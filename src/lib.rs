@@ -310,8 +310,10 @@ impl_abs_diff_eq_signed!(
     (i64, (), 0),
     (i128, (), 0),
     (isize, (), 0),
+    (f32, (), f32::EPSILON),
+    (f64, (), f64::EPSILON),
 );
-
+/*
 impl AbsDiffEq for f32 {
     type Tolerance = f32;
 
@@ -369,7 +371,7 @@ impl AbsDiffWhyEq for f64 {
         (f64::abs(self - other) <= tolerance, ())
     }
 }
-
+*/
 impl<T> AbsDiffEq for &T
 where
     T: AbsDiffEq
