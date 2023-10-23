@@ -208,7 +208,12 @@ where
 
     fn abs_diff_why_eq(&self, other: &Rhs, tolerance: Self::Tolerance) -> (bool, Self::Reason);
 
-    fn abs_diff_why_ne(&self, other: &Rhs, tolerance: Self::Tolerance) -> (bool, Self::Reason);
+    #[inline]
+    fn abs_diff_why_ne(&self, other: &Rhs, tolerance: Self::Tolerance) -> (bool, Self::Reason) {
+        let (result, reason) = Self::abs_diff_why_eq(self, other, tolerance);
+
+        (!result, reason)
+    }
 }
 
 macro_rules! impl_abs_diff_eq_unsigned {
@@ -231,11 +236,6 @@ macro_rules! impl_abs_diff_eq_unsigned {
 
                 abs_diff <= tolerance
             }
-
-            #[inline]
-            fn abs_diff_ne(&self, other: &$T, tolerance: Self::Tolerance) -> bool {
-                !Self::abs_diff_eq(self, other, tolerance)
-            }
         }
 
         impl AbsDiffWhyEq for $T {
@@ -256,13 +256,6 @@ macro_rules! impl_abs_diff_eq_unsigned {
                 };
 
                 (abs_diff <= tolerance, ())
-            }
-
-            #[inline]
-            fn abs_diff_why_ne(&self, other: &$T, tolerance: Self::Tolerance) -> (bool, Self::Reason) {
-                let (result, reason) = Self::abs_diff_why_eq(self, other, tolerance);
-
-                (!result, reason)
             }
         }
     )*}
@@ -306,13 +299,6 @@ macro_rules! impl_abs_diff_eq_signed {
             fn abs_diff_why_eq(&self, other: &$T, tolerance: Self::Tolerance) -> (bool, Self::Reason) {
                 ($T::abs(self - other) <= tolerance, ())
             }
-
-            #[inline]
-            fn abs_diff_why_ne(&self, other: &$T, tolerance: Self::Tolerance) -> (bool, Self::Reason) {
-                let (result, reason) = Self::abs_diff_why_eq(self, other, tolerance);
-
-                (!result, reason)
-            }
         }
     )*};
 }
@@ -353,13 +339,6 @@ impl AbsDiffWhyEq for f32 {
     fn abs_diff_why_eq(&self, other: &f32, tolerance: Self::Tolerance) -> (bool, Self::Reason) {
         (f32::abs(self - other) <= tolerance, ())
     }
-
-    #[inline]
-    fn abs_diff_why_ne(&self, other: &f32, tolerance: Self::Tolerance) -> (bool, Self::Reason) {
-        let (result, reason) = Self::abs_diff_why_eq(self, other, tolerance);
-
-        (!result, reason)
-    }
 }
 
 impl AbsDiffEq for f64 {
@@ -388,13 +367,6 @@ impl AbsDiffWhyEq for f64 {
     #[inline]
     fn abs_diff_why_eq(&self, other: &f64, tolerance: Self::Tolerance) -> (bool, Self::Reason) {
         (f64::abs(self - other) <= tolerance, ())
-    }
-
-    #[inline]
-    fn abs_diff_why_ne(&self, other: &f64, tolerance: Self::Tolerance) -> (bool, Self::Reason) {
-        let (result, reason) = Self::abs_diff_why_eq(self, other, tolerance);
-
-        (!result, reason)
     }
 }
 
@@ -431,11 +403,6 @@ where
     fn abs_diff_why_eq(&self, other: &&T, tolerance: Self::Tolerance) -> (bool, Self::Reason) {
         T::abs_diff_why_eq(self, other, tolerance)
     }
-
-    #[inline]
-    fn abs_diff_why_ne(&self, other: &&T, tolerance: Self::Tolerance) -> (bool, Self::Reason) {
-        T::abs_diff_why_ne(self, other, tolerance)
-    }
 }
 
 impl<T> AbsDiffEq for &mut T
@@ -470,11 +437,6 @@ where
     #[inline]
     fn abs_diff_why_eq(&self, other: &&mut T, tolerance: Self::Tolerance) -> (bool, Self::Reason) {
         T::abs_diff_why_eq(self, other, tolerance)
-    }
-
-    #[inline]
-    fn abs_diff_why_ne(&self, other: &&mut T, tolerance: Self::Tolerance) -> (bool, Self::Reason) {
-        T::abs_diff_why_ne(self, other, tolerance)
     }
 }
 
@@ -563,13 +525,6 @@ where
 
         return (true, SliceReason::AllSequenceElementsMatch)
     }
-
-    #[inline]
-    fn abs_diff_why_ne(&self, other: &[B], tolerance: Self::Tolerance) -> (bool, Self::Reason) {
-        let (result, reason) = Self::abs_diff_why_eq(self, other, tolerance);
-
-        (!result, reason)
-    }
 }
 
 
@@ -630,13 +585,6 @@ where
     fn abs_diff_why_eq(&self, other: &cell::Cell<T>, tolerance: Self::Tolerance) -> (bool, Self::Reason) {
         T::abs_diff_why_eq(&self.get(), &other.get(), tolerance)
     }
-
-    #[inline]
-    fn abs_diff_why_ne(&self, other: &cell::Cell<T>, tolerance: Self::Tolerance) -> (bool, Self::Reason) {
-        let (result, reason) = Self::abs_diff_why_eq(self, other, tolerance);
-
-        (!result, reason)
-    }
 }
 
 impl<T> AbsDiffEq for cell::RefCell<T> 
@@ -671,13 +619,6 @@ where
     #[inline]
     fn abs_diff_why_eq(&self, other: &cell::RefCell<T>, tolerance: Self::Tolerance) -> (bool, Self::Reason) {
         T::abs_diff_why_eq(&self.borrow(), &other.borrow(), tolerance)
-    }
-
-    #[inline]
-    fn abs_diff_why_ne(&self, other: &cell::RefCell<T>, tolerance: Self::Tolerance) -> (bool, Self::Reason) {
-        let (result, reason) = Self::abs_diff_why_eq(self, other, tolerance);
-
-        (!result, reason)
     }
 }
 
@@ -732,13 +673,6 @@ where
         }
 
         return (true, ArrayReason::AllSequenceElementsMatch)
-    }
-
-    #[inline]
-    fn abs_diff_why_ne(&self, other: &[B; N], tolerance: Self::Tolerance) -> (bool, Self::Reason) {
-        let (result, reason) = Self::abs_diff_why_eq(self, other, tolerance);
-
-        (!result, reason)
     }
 }
 
