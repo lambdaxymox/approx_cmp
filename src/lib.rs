@@ -270,6 +270,7 @@ impl_abs_diff_eq_unsigned!(
     (usize, (), 0),
 );
 
+
 macro_rules! impl_abs_diff_eq_signed {
     ($(($T:ident, $ReasonType:ty, $default_tolerance:expr)),* $(,)?) => {$(
         impl AbsDiffEq for $T {
@@ -313,65 +314,8 @@ impl_abs_diff_eq_signed!(
     (f32, (), f32::EPSILON),
     (f64, (), f64::EPSILON),
 );
-/*
-impl AbsDiffEq for f32 {
-    type Tolerance = f32;
 
-    #[inline]
-    fn default_tolerance() -> Self::Tolerance {
-        f32::EPSILON
-    }
 
-    #[inline]
-    fn abs_diff_eq(&self, other: &f32, tolerance: Self::Tolerance) -> bool {
-        f32::abs(self - other) <= tolerance
-    }
-}
-
-impl AbsDiffWhyEq for f32 {
-    type Tolerance = f32;
-    type Reason = ();
-
-    #[inline]
-    fn default_tolerance() -> Self::Tolerance {
-        f32::EPSILON
-    }
-
-    #[inline]
-    fn abs_diff_why_eq(&self, other: &f32, tolerance: Self::Tolerance) -> (bool, Self::Reason) {
-        (f32::abs(self - other) <= tolerance, ())
-    }
-}
-
-impl AbsDiffEq for f64 {
-    type Tolerance = f64;
-
-    #[inline]
-    fn default_tolerance() -> Self::Tolerance {
-        f64::EPSILON
-    }
-
-    #[inline]
-    fn abs_diff_eq(&self, other: &f64, tolerance: Self::Tolerance) -> bool {
-        f64::abs(self - other) <= tolerance
-    }
-}
-
-impl AbsDiffWhyEq for f64 {
-    type Tolerance = f64;
-    type Reason = ();
-
-    #[inline]
-    fn default_tolerance() -> Self::Tolerance {
-        f64::EPSILON
-    }
-
-    #[inline]
-    fn abs_diff_why_eq(&self, other: &f64, tolerance: Self::Tolerance) -> (bool, Self::Reason) {
-        (f64::abs(self - other) <= tolerance, ())
-    }
-}
-*/
 impl<T> AbsDiffEq for &T
 where
     T: AbsDiffEq
