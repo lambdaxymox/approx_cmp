@@ -597,6 +597,91 @@ where
     }
 }
 
+impl<T> AbsDiffEq for cell::Cell<T> 
+where
+    T: AbsDiffEq + Copy
+{
+    type Tolerance = T::Tolerance;
+
+    #[inline]
+    fn default_tolerance() -> Self::Tolerance {
+        T::default_tolerance()
+    }
+
+    #[inline]
+    fn abs_diff_eq(&self, other: &cell::Cell<T>, tolerance: Self::Tolerance) -> bool {
+        T::abs_diff_eq(&self.get(), &other.get(), tolerance)
+    }
+}
+
+impl<T> AbsDiffWhyEq for cell::Cell<T> 
+where
+    T: AbsDiffWhyEq + Copy
+{
+    type Tolerance = T::Tolerance;
+    type Reason = T::Reason;
+
+    #[inline]
+    fn default_tolerance() -> Self::Tolerance {
+        T::default_tolerance()
+    }
+
+    #[inline]
+    fn abs_diff_why_eq(&self, other: &cell::Cell<T>, tolerance: Self::Tolerance) -> (bool, Self::Reason) {
+        T::abs_diff_why_eq(&self.get(), &other.get(), tolerance)
+    }
+
+    #[inline]
+    fn abs_diff_why_ne(&self, other: &cell::Cell<T>, tolerance: Self::Tolerance) -> (bool, Self::Reason) {
+        let (result, reason) = Self::abs_diff_why_eq(self, other, tolerance);
+
+        (!result, reason)
+    }
+}
+
+impl<T> AbsDiffEq for cell::RefCell<T> 
+where
+    T: AbsDiffEq + ?Sized
+{
+    type Tolerance = T::Tolerance;
+
+    #[inline]
+    fn default_tolerance() -> Self::Tolerance {
+        T::default_tolerance()
+    }
+
+    #[inline]
+    fn abs_diff_eq(&self, other: &cell::RefCell<T>, tolerance: Self::Tolerance) -> bool {
+        T::abs_diff_eq(&self.borrow(), &other.borrow(), tolerance)
+    }
+}
+
+impl<T> AbsDiffWhyEq for cell::RefCell<T> 
+where
+    T: AbsDiffWhyEq + ?Sized
+{
+    type Tolerance = T::Tolerance;
+    type Reason = T::Reason;
+
+    #[inline]
+    fn default_tolerance() -> Self::Tolerance {
+        T::default_tolerance()
+    }
+
+    #[inline]
+    fn abs_diff_why_eq(&self, other: &cell::RefCell<T>, tolerance: Self::Tolerance) -> (bool, Self::Reason) {
+        T::abs_diff_why_eq(&self.borrow(), &other.borrow(), tolerance)
+    }
+
+    #[inline]
+    fn abs_diff_why_ne(&self, other: &cell::RefCell<T>, tolerance: Self::Tolerance) -> (bool, Self::Reason) {
+        let (result, reason) = Self::abs_diff_why_eq(self, other, tolerance);
+
+        (!result, reason)
+    }
+}
+
+
 #[derive(Debug, PartialEq, Eq)]
 pub enum ArrayReason<A, B> 
 where
