@@ -4,33 +4,33 @@ use core::cell;
 #[inline]
 pub fn abs_diff_eq<A, B>(lhs: A, rhs: B, tolerance: A::Tolerance) -> bool 
 where
-    A: AbsDiffWhyEq<B>
+    A: AbsDiffEq<B>
 {
-    AbsDiffWhyEq::abs_diff_eq(&lhs, &rhs, tolerance)
+    AbsDiffEq::abs_diff_eq(&lhs, &rhs, tolerance)
 }
 
 #[inline]
 pub fn abs_diff_ne<A, B>(lhs: A, rhs: B, tolerance: A::Tolerance) -> bool 
 where
-    A: AbsDiffWhyEq<B>
+    A: AbsDiffEq<B>
 {
-    AbsDiffWhyEq::abs_diff_ne(&lhs, &rhs, tolerance)
+    AbsDiffEq::abs_diff_ne(&lhs, &rhs, tolerance)
 }
 
 #[inline]
 pub fn abs_diff_eq_default<A, B>(lhs: A, rhs: B) -> bool
 where
-    A: AbsDiffWhyEq<B>
+    A: AbsDiffEq<B>
 {
-    AbsDiffWhyEq::abs_diff_eq(&lhs, &rhs, A::default_tolerance())
+    AbsDiffEq::abs_diff_eq(&lhs, &rhs, A::default_tolerance())
 }
 
 #[inline]
 pub fn abs_diff_ne_default<A, B>(lhs: A, rhs: B) -> bool
 where
-    A: AbsDiffWhyEq<B>
+    A: AbsDiffEq<B>
 {
-    AbsDiffWhyEq::abs_diff_ne(&lhs, &rhs, A::default_tolerance())
+    AbsDiffEq::abs_diff_ne(&lhs, &rhs, A::default_tolerance())
 }
 
 
@@ -154,21 +154,15 @@ macro_rules! assert_abs_diff_ne {
     }};
 }
 
-
-pub trait AbsDiffWhyEq<Rhs = Self>: PartialEq<Rhs> 
+pub trait AbsDiffEq<Rhs = Self>: PartialEq<Rhs> 
 where
     Rhs: ?Sized
 {
     type Tolerance;
-    type Reason: Sized + Clone;
 
     /// The default tolerance for absolute difference comparisons when a
     /// tolerance is not specified at the time of comparison.
     fn default_tolerance() -> Self::Tolerance;
-
-    fn abs_diff_why_eq(&self, other: &Rhs, tolerance: Self::Tolerance) -> (bool, Self::Reason);
-
-    fn abs_diff_why_ne(&self, other: &Rhs, tolerance: Self::Tolerance) -> (bool, Self::Reason);
 
     /// Compare two floating point numbers for absolute difference equality.
     ///
@@ -185,9 +179,7 @@ where
     /// - Returns: A boolean indicating whether or not two floating point
     /// numbers are absolute difference equal with respect to a tolerance
     /// `tolerance`.
-    fn abs_diff_eq(&self, other: &Rhs, tolerance: Self::Tolerance) -> bool {
-        Self::abs_diff_why_eq(self, other, tolerance).0
-    }
+    fn abs_diff_eq(&self, other: &Rhs, tolerance: Self::Tolerance) -> bool;
 
     /// Compare two floating point numbers for absolute difference inequality.
     ///
@@ -203,8 +195,49 @@ where
     }
 }
 
+pub trait AbsDiffWhyEq<Rhs = Self>: PartialEq<Rhs> 
+where
+    Rhs: ?Sized
+{
+    type Tolerance;
+    type Reason: Sized + Clone;
+
+    /// The default tolerance for absolute difference comparisons when a
+    /// tolerance is not specified at the time of comparison.
+    fn default_tolerance() -> Self::Tolerance;
+
+    fn abs_diff_why_eq(&self, other: &Rhs, tolerance: Self::Tolerance) -> (bool, Self::Reason);
+
+    fn abs_diff_why_ne(&self, other: &Rhs, tolerance: Self::Tolerance) -> (bool, Self::Reason);
+}
+
 macro_rules! impl_abs_diff_eq_unsigned {
     ($(($T:ident, $ReasonType:ty, $default_tolerance:expr)),* $(,)?) => {$(
+        impl AbsDiffEq for $T {
+            type Tolerance = $T;
+
+            #[inline]
+            fn default_tolerance() -> Self::Tolerance {
+                $default_tolerance
+            }
+
+            #[inline]
+            fn abs_diff_eq(&self, other: &$T, tolerance: Self::Tolerance) -> bool {
+                let abs_diff = if self > other { 
+                    self - other
+                } else {
+                    other - self
+                };
+
+                abs_diff <= tolerance
+            }
+
+            #[inline]
+            fn abs_diff_ne(&self, other: &$T, tolerance: Self::Tolerance) -> bool {
+                !Self::abs_diff_eq(self, other, tolerance)
+            }
+        }
+
         impl AbsDiffWhyEq for $T {
             type Tolerance = $T;
             type Reason = $ReasonType;
@@ -246,6 +279,20 @@ impl_abs_diff_eq_unsigned!(
 
 macro_rules! impl_abs_diff_eq_signed {
     ($(($T:ident, $ReasonType:ty, $default_tolerance:expr)),* $(,)?) => {$(
+        impl AbsDiffEq for $T {
+            type Tolerance = $T;
+
+            #[inline]
+            fn default_tolerance() -> Self::Tolerance {
+                $default_tolerance
+            }
+
+            #[inline]
+            fn abs_diff_eq(&self, other: &$T, tolerance: Self::Tolerance) -> bool {
+                $T::abs(self - other) <= tolerance
+            }
+        }
+
         impl AbsDiffWhyEq for $T {
             type Tolerance = $T;
             type Reason = $ReasonType;
@@ -279,6 +326,20 @@ impl_abs_diff_eq_signed!(
     (isize, (), 0),
 );
 
+impl AbsDiffEq for f32 {
+    type Tolerance = f32;
+
+    #[inline]
+    fn default_tolerance() -> Self::Tolerance {
+        f32::EPSILON
+    }
+
+    #[inline]
+    fn abs_diff_eq(&self, other: &f32, tolerance: Self::Tolerance) -> bool {
+        f32::abs(self - other) <= tolerance
+    }
+}
+
 impl AbsDiffWhyEq for f32 {
     type Tolerance = f32;
     type Reason = ();
@@ -301,6 +362,20 @@ impl AbsDiffWhyEq for f32 {
     }
 }
 
+impl AbsDiffEq for f64 {
+    type Tolerance = f64;
+
+    #[inline]
+    fn default_tolerance() -> Self::Tolerance {
+        f64::EPSILON
+    }
+
+    #[inline]
+    fn abs_diff_eq(&self, other: &f64, tolerance: Self::Tolerance) -> bool {
+        f64::abs(self - other) <= tolerance
+    }
+}
+
 impl AbsDiffWhyEq for f64 {
     type Tolerance = f64;
     type Reason = ();
@@ -320,6 +395,23 @@ impl AbsDiffWhyEq for f64 {
         let (result, reason) = Self::abs_diff_why_eq(self, other, tolerance);
 
         (!result, reason)
+    }
+}
+
+impl<T> AbsDiffEq for &T
+where
+    T: AbsDiffEq
+{
+    type Tolerance = T::Tolerance;
+
+    #[inline]
+    fn default_tolerance() -> Self::Tolerance {
+        T::default_tolerance()
+    }
+
+    #[inline]
+    fn abs_diff_eq(&self, other: &&T, tolerance: Self::Tolerance) -> bool {
+        T::abs_diff_eq(self, other, tolerance)
     }
 }
 
@@ -346,6 +438,23 @@ where
     }
 }
 
+impl<T> AbsDiffEq for &mut T
+where
+    T: AbsDiffEq
+{
+    type Tolerance = T::Tolerance;
+
+    #[inline]
+    fn default_tolerance() -> Self::Tolerance {
+        T::default_tolerance()
+    }
+
+    #[inline]
+    fn abs_diff_eq(&self, other: &&mut T, tolerance: Self::Tolerance) -> bool {
+        T::abs_diff_eq(self, other, tolerance)
+    }
+}
+
 impl<T> AbsDiffWhyEq for &mut T
 where
     T: AbsDiffWhyEq
@@ -369,6 +478,33 @@ where
     }
 }
 
+impl<A, B> AbsDiffEq<[B]> for [A]
+where
+    A: AbsDiffEq<B>,
+    A::Tolerance: Clone,
+{
+    type Tolerance = A::Tolerance;
+
+    #[inline]
+    fn default_tolerance() -> Self::Tolerance {
+        A::default_tolerance()
+    }
+
+    #[inline]
+    fn abs_diff_eq(&self, other: &[B], tolerance: Self::Tolerance) -> bool {
+        if self.len() != other.len() {
+            return false;
+        }
+        
+        for (a, b) in self.iter().zip(other.iter()) {
+            if !A::abs_diff_eq(a, b, tolerance.clone()) {
+                return false;
+            }
+        }
+
+        true
+    }
+}
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum SliceReason<A, B> 
@@ -436,6 +572,31 @@ where
     }
 }
 
+
+impl<A, B, const N: usize> AbsDiffEq<[B; N]> for [A; N]
+where
+    A: AbsDiffEq<B>,
+    A::Tolerance: Clone,
+{
+    type Tolerance = A::Tolerance;
+
+    #[inline]
+    fn default_tolerance() -> Self::Tolerance {
+        A::default_tolerance()
+    }
+
+    #[inline]
+    fn abs_diff_eq(&self, other: &[B; N], tolerance: Self::Tolerance) -> bool {
+        for (a, b) in self.iter().zip(other.iter()) {
+            if !A::abs_diff_eq(a, b, tolerance.clone()) {
+                return false;
+            }
+        }
+
+        true
+    }
+}
+
 #[derive(Debug, PartialEq, Eq)]
 pub enum ArrayReason<A, B> 
 where
@@ -461,7 +622,6 @@ where
         }
     }
 }
-
 
 impl<A, B, const N: usize> AbsDiffWhyEq<[B; N]> for [A; N]
 where
