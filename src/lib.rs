@@ -41,7 +41,7 @@ macro_rules! assert_abs_diff_eq {
             (result, expected) => {
                 assert!(
                     $crate::abs_diff_eq(result, expected, $max_abs_diff),
-                    "assert_abs_diff_eq!({}, {})\nleft = {:?}\nright = {:?}",
+                    "assert_abs_diff_eq!({}, {}, {})\nleft = {:?}\nright = {:?}",
                     stringify!($result),
                     stringify!($expected),
                     stringify!($max_abs_diff = $max_abs_diff),
@@ -55,11 +55,11 @@ macro_rules! assert_abs_diff_eq {
             (result, expected) => {
                 assert!(
                     $crate::abs_diff_eq(result, expected, $max_abs_diff),
-                    "assert_abs_diff_eq!({}, {})\nleft = {:?}\nright = {:?}",
+                    "assert_abs_diff_eq!({}, {}, {})\nleft = {:?}\nright = {:?}",
                     stringify!($result),
                     stringify!($expected),
                     stringify!($max_abs_diff = $max_abs_diff),
-                    stringify!($($opt = $val),+),
+                    stringify!($($arg)+),
                     result, expected,
                 );
             }
@@ -86,8 +86,8 @@ macro_rules! assert_abs_diff_eq {
                     "assert_abs_diff_eq!({}, {})\n{}\nleft = {:?}\nright = {:?}",
                     stringify!($result),
                     stringify!($expected),
-                    result, expected,
                     stringify!($($arg)+),
+                    result, expected,
                 );
             }
         }
@@ -101,7 +101,7 @@ macro_rules! assert_abs_diff_ne {
             (result, expected) => {
                 assert!(
                     $crate::abs_diff_ne(result, expected, $max_abs_diff),
-                    "assert_abs_diff_ne!({}, {})\nleft = {:?}\nright = {:?}",
+                    "assert_abs_diff_ne!({}, {}, {})\nleft = {:?}\nright = {:?}",
                     stringify!($result),
                     stringify!($expected),
                     stringify!($max_abs_diff = $max_abs_diff),
@@ -115,11 +115,11 @@ macro_rules! assert_abs_diff_ne {
             (result, expected) => {
                 assert!(
                     $crate::abs_diff_ne(result, expected, $max_abs_diff),
-                    "assert_abs_diff_ne!({}, {})\nleft = {:?}\nright = {:?}",
+                    "assert_abs_diff_ne!({}, {}, {})\n{}\nleft = {:?}\nright = {:?}",
                     stringify!($result),
                     stringify!($expected),
                     stringify!($max_abs_diff = $max_abs_diff),
-                    stringify!($($opt = $val),+),
+                    stringify!($($arg)+),
                     result, expected,
                 );
             }
@@ -146,8 +146,8 @@ macro_rules! assert_abs_diff_ne {
                     "assert_abs_diff_ne!({}, {})\n{}\nleft = {:?}\nright = {:?}",
                     stringify!($result),
                     stringify!($expected),
-                    result, expected,
                     stringify!($($arg)+),
+                    result, expected,
                 );
             }
         }

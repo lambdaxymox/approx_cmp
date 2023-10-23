@@ -89,25 +89,25 @@ mod abs_diff_compare_f32_tests {
 
     #[test]
     fn test_tolerance() {
-        assert_abs_diff_eq!(0.0_f32,    1e-40_f32, tolerance = 1e-40_f32);
-        assert_abs_diff_eq!(1e-40_f32,  0.0_f32, tolerance = 1e-40_f32);
-        assert_abs_diff_eq!(0.0_f32,   -1e-40_f32, tolerance = 1e-40_f32);
-        assert_abs_diff_eq!(-1e-40_f32, 0.0_f32, tolerance = 1e-40_f32);
+        assert_abs_diff_eq!( 0.0_f32,    1e-40_f32, max_abs_diff = 1e-40_f32);
+        assert_abs_diff_eq!( 1e-40_f32,  0.0_f32,   max_abs_diff = 1e-40_f32);
+        assert_abs_diff_eq!( 0.0_f32,   -1e-40_f32, max_abs_diff = 1e-40_f32);
+        assert_abs_diff_eq!(-1e-40_f32,  0.0_f32,   max_abs_diff = 1e-40_f32);
 
-        assert_abs_diff_ne!( 1e-40_f32,  0.0_f32, tolerance = 1e-41_f32);
-        assert_abs_diff_ne!( 0.0_f32,    1e-40_f32, tolerance = 1e-41_f32);
-        assert_abs_diff_ne!(-1e-40_f32,  0.0_f32, tolerance = 1e-41_f32);
-        assert_abs_diff_ne!( 0.0_f32,   -1e-40_f32, tolerance = 1e-41_f32);
+        assert_abs_diff_ne!( 1e-40_f32,  0.0_f32,   max_abs_diff = 1e-41_f32);
+        assert_abs_diff_ne!( 0.0_f32,    1e-40_f32, max_abs_diff = 1e-41_f32);
+        assert_abs_diff_ne!(-1e-40_f32,  0.0_f32,   max_abs_diff = 1e-41_f32);
+        assert_abs_diff_ne!( 0.0_f32,   -1e-40_f32, max_abs_diff = 1e-41_f32);
     }
 
     #[test]
     fn test_max() {
-        assert_abs_diff_eq!(f32::MAX, f32::MAX);
-        assert_abs_diff_ne!(f32::MAX, -f32::MAX);
-        assert_abs_diff_ne!(-f32::MAX, f32::MAX);
-        assert_abs_diff_ne!(f32::MAX, f32::MAX / 2.0_f32);
-        assert_abs_diff_ne!(f32::MAX, -f32::MAX / 2.0_f32);
-        assert_abs_diff_ne!(-f32::MAX, f32::MAX / 2.0_f32);
+        assert_abs_diff_eq!( f32::MAX,  f32::MAX);
+        assert_abs_diff_ne!( f32::MAX, -f32::MAX);
+        assert_abs_diff_ne!(-f32::MAX,  f32::MAX);
+        assert_abs_diff_ne!( f32::MAX,  f32::MAX / 2.0_f32);
+        assert_abs_diff_ne!( f32::MAX, -f32::MAX / 2.0_f32);
+        assert_abs_diff_ne!(-f32::MAX,  f32::MAX / 2.0_f32);
     }
 
     #[test]
@@ -141,10 +141,8 @@ mod abs_diff_compare_f32_tests {
         assert_abs_diff_ne!(-1.0_f32, 1.000000001_f32);
         assert_abs_diff_ne!(-1.000000001_f32, 1.0_f32);
         assert_abs_diff_ne!(1.0_f32, -1.000000001_f32);
-        assert_abs_diff_eq!(
-            10.0_f32 * f32::MIN_POSITIVE,
-            10.0_f32 * -f32::MIN_POSITIVE
-        );
+        
+        assert_abs_diff_eq!(10.0_f32 * f32::MIN_POSITIVE, 10.0_f32 * -f32::MIN_POSITIVE);
     }
 
     #[test]
@@ -254,25 +252,25 @@ mod abs_diff_compare_f64_tests {
 
     #[test]
     fn test_tolerance() {
-        assert_abs_diff_eq!( 0.0_f64,    1e-40_f64, tolerance = 1e-40_f64);
-        assert_abs_diff_eq!( 1e-40_f64,  0.0_f64, tolerance = 1e-40_f64);
-        assert_abs_diff_eq!( 0.0_f64,   -1e-40_f64, tolerance = 1e-40_f64);
-        assert_abs_diff_eq!(-1e-40_f64,  0.0_f64, tolerance = 1e-40_f64);
+        assert_abs_diff_eq!( 0.0_f64,    1e-40_f64, max_abs_diff = 1e-40_f64);
+        assert_abs_diff_eq!( 1e-40_f64,  0.0_f64,   max_abs_diff = 1e-40_f64);
+        assert_abs_diff_eq!( 0.0_f64,   -1e-40_f64, max_abs_diff = 1e-40_f64);
+        assert_abs_diff_eq!(-1e-40_f64,  0.0_f64,   max_abs_diff = 1e-40_f64);
 
-        assert_abs_diff_ne!( 1e-40_f64,  0.0_f64, tolerance = 1e-41_f64);
-        assert_abs_diff_ne!( 0.0_f64,    1e-40_f64, tolerance = 1e-41_f64);
-        assert_abs_diff_ne!(-1e-40_f64,  0.0_f64, tolerance = 1e-41_f64);
-        assert_abs_diff_ne!( 0.0_f64,   -1e-40_f64, tolerance = 1e-41_f64);
+        assert_abs_diff_ne!( 1e-40_f64,  0.0_f64,   max_abs_diff = 1e-41_f64);
+        assert_abs_diff_ne!( 0.0_f64,    1e-40_f64, max_abs_diff = 1e-41_f64);
+        assert_abs_diff_ne!(-1e-40_f64,  0.0_f64,   max_abs_diff = 1e-41_f64);
+        assert_abs_diff_ne!( 0.0_f64,   -1e-40_f64, max_abs_diff = 1e-41_f64);
     }
 
     #[test]
     fn test_max() {
-        assert_abs_diff_eq!(f64::MAX, f64::MAX);
-        assert_abs_diff_ne!(f64::MAX, -f64::MAX);
-        assert_abs_diff_ne!(-f64::MAX, f64::MAX);
-        assert_abs_diff_ne!(f64::MAX, f64::MAX / 2.0_f64);
-        assert_abs_diff_ne!(f64::MAX, -f64::MAX / 2.0_f64);
-        assert_abs_diff_ne!(-f64::MAX, f64::MAX / 2.0_f64);
+        assert_abs_diff_eq!( f64::MAX,  f64::MAX);
+        assert_abs_diff_ne!( f64::MAX, -f64::MAX);
+        assert_abs_diff_ne!(-f64::MAX,  f64::MAX);
+        assert_abs_diff_ne!( f64::MAX,  f64::MAX / 2.0_f64);
+        assert_abs_diff_ne!( f64::MAX, -f64::MAX / 2.0_f64);
+        assert_abs_diff_ne!(-f64::MAX,  f64::MAX / 2.0_f64);
     }
 
     #[test]
@@ -307,10 +305,7 @@ mod abs_diff_compare_f64_tests {
         assert_abs_diff_ne!(-1.000000001_f64, 1.0_f64);
         assert_abs_diff_ne!(1.0_f64, -1.000000001_f64);
 
-        assert_abs_diff_eq!(
-            10.0_f64 * f64::MIN_POSITIVE,
-            10.0_f64 * -f64::MIN_POSITIVE
-        );
+        assert_abs_diff_eq!(10.0_f64 * f64::MIN_POSITIVE, 10.0_f64 * -f64::MIN_POSITIVE);
     }
 
     #[test]
