@@ -33,7 +33,6 @@ where
     AbsDiffEq::abs_diff_ne(&lhs, &rhs, A::default_tolerance())
 }
 
-
 #[macro_export]
 macro_rules! assert_abs_diff_eq {
     ($left:expr, $right:expr, max_abs_diff = $max_abs_diff:expr $(,)?) => {{

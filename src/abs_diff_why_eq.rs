@@ -166,7 +166,6 @@ where
 
     fn abs_diff_why_eq(&self, other: &Rhs, tolerance: Self::Tolerance) -> (bool, Self::Reason);
 
-    #[inline]
     fn abs_diff_why_ne(&self, other: &Rhs, tolerance: Self::Tolerance) -> (bool, Self::Reason) {
         let (result, reason) = Self::abs_diff_why_eq(self, other, tolerance);
 
