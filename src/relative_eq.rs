@@ -21,21 +21,6 @@ where
     RelativeEq::relative_ne(&lhs, &rhs, tolerance, max_relative)
 }
 
-#[inline]
-pub fn relative_eq_default<A, B>(lhs: A, rhs: B) -> bool
-where
-    A: RelativeEq<B>,
-{
-    RelativeEq::relative_eq(&lhs, &rhs, A::default_tolerance(), A::default_max_relative())
-}
-
-#[inline]
-pub fn relative_ne_default<A, B>(lhs: A, rhs: B) -> bool 
-where
-    A: RelativeEq<B>
-{
-    RelativeEq::relative_ne(&lhs, &rhs, A::default_tolerance(), A::default_max_relative())
-}
 
 #[derive(Clone)]
 pub struct Relative<A, B = A> 

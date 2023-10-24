@@ -17,21 +17,6 @@ where
     AbsDiffEq::abs_diff_ne(&lhs, &rhs, tolerance)
 }
 
-#[inline]
-pub fn abs_diff_eq_default<A, B>(lhs: A, rhs: B) -> bool
-where
-    A: AbsDiffEq<B>
-{
-    AbsDiffEq::abs_diff_eq(&lhs, &rhs, A::default_tolerance())
-}
-
-#[inline]
-pub fn abs_diff_ne_default<A, B>(lhs: A, rhs: B) -> bool
-where
-    A: AbsDiffEq<B>
-{
-    AbsDiffEq::abs_diff_ne(&lhs, &rhs, A::default_tolerance())
-}
 
 #[derive(Clone)]
 pub struct AbsDiff<A, B = A>
