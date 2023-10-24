@@ -17,21 +17,6 @@ where
     AbsDiffWhyEq::abs_diff_why_ne(&lhs, &rhs, tolerance)
 }
 
-#[inline]
-pub fn abs_diff_why_eq_default<A, B>(lhs: A, rhs: B) -> (bool, A::Reason)
-where
-    A: AbsDiffWhyEq<B>
-{
-    AbsDiffWhyEq::abs_diff_why_eq(&lhs, &rhs, A::default_tolerance())
-}
-
-#[inline]
-pub fn abs_diff_why_ne_default<A, B>(lhs: A, rhs: B) -> (bool, A::Reason)
-where
-    A: AbsDiffWhyEq<B>
-{
-    AbsDiffWhyEq::abs_diff_why_ne(&lhs, &rhs, A::default_tolerance())
-}
 
 #[derive(Clone)]
 pub struct AbsDiffWhy<A, B = A>
