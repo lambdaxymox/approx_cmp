@@ -24,7 +24,6 @@ where
     A: AbsDiffEq<B> + ?Sized,
     B: ?Sized
 {
-    /// The tolerance to use when testing values that are close together.
     pub max_abs_diff: A::Tolerance,
 }
 
