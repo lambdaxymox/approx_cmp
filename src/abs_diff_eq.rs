@@ -33,60 +33,80 @@ where
     AbsDiffEq::abs_diff_ne(&lhs, &rhs, A::default_tolerance())
 }
 
+#[derive(Clone)]
+pub struct AbsDiff<A, B = A>
+where
+    A: AbsDiffEq<B> + ?Sized,
+    B: ?Sized
+{
+    /// The tolerance to use when testing values that are close together.
+    pub max_abs_diff: A::Tolerance,
+}
+
+impl<A, B> Default for AbsDiff<A, B>
+where
+    A: AbsDiffEq<B> + ?Sized,
+    B: ?Sized
+{
+    #[inline]
+    fn default() -> AbsDiff<A, B> {
+        AbsDiff {
+            max_abs_diff: A::default_tolerance(),
+        }
+    }
+}
+
+impl<A, B> AbsDiff<A, B>
+where
+    A: AbsDiffEq<B> + ?Sized,
+    B: ?Sized
+{
+    #[inline]
+    pub fn max_abs_diff(self, max_abs_diff: A::Tolerance) -> AbsDiff<A, B> {
+        AbsDiff { max_abs_diff }
+    }
+
+    #[inline]
+    pub fn eq(self, lhs: &A, rhs: &B) -> bool {
+        A::abs_diff_eq(lhs, rhs, self.max_abs_diff)
+    }
+
+    #[inline]
+    pub fn ne(self, lhs: &A, rhs: &B) -> bool {
+        A::abs_diff_ne(lhs, rhs, self.max_abs_diff)
+    }
+}
+
 #[macro_export]
 macro_rules! assert_abs_diff_eq {
-    ($left:expr, $right:expr, max_abs_diff = $max_abs_diff:expr $(,)?) => {{
+    ($left:expr, $right:expr $(, $opt:ident = $val:expr)* $(,)?) => {{
         match (&($left), &($right)) {
-            (result, expected) => {
+            (left_val, right_val) => {
+                let abs_diff = $crate::AbsDiff::default()$(.$opt($val))*;
+                let result = abs_diff.clone().eq(left_val, right_val);
                 assert!(
-                    $crate::abs_diff_eq(result, expected, $max_abs_diff),
-                    "assert_abs_diff_eq!({}, {}, {})\nleft = {:?}\nright = {:?}",
+                    result,
+                    "assert_abs_diff_eq!({}, {}, {} = {})\nleft = {:?}\nright = {:?}",
                     stringify!($left),
                     stringify!($right),
-                    stringify!($max_abs_diff = $max_abs_diff),
-                    result, expected,
+                    stringify!(max_abs_diff), abs_diff.max_abs_diff,
+                    left_val, right_val,
                 );
             }
         }
     }};
-    ($left:expr, $right:expr, max_abs_diff = $max_abs_diff:expr, $($arg:tt)+) => {{
+    ($left:expr, $right:expr, $(, $opt:ident = $val:expr)*, $($arg:tt)+) => {{
         match (&($left), &($right)) {
             (result, expected) => {
                 assert!(
-                    $crate::abs_diff_eq(result, expected, $max_abs_diff),
-                    "assert_abs_diff_eq!({}, {}, {})\n{}\nleft = {:?}\nright = {:?}",
+                    let abs_diff = $crate::AbsDiff::default()$(.$opt($val))*;
+                    let result = abs_diff.clone().eq(left_val, right_val);
+                    "assert_abs_diff_eq!({}, {}, {} = {})\n{}\nleft = {:?}\nright = {:?}",
                     stringify!($left),
                     stringify!($right),
-                    stringify!($max_abs_diff = $max_abs_diff),
-                    result, expected,
-                    stringify!($($arg)+),
-                );
-            }
-        }
-    }};
-    ($left:expr, $right:expr $(,)?) => {{
-        match (&($left), &($right)) {
-            (result, expected) => {
-                assert!(
-                    $crate::abs_diff_eq_default(result, expected),
-                    "assert_abs_diff_eq!({}, {})\nleft = {:?}\nright = {:?}",
-                    stringify!($left),
-                    stringify!($right),
-                    result, expected,
-                );
-            }
-        }
-    }};
-    ($left:expr, $right:expr, $($arg:tt)+) => {{
-        match (&($left), &($right)) {
-            (result, expected) => {
-                assert!(
-                    $crate::abs_diff_eq_default(result, expected),
-                    "assert_abs_diff_eq!({}, {})\n{}\nleft = {:?}\nright = {:?}",
-                    stringify!($left),
-                    stringify!($right),
-                    stringify!($($arg)+),
-                    result, expected,
+                    stringify!($max_abs_diff), abs_diff.max_abs_diff,
+                    format!($($arg)+),
+                    left_val, right_val,
                 );
             }
         }
@@ -95,58 +115,35 @@ macro_rules! assert_abs_diff_eq {
 
 #[macro_export]
 macro_rules! assert_abs_diff_ne {
-    ($left:expr, $right:expr, max_abs_diff = $max_abs_diff:expr $(,)?) => {{
+    ($left:expr, $right:expr $(, $opt:ident = $val:expr)* $(,)?) => {{
         match (&($left), &($right)) {
-            (result, expected) => {
+            (left_val, right_val) => {
+                let abs_diff = $crate::AbsDiff::default()$(.$opt($val))*;
+                let result = abs_diff.clone().ne(left_val, right_val);
                 assert!(
-                    $crate::abs_diff_ne(result, expected, $max_abs_diff),
-                    "assert_abs_diff_ne!({}, {}, {})\nleft = {:?}\nright = {:?}",
+                    result,
+                    "assert_abs_diff_ne!({}, {}, {} = {})\nleft = {:?}\nright = {:?}",
                     stringify!($left),
                     stringify!($right),
-                    stringify!($max_abs_diff = $max_abs_diff),
-                    result, expected,
+                    stringify!(max_abs_diff), abs_diff.max_abs_diff,
+                    left_val, right_val,
                 );
             }
         }
     }};
-    ($left:expr, $right:expr, max_abs_diff = $max_abs_diff:expr, $($arg:tt)+) => {{
+    ($left:expr, $right:expr $(, $opt:ident = $val:expr)* $(,)?) => {{
         match (&($left), &($right)) {
-            (result, expected) => {
+            (left_val, right_val) => {
+                let abs_diff = $crate::AbsDiff::default()$(.$opt($val))*;
+                let result = abs_diff.clone().ne(left_val, right_val);
                 assert!(
-                    $crate::abs_diff_ne(result, expected, $max_abs_diff),
+                    result,
                     "assert_abs_diff_ne!({}, {}, {})\n{}\nleft = {:?}\nright = {:?}",
                     stringify!($left),
                     stringify!($right),
-                    stringify!($max_abs_diff = $max_abs_diff),
+                    stringify!(max_abs_diff), abs_diff.max_abs_diff,
                     stringify!($($arg)+),
-                    result, expected,
-                );
-            }
-        }
-    }};
-    ($left:expr, $right:expr $(,)?) => {{
-        match (&($left), &($right)) {
-            (result, expected) => {
-                assert!(
-                    $crate::abs_diff_ne_default(result, expected),
-                    "assert_abs_diff_ne!({}, {})\nleft = {:?}\nright = {:?}",
-                    stringify!($left),
-                    stringify!($right),
-                    result, expected,
-                );
-            }
-        }
-    }};
-    ($left:expr, $right:expr, $($arg:tt)+) => {{
-        match (&($left), &($right)) {
-            (result, expected) => {
-                assert!(
-                    $crate::abs_diff_ne_default(result, expected),
-                    "assert_abs_diff_ne!({}, {})\n{}\nleft = {:?}\nright = {:?}",
-                    stringify!($left),
-                    stringify!($right),
-                    stringify!($($arg)+),
-                    result, expected,
+                    left_val, right_val,
                 );
             }
         }
