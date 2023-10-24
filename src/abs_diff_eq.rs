@@ -36,28 +36,28 @@ where
 
 #[macro_export]
 macro_rules! assert_abs_diff_eq {
-    ($result:expr, $expected:expr, max_abs_diff = $max_abs_diff:expr $(,)?) => {{
-        match (&($result), &($expected)) {
+    ($left:expr, $right:expr, max_abs_diff = $max_abs_diff:expr $(,)?) => {{
+        match (&($left), &($right)) {
             (result, expected) => {
                 assert!(
                     $crate::abs_diff_eq(result, expected, $max_abs_diff),
                     "assert_abs_diff_eq!({}, {}, {})\nleft = {:?}\nright = {:?}",
-                    stringify!($result),
-                    stringify!($expected),
+                    stringify!($left),
+                    stringify!($right),
                     stringify!($max_abs_diff = $max_abs_diff),
                     result, expected,
                 );
             }
         }
     }};
-    ($result:expr, $expected:expr, max_abs_diff = $max_abs_diff:expr, $($arg:tt)+) => {{
-        match (&($result), &($expected)) {
+    ($left:expr, $right:expr, max_abs_diff = $max_abs_diff:expr, $($arg:tt)+) => {{
+        match (&($left), &($right)) {
             (result, expected) => {
                 assert!(
                     $crate::abs_diff_eq(result, expected, $max_abs_diff),
                     "assert_abs_diff_eq!({}, {}, {})\n{}\nleft = {:?}\nright = {:?}",
-                    stringify!($result),
-                    stringify!($expected),
+                    stringify!($left),
+                    stringify!($right),
                     stringify!($max_abs_diff = $max_abs_diff),
                     result, expected,
                     stringify!($($arg)+),
@@ -65,27 +65,27 @@ macro_rules! assert_abs_diff_eq {
             }
         }
     }};
-    ($result:expr, $expected:expr $(,)?) => {{
-        match (&($result), &($expected)) {
+    ($left:expr, $right:expr $(,)?) => {{
+        match (&($left), &($right)) {
             (result, expected) => {
                 assert!(
                     $crate::abs_diff_eq_default(result, expected),
                     "assert_abs_diff_eq!({}, {})\nleft = {:?}\nright = {:?}",
-                    stringify!($result),
-                    stringify!($expected),
+                    stringify!($left),
+                    stringify!($right),
                     result, expected,
                 );
             }
         }
     }};
-    ($result:expr, $expected:expr, $($arg:tt)+) => {{
-        match (&($result), &($expected)) {
+    ($left:expr, $right:expr, $($arg:tt)+) => {{
+        match (&($left), &($right)) {
             (result, expected) => {
                 assert!(
                     $crate::abs_diff_eq_default(result, expected),
                     "assert_abs_diff_eq!({}, {})\n{}\nleft = {:?}\nright = {:?}",
-                    stringify!($result),
-                    stringify!($expected),
+                    stringify!($left),
+                    stringify!($right),
                     stringify!($($arg)+),
                     result, expected,
                 );
@@ -96,28 +96,28 @@ macro_rules! assert_abs_diff_eq {
 
 #[macro_export]
 macro_rules! assert_abs_diff_ne {
-    ($result:expr, $expected:expr, max_abs_diff = $max_abs_diff:expr $(,)?) => {{
-        match (&($result), &($expected)) {
+    ($left:expr, $right:expr, max_abs_diff = $max_abs_diff:expr $(,)?) => {{
+        match (&($left), &($right)) {
             (result, expected) => {
                 assert!(
                     $crate::abs_diff_ne(result, expected, $max_abs_diff),
                     "assert_abs_diff_ne!({}, {}, {})\nleft = {:?}\nright = {:?}",
-                    stringify!($result),
-                    stringify!($expected),
+                    stringify!($left),
+                    stringify!($right),
                     stringify!($max_abs_diff = $max_abs_diff),
                     result, expected,
                 );
             }
         }
     }};
-    ($result:expr, $expected:expr, max_abs_diff = $max_abs_diff:expr, $($arg:tt)+) => {{
-        match (&($result), &($expected)) {
+    ($left:expr, $right:expr, max_abs_diff = $max_abs_diff:expr, $($arg:tt)+) => {{
+        match (&($left), &($right)) {
             (result, expected) => {
                 assert!(
                     $crate::abs_diff_ne(result, expected, $max_abs_diff),
                     "assert_abs_diff_ne!({}, {}, {})\n{}\nleft = {:?}\nright = {:?}",
-                    stringify!($result),
-                    stringify!($expected),
+                    stringify!($left),
+                    stringify!($right),
                     stringify!($max_abs_diff = $max_abs_diff),
                     stringify!($($arg)+),
                     result, expected,
@@ -125,27 +125,27 @@ macro_rules! assert_abs_diff_ne {
             }
         }
     }};
-    ($result:expr, $expected:expr $(,)?) => {{
-        match (&($result), &($expected)) {
+    ($left:expr, $right:expr $(,)?) => {{
+        match (&($left), &($right)) {
             (result, expected) => {
                 assert!(
                     $crate::abs_diff_ne_default(result, expected),
                     "assert_abs_diff_ne!({}, {})\nleft = {:?}\nright = {:?}",
-                    stringify!($result),
-                    stringify!($expected),
+                    stringify!($left),
+                    stringify!($right),
                     result, expected,
                 );
             }
         }
     }};
-    ($result:expr, $expected:expr, $($arg:tt)+) => {{
-        match (&($result), &($expected)) {
+    ($left:expr, $right:expr, $($arg:tt)+) => {{
+        match (&($left), &($right)) {
             (result, expected) => {
                 assert!(
                     $crate::abs_diff_ne_default(result, expected),
                     "assert_abs_diff_ne!({}, {})\n{}\nleft = {:?}\nright = {:?}",
-                    stringify!($result),
-                    stringify!($expected),
+                    stringify!($left),
+                    stringify!($right),
                     stringify!($($arg)+),
                     result, expected,
                 );

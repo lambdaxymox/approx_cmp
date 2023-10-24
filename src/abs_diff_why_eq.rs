@@ -1,6 +1,158 @@
 use core::cell;
 
 
+#[inline]
+pub fn abs_diff_why_eq<A, B>(lhs: A, rhs: B, tolerance: A::Tolerance) -> (bool, A::Reason)
+where
+    A: AbsDiffWhyEq<B>
+{
+    AbsDiffWhyEq::abs_diff_why_eq(&lhs, &rhs, tolerance)
+}
+
+#[inline]
+pub fn abs_diff_why_ne<A, B>(lhs: A, rhs: B, tolerance: A::Tolerance) -> (bool, A::Reason)
+where
+    A: AbsDiffWhyEq<B>
+{
+    AbsDiffWhyEq::abs_diff_why_ne(&lhs, &rhs, tolerance)
+}
+
+#[inline]
+pub fn abs_diff_why_eq_default<A, B>(lhs: A, rhs: B) -> (bool, A::Reason)
+where
+    A: AbsDiffWhyEq<B>
+{
+    AbsDiffWhyEq::abs_diff_why_eq(&lhs, &rhs, A::default_tolerance())
+}
+
+#[inline]
+pub fn abs_diff_why_ne_default<A, B>(lhs: A, rhs: B) -> (bool, A::Reason)
+where
+    A: AbsDiffWhyEq<B>
+{
+    AbsDiffWhyEq::abs_diff_why_ne(&lhs, &rhs, A::default_tolerance())
+}
+
+#[macro_export]
+macro_rules! assert_abs_diff_why_eq {
+    ($left:expr, $right:expr, max_abs_diff = $max_abs_diff:expr $(,)?) => {{
+        match (&($left), &($right)) {
+            (result, expected) => {
+                assert!(
+                    $crate::abs_diff_why_eq(result, expected, $max_abs_diff),
+                    "assert_abs_diff_why_eq!({}, {}, {})\nleft = {:?}\nright = {:?}",
+                    stringify!($left),
+                    stringify!($right),
+                    stringify!($max_abs_diff = $max_abs_diff),
+                    result, expected,
+                );
+            }
+        }
+    }};
+    ($left:expr, $right:expr, max_abs_diff = $max_abs_diff:expr, $($arg:tt)+) => {{
+        match (&($left), &($right)) {
+            (result, expected) => {
+                assert!(
+                    $crate::abs_diff_why_eq(result, expected, $max_abs_diff),
+                    "assert_abs_diff_why_eq!({}, {}, {})\n{}\nleft = {:?}\nright = {:?}",
+                    stringify!($left),
+                    stringify!($right),
+                    stringify!($max_abs_diff = $max_abs_diff),
+                    result, expected,
+                    stringify!($($arg)+),
+                );
+            }
+        }
+    }};
+    ($left:expr, $right:expr $(,)?) => {{
+        match (&($left), &($right)) {
+            (result, expected) => {
+                assert!(
+                    $crate::abs_diff_why_eq_default(result, expected),
+                    "assert_abs_diff_why_eq!({}, {})\nleft = {:?}\nright = {:?}",
+                    stringify!($left),
+                    stringify!($right),
+                    result, expected,
+                );
+            }
+        }
+    }};
+    ($left:expr, $right:expr, $($arg:tt)+) => {{
+        match (&($left), &($right)) {
+            (result, expected) => {
+                assert!(
+                    $crate::abs_diff_why_eq_default(result, expected),
+                    "assert_abs_diff_why_eq!({}, {})\n{}\nleft = {:?}\nright = {:?}",
+                    stringify!($left),
+                    stringify!($right),
+                    stringify!($($arg)+),
+                    result, expected,
+                );
+            }
+        }
+    }};
+}
+
+#[macro_export]
+macro_rules! assert_abs_diff_why_ne {
+    ($left:expr, $right:expr, max_abs_diff = $max_abs_diff:expr $(,)?) => {{
+        match (&($left), &($right)) {
+            (result, expected) => {
+                assert!(
+                    $crate::abs_diff_why_ne(result, expected, $max_abs_diff),
+                    "assert_abs_diff_why_ne!({}, {}, {})\nleft = {:?}\nright = {:?}",
+                    stringify!($left),
+                    stringify!($right),
+                    stringify!($max_abs_diff = $max_abs_diff),
+                    result, expected,
+                );
+            }
+        }
+    }};
+    ($left:expr, $right:expr, max_abs_diff = $max_abs_diff:expr, $($arg:tt)+) => {{
+        match (&($left), &($right)) {
+            (result, expected) => {
+                assert!(
+                    $crate::abs_diff_why_ne(result, expected, $max_abs_diff),
+                    "assert_abs_diff_why_ne!({}, {}, {})\n{}\nleft = {:?}\nright = {:?}",
+                    stringify!($left),
+                    stringify!($right),
+                    stringify!($max_abs_diff = $max_abs_diff),
+                    stringify!($($arg)+),
+                    result, expected,
+                );
+            }
+        }
+    }};
+    ($left:expr, $right:expr $(,)?) => {{
+        match (&($left), &($right)) {
+            (result, expected) => {
+                assert!(
+                    $crate::abs_diff_why_ne_default(result, expected),
+                    "assert_abs_diff_why_ne!({}, {})\nleft = {:?}\nright = {:?}",
+                    stringify!($left),
+                    stringify!($right),
+                    result, expected,
+                );
+            }
+        }
+    }};
+    ($left:expr, $right:expr, $($arg:tt)+) => {{
+        match (&($left), &($right)) {
+            (result, expected) => {
+                assert!(
+                    $crate::abs_diff_why_ne_default(result, expected),
+                    "assert_abs_diff_why_ne!({}, {})\n{}\nleft = {:?}\nright = {:?}",
+                    stringify!($left),
+                    stringify!($right),
+                    stringify!($($arg)+),
+                    result, expected,
+                );
+            }
+        }
+    }};
+}
+
 pub trait AbsDiffWhyEq<Rhs = Self>: PartialEq<Rhs> 
 where
     Rhs: ?Sized
