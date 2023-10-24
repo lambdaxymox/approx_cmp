@@ -157,7 +157,7 @@ pub trait AbsDiffEq<Rhs = Self>: PartialEq<Rhs>
 where
     Rhs: ?Sized
 {
-    type Tolerance;
+    type Tolerance: Clone;
 
     /// The default tolerance for absolute difference comparisons when a
     /// tolerance is not specified at the time of comparison.

@@ -37,94 +37,95 @@ where
     RelativeEq::relative_ne(&lhs, &rhs, A::default_tolerance(), A::default_max_relative())
 }
 
+#[derive(Clone)]
+pub struct Relative<A, B = A> 
+where
+    A: RelativeEq<B> + ?Sized,
+    B: ?Sized
+{
+    pub max_abs_diff: A::Tolerance,
+    pub max_relative: A::Tolerance,
+}
+
+impl<A, B> Default for Relative<A, B> 
+where
+    A: RelativeEq<B> + ?Sized,
+    B: ?Sized,
+{
+    #[inline]
+    fn default() -> Self {
+        Self {
+            max_abs_diff: A::default_tolerance(),
+            max_relative: A::default_max_relative(),
+        }
+    }
+}
+
+impl<A, B> Relative<A, B> 
+where
+    A: RelativeEq<B> + ?Sized,
+    B: ?Sized
+{
+    #[inline]
+    pub fn max_abs_diff(self, max_abs_diff: A::Tolerance) -> Self {
+        Self {
+            max_abs_diff,
+            max_relative: self.max_relative,
+        }
+    }
+
+    #[inline]
+    pub fn max_relative(self, max_relative: A::Tolerance) -> Self {
+        Self {
+            max_abs_diff: self.max_abs_diff,
+            max_relative,
+        }
+    }
+
+    #[inline]
+    pub fn eq(self, lhs: &A, rhs: &B) -> bool {
+        A::relative_eq(lhs, rhs, self.max_abs_diff, self.max_relative)
+    }
+
+    #[inline]
+    pub fn ne(self, lhs: &A, rhs: &B) -> bool {
+        A::relative_ne(lhs, rhs, self.max_abs_diff, self.max_relative)
+    }
+}
 
 #[macro_export]
 macro_rules! assert_relative_eq {
-    ($left:expr, $right:expr, max_abs_diff = $max_abs_diff:expr, max_relative = $max_relative:expr $(,)?) => {{
+    ($left:expr, $right:expr $(, $opt:ident = $val:expr)* $(,)?) => {{
         match (&($left), &($right)) {
-            (result, expected) => {
+            (left_val, right_val) => {
+                let relative = $crate::Relative::default()$(.$opt($val))*;
+                let result = relative.clone().eq(left_val, right_val);
                 assert!(
-                    $crate::relative_eq(result, expected, $max_abs_diff, $max_relative),
-                    "assert_relative_eq!({}, {}, {}, {})\nleft = {:?}\nright = {:?}",
+                    result,
+                    "assert_relative_eq!({}, {}, {} = {}, {} = {})\nleft = {:?}\nright = {:?}",
                     stringify!($left),
                     stringify!($right),
-                    stringify!($max_abs_diff = $max_abs_diff),
-                    stringify!($max_relative = $max_relative),
-                    result, expected,
+                    stringify!(max_abs_diff), relative.max_abs_diff,
+                    stringify!(max_relative), relative.max_relative,
+                    left_val, right_val,
                 );
             }
         }
     }};
-    ($left:expr, $right:expr, max_abs_diff = $max_abs_diff:expr, max_relative = $max_relative:expr, $($arg:tt)+) => {{
+    ($left:expr, $right:expr, $(, $opt:ident = $val:expr)*, $($arg:tt)+) => {{
         match (&($left), &($right)) {
-            (result, expected) => {
+            (left_val, right_val) => {
+                let relative = $crate::Relative::default()$(.$opt($val))*;
+                let result = relative.clone().eq(left_val, right_val);
                 assert!(
-                    $crate::relative_eq(result, expected, $max_abs_diff, $max_relative),
-                    "assert_relative_eq!({}, {}, {}, {})\n{}\nleft = {:?}\nright = {:?}",
+                    result,
+                    "assert_relative_eq!({}, {}, {} = {}, {} = {})\n{}\nleft = {:?}\nright = {:?}",
                     stringify!($left),
                     stringify!($right),
-                    stringify!($max_abs_diff = $max_abs_diff),
-                    stringify!($max_relative = $max_relative),
-                    result, expected,
-                    stringify!($($arg)+),
-                );
-            }
-        }
-    }};
-    ($left:expr, $right:expr, max_relative = $max_relative:expr, max_abs_diff = $max_abs_diff:expr $(,)?) => {{
-        match (&($left), &($right)) {
-            (result, expected) => {
-                assert!(
-                    $crate::relative_eq(result, expected, $max_abs_diff, $max_relative),
-                    "assert_relative_eq!({}, {}, {}, {})\nleft = {:?}\nright = {:?}",
-                    stringify!($left),
-                    stringify!($right),
-                    stringify!($max_abs_diff = $max_abs_diff),
-                    stringify!($max_relative = $max_relative),
-                    result, expected,
-                );
-            }
-        }
-    }};
-    ($left:expr, $right:expr, max_relative = $max_relative:expr, max_abs_diff = $max_abs_diff:expr, $($arg:tt)+) => {{
-        match (&($left), &($right)) {
-            (result, expected) => {
-                assert!(
-                    $crate::relative_eq(result, expected, $max_abs_diff, $max_relative),
-                    "assert_relative_eq!({}, {}, {}, {})\n{}\nleft = {:?}\nright = {:?}",
-                    stringify!($left),
-                    stringify!($right),
-                    stringify!($max_abs_diff = $max_abs_diff),
-                    stringify!($max_relative = $max_relative),
-                    result, expected,
-                    stringify!($($arg)+),
-                );
-            }
-        }
-    }};
-    ($left:expr, $right:expr $(,)?) => {{
-        match (&($left), &($right)) {
-            (result, expected) => {
-                assert!(
-                    $crate::relative_eq_default(result, expected),
-                    "assert_relative_eq!({}, {})\nleft = {:?}\nright = {:?}",
-                    stringify!($left),
-                    stringify!($right),
-                    result, expected,
-                );
-            }
-        }
-    }};
-    ($left:expr, $right:expr, $($arg:tt)+) => {{
-        match (&($left), &($right)) {
-            (result, expected) => {
-                assert!(
-                    $crate::relative_eq_default(result, expected),
-                    "assert_relative_eq!({}, {})\n{}\nleft = {:?}\nright = {:?}",
-                    stringify!($left),
-                    stringify!($right),
-                    stringify!($($arg)+),
-                    result, expected,
+                    stringify!(max_abs_diff), relative.max_abs_diff,
+                    stringify!(max_relative), relative.max_relative,
+                    left_val, right_val,
+                    format!($($arg)+),
                 );
             }
         }
@@ -133,91 +134,37 @@ macro_rules! assert_relative_eq {
 
 #[macro_export]
 macro_rules! assert_relative_ne {
-    ($left:expr, $right:expr, max_abs_diff = $max_abs_diff:expr, max_relative = $max_relative:expr $(,)?) => {{
+    ($left:expr, $right:expr $(, $opt:ident = $val:expr)* $(,)?) => {{
         match (&($left), &($right)) {
-            (result, expected) => {
+            (left_val, right_val) => {
+                let relative = $crate::Relative::default()$(.$opt($val))*;
+                let result = relative.clone().ne(left_val, right_val);
                 assert!(
-                    $crate::relative_ne(result, expected, $max_abs_diff, $max_relative),
-                    "assert_relative_ne!({}, {}, {}, {})\nleft = {:?}\nright = {:?}",
+                    result,
+                    "assert_relative_ne!({}, {}, {} = {}, {} = {})\nleft = {:?}\nright = {:?}",
                     stringify!($left),
                     stringify!($right),
-                    stringify!($max_abs_diff = $max_abs_diff),
-                    stringify!($max_relative = $max_relative),
-                    result, expected,
+                    stringify!(max_abs_diff), relative.max_abs_diff,
+                    stringify!(max_relative), relative.max_relative,
+                    left_val, right_val,
                 );
             }
         }
     }};
-    ($left:expr, $right:expr, max_abs_diff = $max_abs_diff:expr, max_relative = $max_relative:expr, $($arg:tt)+) => {{
+    ($left:expr, $right:expr $(, $opt:ident = $val:expr)*, $($arg:tt)+) => {{
         match (&($left), &($right)) {
-            (result, expected) => {
+            (left_val, right_val) => {
+                let relative = $crate::Relative::default()$(.$opt($val))*;
+                let result = relative.clone().ne(left_val, right_val);
                 assert!(
-                    $crate::relative_ne(result, expected, $max_abs_diff, $max_relative),
-                    "assert_relative_ne!({}, {}, {}, {})\n{}\nleft = {:?}\nright = {:?}",
+                    result,
+                    "assert_relative_ne!({}, {}, {} = {}, {} = {})\n{}\nleft = {:?}\nright = {:?}",
                     stringify!($left),
                     stringify!($right),
-                    stringify!($max_abs_diff = $max_abs_diff),
-                    stringify!($max_relative = $max_relative),
-                    result, expected,
-                    stringify!($($arg)+),
-                );
-            }
-        }
-    }};
-    ($left:expr, $right:expr, max_relative = $max_relative:expr, max_abs_diff = $max_abs_diff:expr $(,)?) => {{
-        match (&($left), &($right)) {
-            (result, expected) => {
-                assert!(
-                    $crate::relative_ne(result, expected, $max_abs_diff, $max_relative),
-                    "assert_relative_ne!({}, {}, {}, {})\nleft = {:?}\nright = {:?}",
-                    stringify!($left),
-                    stringify!($right),
-                    stringify!($max_abs_diff = $max_abs_diff),
-                    stringify!($max_relative = $max_relative),
-                    result, expected,
-                );
-            }
-        }
-    }};
-    ($left:expr, $right:expr, max_relative = $max_relative:expr, max_abs_diff = $max_abs_diff:expr, $($arg:tt)+) => {{
-        match (&($left), &($right)) {
-            (result, expected) => {
-                assert!(
-                    $crate::relative_ne(result, expected, $max_abs_diff, $max_relative),
-                    "assert_relative_ne!({}, {}, {}, {})\n{}\nleft = {:?}\nright = {:?}",
-                    stringify!($left),
-                    stringify!($right),
-                    stringify!($max_abs_diff = $max_abs_diff),
-                    stringify!($max_relative = $max_relative),
-                    result, expected,
-                    stringify!($($arg)+),
-                );
-            }
-        }
-    }};
-    ($left:expr, $right:expr $(,)?) => {{
-        match (&($left), &($right)) {
-            (result, expected) => {
-                assert!(
-                    $crate::relative_ne_default(result, expected),
-                    "assert_relative_ne!({}, {})\nleft = {:?}\nright = {:?}",
-                    stringify!($left),
-                    stringify!($right),
-                    result, expected,
-                );
-            }
-        }
-    }};
-    ($left:expr, $right:expr, $($arg:tt)+) => {{
-        match (&($left), &($right)) {
-            (result, expected) => {
-                assert!(
-                    $crate::relative_ne_default(result, expected),
-                    "assert_relative_ne!({}, {})\n{}\nleft = {:?}\nright = {:?}",
-                    stringify!($left),
-                    stringify!($right),
-                    stringify!($($arg)+),
-                    result, expected,
+                    stringify!(max_abs_diff), relative.max_abs_diff,
+                    stringify!(max_relative), relative.max_relative,
+                    format!($($arg)+),
+                    left_val, right_val,
                 );
             }
         }

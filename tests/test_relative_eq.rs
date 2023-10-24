@@ -282,8 +282,8 @@ mod relative_eq_f64_tests {
         assert_relative_eq!(0.0_f64, -1e-40_f64, max_abs_diff = 1e-40_f64);
         assert_relative_eq!(-1e-40_f64, 0.0_f64, max_abs_diff = 1e-40_f64);
 
-        assert_relative_ne!(1e-40_f64, 0.0_f64, max_abs_diff = 1e-41_f64);
-        assert_relative_ne!(0.0_f64, 1e-40_f64, max_abs_diff = 1e-41_f64);
+        assert_relative_ne!(1e-40_f64, 0.0_f64,  max_abs_diff = 1e-41_f64);
+        assert_relative_ne!(0.0_f64, 1e-40_f64,  max_abs_diff = 1e-41_f64);
         assert_relative_ne!(-1e-40_f64, 0.0_f64, max_abs_diff = 1e-41_f64);
         assert_relative_ne!(0.0_f64, -1e-40_f64, max_abs_diff = 1e-41_f64);
     }
