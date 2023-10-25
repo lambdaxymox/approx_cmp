@@ -1,12 +1,12 @@
 use core::cell;
 
-use crate::abs_diff_eq::{
-    AbsDiffEq,
+use crate::tolerance::{
+    ApproxCompareTolerance,
 };
 
 
 #[inline]
-pub fn relative_eq<A, B>(lhs: A, rhs: B, tolerance: A::Tolerance, max_relative: A::Tolerance) -> bool
+pub fn relative_eq<A, B>(lhs: A, rhs: B, tolerance: &A::Tolerance, max_relative: &A::Tolerance) -> bool
 where
     A: RelativeEq<B>,
 {
@@ -14,13 +14,12 @@ where
 }
 
 #[inline]
-pub fn relative_ne<A, B>(lhs: A, rhs: B, tolerance: A::Tolerance, max_relative: A::Tolerance) -> bool 
+pub fn relative_ne<A, B>(lhs: A, rhs: B, tolerance: &A::Tolerance, max_relative: &A::Tolerance) -> bool 
 where
     A: RelativeEq<B>
 {
     RelativeEq::relative_ne(&lhs, &rhs, tolerance, max_relative)
 }
-
 
 #[derive(Clone)]
 pub struct Relative<A, B = A> 
@@ -40,8 +39,8 @@ where
     #[inline]
     fn default() -> Self {
         Self {
-            max_abs_diff: A::default_tolerance(),
-            max_relative: A::default_max_relative(),
+            max_abs_diff: A::Tolerance::default_tolerance(),
+            max_relative: A::Tolerance::default_tolerance(),
         }
     }
 }
@@ -69,12 +68,12 @@ where
 
     #[inline]
     pub fn eq(self, lhs: &A, rhs: &B) -> bool {
-        A::relative_eq(lhs, rhs, self.max_abs_diff, self.max_relative)
+        A::relative_eq(lhs, rhs, &self.max_abs_diff, &self.max_relative)
     }
 
     #[inline]
     pub fn ne(self, lhs: &A, rhs: &B) -> bool {
-        A::relative_ne(lhs, rhs, self.max_abs_diff, self.max_relative)
+        A::relative_ne(lhs, rhs, &self.max_abs_diff, &self.max_relative)
     }
 }
 
@@ -156,13 +155,11 @@ macro_rules! assert_relative_ne {
     }};
 }
 
-pub trait RelativeEq<Rhs = Self>: AbsDiffEq<Rhs> 
+pub trait RelativeEq<Rhs = Self>: PartialEq<Rhs> 
 where
     Rhs: ?Sized
 {
-    /// The default maximum relative error multiplier when one is
-    /// not specified at the time of comparison.
-    fn default_max_relative() -> Self::Tolerance;
+    type Tolerance: ApproxCompareTolerance;
 
     /// Compare two floating point numbers for relative equality.
     ///
@@ -173,7 +170,7 @@ where
     /// - Returns: A boolean indicating whether or not two floating point numbers
     /// are relatively equal with respect to a `maxRelative` multiple of the
     /// tolerance `tolerance`.
-    fn relative_eq(&self, other: &Rhs, tolerance: Self::Tolerance, max_relative: Self::Tolerance) -> bool;
+    fn relative_eq(&self, other: &Rhs, tolerance: &Self::Tolerance, max_relative: &Self::Tolerance) -> bool;
 
     /// Compare two floating point numbers for relative inequality.
     ///
@@ -184,19 +181,16 @@ where
     /// - Returns: A boolean indicating whether or not two floating point numbers
     /// are relatively inequal with respect to a `maxRelative` multiple of the
     /// tolerance `tolerance`.
-    fn relative_ne(&self, other: &Rhs, tolerance: Self::Tolerance, max_relative: Self::Tolerance) -> bool {
+    fn relative_ne(&self, other: &Rhs, tolerance: &Self::Tolerance, max_relative: &Self::Tolerance) -> bool {
         !Self::relative_eq(self, other, tolerance, max_relative)
     }
 }
 
 impl RelativeEq for f32 {
-    #[inline]
-    fn default_max_relative() -> Self::Tolerance {
-        f32::EPSILON
-    }
+    type Tolerance = f32;
 
     #[inline]
-    fn relative_eq(&self, other: &Self, tolerance: Self::Tolerance, max_relative: Self::Tolerance) -> bool {
+    fn relative_eq(&self, other: &Self, tolerance: &Self::Tolerance, max_relative: &Self::Tolerance) -> bool {
         // If `self` and `other` are finite and bitwise identical, They are relatively
         // equal. If `self` and `other` are infinite and bitwise identical, they are
         // the same kind of infinity, and therefore also equal.
@@ -213,7 +207,7 @@ impl RelativeEq for f32 {
         
         // Now check whether `self` and `other` are really close together.
         let abs_diff = f32::abs(self - other);
-        if abs_diff <= tolerance {
+        if abs_diff <= *tolerance {
             return true;
         }
 
@@ -233,13 +227,10 @@ impl RelativeEq for f32 {
 }
 
 impl RelativeEq for f64 {
-    #[inline]
-    fn default_max_relative() -> Self::Tolerance {
-        f64::EPSILON
-    }
+    type Tolerance = f64;
 
     #[inline]
-    fn relative_eq(&self, other: &Self, tolerance: Self::Tolerance, max_relative: Self::Tolerance) -> bool {
+    fn relative_eq(&self, other: &Self, tolerance: &Self::Tolerance, max_relative: &Self::Tolerance) -> bool {
         // If `self` and `other` are finite and bitwise identical, They are relatively
         // equal. If `self` and `other` are infinite and bitwise identical, they are
         // the same kind of infinity, and therefore also equal.
@@ -256,7 +247,7 @@ impl RelativeEq for f64 {
         
         // Now check whether `self` and `other` are really close together.
         let abs_diff = f64::abs(self - other);
-        if abs_diff <= tolerance {
+        if abs_diff <= *tolerance {
             return true;
         }
 
@@ -279,13 +270,10 @@ impl<T> RelativeEq for &T
 where
     T: RelativeEq
 {
-    #[inline]
-    fn default_max_relative() -> T::Tolerance {
-        T::default_max_relative()
-    }
+    type Tolerance = T::Tolerance;
 
     #[inline]
-    fn relative_eq(&self, other: &&T, tolerance: T::Tolerance, max_relative: T::Tolerance) -> bool {
+    fn relative_eq(&self, other: &&T, tolerance: &T::Tolerance, max_relative: &T::Tolerance) -> bool {
         T::relative_eq(*self, *other, tolerance, max_relative)
     }
 }
@@ -294,13 +282,10 @@ impl<T> RelativeEq for &mut T
 where
     T: RelativeEq
 {
-    #[inline]
-    fn default_max_relative() -> T::Tolerance {
-        T::default_max_relative()
-    }
+    type Tolerance = T::Tolerance;
 
     #[inline]
-    fn relative_eq(&self, other: &&mut T, tolerance: T::Tolerance, max_relative: T::Tolerance) -> bool {
+    fn relative_eq(&self, other: &&mut T, tolerance: &T::Tolerance, max_relative: &T::Tolerance) -> bool {
         T::relative_eq(*self, *other, tolerance, max_relative)
     }
 }
@@ -308,21 +293,18 @@ where
 impl<A, B> RelativeEq<[B]> for [A]
 where
     A: RelativeEq<B>,
-    A::Tolerance: Clone
+    A::Tolerance: Sized
 {
-    #[inline]
-    fn default_max_relative() -> A::Tolerance {
-        A:: default_max_relative()
-    }
+    type Tolerance = A::Tolerance;
 
     #[inline]
-    fn relative_eq(&self, other: &[B], tolerance: Self::Tolerance, max_relative: Self::Tolerance) -> bool {
+    fn relative_eq(&self, other: &[B], tolerance: &Self::Tolerance, max_relative: &Self::Tolerance) -> bool {
         if self.len() != other.len() {
             return false;
         }
         
         for (a, b) in self.iter().zip(other.iter()) {
-            if !A::relative_eq(a, b, tolerance.clone(), max_relative.clone()) {
+            if !A::relative_eq(a, b, tolerance, max_relative) {
                 return false;
             }
         }
@@ -334,18 +316,14 @@ where
 impl<A, B, const N: usize> RelativeEq<[B; N]> for [A; N]
 where
     A: RelativeEq<B>,
-    A::Tolerance: Clone,
+    A::Tolerance: Sized,
 {
+    type Tolerance = A::Tolerance;
 
     #[inline]
-    fn default_max_relative() -> Self::Tolerance {
-        A::default_tolerance()
-    }
-
-    #[inline]
-    fn relative_eq(&self, other: &[B; N], tolerance: Self::Tolerance, max_relative: Self::Tolerance) -> bool {
+    fn relative_eq(&self, other: &[B; N], tolerance: &Self::Tolerance, max_relative: &Self::Tolerance) -> bool {
         for (a, b) in self.iter().zip(other.iter()) {
-            if !A::relative_eq(a, b, tolerance.clone(), max_relative.clone()) {
+            if !A::relative_eq(a, b, tolerance, max_relative) {
                 return false;
             }
         }
@@ -358,13 +336,10 @@ impl<T> RelativeEq for cell::Cell<T>
 where
     T: RelativeEq + Copy
 {
-    #[inline]
-    fn default_max_relative() -> Self::Tolerance {
-        T::default_max_relative()
-    }
+    type Tolerance = T::Tolerance;
 
     #[inline]
-    fn relative_eq(&self, other: &cell::Cell<T>, tolerance: T::Tolerance, max_relative: T::Tolerance) -> bool {
+    fn relative_eq(&self, other: &cell::Cell<T>, tolerance: &T::Tolerance, max_relative: &T::Tolerance) -> bool {
         T::relative_eq(&self.get(), &other.get(), tolerance, max_relative)
     }
 }
@@ -373,13 +348,10 @@ impl<T> RelativeEq for cell::RefCell<T>
 where
     T: RelativeEq + ?Sized
 {
-    #[inline]
-    fn default_max_relative() -> T::Tolerance {
-        T::default_max_relative()
-    }
+    type Tolerance = T::Tolerance;
 
     #[inline]
-    fn relative_eq(&self, other: &cell::RefCell<T>, tolerance: T::Tolerance, max_relative: T::Tolerance) -> bool {
+    fn relative_eq(&self, other: &cell::RefCell<T>, tolerance: &T::Tolerance, max_relative: &T::Tolerance) -> bool {
         T::relative_eq(&self.borrow(), &other.borrow(), tolerance, max_relative)
     }
 }
