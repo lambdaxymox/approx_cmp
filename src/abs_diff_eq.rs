@@ -1,7 +1,8 @@
-use core::cell;
 use crate::tolerance::{
     ApproxCompareTolerance,
 };
+use core::cell;
+
 
 #[inline]
 pub fn abs_diff_eq<A, B>(lhs: A, rhs: B, tolerance: &A::Tolerance) -> bool 
@@ -20,7 +21,7 @@ where
 }
 
 
-pub trait AbsDiffEq<Rhs = Self>: PartialEq<Rhs>
+pub trait AbsDiffEq<Rhs = Self>
 where
     Rhs: ?Sized
 {
@@ -52,6 +53,7 @@ where
     /// - Returns: A boolean indicating whether or not two floating point
     /// numbers are absolute difference inequal with respect to a tolerance
     /// `tolerance`.
+    #[inline]
     fn abs_diff_ne(&self, other: &Rhs, tolerance: &Self::Tolerance) -> bool {
         !Self::abs_diff_eq(self, other, tolerance)
     }
@@ -111,64 +113,79 @@ impl_abs_diff_eq_signed!(
 );
 
 
-impl<T> AbsDiffEq for &T
+impl<A, B> AbsDiffEq<&B> for &A
 where
-    T: AbsDiffEq
+    A: AbsDiffEq<B>
 {
-    type Tolerance = T::Tolerance;
+    type Tolerance = <A as AbsDiffEq<B>>::Tolerance;
 
     #[inline]
-    fn abs_diff_eq(&self, other: &&T, tolerance: &Self::Tolerance) -> bool {
-        T::abs_diff_eq(self, other, tolerance)
+    fn abs_diff_eq(&self, other: &&B, tolerance: &Self::Tolerance) -> bool {
+        A::abs_diff_eq(self, other, tolerance)
     }
 }
 
-impl<T> AbsDiffEq for &mut T
+impl<A, B> AbsDiffEq<&mut B> for &A
 where
-    T: AbsDiffEq
+    A: AbsDiffEq<B>
 {
-    type Tolerance = T::Tolerance;
+    type Tolerance = <A as AbsDiffEq<B>>::Tolerance;
 
     #[inline]
-    fn abs_diff_eq(&self, other: &&mut T, tolerance: &Self::Tolerance) -> bool {
-        T::abs_diff_eq(self, other, tolerance)
+    fn abs_diff_eq(&self, other: &&mut B, tolerance: &Self::Tolerance) -> bool {
+        A::abs_diff_eq(self, other, tolerance)
+    }
+}
+
+impl<A, B> AbsDiffEq<&B> for &mut A
+where
+    A: AbsDiffEq<B>
+{
+    type Tolerance = <A as AbsDiffEq<B>>::Tolerance;
+
+    #[inline]
+    fn abs_diff_eq(&self, other: &&B, tolerance: &Self::Tolerance) -> bool {
+        A::abs_diff_eq(self, other, tolerance)
+    }
+}
+
+impl<A, B> AbsDiffEq<&mut B> for &mut A
+where
+    A: AbsDiffEq<B>
+{
+    type Tolerance = <A as AbsDiffEq<B>>::Tolerance;
+
+    #[inline]
+    fn abs_diff_eq(&self, other: &&mut B, tolerance: &Self::Tolerance) -> bool {
+        A::abs_diff_eq(self, other, tolerance)
     }
 }
 
 impl<A, B> AbsDiffEq<[B]> for [A]
 where
-    A: AbsDiffEq<B>,
-    A::Tolerance: Clone,
+    A: AbsDiffEq<B>
 {
-    type Tolerance = A::Tolerance;
+    type Tolerance = <A as AbsDiffEq<B>>::Tolerance;
 
     #[inline]
     fn abs_diff_eq(&self, other: &[B], tolerance: &Self::Tolerance) -> bool {
-        if self.len() != other.len() {
-            return false;
-        }
-        
-        for (a, b) in self.iter().zip(other.iter()) {
-            if !A::abs_diff_eq(a, b, tolerance) {
-                return false;
-            }
-        }
-
-        true
+        self.len() == other.len() && 
+        self.iter()
+            .zip(other.iter())
+            .all(|(a, b)| a.abs_diff_eq(b, tolerance))
     }
 }
 
 impl<A, B, const N: usize> AbsDiffEq<[B; N]> for [A; N]
 where
-    A: AbsDiffEq<B>,
-    A::Tolerance: Clone,
+    A: AbsDiffEq<B>
 {
-    type Tolerance = A::Tolerance;
+    type Tolerance = <A as AbsDiffEq<B>>::Tolerance;
 
     #[inline]
     fn abs_diff_eq(&self, other: &[B; N], tolerance: &Self::Tolerance) -> bool {
-        for (a, b) in self.iter().zip(other.iter()) {
-            if !A::abs_diff_eq(a, b, tolerance) {
+        for i in 0..N {
+            if !self[i].abs_diff_eq(&other[i], tolerance) {
                 return false;
             }
         }
@@ -177,30 +194,30 @@ where
     }
 }
 
-impl<T> AbsDiffEq for cell::Cell<T> 
+impl<A, B> AbsDiffEq<cell::Cell<B>> for cell::Cell<A> 
 where
-    T: AbsDiffEq + Copy
+    A: AbsDiffEq<B> + Copy,
+    B: Copy
 {
-    type Tolerance = T::Tolerance;
+    type Tolerance = <A as AbsDiffEq<B>>::Tolerance;
 
     #[inline]
-    fn abs_diff_eq(&self, other: &cell::Cell<T>, tolerance: &Self::Tolerance) -> bool {
-        T::abs_diff_eq(&self.get(), &other.get(), tolerance)
+    fn abs_diff_eq(&self, other: &cell::Cell<B>, tolerance: &Self::Tolerance) -> bool {
+        A::abs_diff_eq(&self.get(), &other.get(), tolerance)
     }
 }
 
-impl<T> AbsDiffEq for cell::RefCell<T> 
+impl<A, B> AbsDiffEq<cell::RefCell<B>> for cell::RefCell<A> 
 where
-    T: AbsDiffEq + ?Sized
+    A: AbsDiffEq<B> + ?Sized
 {
-    type Tolerance = T::Tolerance;
+    type Tolerance = <A as AbsDiffEq<B>>::Tolerance;
 
     #[inline]
-    fn abs_diff_eq(&self, other: &cell::RefCell<T>, tolerance: &Self::Tolerance) -> bool {
-        T::abs_diff_eq(&self.borrow(), &other.borrow(), tolerance)
+    fn abs_diff_eq(&self, other: &cell::RefCell<B>, tolerance: &Self::Tolerance) -> bool {
+        A::abs_diff_eq(&self.borrow(), &other.borrow(), tolerance)
     }
 }
-
 
 
 #[derive(Clone)]
