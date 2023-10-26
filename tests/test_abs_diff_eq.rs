@@ -19,7 +19,7 @@ mod abs_diff_compare_f32_tests {
 
     #[test]
     fn test_basic_eq() {
-        assert_abs_diff_eq!(1.0_f32, 1.0_f32);
+        assert_abs_diff_eq!(1.0_f32, 1.0_f32, max_abs_diff = f32::EPSILON);
     }
 
     #[test]

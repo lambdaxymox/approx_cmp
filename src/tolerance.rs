@@ -1,4 +1,4 @@
-pub trait ApproxCompareTolerance {
+pub trait ApproxCompareTolerance: Sized {
     fn default_tolerance() -> Self;
 }
 
