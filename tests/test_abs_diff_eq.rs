@@ -1,21 +1,116 @@
 extern crate approx_compare;
 
 
-/// The test cases in this class are derived from
-/// ```
-/// https://github.com/brendanzab/approx/blob/master/tests/
-/// ```
-/// and
-/// ```
-/// https://github.com/Pybonacci/puntoflotante.org/blob/master/content/errors/NearlyEqualsTest.java
-/// ```
+#[cfg(test)]
+mod abs_diff_eq_integer_tests {
+    use approx_compare::{
+        assert_abs_diff_eq,
+        assert_abs_diff_ne,
+        abs_diff_eq,
+        abs_diff_ne,
+    };
+
+
+    #[test]
+    fn test_abs_diff_eq_exhaustive_u8() {
+        for i in u8::MIN..=u8::MAX {
+            assert!(abs_diff_eq!(i, i, abs_diff <= 0_u8));
+        }
+    }
+
+    #[test]
+    fn test_abs_diff_ne_exhaustive_u8() {
+        for i in u8::MIN..u8::MAX {
+            assert!(abs_diff_ne!(i + 1, i, abs_diff <= 0_u8));
+            assert!(abs_diff_ne!(i, i + 1, abs_diff <= 0_u8));
+        }
+    }
+
+    #[test]
+    fn test_abs_diff_eq_exhaustive_u16() {
+        for i in u16::MIN..=u16::MAX {
+            assert!(abs_diff_eq!(i, i, abs_diff <= 0_u16));
+        }
+    }
+
+    #[test]
+    fn test_abs_diff_ne_exhaustive_u16() {
+        for i in u16::MIN..u16::MAX {
+            assert!(abs_diff_ne!(i + 1, i, abs_diff <= 0_u16));
+            assert!(abs_diff_ne!(i, i + 1, abs_diff <= 0_u16));
+        }
+    }
+
+    #[test]
+    fn test_abs_diff_eq_exhaustive_i8() {
+        for i in i8::MIN..=i8::MAX {
+            assert!(abs_diff_eq!(i, i, abs_diff <= 0_i8));
+        }
+    }
+
+    #[test]
+    fn test_abs_diff_ne_exhaustive_i8() {
+        for i in i8::MIN..i8::MAX {
+            assert!(abs_diff_ne!(i + 1, i, abs_diff <= 0_i8));
+            assert!(abs_diff_ne!(i, i + 1, abs_diff <= 0_i8));
+        }
+    }
+
+    #[test]
+    fn test_abs_diff_eq_exhaustive_i16() {
+        for i in i16::MIN..=i16::MAX {
+            assert!(abs_diff_eq!(i, i, abs_diff <= 0_i16));
+        }
+    }
+
+    #[test]
+    fn test_abs_diff_ne_exhaustive_i16() {
+        for i in i16::MIN..i16::MAX {
+            assert!(abs_diff_ne!(i + 1, i, abs_diff <= 0_i16));
+            assert!(abs_diff_ne!(i, i + 1, abs_diff <= 0_i16));
+        }
+    }
+}
+
+
 #[cfg(test)]
 mod abs_diff_compare_f32_tests {
     use approx_compare::{
         assert_abs_diff_eq,
-        assert_abs_diff_ne
+        assert_abs_diff_ne,
+        abs_diff_eq,
+        abs_diff_ne,
     };
 
+    #[test]
+    fn test_eq_f32_exactly_representable1() {
+        for i in i16::MIN..i16::MAX {
+            assert!(abs_diff_eq!(i as f32, i as f32, abs_diff <= 0_f32));
+        }
+    }
+
+    #[test]
+    fn test_eq_f32_exactly_representable2() {
+        for i in i16::MIN..i16::MAX {
+            assert_abs_diff_eq!(i as f32, i as f32, abs_diff <= 0_f32);
+        }
+    }
+
+    #[test]
+    fn test_ne_f32_exactly_representable1() {
+        for i in i16::MIN..i16::MAX {
+            assert!(abs_diff_ne!((i + 1) as f32, i as f32, abs_diff <= 0_f32));
+            assert!(abs_diff_ne!(i as f32, (i + 1) as f32, abs_diff <= 0_f32));
+        }
+    }
+
+    #[test]
+    fn test_ne_f32_exactly_representable2() {
+        for i in i16::MIN..i16::MAX {
+            assert_abs_diff_ne!((i + 1) as f32, i as f32, abs_diff <= 0_f32);
+            assert_abs_diff_ne!(i as f32, (i + 1) as f32, abs_diff <= 0_f32);
+        }
+    }
 
     #[test]
     fn test_basic_eq() {
