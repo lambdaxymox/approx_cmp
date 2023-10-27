@@ -865,14 +865,39 @@ impl AbsDiffCmp {
     {
         A::abs_diff_ne(lhs, rhs, max_abs_diff)
     }
+
+    #[inline]
+    pub fn all_eq<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance) -> bool 
+    where
+        A: AbsDiffEqAll<B> + ?Sized,
+        B: ?Sized
+    {
+        A::all_abs_diff_eq(lhs, rhs, max_abs_diff)
+    }
+
+    #[inline]
+    pub fn all_ne<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance) -> bool 
+    where
+        A: AbsDiffEqAll<B> + ?Sized,
+        B: ?Sized
+    {
+        A::all_abs_diff_ne(lhs, rhs, max_abs_diff)
+    }
 }
 
 #[macro_export]
 macro_rules! abs_diff_eq {
-    ($left:expr, $right:expr, max_abs_diff = $tol:expr $(,)?) => {{
+    ($left:expr, $right:expr, abs_diff <= $tol:expr $(,)?) => {{
         match (&$left, &$right) {
             (left_val, right_val) => {
                 $crate::AbsDiffCmp::eq(left_val, right_val, &$tol)
+            }
+        }
+    }};
+    ($left:expr, $right:expr, abs_diff_all <= $tol:expr $(,)?) => {{
+        match (&$left, &$right) {
+            (left_val, right_val) => {
+                $crate::AbsDiffCmp::all_eq(left_val, right_val, &$tol)
             }
         }
     }};
@@ -880,10 +905,17 @@ macro_rules! abs_diff_eq {
 
 #[macro_export]
 macro_rules! abs_diff_ne {
-    ($left:expr, $right:expr, max_abs_diff = $tol:expr $(,)?) => {{
+    ($left:expr, $right:expr, abs_diff <= $tol:expr $(,)?) => {{
         match (&$left, &$right) {
             (left_val, right_val) => {
                 $crate::AbsDiffCmp::ne(left_val, right_val, &$tol)
+            }
+        }
+    }};
+    ($left:expr, $right:expr, abs_diff_all <= $tol:expr $(,)?) => {{
+        match (&$left, &$right) {
+            (left_val, right_val) => {
+                $crate::AbsDiffCmp::all_ne(left_val, right_val, &$tol)
             }
         }
     }};
@@ -891,30 +923,78 @@ macro_rules! abs_diff_ne {
 
 #[macro_export]
 macro_rules! assert_abs_diff_eq {
-    ($left:expr, $right:expr, max_abs_diff = $tol:expr $(,)?) => {{
+    ($left:expr, $right:expr, abs_diff <= $tol:expr $(,)?) => {{
         match (&$left, &$right, &$tol) {
             (left_val, right_val, tol_val) => {
-                if !$crate::abs_diff_eq!(*left_val, *right_val, max_abs_diff = *tol_val) {
+                if !$crate::abs_diff_eq!(*left_val, *right_val, abs_diff <= *tol_val) {
+                    // The reborrows below are intentional. Without them, the stack slot for the
+                    // borrow is initialized even before the values are compared, leading to a
+                    // noticeable slow down. See the documentation for `core::approx_eq`.
                     panic!(
-                        concat!("assertion failed: assert_abs_diff_eq!(left, right, max_abs_diff)\nleft: `{:?}`\nright: `{:?}`\nmax_abs_diff: `{:?}`"),
+                        concat!("assertion failed: assert_abs_diff_eq!(left, right, abs_diff <= t)\nleft: `{:?}`,\nright: `{:?}`,\nabs_diff: `{:?}`,\nt: `{:?}`"),
                         &*left_val,
                         &*right_val,
+                        $crate::AssertAbsDiffEq::debug_abs_diff(&*left_val, &*right_val),
                         $crate::AssertAbsDiffEq::debug_abs_diff_tolerance(&*left_val, &*right_val, &*tol_val),
                     )
                 }
             }
         }
     }};
-    ($left:expr, $right:expr, $(, $opt:ident = $val:expr)*, $($arg:tt)+) => {{
+    ($left:expr, $right:expr, abs_diff <= $tol:expr, $($arg:tt)+) => {{
         match (&($left), &($right)) {
             match (&$left, &$right, &$tol) {
                 (left_val, right_val, tol_val) => {
-                    if !$crate::abs_diff_eq!(left_val, right_val, max_abs_diff = tol_val) {
+                    if !$crate::abs_diff_eq!(left_val, right_val, abs_diff <= tol_val) {
+                        // The reborrows below are intentional. Without them, the stack slot for the
+                        // borrow is initialized even before the values are compared, leading to a
+                        // noticeable slow down. See the documentation for `core::approx_eq`.
                         panic!(
-                            concat!("assertion failed: assert_abs_diff_eq!(left, right, max_abs_diff)\nleft: `{:?}`\nright: `{:?}`\nmax_abs_diff: `{:?}`"),
+                            concat!("assertion failed: assert_abs_diff_eq!(left, right, abs_diff <= t)\nleft: `{:?}`,\nright: `{:?}`,\nabs_diff: `{:?}`,\nt: `{:?}`\n{}"),
                             &*left_val,
                             &*right_val,
+                            $crate::AssertAbsDiffEq::debug_abs_diff(&*left_val, &*right_val),
                             $crate::AssertAbsDiffEq::debug_abs_diff_tolerance(&*left_val, &*right_val, &*tol_val),
+                            format_args!($($arg)+),
+                        )
+                    }
+                }
+            }
+        }
+    }};
+    ($left:expr, $right:expr, abs_diff_all <= $tol:expr $(,)?) => {{
+        match (&$left, &$right, &$tol) {
+            (left_val, right_val, tol_val) => {
+                if !$crate::abs_diff_eq!(*left_val, *right_val, abs_diff_all <= *tol_val) {
+                    // The reborrows below are intentional. Without them, the stack slot for the
+                    // borrow is initialized even before the values are compared, leading to a
+                    // noticeable slow down. See the documentation for `core::approx_eq`.
+                    panic!(
+                        concat!("assertion failed: assert_abs_diff_eq!(left, right, abs_diff <= t)\nleft: `{:?}`,\nright: `{:?}`,\nabs_diff: `{:?}`,\nt: `{:?}`"),
+                        &*left_val,
+                        &*right_val,
+                        $crate::AssertAbsDiffEq::debug_abs_diff(&*left_val, &*right_val),
+                        $crate::AssertAbsDiffEqAll::debug_all_abs_diff_tolerance(&*left_val, &*right_val, &*tol_val),
+                    )
+                }
+            }
+        }
+    }};
+    ($left:expr, $right:expr, abs_diff_all <= $tol:expr, $($arg:tt)+) => {{
+        match (&($left), &($right)) {
+            match (&$left, &$right, &$tol) {
+                (left_val, right_val, tol_val) => {
+                    if !$crate::abs_diff_eq!(left_val, right_val, abs_diff_all <= tol_val) {
+                        // The reborrows below are intentional. Without them, the stack slot for the
+                        // borrow is initialized even before the values are compared, leading to a
+                        // noticeable slow down. See the documentation for `core::approx_eq`.
+                        panic!(
+                            concat!("assertion failed: assert_abs_diff_eq!(left, right, abs_diff <= t)\nleft: `{:?}`,\nright: `{:?}`,\nabs_diff: `{:?}`,\nt: `{:?}`\n{}"),
+                            &*left_val,
+                            &*right_val,
+                            $crate::AssertAbsDiffEqAll::debug_all_abs_diff(&*left_val, &*right_val),
+                            $crate::AssertAbsDiffEqAll::debug_all_abs_diff_tolerance(&*left_val, &*right_val, &*tol_val),
+                            format_args!($($arg)+),
                         )
                     }
                 }
@@ -925,30 +1005,72 @@ macro_rules! assert_abs_diff_eq {
 
 #[macro_export]
 macro_rules! assert_abs_diff_ne {
-    ($left:expr, $right:expr, max_abs_diff = $tol:expr $(,)?) => {{
+    ($left:expr, $right:expr, abs_diff <= $tol:expr $(,)?) => {{
         match (&$left, &$right, &$tol) {
             (left_val, right_val, tol_val) => {
-                if !$crate::abs_diff_ne!(*left_val, *right_val, max_abs_diff = *tol_val) {
+                if !$crate::abs_diff_ne!(*left_val, *right_val, abs_diff <= *tol_val) {
                     panic!(
-                        concat!("assertion failed: assert_abs_diff_ne!(left, right, max_abs_diff)\nleft: `{:?}`\nright: `{:?}`\nmax_abs_diff: `{:?}`"),
+                        concat!("assertion failed: assert_abs_diff_ne!(left, right, abs_diff <= t)\nleft: `{:?}`\nright: `{:?}`\nabs_diff: `{:?}`\nt: `{:?}`"),
                         &*left_val,
                         &*right_val,
+                        $crate::AssertAbsDiffEq::debug_abs_diff(&*left_val, &*right_val),
                         $crate::AssertAbsDiffEq::debug_abs_diff_tolerance(&*left_val, &*right_val, &*tol_val),
                     )
                 }
             }
         }
     }};
-    ($left:expr, $right:expr, $(, $opt:ident = $val:expr)*, $($arg:tt)+) => {{
+    ($left:expr, $right:expr, abs_diff <= $tol:expr, $($arg:tt)+) => {{
         match (&($left), &($right)) {
             match (&$left, &$right, &$tol) {
                 (left_val, right_val, tol_val) => {
-                    if !$crate::abs_diff_ne!(left_val, right_val, max_abs_diff = tol_val) {
+                    if !$crate::abs_diff_ne!(left_val, right_val, abs_diff <= tol_val) {
                         panic!(
-                            concat!("assertion failed: assert_abs_diff_ne!(left, right, max_abs_diff)\nleft: `{:?}`\nright: `{:?}`\nmax_abs_diff: `{:?}`"),
+                            concat!("assertion failed: assert_abs_diff_ne!(left, right, abs_diff <= t)\nleft: `{:?}`\nright: `{:?}`\nabs_diff: `{:?}`\nt: `{:?}`\n{}"),
                             &*left_val,
                             &*right_val,
+                            $crate::AssertAbsDiffEq::debug_abs_diff(&*left_val, &*right_val),
                             $crate::AssertAbsDiffEq::debug_abs_diff_tolerance(&*left_val, &*right_val, &*tol_val),
+                            format_args!($($arg)+)
+                        )
+                    }
+                }
+            }
+        }
+    }};
+    ($left:expr, $right:expr, abs_diff_all <= $tol:expr $(,)?) => {{
+        match (&$left, &$right, &$tol) {
+            (left_val, right_val, tol_val) => {
+                if !$crate::abs_diff_ne!(*left_val, *right_val, abs_diff_all <= *tol_val) {
+                    // The reborrows below are intentional. Without them, the stack slot for the
+                    // borrow is initialized even before the values are compared, leading to a
+                    // noticeable slow down. See the documentation for `core::approx_eq`.
+                    panic!(
+                        concat!("assertion failed: assert_abs_diff_ne!(left, right, abs_diff <= t)\nleft: `{:?}`,\nright: `{:?}`,\nabs_diff: `{:?}`,\nt: `{:?}`"),
+                        &*left_val,
+                        &*right_val,
+                        $crate::AssertAbsDiffEq::debug_abs_diff(&*left_val, &*right_val),
+                        $crate::AssertAbsDiffEqAll::debug_all_abs_diff_tolerance(&*left_val, &*right_val, &*tol_val),
+                    )
+                }
+            }
+        }
+    }};
+    ($left:expr, $right:expr, abs_diff_all <= $tol:expr, $($arg:tt)+) => {{
+        match (&($left), &($right)) {
+            match (&$left, &$right, &$tol) {
+                (left_val, right_val, tol_val) => {
+                    if !$crate::abs_diff_ne!(left_val, right_val, abs_diff_all <= tol_val) {
+                        // The reborrows below are intentional. Without them, the stack slot for the
+                        // borrow is initialized even before the values are compared, leading to a
+                        // noticeable slow down. See the documentation for `core::approx_eq`.
+                        panic!(
+                            concat!("assertion failed: assert_abs_diff_ne!(left, right, abs_diff <= t)\nleft: `{:?}`,\nright: `{:?}`,\nabs_diff: `{:?}`,\nt: `{:?}`\n{}"),
+                            &*left_val,
+                            &*right_val,
+                            $crate::AssertAbsDiffEqAll::debug_all_abs_diff(&*left_val, &*right_val),
+                            $crate::AssertAbsDiffEqAll::debug_all_abs_diff_tolerance(&*left_val, &*right_val, &*tol_val),
+                            format_args!($($arg)+),
                         )
                     }
                 }
