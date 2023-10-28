@@ -1,9 +1,9 @@
-extern crate approx_compare;
+extern crate approx_cmp;
 
 
 #[cfg(test)]
 mod relative_eq_f32_tests {
-    use approx_compare::{
+    use approx_cmp::{
         assert_relative_eq,
         assert_relative_ne,
     };
@@ -191,7 +191,7 @@ mod relative_eq_f32_tests {
 
 #[cfg(test)]
 mod relative_eq_f64_tests {
-    use approx_compare::{
+    use approx_cmp::{
         assert_relative_eq,
         assert_relative_ne,
     };
@@ -373,7 +373,7 @@ mod relative_eq_f64_tests {
 
 #[cfg(test)]
 mod abs_diff_array_tests {
-    use approx_compare::{
+    use approx_cmp::{
         assert_relative_eq,
         assert_relative_ne,
     };

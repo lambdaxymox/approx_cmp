@@ -1,9 +1,9 @@
-extern crate approx_compare;
+extern crate approx_cmp;
 
 
 #[cfg(test)]
 mod abs_diff_eq_integer_tests {
-    use approx_compare::{
+    use approx_cmp::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         abs_diff_eq,
@@ -75,7 +75,7 @@ mod abs_diff_eq_integer_tests {
 
 #[cfg(test)]
 mod abs_diff_compare_f32_tests {
-    use approx_compare::{
+    use approx_cmp::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         abs_diff_eq,
@@ -261,7 +261,7 @@ mod abs_diff_compare_f32_tests {
 
 #[cfg(test)]
 mod abs_diff_compare_f64_tests {
-    use approx_compare::{
+    use approx_cmp::{
         assert_abs_diff_eq,
         assert_abs_diff_ne
     };
@@ -416,7 +416,7 @@ mod abs_diff_compare_f64_tests {
 
 #[cfg(test)]
 mod abs_diff_array_tests {
-    use approx_compare::{
+    use approx_cmp::{
         assert_abs_diff_eq,
         assert_abs_diff_ne
     };

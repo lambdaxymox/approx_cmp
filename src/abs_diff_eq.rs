@@ -24,7 +24,7 @@ where
     /// - Returns: A boolean indicating whether or not two floating point
     /// numbers are absolute difference equal with respect to a tolerance
     /// `tolerance`.
-    fn abs_diff_eq(&self, other: &Rhs, tolerance: &Self::Tolerance) -> bool;
+    fn abs_diff_eq(&self, other: &Rhs, max_abs_diff: &Self::Tolerance) -> bool;
 
     /// Compare two floating point numbers for absolute difference inequality.
     ///
@@ -36,21 +36,21 @@ where
     /// numbers are absolute difference inequal with respect to a tolerance
     /// `tolerance`.
     #[inline]
-    fn abs_diff_ne(&self, other: &Rhs, tolerance: &Self::Tolerance) -> bool {
-        !Self::abs_diff_eq(self, other, tolerance)
+    fn abs_diff_ne(&self, other: &Rhs, max_abs_diff: &Self::Tolerance) -> bool {
+        !Self::abs_diff_eq(self, other, max_abs_diff)
     }
 }
 
-pub trait AbsDiffEqAll<Rhs = Self>
+pub trait AbsDiffAllEq<Rhs = Self>
 where
     Rhs: ?Sized
 {
     type AllTolerance: ?Sized;
 
-    fn all_abs_diff_eq(&self, other: &Rhs, tolerance: &Self::AllTolerance) -> bool;
+    fn abs_diff_all_eq(&self, other: &Rhs, max_abs_diff: &Self::AllTolerance) -> bool;
 
-    fn all_abs_diff_ne(&self, other: &Rhs, tolerance: &Self::AllTolerance) -> bool {
-        !Self::all_abs_diff_eq(self, other, tolerance)
+    fn abs_diff_all_ne(&self, other: &Rhs, max_abs_diff: &Self::AllTolerance) -> bool {
+        !Self::abs_diff_all_eq(self, other, max_abs_diff)
     }
 }
 pub trait AssertAbsDiffEq<Rhs = Self>: AbsDiffEq<Rhs>
@@ -62,16 +62,16 @@ where
 
     fn debug_abs_diff(&self, other: &Rhs) -> Self::DebugAbsDiff;
 
-    fn debug_abs_diff_tolerance(&self, other: &Rhs, tolerance: &Self::Tolerance) -> Self::DebugTolerance;
+    fn debug_abs_diff_tolerance(&self, other: &Rhs, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance;
 }
 
-pub trait AssertAbsDiffEqAll<Rhs = Self>: AbsDiffEqAll<Rhs> 
+pub trait AssertAbsDiffEqAll<Rhs = Self>: AbsDiffAllEq<Rhs> 
 where
     Rhs: ?Sized
 {
     type AllDebugTolerance: fmt::Debug;
 
-    fn debug_all_abs_diff_tolerance(&self, other: &Rhs, tolerance: &Self::AllTolerance) -> Self::AllDebugTolerance;
+    fn debug_abs_diff_all_tolerance(&self, other: &Rhs, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance;
 }
 
 
@@ -102,14 +102,14 @@ macro_rules! impl_abs_diff_eq_unsigned {
             type Tolerance = $T;
 
             #[inline]
-            fn abs_diff_eq(&self, other: &$T, tolerance: &Self::Tolerance) -> bool {
+            fn abs_diff_eq(&self, other: &$T, max_abs_diff: &Self::Tolerance) -> bool {
                 let abs_diff = if self > other { 
                     self - other
                 } else {
                     other - self
                 };
 
-                abs_diff <= *tolerance
+                abs_diff <= *max_abs_diff
             }
         }
     )*}
@@ -124,8 +124,8 @@ macro_rules! impl_abs_diff_eq_signed {
             type Tolerance = $T;
 
             #[inline]
-            fn abs_diff_eq(&self, other: &$T, tolerance: &Self::Tolerance) -> bool {
-                $T::abs(self - other) <= *tolerance
+            fn abs_diff_eq(&self, other: &$T, max_abs_diff: &Self::Tolerance) -> bool {
+                $T::abs(self - other) <= *max_abs_diff
             }
         }
     )*};
@@ -141,8 +141,8 @@ where
     type Tolerance = A::Tolerance;
 
     #[inline]
-    fn abs_diff_eq(&self, other: &&B, tolerance: &Self::Tolerance) -> bool {
-        AbsDiffEq::abs_diff_eq(*self, *other, tolerance)
+    fn abs_diff_eq(&self, other: &&B, max_abs_diff: &Self::Tolerance) -> bool {
+        AbsDiffEq::abs_diff_eq(*self, *other, max_abs_diff)
     }
 }
 
@@ -153,8 +153,8 @@ where
     type Tolerance = A::Tolerance;
 
     #[inline]
-    fn abs_diff_eq(&self, other: &&mut B, tolerance: &Self::Tolerance) -> bool {
-        AbsDiffEq::abs_diff_eq(*self, *other, tolerance)
+    fn abs_diff_eq(&self, other: &&mut B, max_abs_diff: &Self::Tolerance) -> bool {
+        AbsDiffEq::abs_diff_eq(*self, *other, max_abs_diff)
     }
 }
 
@@ -165,8 +165,8 @@ where
     type Tolerance = A::Tolerance;
 
     #[inline]
-    fn abs_diff_eq(&self, other: &&B, tolerance: &Self::Tolerance) -> bool {
-        AbsDiffEq::abs_diff_eq(*self, *other, tolerance)
+    fn abs_diff_eq(&self, other: &&B, max_abs_diff: &Self::Tolerance) -> bool {
+        AbsDiffEq::abs_diff_eq(*self, *other, max_abs_diff)
     }
 }
 
@@ -177,8 +177,8 @@ where
     type Tolerance = A::Tolerance;
 
     #[inline]
-    fn abs_diff_eq(&self, other: &&mut B, tolerance: &Self::Tolerance) -> bool {
-        AbsDiffEq::abs_diff_eq(*self, *other, tolerance)
+    fn abs_diff_eq(&self, other: &&mut B, max_abs_diff: &Self::Tolerance) -> bool {
+        AbsDiffEq::abs_diff_eq(*self, *other, max_abs_diff)
     }
 }
 
@@ -190,11 +190,11 @@ where
     type Tolerance = [A::Tolerance];
 
     #[inline]
-    fn abs_diff_eq(&self, other: &[B], tolerance: &Self::Tolerance) -> bool {
+    fn abs_diff_eq(&self, other: &[B], max_abs_diff: &Self::Tolerance) -> bool {
         self.len() == other.len() && 
         self.iter()
             .zip(other.iter())
-            .zip(tolerance.iter())
+            .zip(max_abs_diff.iter())
             .all(|((a, b), tol)| a.abs_diff_eq(b, tol))
     }
 }
@@ -207,9 +207,9 @@ where
     type Tolerance = [A::Tolerance; N];
 
     #[inline]
-    fn abs_diff_eq(&self, other: &[B; N], tolerance: &Self::Tolerance) -> bool {
+    fn abs_diff_eq(&self, other: &[B; N], max_abs_diff: &Self::Tolerance) -> bool {
         for i in 0..N {
-            if !self[i].abs_diff_eq(&other[i], &tolerance[i]) {
+            if !self[i].abs_diff_eq(&other[i], &max_abs_diff[i]) {
                 return false;
             }
         }
@@ -226,8 +226,8 @@ where
     type Tolerance = A::Tolerance;
 
     #[inline]
-    fn abs_diff_eq(&self, other: &cell::Cell<B>, tolerance: &Self::Tolerance) -> bool {
-        AbsDiffEq::abs_diff_eq(&self.get(), &other.get(), tolerance)
+    fn abs_diff_eq(&self, other: &cell::Cell<B>, max_abs_diff: &Self::Tolerance) -> bool {
+        AbsDiffEq::abs_diff_eq(&self.get(), &other.get(), max_abs_diff)
     }
 }
 
@@ -238,8 +238,8 @@ where
     type Tolerance = A::Tolerance;
 
     #[inline]
-    fn abs_diff_eq(&self, other: &cell::RefCell<B>, tolerance: &Self::Tolerance) -> bool {
-        AbsDiffEq::abs_diff_eq(&*self.borrow(), &*other.borrow(), tolerance)
+    fn abs_diff_eq(&self, other: &cell::RefCell<B>, max_abs_diff: &Self::Tolerance) -> bool {
+        AbsDiffEq::abs_diff_eq(&*self.borrow(), &*other.borrow(), max_abs_diff)
     }
 }
 
@@ -272,12 +272,12 @@ where
 
 macro_rules! impl_abs_diff_eq_all_unsigned {
     ($($T:ident),* $(,)?) => {$(
-        impl AbsDiffEqAll for $T {
+        impl AbsDiffAllEq for $T {
             type AllTolerance = $T;
 
             #[inline]
-            fn all_abs_diff_eq(&self, other: &$T, tolerance: &Self::AllTolerance) -> bool {
-                $T::abs_diff_eq(self, other, tolerance)
+            fn abs_diff_all_eq(&self, other: &$T, max_abs_diff: &Self::AllTolerance) -> bool {
+                $T::abs_diff_eq(self, other, max_abs_diff)
             }
         }
     )*}
@@ -288,12 +288,12 @@ impl_abs_diff_eq_all_unsigned!(u8, u16, u32, u64, u128, usize);
 
 macro_rules! impl_abs_diff_eq_all_signed {
     ($($T:ident),* $(,)?) => {$(
-        impl AbsDiffEqAll for $T {
+        impl AbsDiffAllEq for $T {
             type AllTolerance = $T;
 
             #[inline]
-            fn all_abs_diff_eq(&self, other: &$T, tolerance: &Self::AllTolerance) -> bool {
-                $T::abs_diff_eq(self, other, tolerance)
+            fn abs_diff_all_eq(&self, other: &$T, max_abs_diff: &Self::AllTolerance) -> bool {
+                $T::abs_diff_eq(self, other, max_abs_diff)
             }
         }
     )*};
@@ -302,105 +302,105 @@ macro_rules! impl_abs_diff_eq_all_signed {
 impl_abs_diff_eq_all_signed!(i8, i16, i32, i64, i128, isize, f32, f64);
 
 
-impl<A, B> AbsDiffEqAll<&B> for &A
+impl<A, B> AbsDiffAllEq<&B> for &A
 where
-    A: AbsDiffEqAll<B>
+    A: AbsDiffAllEq<B>
 {
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn all_abs_diff_eq(&self, other: &&B, tolerance: &Self::AllTolerance) -> bool {
-        AbsDiffEqAll::all_abs_diff_eq(*self, *other, tolerance)
+    fn abs_diff_all_eq(&self, other: &&B, max_abs_diff: &Self::AllTolerance) -> bool {
+        AbsDiffAllEq::abs_diff_all_eq(*self, *other, max_abs_diff)
     }
 }
 
-impl<A, B> AbsDiffEqAll<&mut B> for &A
+impl<A, B> AbsDiffAllEq<&mut B> for &A
 where
-    A: AbsDiffEqAll<B>
+    A: AbsDiffAllEq<B>
 {
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn all_abs_diff_eq(&self, other: &&mut B, tolerance: &Self::AllTolerance) -> bool {
-        AbsDiffEqAll::all_abs_diff_eq(*self, *other, tolerance)
+    fn abs_diff_all_eq(&self, other: &&mut B, max_abs_diff: &Self::AllTolerance) -> bool {
+        AbsDiffAllEq::abs_diff_all_eq(*self, *other, max_abs_diff)
     }
 }
 
-impl<A, B> AbsDiffEqAll<&B> for &mut A
+impl<A, B> AbsDiffAllEq<&B> for &mut A
 where
-    A: AbsDiffEqAll<B>
+    A: AbsDiffAllEq<B>
 {
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn all_abs_diff_eq(&self, other: &&B, tolerance: &Self::AllTolerance) -> bool {
-        AbsDiffEqAll::all_abs_diff_eq(*self, *other, tolerance)
+    fn abs_diff_all_eq(&self, other: &&B, max_abs_diff: &Self::AllTolerance) -> bool {
+        AbsDiffAllEq::abs_diff_all_eq(*self, *other, max_abs_diff)
     }
 }
 
-impl<A, B> AbsDiffEqAll<&mut B> for &mut A
+impl<A, B> AbsDiffAllEq<&mut B> for &mut A
 where
-    A: AbsDiffEqAll<B>
+    A: AbsDiffAllEq<B>
 {
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn all_abs_diff_eq(&self, other: &&mut B, tolerance: &Self::AllTolerance) -> bool {
-        AbsDiffEqAll::all_abs_diff_eq(*self, *other, tolerance)
+    fn abs_diff_all_eq(&self, other: &&mut B, max_abs_diff: &Self::AllTolerance) -> bool {
+        AbsDiffAllEq::abs_diff_all_eq(*self, *other, max_abs_diff)
     }
 }
 
-impl<A, B> AbsDiffEqAll<[B]> for [A]
+impl<A, B> AbsDiffAllEq<[B]> for [A]
 where
-    A: AbsDiffEqAll<B>
+    A: AbsDiffAllEq<B>
 {
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn all_abs_diff_eq(&self, other: &[B], tolerance: &Self::AllTolerance) -> bool {
+    fn abs_diff_all_eq(&self, other: &[B], max_abs_diff: &Self::AllTolerance) -> bool {
         self.len() == other.len() && 
         self.iter()
             .zip(other.iter())
-            .all(|(a, b)| a.all_abs_diff_eq(b, tolerance))
+            .all(|(a, b)| a.abs_diff_all_eq(b, max_abs_diff))
     }
 }
 
-impl<A, B, const N: usize> AbsDiffEqAll<[B; N]> for [A; N]
+impl<A, B, const N: usize> AbsDiffAllEq<[B; N]> for [A; N]
 where
-    A: AbsDiffEqAll<B>
+    A: AbsDiffAllEq<B>
 {
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn all_abs_diff_eq(&self, other: &[B; N], tolerance: &Self::AllTolerance) -> bool {
+    fn abs_diff_all_eq(&self, other: &[B; N], max_abs_diff: &Self::AllTolerance) -> bool {
         self.iter()
             .zip(other.iter())
-            .all(|(a, b)| a.all_abs_diff_eq(b, tolerance))
+            .all(|(a, b)| a.abs_diff_all_eq(b, max_abs_diff))
     }
 }
 
-impl<A, B> AbsDiffEqAll<cell::Cell<B>> for cell::Cell<A> 
+impl<A, B> AbsDiffAllEq<cell::Cell<B>> for cell::Cell<A> 
 where
-    A: AbsDiffEqAll<B> + Copy,
+    A: AbsDiffAllEq<B> + Copy,
     B: Copy
 {
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn all_abs_diff_eq(&self, other: &cell::Cell<B>, tolerance: &Self::AllTolerance) -> bool {
-        AbsDiffEqAll::all_abs_diff_eq(&self.get(), &other.get(), tolerance)
+    fn abs_diff_all_eq(&self, other: &cell::Cell<B>, max_abs_diff: &Self::AllTolerance) -> bool {
+        AbsDiffAllEq::abs_diff_all_eq(&self.get(), &other.get(), max_abs_diff)
     }
 }
 
-impl<A, B> AbsDiffEqAll<cell::RefCell<B>> for cell::RefCell<A> 
+impl<A, B> AbsDiffAllEq<cell::RefCell<B>> for cell::RefCell<A> 
 where
-    A: AbsDiffEqAll<B> + ?Sized
+    A: AbsDiffAllEq<B> + ?Sized
 {
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn all_abs_diff_eq(&self, other: &cell::RefCell<B>, tolerance: &Self::AllTolerance) -> bool {
-        AbsDiffEqAll::all_abs_diff_eq(&*self.borrow(), &*other.borrow(), tolerance)
+    fn abs_diff_all_eq(&self, other: &cell::RefCell<B>, max_abs_diff: &Self::AllTolerance) -> bool {
+        AbsDiffAllEq::abs_diff_all_eq(&*self.borrow(), &*other.borrow(), max_abs_diff)
     }
 }
 
@@ -435,8 +435,8 @@ macro_rules! impl_assert_abs_diff_eq_unsigned {
             }
 
             #[inline]
-            fn debug_abs_diff_tolerance(&self, _other: &$T, tolerance: &Self::Tolerance) -> Self::DebugTolerance {
-                *tolerance
+            fn debug_abs_diff_tolerance(&self, _other: &$T, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+                *max_abs_diff
             }
         }
     )*}
@@ -457,8 +457,8 @@ macro_rules! impl_assert_abs_diff_eq_signed {
             }
 
             #[inline]
-            fn debug_abs_diff_tolerance(&self, _other: &$T, tolerance: &Self::Tolerance) -> Self::DebugTolerance {
-                *tolerance
+            fn debug_abs_diff_tolerance(&self, _other: &$T, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+                *max_abs_diff
             }
         }
     )*};
@@ -480,8 +480,8 @@ where
     }
 
     #[inline]
-    fn debug_abs_diff_tolerance(&self, other: &&B, tolerance: &Self::Tolerance) -> Self::DebugTolerance {
-        AssertAbsDiffEq::debug_abs_diff_tolerance(*self, *other, tolerance)
+    fn debug_abs_diff_tolerance(&self, other: &&B, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        AssertAbsDiffEq::debug_abs_diff_tolerance(*self, *other, max_abs_diff)
     }
 }
 
@@ -498,8 +498,8 @@ where
     }
 
     #[inline]
-    fn debug_abs_diff_tolerance(&self, other: &&mut B, tolerance: &Self::Tolerance) -> Self::DebugTolerance {
-        AssertAbsDiffEq::debug_abs_diff_tolerance(*self, *other, tolerance)
+    fn debug_abs_diff_tolerance(&self, other: &&mut B, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        AssertAbsDiffEq::debug_abs_diff_tolerance(*self, *other, max_abs_diff)
     }
 }
 
@@ -516,8 +516,8 @@ where
     }
 
     #[inline]
-    fn debug_abs_diff_tolerance(&self, other: &&B, tolerance: &Self::Tolerance) -> Self::DebugTolerance {
-        AssertAbsDiffEq::debug_abs_diff_tolerance(*self, *other, tolerance)
+    fn debug_abs_diff_tolerance(&self, other: &&B, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        AssertAbsDiffEq::debug_abs_diff_tolerance(*self, *other, max_abs_diff)
     }
 }
 
@@ -534,8 +534,8 @@ where
     }
 
     #[inline]
-    fn debug_abs_diff_tolerance(&self, other: &&mut B, tolerance: &Self::Tolerance) -> Self::DebugTolerance {
-        AssertAbsDiffEq::debug_abs_diff_tolerance(*self, *other, tolerance)
+    fn debug_abs_diff_tolerance(&self, other: &&mut B, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        AssertAbsDiffEq::debug_abs_diff_tolerance(*self, *other, max_abs_diff)
     }
 }
 
@@ -562,11 +562,11 @@ where
     }
 
     #[inline]
-    fn debug_abs_diff_tolerance(&self, other: &[B], tolerance: &Self::Tolerance) -> Self::DebugTolerance {
-        if (self.len() == other.len()) && (self.len() == tolerance.len()) {
+    fn debug_abs_diff_tolerance(&self, other: &[B], max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        if (self.len() == other.len()) && (self.len() == max_abs_diff.len()) {
             Some(self.iter()
                 .zip(other.iter())
-                .zip(tolerance.iter())
+                .zip(max_abs_diff.iter())
                 .map(|((a, b), tol)| { AssertAbsDiffEq::debug_abs_diff_tolerance(a, b, tol) })
                 .collect()
             )
@@ -610,10 +610,10 @@ where
     }
 
     #[inline]
-    fn debug_abs_diff_tolerance(&self, other: &[B; N], tolerance: &Self::Tolerance) -> Self::DebugTolerance {
+    fn debug_abs_diff_tolerance(&self, other: &[B; N], max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
         let mut result: [mem::MaybeUninit<A::DebugTolerance>; N] = uninit_array();
         for i in 0..N {
-            result[i] = mem::MaybeUninit::new(self[i].debug_abs_diff_tolerance(&other[i], &tolerance[i]));
+            result[i] = mem::MaybeUninit::new(self[i].debug_abs_diff_tolerance(&other[i], &max_abs_diff[i]));
         }
 
         unsafe { 
@@ -636,8 +636,8 @@ where
     }
 
     #[inline]
-    fn debug_abs_diff_tolerance(&self, other: &cell::Cell<B>, tolerance: &Self::Tolerance) -> Self::DebugTolerance {
-        AssertAbsDiffEq::debug_abs_diff_tolerance(&self.get(), &other.get(), tolerance)
+    fn debug_abs_diff_tolerance(&self, other: &cell::Cell<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        AssertAbsDiffEq::debug_abs_diff_tolerance(&self.get(), &other.get(), max_abs_diff)
     }
 }
 
@@ -655,8 +655,8 @@ where
     }
 
     #[inline]
-    fn debug_abs_diff_tolerance(&self, other: &cell::RefCell<B>, tolerance: &Self::Tolerance) -> Self::DebugTolerance {
-        AssertAbsDiffEq::debug_abs_diff_tolerance(&*self.borrow(), &*other.borrow(), tolerance)
+    fn debug_abs_diff_tolerance(&self, other: &cell::RefCell<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        AssertAbsDiffEq::debug_abs_diff_tolerance(&*self.borrow(), &*other.borrow(), max_abs_diff)
     }
 }
 
@@ -674,8 +674,8 @@ macro_rules! impl_assert_all_abs_diff_eq_unsigned {
             type AllDebugTolerance = Self::AllTolerance;
 
             #[inline]
-            fn debug_all_abs_diff_tolerance(&self, other: &$T, tolerance: &Self::AllTolerance) -> Self::AllDebugTolerance {
-                self.debug_abs_diff_tolerance(other, tolerance)
+            fn debug_abs_diff_all_tolerance(&self, other: &$T, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+                self.debug_abs_diff_tolerance(other, max_abs_diff)
             }
         }
     )*}
@@ -690,8 +690,8 @@ macro_rules! impl_assert_all_abs_diff_eq_signed {
             type AllDebugTolerance = Self::AllTolerance;
 
             #[inline]
-            fn debug_all_abs_diff_tolerance(&self, other: &$T, tolerance: &Self::AllTolerance) -> Self::AllDebugTolerance {
-                self.debug_abs_diff_tolerance(other, tolerance)
+            fn debug_abs_diff_all_tolerance(&self, other: &$T, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+                self.debug_abs_diff_tolerance(other, max_abs_diff)
             }
         }
     )*};
@@ -707,8 +707,8 @@ where
     type AllDebugTolerance = A::AllDebugTolerance;
 
     #[inline]
-    fn debug_all_abs_diff_tolerance(&self, other: &&B, tolerance: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        AssertAbsDiffEqAll::debug_all_abs_diff_tolerance(*self, *other, tolerance)
+    fn debug_abs_diff_all_tolerance(&self, other: &&B, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        AssertAbsDiffEqAll::debug_abs_diff_all_tolerance(*self, *other, max_abs_diff)
     }
 }
 
@@ -719,8 +719,8 @@ where
     type AllDebugTolerance = A::AllDebugTolerance;
 
     #[inline]
-    fn debug_all_abs_diff_tolerance(&self, other: &&mut B, tolerance: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        AssertAbsDiffEqAll::debug_all_abs_diff_tolerance(*self, *other, tolerance)
+    fn debug_abs_diff_all_tolerance(&self, other: &&mut B, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        AssertAbsDiffEqAll::debug_abs_diff_all_tolerance(*self, *other, max_abs_diff)
     }
 }
 
@@ -731,8 +731,8 @@ where
     type AllDebugTolerance = A::AllDebugTolerance;
 
     #[inline]
-    fn debug_all_abs_diff_tolerance(&self, other: &&B, tolerance: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        AssertAbsDiffEqAll::debug_all_abs_diff_tolerance(*self, *other, tolerance)
+    fn debug_abs_diff_all_tolerance(&self, other: &&B, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        AssertAbsDiffEqAll::debug_abs_diff_all_tolerance(*self, *other, max_abs_diff)
     }
 }
 
@@ -743,8 +743,8 @@ where
     type AllDebugTolerance = A::AllDebugTolerance;
 
     #[inline]
-    fn debug_all_abs_diff_tolerance(&self, other: &&mut B, tolerance: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        AssertAbsDiffEqAll::debug_all_abs_diff_tolerance(*self, *other, tolerance)
+    fn debug_abs_diff_all_tolerance(&self, other: &&mut B, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        AssertAbsDiffEqAll::debug_abs_diff_all_tolerance(*self, *other, max_abs_diff)
     }
 }
 
@@ -756,11 +756,11 @@ where
     type AllDebugTolerance = Option<Vec<A::AllDebugTolerance>>;
 
     #[inline]
-    fn debug_all_abs_diff_tolerance(&self, other: &[B], tolerance: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_abs_diff_all_tolerance(&self, other: &[B], max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
         if self.len() == other.len() {
             Some(self.iter()
                 .zip(other.iter())
-                .map(|(a, b)| a.debug_all_abs_diff_tolerance(b, tolerance))
+                .map(|(a, b)| a.debug_abs_diff_all_tolerance(b, max_abs_diff))
                 .collect(),
             )
         } else {
@@ -776,10 +776,10 @@ where
     type AllDebugTolerance = [A::AllDebugTolerance; N];
 
     #[inline]
-    fn debug_all_abs_diff_tolerance(&self, other: &[B; N], tolerance: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_abs_diff_all_tolerance(&self, other: &[B; N], max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
         let mut result: [mem::MaybeUninit<A::AllDebugTolerance>; N] = uninit_array();
         for i in 0..N {
-            result[i] = mem::MaybeUninit::new(self[i].debug_all_abs_diff_tolerance(&other[i], &tolerance));
+            result[i] = mem::MaybeUninit::new(self[i].debug_abs_diff_all_tolerance(&other[i], &max_abs_diff));
         }
 
         unsafe { 
@@ -796,8 +796,8 @@ where
     type AllDebugTolerance = A::AllDebugTolerance;
 
     #[inline]
-    fn debug_all_abs_diff_tolerance(&self, other: &cell::Cell<B>, tolerance: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        AssertAbsDiffEqAll::debug_all_abs_diff_tolerance(&self.get(), &other.get(), tolerance)
+    fn debug_abs_diff_all_tolerance(&self, other: &cell::Cell<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        AssertAbsDiffEqAll::debug_abs_diff_all_tolerance(&self.get(), &other.get(), max_abs_diff)
     }
 }
 
@@ -808,8 +808,8 @@ where
     type AllDebugTolerance = A::AllDebugTolerance;
 
     #[inline]
-    fn debug_all_abs_diff_tolerance(&self, other: &cell::RefCell<B>, tolerance: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        AssertAbsDiffEqAll::debug_all_abs_diff_tolerance(&*self.borrow(), &*other.borrow(), tolerance)
+    fn debug_abs_diff_all_tolerance(&self, other: &cell::RefCell<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        AssertAbsDiffEqAll::debug_abs_diff_all_tolerance(&*self.borrow(), &*other.borrow(), max_abs_diff)
     }
 }
 
@@ -852,19 +852,19 @@ impl AbsDiffCmp {
     #[inline]
     pub fn all_eq<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance) -> bool 
     where
-        A: AbsDiffEqAll<B> + ?Sized,
+        A: AbsDiffAllEq<B> + ?Sized,
         B: ?Sized
     {
-        A::all_abs_diff_eq(lhs, rhs, max_abs_diff)
+        A::abs_diff_all_eq(lhs, rhs, max_abs_diff)
     }
 
     #[inline]
     pub fn all_ne<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance) -> bool 
     where
-        A: AbsDiffEqAll<B> + ?Sized,
+        A: AbsDiffAllEq<B> + ?Sized,
         B: ?Sized
     {
-        A::all_abs_diff_ne(lhs, rhs, max_abs_diff)
+        A::abs_diff_all_ne(lhs, rhs, max_abs_diff)
     }
 }
 
@@ -883,9 +883,9 @@ impl AbsDiffCmpOpTol {
     #[inline]
     pub fn abs_diff_all<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance) -> A::AllDebugTolerance 
     where
-        A: AbsDiffEqAll<B> + AssertAbsDiffEqAll<B>
+        A: AbsDiffAllEq<B> + AssertAbsDiffEqAll<B>
     {
-        A::debug_all_abs_diff_tolerance(lhs, rhs, max_abs_diff)
+        A::debug_abs_diff_all_tolerance(lhs, rhs, max_abs_diff)
     }
 }
 
