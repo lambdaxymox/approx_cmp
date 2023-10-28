@@ -259,14 +259,6 @@ mod abs_diff_compare_f32_tests {
 }
 
 
-/// The test cases in this class are derived from
-/// ```
-/// https://github.com/brendanzab/approx/blob/master/tests/
-/// ```
-/// and
-/// ```
-/// https://github.com/Pybonacci/puntoflotante.org/blob/master/content/errors/NearlyEqualsTest.java
-/// ```
 #[cfg(test)]
 mod abs_diff_compare_f64_tests {
     use approx_compare::{

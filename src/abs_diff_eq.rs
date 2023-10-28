@@ -2,7 +2,7 @@ use core::cell;
 use core::fmt;
 use core::mem;
 
-
+/*
 #[inline]
 pub fn abs_diff_eq<A, B>(lhs: A, rhs: B, tolerance: &A::Tolerance) -> bool 
 where
@@ -18,6 +18,7 @@ where
 {
     AbsDiffEq::abs_diff_ne(&lhs, &rhs, tolerance)
 }
+*/
 
 
 pub trait AbsDiffEq<Rhs = Self>
@@ -159,7 +160,7 @@ where
 
     #[inline]
     fn abs_diff_eq(&self, other: &&B, tolerance: &Self::Tolerance) -> bool {
-        A::abs_diff_eq(self, other, tolerance)
+        AbsDiffEq::abs_diff_eq(*self, *other, tolerance)
     }
 }
 
@@ -171,7 +172,7 @@ where
 
     #[inline]
     fn abs_diff_eq(&self, other: &&mut B, tolerance: &Self::Tolerance) -> bool {
-        A::abs_diff_eq(self, other, tolerance)
+        AbsDiffEq::abs_diff_eq(*self, *other, tolerance)
     }
 }
 
@@ -183,7 +184,7 @@ where
 
     #[inline]
     fn abs_diff_eq(&self, other: &&B, tolerance: &Self::Tolerance) -> bool {
-        A::abs_diff_eq(self, other, tolerance)
+        AbsDiffEq::abs_diff_eq(*self, *other, tolerance)
     }
 }
 
@@ -195,7 +196,7 @@ where
 
     #[inline]
     fn abs_diff_eq(&self, other: &&mut B, tolerance: &Self::Tolerance) -> bool {
-        A::abs_diff_eq(self, other, tolerance)
+        AbsDiffEq::abs_diff_eq(*self, *other, tolerance)
     }
 }
 
@@ -244,7 +245,7 @@ where
 
     #[inline]
     fn abs_diff_eq(&self, other: &cell::Cell<B>, tolerance: &Self::Tolerance) -> bool {
-        A::abs_diff_eq(&self.get(), &other.get(), tolerance)
+        AbsDiffEq::abs_diff_eq(&self.get(), &other.get(), tolerance)
     }
 }
 
@@ -256,7 +257,7 @@ where
 
     #[inline]
     fn abs_diff_eq(&self, other: &cell::RefCell<B>, tolerance: &Self::Tolerance) -> bool {
-        A::abs_diff_eq(&self.borrow(), &other.borrow(), tolerance)
+        AbsDiffEq::abs_diff_eq(&*self.borrow(), &*other.borrow(), tolerance)
     }
 }
 
@@ -327,7 +328,7 @@ where
 
     #[inline]
     fn all_abs_diff_eq(&self, other: &&B, tolerance: &Self::AllTolerance) -> bool {
-        A::all_abs_diff_eq(self, other, tolerance)
+        AbsDiffEqAll::all_abs_diff_eq(*self, *other, tolerance)
     }
 }
 
@@ -339,7 +340,7 @@ where
 
     #[inline]
     fn all_abs_diff_eq(&self, other: &&mut B, tolerance: &Self::AllTolerance) -> bool {
-        A::all_abs_diff_eq(self, other, tolerance)
+        AbsDiffEqAll::all_abs_diff_eq(*self, *other, tolerance)
     }
 }
 
@@ -351,7 +352,7 @@ where
 
     #[inline]
     fn all_abs_diff_eq(&self, other: &&B, tolerance: &Self::AllTolerance) -> bool {
-        A::all_abs_diff_eq(self, other, tolerance)
+        AbsDiffEqAll::all_abs_diff_eq(*self, *other, tolerance)
     }
 }
 
@@ -363,7 +364,7 @@ where
 
     #[inline]
     fn all_abs_diff_eq(&self, other: &&mut B, tolerance: &Self::AllTolerance) -> bool {
-        A::all_abs_diff_eq(self, other, tolerance)
+        AbsDiffEqAll::all_abs_diff_eq(*self, *other, tolerance)
     }
 }
 
@@ -405,7 +406,7 @@ where
 
     #[inline]
     fn all_abs_diff_eq(&self, other: &cell::Cell<B>, tolerance: &Self::AllTolerance) -> bool {
-        A::all_abs_diff_eq(&self.get(), &other.get(), tolerance)
+        AbsDiffEqAll::all_abs_diff_eq(&self.get(), &other.get(), tolerance)
     }
 }
 
@@ -417,7 +418,7 @@ where
 
     #[inline]
     fn all_abs_diff_eq(&self, other: &cell::RefCell<B>, tolerance: &Self::AllTolerance) -> bool {
-        A::all_abs_diff_eq(&self.borrow(), &other.borrow(), tolerance)
+        AbsDiffEqAll::all_abs_diff_eq(&*self.borrow(), &*other.borrow(), tolerance)
     }
 }
 
