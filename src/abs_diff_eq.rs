@@ -2,24 +2,6 @@ use core::cell;
 use core::fmt;
 use core::mem;
 
-/*
-#[inline]
-pub fn abs_diff_eq<A, B>(lhs: A, rhs: B, tolerance: &A::Tolerance) -> bool 
-where
-    A: AbsDiffEq<B>
-{
-    AbsDiffEq::abs_diff_eq(&lhs, &rhs, tolerance)
-}
-
-#[inline]
-pub fn abs_diff_ne<A, B>(lhs: A, rhs: B, tolerance: &A::Tolerance) -> bool 
-where
-    A: AbsDiffEq<B>
-{
-    AbsDiffEq::abs_diff_ne(&lhs, &rhs, tolerance)
-}
-*/
-
 
 pub trait AbsDiffEq<Rhs = Self>
 where
