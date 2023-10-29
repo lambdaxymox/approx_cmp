@@ -476,9 +476,9 @@ mod abs_diff_compare_f32_tests {
 
     #[test]
     fn test_eq_near_zero1() {
-        check_eq( f32::MIN_POSITIVE,  f32:: MIN_POSITIVE, f32::EPSILON);
-        check_eq( f32::MIN_POSITIVE, -f32::MIN_POSITIVE,  f32::EPSILON);
-        check_eq(-f32::MIN_POSITIVE,  f32::MIN_POSITIVE,  f32::EPSILON);
+        check_eq( f32::MIN_POSITIVE,  f32::MIN_POSITIVE, f32::EPSILON);
+        check_eq( f32::MIN_POSITIVE, -f32::MIN_POSITIVE, f32::EPSILON);
+        check_eq(-f32::MIN_POSITIVE,  f32::MIN_POSITIVE, f32::EPSILON);
 
         check_eq( f32::MIN_POSITIVE,  0_f32,             f32::EPSILON);
         check_eq( 0_f32,              f32::MIN_POSITIVE, f32::EPSILON);
@@ -538,7 +538,655 @@ mod abs_diff_compare_f32_tests {
     }
 }
 
+#[cfg(test)]
+mod abs_diff_compare_f64_tests {
+    use approx_cmp::{
+        AbsDiffEq,
+        AbsDiffAllEq,
+        assert_abs_diff_eq,
+        assert_abs_diff_ne,
+        abs_diff_eq,
+        abs_diff_ne,
+    };
 
+    fn check_abs_diff_eq(a: f64, b: f64, tolerance: f64) {
+        assert!(a.abs_diff_eq(&b, &tolerance));
+        assert!(abs_diff_eq!(a, b, abs_diff <= tolerance));
+        assert_abs_diff_eq!(a, b, abs_diff <= tolerance);
+        
+        assert!(a.abs_diff_all_eq(&b, &tolerance));
+        assert!(abs_diff_eq!(a, b, abs_diff_all <= tolerance));
+        assert_abs_diff_eq!(a, b, abs_diff_all <= tolerance);
+    }
+
+    fn check_abs_diff_ne(a: f64, b: f64, tolerance: f64) {
+        assert!(a.abs_diff_ne(&b, &tolerance));
+        assert!(abs_diff_ne!(a, b, abs_diff <= tolerance));
+        assert_abs_diff_ne!(a, b, abs_diff <= tolerance);
+
+        assert!(a.abs_diff_all_ne(&b, &tolerance));
+        assert!(abs_diff_ne!(a, b, abs_diff_all <= tolerance));
+        assert_abs_diff_ne!(a, b, abs_diff_all <= tolerance);
+    }
+
+    fn check_eq(a: f64, b: f64, tolerance: f64) {
+        check_abs_diff_eq(a, b, tolerance);
+        check_abs_diff_eq(b, a, tolerance);
+        check_abs_diff_eq(-a, -b, tolerance);
+        check_abs_diff_eq(-b, -a, tolerance);
+    }
+
+    fn check_ne(a: f64, b: f64, tolerance: f64) {
+        check_abs_diff_ne(a, b, tolerance);
+        check_abs_diff_ne(b, a, tolerance);
+        check_abs_diff_ne(-a, -b, tolerance);
+        check_abs_diff_ne(-b, -a, tolerance);
+    }
+
+    fn check_eq_self(value: f64) {
+        check_eq(value, value, 0.0);
+        check_eq(value, value, f64::MIN_POSITIVE);
+        check_eq(value, value, f64::MAX);
+        check_eq(value, value, f64::INFINITY);
+    }
+
+    #[test]
+    fn test_eq_zero() {
+        check_eq_self(0.0);
+
+        check_eq( 0.0,  0.0, f64::EPSILON);
+        check_eq(-0.0,  0.0, f64::EPSILON);
+        check_eq( 0.0, -0.0, f64::EPSILON);
+        check_eq(-0.0, -0.0, f64::EPSILON);
+    }
+
+    #[test]
+    fn test_ne_zero() {
+        check_ne( 0.000001_f64, 0.0_f64,      f64::EPSILON);
+        check_ne( 0.0_f64,      0.000001_f64, f64::EPSILON);
+        check_ne(-0.000001_f64, 0.0_f64,      f64::EPSILON);
+        check_ne( 0.0_f64,     -0.000001_f64, f64::EPSILON);
+    }
+
+    #[test]
+    fn test_eq_tolerance() {
+        check_eq( 0.0_f64,    1e-40_f64, 1e-40_f64);
+        check_eq( 1e-40_f64,  0.0_f64,   1e-40_f64);
+        check_eq( 0.0_f64,   -1e-40_f64, 1e-40_f64);
+        check_eq(-1e-40_f64,  0.0_f64,   1e-40_f64);
+    }
+
+    #[test]
+    fn test_ne_tolerance() {
+        check_ne( 1e-40_f64,  0.0_f64,   1e-41_f64);
+        check_ne( 0.0_f64,    1e-40_f64, 1e-41_f64);
+        check_ne(-1e-40_f64,  0.0_f64,   1e-41_f64);
+        check_ne( 0.0_f64,   -1e-40_f64, 1e-41_f64);
+    }
+
+    #[test]
+    fn test_eq_self() {
+        check_eq_self(-1.0_f64);
+        check_eq_self(-2.0_f64);
+        check_eq_self(-3.0_f64);
+        check_eq_self(-4.0_f64);
+        check_eq_self(-5.0_f64);
+        check_eq_self(-6.0_f64);
+        check_eq_self(-7.0_f64);
+        check_eq_self(-8.0_f64);
+        check_eq_self(-9.0_f64);
+        check_eq_self(-10.0_f64);
+        check_eq_self(-11.0_f64);
+        check_eq_self(-12.0_f64);
+        check_eq_self(-13.0_f64);
+        check_eq_self(-14.0_f64);
+        check_eq_self(-15.0_f64);
+        check_eq_self(-16.0_f64);
+
+        check_eq_self(1.0_f64);
+        check_eq_self(2.0_f64);
+        check_eq_self(3.0_f64);
+        check_eq_self(4.0_f64);
+        check_eq_self(5.0_f64);
+        check_eq_self(6.0_f64);
+        check_eq_self(7.0_f64);
+        check_eq_self(8.0_f64);
+        check_eq_self(9.0_f64);
+        check_eq_self(10.0_f64);
+        check_eq_self(11.0_f64);
+        check_eq_self(12.0_f64);
+        check_eq_self(13.0_f64);
+        check_eq_self(14.0_f64);
+        check_eq_self(15.0_f64);
+        check_eq_self(16.0_f64);
+    }
+
+    #[test]
+    fn test_ne() {
+        check_ne( 1.0_f64,  2.0_f64, f64::EPSILON);
+        check_ne( 1.0_f64,  2.0_f64, f64::MIN_POSITIVE);
+        check_ne( 1.0_f64, -2.0_f64, f64::EPSILON);
+        check_ne( 1.0_f64, -2.0_f64, f64::MIN_POSITIVE);
+        check_ne(-1.0_f64,  2.0_f64, f64::EPSILON);
+        check_ne(-1.0_f64,  2.0_f64, f64::MIN_POSITIVE);
+        check_ne(-1.0_f64, -2.0_f64, f64::EPSILON);
+        check_ne(-1.0_f64, -2.0_f64, f64::MIN_POSITIVE);
+    }
+
+    #[test]
+    fn test_eq_rounding1() {
+        check_eq( 10000000000000000.0_f64,  10000000000000001.0_f64, f64::EPSILON);
+        check_eq( 10000000000000001.0_f64,  10000000000000000.0_f64, f64::EPSILON);
+        check_eq(-10000000000000000.0_f64, -10000000000000001.0_f64, f64::EPSILON);
+        check_eq(-10000000000000001.0_f64, -10000000000000000.0_f64, f64::EPSILON);
+
+        check_eq( 100000000000000000.0_f64,  100000000000000001.0_f64, f64::EPSILON);
+        check_eq( 100000000000000001.0_f64,  100000000000000000.0_f64, f64::EPSILON);
+        check_eq(-100000000000000000.0_f64, -100000000000000001.0_f64, f64::EPSILON);
+        check_eq(-100000000000000001.0_f64, -100000000000000000.0_f64, f64::EPSILON);
+
+        check_eq( 1000000000000000000.0_f64,  1000000000000000001.0_f64, f64::EPSILON);
+        check_eq( 1000000000000000001.0_f64,  1000000000000000000.0_f64, f64::EPSILON);
+        check_eq(-1000000000000000000.0_f64, -1000000000000000001.0_f64, f64::EPSILON);
+        check_eq(-1000000000000000001.0_f64, -1000000000000000000.0_f64, f64::EPSILON);
+
+        check_eq( 10000000000000000000.0_f64,  10000000000000000001.0_f64, f64::EPSILON);
+        check_eq( 10000000000000000001.0_f64,  10000000000000000000.0_f64, f64::EPSILON);
+        check_eq(-10000000000000000000.0_f64, -10000000000000000001.0_f64, f64::EPSILON);
+        check_eq(-10000000000000000001.0_f64, -10000000000000000000.0_f64, f64::EPSILON);
+
+        check_eq( 100000000000000000000.0_f64,  100000000000000000001.0_f64, f64::EPSILON);
+        check_eq( 100000000000000000001.0_f64,  100000000000000000000.0_f64, f64::EPSILON);
+        check_eq(-100000000000000000000.0_f64, -100000000000000000001.0_f64, f64::EPSILON);
+        check_eq(-100000000000000000001.0_f64, -100000000000000000000.0_f64, f64::EPSILON);
+    }
+
+    #[test]
+    fn test_ne_rounding1() {
+        check_ne( 1000.0_f64,  1001.0_f64, f64::EPSILON);
+        check_ne( 1001.0_f64,  1000.0_f64, f64::EPSILON);
+        check_ne(-1000.0_f64, -1001.0_f64, f64::EPSILON);
+        check_ne(-1001.0_f64, -1000.0_f64, f64::EPSILON);
+
+        check_ne( 10000.0_f64,  10001.0_f64, f64::EPSILON);
+        check_ne( 10001.0_f64,  10000.0_f64, f64::EPSILON);
+        check_ne(-10000.0_f64, -10001.0_f64, f64::EPSILON);
+        check_ne(-10001.0_f64, -10000.0_f64, f64::EPSILON);
+
+        check_ne( 100000.0_f64,  100001.0_f64, f64::EPSILON);
+        check_ne( 100001.0_f64,  100000.0_f64, f64::EPSILON);
+        check_ne(-100000.0_f64, -100001.0_f64, f64::EPSILON);
+        check_ne(-100001.0_f64, -100000.0_f64, f64::EPSILON);
+
+        check_ne( 1000000.0_f64,  1000001.0_f64, f64::EPSILON);
+        check_ne( 1000001.0_f64,  1000000.0_f64, f64::EPSILON);
+        check_ne(-1000000.0_f64, -1000001.0_f64, f64::EPSILON);
+        check_ne(-1000001.0_f64, -1000000.0_f64, f64::EPSILON);
+        
+        check_ne( 10000000.0_f64,  10000001.0_f64, f64::EPSILON);
+        check_ne( 10000001.0_f64,  10000000.0_f64, f64::EPSILON);
+        check_ne(-10000000.0_f64, -10000001.0_f64, f64::EPSILON);
+        check_ne(-10000001.0_f64, -10000000.0_f64, f64::EPSILON);
+
+        check_ne( 100000000.0_f64,  100000001.0_f64, f64::EPSILON);
+        check_ne( 100000001.0_f64,  100000000.0_f64, f64::EPSILON);
+        check_ne(-100000000.0_f64, -100000001.0_f64, f64::EPSILON);
+        check_ne(-100000001.0_f64, -100000000.0_f64, f64::EPSILON);
+
+        check_ne( 1000000000.0_f64,  1000000001.0_f64, f64::EPSILON);
+        check_ne( 1000000001.0_f64,  1000000000.0_f64, f64::EPSILON);
+        check_ne(-1000000000.0_f64, -1000000001.0_f64, f64::EPSILON);
+        check_ne(-1000000001.0_f64, -1000000000.0_f64, f64::EPSILON);
+
+        check_ne( 10000000000.0_f64,  10000000001.0_f64, f64::EPSILON);
+        check_ne( 10000000001.0_f64,  10000000000.0_f64, f64::EPSILON);
+        check_ne(-10000000000.0_f64, -10000000001.0_f64, f64::EPSILON);
+        check_ne(-10000000001.0_f64, -10000000000.0_f64, f64::EPSILON);
+
+        check_ne( 100000000000.0_f64,  100000000001.0_f64, f64::EPSILON);
+        check_ne( 100000000001.0_f64,  100000000000.0_f64, f64::EPSILON);
+        check_ne(-100000000000.0_f64, -100000000001.0_f64, f64::EPSILON);
+        check_ne(-100000000001.0_f64, -100000000000.0_f64, f64::EPSILON);
+
+        check_ne( 1000000000000.0_f64,  1000000000001.0_f64, f64::EPSILON);
+        check_ne( 1000000000001.0_f64,  1000000000000.0_f64, f64::EPSILON);
+        check_ne(-1000000000000.0_f64, -1000000000001.0_f64, f64::EPSILON);
+        check_ne(-1000000000001.0_f64, -1000000000000.0_f64, f64::EPSILON);
+
+        check_ne( 10000000000000.0_f64,  10000000000001.0_f64, f64::EPSILON);
+        check_ne( 10000000000001.0_f64,  10000000000000.0_f64, f64::EPSILON);
+        check_ne(-10000000000000.0_f64, -10000000000001.0_f64, f64::EPSILON);
+        check_ne(-10000000000001.0_f64, -10000000000000.0_f64, f64::EPSILON);
+
+        check_ne( 100000000000000.0_f64,  100000000000001.0_f64, f64::EPSILON);
+        check_ne( 100000000000001.0_f64,  100000000000000.0_f64, f64::EPSILON);
+        check_ne(-100000000000000.0_f64, -100000000000001.0_f64, f64::EPSILON);
+        check_ne(-100000000000001.0_f64, -100000000000000.0_f64, f64::EPSILON);
+
+        check_ne( 1000000000000000.0_f64,  1000000000000001.0_f64, f64::EPSILON);
+        check_ne( 1000000000000001.0_f64,  1000000000000000.0_f64, f64::EPSILON);
+        check_ne(-1000000000000000.0_f64, -1000000000000001.0_f64, f64::EPSILON);
+        check_ne(-1000000000000001.0_f64, -1000000000000000.0_f64, f64::EPSILON);
+    }
+
+    #[test]
+    fn test_eq_rounding2() {
+        check_eq( 1.0000000000000001_f64,  1.0000000000000002_f64, f64::EPSILON);
+        check_eq( 1.0000000000000002_f64,  1.0000000000000001_f64, f64::EPSILON);
+        check_eq(-1.0000000000000001_f64, -1.0000000000000002_f64, f64::EPSILON);
+        check_eq(-1.0000000000000002_f64, -1.0000000000000001_f64, f64::EPSILON);
+
+        check_eq( 1.00000000000000001_f64,  1.00000000000000002_f64, f64::EPSILON);
+        check_eq( 1.00000000000000002_f64,  1.00000000000000001_f64, f64::EPSILON);
+        check_eq(-1.00000000000000001_f64, -1.00000000000000002_f64, f64::EPSILON);
+        check_eq(-1.00000000000000002_f64, -1.00000000000000001_f64, f64::EPSILON);
+
+        check_eq( 1.000000000000000001_f64,  1.000000000000000002_f64, f64::EPSILON);
+        check_eq( 1.000000000000000002_f64,  1.000000000000000001_f64, f64::EPSILON);
+        check_eq(-1.000000000000000001_f64, -1.000000000000000002_f64, f64::EPSILON);
+        check_eq(-1.000000000000000002_f64, -1.000000000000000001_f64, f64::EPSILON);
+
+        check_eq( 1.0000000000000000001_f64,  1.0000000000000000002_f64, f64::EPSILON);
+        check_eq( 1.0000000000000000002_f64,  1.0000000000000000001_f64, f64::EPSILON);
+        check_eq(-1.0000000000000000001_f64, -1.0000000000000000002_f64, f64::EPSILON);
+        check_eq(-1.0000000000000000002_f64, -1.0000000000000000001_f64, f64::EPSILON);
+
+        check_eq( 1.00000000000000000001_f64,  1.00000000000000000002_f64, f64::EPSILON);
+        check_eq( 1.00000000000000000002_f64,  1.00000000000000000001_f64, f64::EPSILON);
+        check_eq(-1.00000000000000000001_f64, -1.00000000000000000002_f64, f64::EPSILON);
+        check_eq(-1.00000000000000000002_f64, -1.00000000000000000001_f64, f64::EPSILON);
+    }
+
+    #[test]
+    fn test_ne_rounding2() {
+        check_ne( 1.01_f64,  1.02_f64, f64::EPSILON);
+        check_ne( 1.02_f64,  1.01_f64, f64::EPSILON);
+        check_ne(-1.01_f64, -1.02_f64, f64::EPSILON);
+        check_ne(-1.02_f64, -1.01_f64, f64::EPSILON);
+
+        check_ne( 1.001_f64,  1.002_f64, f64::EPSILON);
+        check_ne( 1.002_f64,  1.001_f64, f64::EPSILON);
+        check_ne(-1.001_f64, -1.002_f64, f64::EPSILON);
+        check_ne(-1.002_f64, -1.001_f64, f64::EPSILON);
+
+        check_ne( 1.0001_f64,  1.0002_f64, f64::EPSILON);
+        check_ne( 1.0002_f64,  1.0001_f64, f64::EPSILON);
+        check_ne(-1.0001_f64, -1.0002_f64, f64::EPSILON);
+        check_ne(-1.0002_f64, -1.0001_f64, f64::EPSILON);
+
+        check_ne( 1.00001_f64,  1.00002_f64, f64::EPSILON);
+        check_ne( 1.00002_f64,  1.00001_f64, f64::EPSILON);
+        check_ne(-1.00001_f64, -1.00002_f64, f64::EPSILON);
+        check_ne(-1.00002_f64, -1.00001_f64, f64::EPSILON);
+
+        check_ne( 1.000001_f64,  1.000002_f64, f64::EPSILON);
+        check_ne( 1.000002_f64,  1.000001_f64, f64::EPSILON);
+        check_ne(-1.000001_f64, -1.000002_f64, f64::EPSILON);
+        check_ne(-1.000002_f64, -1.000001_f64, f64::EPSILON);
+
+        check_ne( 1.0000001_f64,  1.0000002_f64, f64::EPSILON);
+        check_ne( 1.0000002_f64,  1.0000001_f64, f64::EPSILON);
+        check_ne(-1.0000001_f64, -1.0000002_f64, f64::EPSILON);
+        check_ne(-1.0000002_f64, -1.0000001_f64, f64::EPSILON);
+
+        check_ne( 1.00000001_f64,  1.00000002_f64, f64::EPSILON);
+        check_ne( 1.00000002_f64,  1.00000001_f64, f64::EPSILON);
+        check_ne(-1.00000001_f64, -1.00000002_f64, f64::EPSILON);
+        check_ne(-1.00000002_f64, -1.00000001_f64, f64::EPSILON);
+
+        check_ne( 1.000000001_f64,  1.000000002_f64, f64::EPSILON);
+        check_ne( 1.000000002_f64,  1.000000001_f64, f64::EPSILON);
+        check_ne(-1.000000001_f64, -1.000000002_f64, f64::EPSILON);
+        check_ne(-1.000000002_f64, -1.000000001_f64, f64::EPSILON);
+
+        check_ne( 1.0000000001_f64,  1.0000000002_f64, f64::EPSILON);
+        check_ne( 1.0000000002_f64,  1.0000000001_f64, f64::EPSILON);
+        check_ne(-1.0000000001_f64, -1.0000000002_f64, f64::EPSILON);
+        check_ne(-1.0000000002_f64, -1.0000000001_f64, f64::EPSILON);
+
+        check_ne( 1.00000000001_f64,  1.00000000002_f64, f64::EPSILON);
+        check_ne( 1.00000000002_f64,  1.00000000001_f64, f64::EPSILON);
+        check_ne(-1.00000000001_f64, -1.00000000002_f64, f64::EPSILON);
+        check_ne(-1.00000000002_f64, -1.00000000001_f64, f64::EPSILON);
+
+        check_ne( 1.000000000001_f64,  1.000000000002_f64, f64::EPSILON);
+        check_ne( 1.000000000002_f64,  1.000000000001_f64, f64::EPSILON);
+        check_ne(-1.000000000001_f64, -1.000000000002_f64, f64::EPSILON);
+        check_ne(-1.000000000002_f64, -1.000000000001_f64, f64::EPSILON);
+
+        check_ne( 1.0000000000001_f64,  1.0000000000002_f64, f64::EPSILON);
+        check_ne( 1.0000000000002_f64,  1.0000000000001_f64, f64::EPSILON);
+        check_ne(-1.0000000000001_f64, -1.0000000000002_f64, f64::EPSILON);
+        check_ne(-1.0000000000002_f64, -1.0000000000001_f64, f64::EPSILON);
+
+        check_ne( 1.00000000000001_f64,  1.00000000000002_f64, f64::EPSILON);
+        check_ne( 1.00000000000002_f64,  1.00000000000001_f64, f64::EPSILON);
+        check_ne(-1.00000000000001_f64, -1.00000000000002_f64, f64::EPSILON);
+        check_ne(-1.00000000000002_f64, -1.00000000000001_f64, f64::EPSILON);
+
+        check_ne( 1.000000000000001_f64,  1.000000000000002_f64, f64::EPSILON);
+        check_ne( 1.000000000000002_f64,  1.000000000000001_f64, f64::EPSILON);
+        check_ne(-1.000000000000001_f64, -1.000000000000002_f64, f64::EPSILON);
+        check_ne(-1.000000000000002_f64, -1.000000000000001_f64, f64::EPSILON);
+    }
+
+    #[test]
+    fn test_eq_max() {
+        check_eq( f64::MAX,  f64::MAX, f64::EPSILON);
+    }
+
+    #[test]
+    fn test_ne_max() {
+        check_ne( f64::MAX, -f64::MAX,           f64::EPSILON);
+        check_ne(-f64::MAX,  f64::MAX,           f64::EPSILON);
+        check_ne( f64::MAX,  f64::MAX / 2.0_f64, f64::EPSILON);
+        check_ne( f64::MAX, -f64::MAX / 2.0_f64, f64::EPSILON);
+        check_ne(-f64::MAX,  f64::MAX / 2.0_f64, f64::EPSILON);
+    }
+
+    #[test]
+    fn test_ne_nan1() {
+        check_ne( f64::NAN,  f64::NAN, 0_f64);
+        check_ne( f64::NAN, -f64::NAN, 0_f64);
+        check_ne(-f64::NAN,  f64::NAN, 0_f64);
+        check_ne(-f64::NAN, -f64::NAN, 0_f64);
+    }
+
+    #[test]
+    fn test_ne_nan2() {
+        for i in 0..=i16::MAX {
+            check_ne( f64::NAN , f64::NAN, 1_f64 / (i as f64));
+            check_ne( f64::NAN, -f64::NAN, 1_f64 / (i as f64));
+            check_ne(-f64::NAN,  f64::NAN, 1_f64 / (i as f64));
+            check_ne(-f64::NAN, -f64::NAN, 1_f64 / (i as f64));
+        }
+    }
+
+    #[test]
+    fn test_ne_nan3() {
+        for i in 0..=i16::MAX {
+            check_ne( f64::NAN , f64::NAN, i as f64);
+            check_ne( f64::NAN, -f64::NAN, i as f64);
+            check_ne(-f64::NAN,  f64::NAN, i as f64);
+            check_ne(-f64::NAN, -f64::NAN, i as f64);
+        }
+    }
+
+    #[test]
+    fn test_ne_nan4() {
+        check_ne(f64::NAN, f64::NAN, f64::EPSILON);
+        
+        check_ne( f64::NAN,  0.0_f64,  f64::EPSILON);
+        check_ne(-0_f64,     f64::NAN, f64::EPSILON);
+        check_ne( f64::NAN, -0.0_f64,  f64::EPSILON);
+        check_ne( 0_f64,     f64::NAN, f64::EPSILON);
+
+        check_ne( f64::NAN, f64::INFINITY,  f64::EPSILON);
+        check_ne( f64::INFINITY, f64::NAN,  f64::EPSILON);
+        check_ne( f64::NAN, -f64::INFINITY, f64::EPSILON);
+        check_ne(-f64::INFINITY, f64::NAN,  f64::EPSILON);
+
+        check_ne( f64::NAN, f64::MAX,  f64::EPSILON);
+        check_ne( f64::MAX, f64::NAN,  f64::EPSILON);
+        check_ne( f64::NAN, -f64::MAX, f64::EPSILON);
+        check_ne(-f64::MAX, f64::NAN,  f64::EPSILON);
+
+        check_ne( f64::NAN,          f64::MIN_POSITIVE,  f64::EPSILON);
+        check_ne( f64::MIN_POSITIVE, f64::NAN,           f64::EPSILON);
+        check_ne( f64::NAN,          -f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne(-f64::MIN_POSITIVE, f64::NAN,           f64::EPSILON);
+
+        check_ne( f64::NAN,  1_f64,    f64::EPSILON);
+        check_ne( f64::NAN, -1_f64,    f64::EPSILON);
+        check_ne( 1_f64,     f64::NAN, f64::EPSILON);
+        check_ne(-1_f64,     f64::NAN, f64::EPSILON);
+    }
+
+    #[test]
+    fn test_nan5() {
+        check_ne(f64::NAN, f64::NAN, 1_f64);
+        
+        check_ne( f64::NAN,  0.0_f64,  1_f64);
+        check_ne(-0_f64,     f64::NAN, 1_f64);
+        check_ne( f64::NAN, -0.0_f64,  1_f64);
+        check_ne( 0_f64,     f64::NAN, 1_f64);
+
+        check_ne( f64::NAN, f64::INFINITY,  1_f64);
+        check_ne( f64::INFINITY, f64::NAN,  1_f64);
+        check_ne( f64::NAN, -f64::INFINITY, 1_f64);
+        check_ne(-f64::INFINITY, f64::NAN,  1_f64);
+
+        check_ne( f64::NAN, f64::MAX,  1_f64);
+        check_ne( f64::MAX, f64::NAN,  1_f64);
+        check_ne( f64::NAN, -f64::MAX, 1_f64);
+        check_ne(-f64::MAX, f64::NAN,  1_f64);
+
+        check_ne( f64::NAN,          f64::MIN_POSITIVE,  1_f64);
+        check_ne( f64::MIN_POSITIVE, f64::NAN,           1_f64);
+        check_ne( f64::NAN,          -f64::MIN_POSITIVE, 1_f64);
+        check_ne(-f64::MIN_POSITIVE, f64::NAN,           1_f64);
+
+        check_ne( f64::NAN,  1_f64,    1_f64);
+        check_ne( f64::NAN, -1_f64,    1_f64);
+        check_ne( 1_f64,     f64::NAN, 1_f64);
+        check_ne(-1_f64,     f64::NAN, 1_f64);
+    }
+
+    #[test]
+    fn test_eq_infinity() {
+        check_eq(f64::INFINITY,     f64::INFINITY,     f64::INFINITY);
+        check_eq(f64::INFINITY,     f64::MAX,          f64::INFINITY);
+        check_eq(f64::INFINITY,     f64::NEG_INFINITY, f64::INFINITY);
+        check_eq(f64::NEG_INFINITY, f64::MAX,          f64::INFINITY);
+    }
+
+    #[test]
+    fn test_ne_infinity() {
+        // check_ne(f64::INFINITY,     f64::INFINITY,     f64::MAX);
+        check_ne(f64::INFINITY,     f64::MAX,          f64::MAX);
+        check_ne(f64::INFINITY,     f64::NEG_INFINITY, f64::MAX);
+        check_ne(f64::NEG_INFINITY, f64::MAX,          f64::MAX);
+    }
+
+    #[test]
+    fn test_eq_near_zero1() {
+        check_eq( f64::MIN_POSITIVE,  f64::MIN_POSITIVE, f64::EPSILON);
+        check_eq( f64::MIN_POSITIVE, -f64::MIN_POSITIVE, f64::EPSILON);
+        check_eq(-f64::MIN_POSITIVE,  f64::MIN_POSITIVE, f64::EPSILON);
+
+        check_eq( f64::MIN_POSITIVE,  0_f64,             f64::EPSILON);
+        check_eq( 0_f64,              f64::MIN_POSITIVE, f64::EPSILON);
+        check_eq(-f64::MIN_POSITIVE,  0_f64,             f64::EPSILON);
+        check_eq( 0_f64,             -f64::MIN_POSITIVE, f64::EPSILON);
+
+        check_eq( 0.0000000000000001_f64, -f64::MIN_POSITIVE,      f64::EPSILON);
+        check_eq( 0.0000000000000001_f64,  f64::MIN_POSITIVE,      f64::EPSILON);
+        check_eq( f64::MIN_POSITIVE,       0.0000000000000001_f64, f64::EPSILON);
+        check_eq(-f64::MIN_POSITIVE,       0.0000000000000001_f64, f64::EPSILON);
+    }
+
+    #[test]
+    fn test_eq_near_zero2() {
+        check_eq( 0.0000000010000001_f64,  0.0000000010000002_f64, f64::EPSILON);
+        check_eq( 0.0000000010000002_f64,  0.0000000010000001_f64, f64::EPSILON);
+        check_eq(-0.0000000010000001_f64, -0.0000000010000002_f64, f64::EPSILON);
+        check_eq(-0.0000000010000002_f64, -0.0000000010000001_f64, f64::EPSILON);
+    }
+
+    #[test]
+    fn test_eq_near_zero3() {
+        check_eq(1e-16_f64, -1e-16_f64, f64::EPSILON);
+        check_eq(1e-17_f64, -1e-17_f64, f64::EPSILON);
+        check_eq(1e-18_f64, -1e-18_f64, f64::EPSILON);
+        check_eq(1e-19_f64, -1e-19_f64, f64::EPSILON);
+        check_eq(1e-20_f64, -1e-20_f64, f64::EPSILON);
+        check_eq(1e-21_f64, -1e-21_f64, f64::EPSILON);
+        check_eq(1e-22_f64, -1e-22_f64, f64::EPSILON);
+        check_eq(1e-23_f64, -1e-23_f64, f64::EPSILON);
+        check_eq(1e-24_f64, -1e-24_f64, f64::EPSILON);
+        check_eq(1e-25_f64, -1e-25_f64, f64::EPSILON);
+        check_eq(1e-26_f64, -1e-26_f64, f64::EPSILON);
+        check_eq(1e-27_f64, -1e-27_f64, f64::EPSILON);
+        check_eq(1e-28_f64, -1e-28_f64, f64::EPSILON);
+    }
+
+    #[test]
+    fn test_ne_near_zero1() {
+        check_ne( 0.000001_f64,      -f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne( 0.000001_f64,       f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne( f64::MIN_POSITIVE,  0.000001_f64,      f64::EPSILON);
+        check_ne(-f64::MIN_POSITIVE,  0.000001_f64,      f64::EPSILON);
+
+        check_ne(-0.000001_f64,      -f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne(-0.000001_f64,       f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne( f64::MIN_POSITIVE, -0.000001_f64,      f64::EPSILON);
+        check_ne(-f64::MIN_POSITIVE, -0.000001_f64,      f64::EPSILON);
+
+        check_ne( 0.0000001_f64,     -f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne( 0.0000001_f64,      f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne( f64::MIN_POSITIVE,  0.0000001_f64,     f64::EPSILON);
+        check_ne(-f64::MIN_POSITIVE,  0.0000001_f64,     f64::EPSILON);
+
+        check_ne(-0.0000001_f64,     -f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne(-0.0000001_f64,      f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne( f64::MIN_POSITIVE, -0.0000001_f64,     f64::EPSILON);
+        check_ne(-f64::MIN_POSITIVE, -0.0000001_f64,     f64::EPSILON);
+
+        check_ne( 0.00000001_f64,    -f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne( 0.00000001_f64,     f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne( f64::MIN_POSITIVE,  0.00000001_f64,    f64::EPSILON);
+        check_ne(-f64::MIN_POSITIVE,  0.00000001_f64,    f64::EPSILON);
+
+        check_ne(-0.00000001_f64,    -f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne(-0.00000001_f64,     f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne( f64::MIN_POSITIVE, -0.00000001_f64,    f64::EPSILON);
+        check_ne(-f64::MIN_POSITIVE, -0.00000001_f64,    f64::EPSILON);
+
+        check_ne( 0.000000001_f64,   -f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne( 0.000000001_f64,    f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne( f64::MIN_POSITIVE,  0.000000001_f64,    f64::EPSILON);
+        check_ne(-f64::MIN_POSITIVE,  0.000000001_f64,    f64::EPSILON);
+
+        check_ne(-0.000000001_f64,   -f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne(-0.000000001_f64,    f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne( f64::MIN_POSITIVE, -0.000000001_f64,   f64::EPSILON);
+        check_ne(-f64::MIN_POSITIVE, -0.000000001_f64,   f64::EPSILON);
+
+        check_ne( 0.0000000001_f64,  -f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne( 0.0000000001_f64,   f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne( f64::MIN_POSITIVE,  0.0000000001_f64,  f64::EPSILON);
+        check_ne(-f64::MIN_POSITIVE,  0.0000000001_f64,  f64::EPSILON);
+
+        check_ne(-0.0000000001_f64,  -f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne(-0.0000000001_f64,   f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne( f64::MIN_POSITIVE, -0.0000000001_f64,  f64::EPSILON);
+        check_ne(-f64::MIN_POSITIVE, -0.0000000001_f64,  f64::EPSILON);
+
+        check_ne( 0.00000000001_f64, -f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne( 0.00000000001_f64,  f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne( f64::MIN_POSITIVE,  0.00000000001_f64, f64::EPSILON);
+        check_ne(-f64::MIN_POSITIVE,  0.00000000001_f64, f64::EPSILON);
+
+        check_ne(-0.00000000001_f64, -f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne(-0.00000000001_f64,  f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne( f64::MIN_POSITIVE, -0.00000000001_f64, f64::EPSILON);
+        check_ne(-f64::MIN_POSITIVE, -0.00000000001_f64, f64::EPSILON);
+
+        check_ne( 0.000000000001_f64, -f64::MIN_POSITIVE,  f64::EPSILON);
+        check_ne( 0.000000000001_f64,  f64::MIN_POSITIVE,  f64::EPSILON);
+        check_ne( f64::MIN_POSITIVE,   0.000000000001_f64, f64::EPSILON);
+        check_ne(-f64::MIN_POSITIVE,   0.000000000001_f64, f64::EPSILON);
+
+        check_ne(-0.000000000001_f64, -f64::MIN_POSITIVE,  f64::EPSILON);
+        check_ne(-0.000000000001_f64,  f64::MIN_POSITIVE,  f64::EPSILON);
+        check_ne( f64::MIN_POSITIVE,  -0.000000000001_f64, f64::EPSILON);
+        check_ne(-f64::MIN_POSITIVE,  -0.000000000001_f64, f64::EPSILON);
+
+        check_ne( 0.0000000000001_f64, -f64::MIN_POSITIVE,   f64::EPSILON);
+        check_ne( 0.0000000000001_f64,  f64::MIN_POSITIVE,   f64::EPSILON);
+        check_ne( f64::MIN_POSITIVE,    0.0000000000001_f64, f64::EPSILON);
+        check_ne(-f64::MIN_POSITIVE,    0.0000000000001_f64, f64::EPSILON);
+
+        check_ne(-0.0000000000001_f64, -f64::MIN_POSITIVE,   f64::EPSILON);
+        check_ne(-0.0000000000001_f64,  f64::MIN_POSITIVE,   f64::EPSILON);
+        check_ne( f64::MIN_POSITIVE,   -0.0000000000001_f64, f64::EPSILON);
+        check_ne(-f64::MIN_POSITIVE,   -0.0000000000001_f64, f64::EPSILON);
+
+        check_ne( 0.00000000000001_f64, -f64::MIN_POSITIVE,    f64::EPSILON);
+        check_ne( 0.00000000000001_f64,  f64::MIN_POSITIVE,    f64::EPSILON);
+        check_ne( f64::MIN_POSITIVE,     0.00000000000001_f64, f64::EPSILON);
+        check_ne(-f64::MIN_POSITIVE,     0.00000000000001_f64, f64::EPSILON);
+
+        check_ne(-0.00000000000001_f64, -f64::MIN_POSITIVE,    f64::EPSILON);
+        check_ne(-0.00000000000001_f64,  f64::MIN_POSITIVE,    f64::EPSILON);
+        check_ne( f64::MIN_POSITIVE,    -0.00000000000001_f64, f64::EPSILON);
+        check_ne(-f64::MIN_POSITIVE,    -0.00000000000001_f64, f64::EPSILON);
+
+        check_ne( 0.000000000000001_f64, -f64::MIN_POSITIVE,     f64::EPSILON);
+        check_ne( 0.000000000000001_f64,  f64::MIN_POSITIVE,     f64::EPSILON);
+        check_ne( f64::MIN_POSITIVE,      0.000000000000001_f64, f64::EPSILON);
+        check_ne(-f64::MIN_POSITIVE,      0.000000000000001_f64, f64::EPSILON);
+
+        check_ne(-0.000000000000001_f64, -f64::MIN_POSITIVE,     f64::EPSILON);
+        check_ne(-0.000000000000001_f64,  f64::MIN_POSITIVE,     f64::EPSILON);
+        check_ne( f64::MIN_POSITIVE,     -0.000000000000001_f64, f64::EPSILON);
+        check_ne(-f64::MIN_POSITIVE,     -0.000000000000001_f64, f64::EPSILON);
+    }
+
+    #[test]
+    fn test_ne_near_zero2() {
+        check_ne( 0.0000010000002_f64,  0.00000010000001_f64, f64::EPSILON);
+        check_ne( 0.0000010000001_f64,  0.00000010000002_f64, f64::EPSILON);
+        check_ne(-0.0000010000002_f64, -0.00000010000001_f64, f64::EPSILON);
+        check_ne(-0.0000010000001_f64, -0.00000010000002_f64, f64::EPSILON);
+
+        check_ne( 0.00000010000002_f64,  0.000000010000001_f64, f64::EPSILON);
+        check_ne( 0.00000010000001_f64,  0.000000010000002_f64, f64::EPSILON);
+        check_ne(-0.00000010000002_f64, -0.000000010000001_f64, f64::EPSILON);
+        check_ne(-0.00000010000001_f64, -0.000000010000002_f64, f64::EPSILON);
+
+        check_ne( 0.000000010000002_f64,  0.0000000010000001_f64, f64::EPSILON);
+        check_ne( 0.000000010000001_f64,  0.0000000010000002_f64, f64::EPSILON);
+        check_ne(-0.000000010000002_f64, -0.0000000010000001_f64, f64::EPSILON);
+        check_ne(-0.000000010000001_f64, -0.0000000010000002_f64, f64::EPSILON);
+
+        check_ne( 0.0000000010000002_f64,  0.00000000010000001_f64, f64::EPSILON);
+        check_ne( 0.0000000010000001_f64,  0.00000000010000002_f64, f64::EPSILON);
+        check_ne(-0.0000000010000002_f64, -0.00000000010000001_f64, f64::EPSILON);
+        check_ne(-0.0000000010000001_f64, -0.00000000010000002_f64, f64::EPSILON);
+
+        check_ne( 0.00000000010000002_f64,  0.000000000010000001_f64, f64::EPSILON);
+        check_ne( 0.00000000010000001_f64,  0.000000000010000002_f64, f64::EPSILON);
+        check_ne(-0.00000000010000002_f64, -0.000000000010000001_f64, f64::EPSILON);
+        check_ne(-0.00000000010000001_f64, -0.000000000010000002_f64, f64::EPSILON);
+
+        check_ne( 0.000000000010000002_f64,  0.0000000000010000001_f64, f64::EPSILON);
+        check_ne( 0.000000000010000001_f64,  0.0000000000010000002_f64, f64::EPSILON);
+        check_ne(-0.000000000010000002_f64, -0.0000000000010000001_f64, f64::EPSILON);
+        check_ne(-0.000000000010000001_f64, -0.0000000000010000002_f64, f64::EPSILON);
+
+        check_ne( 0.0000000000010000002_f64,  0.00000000000010000001_f64, f64::EPSILON);
+        check_ne( 0.0000000000010000001_f64,  0.00000000000010000002_f64, f64::EPSILON);
+        check_ne(-0.0000000000010000002_f64, -0.00000000000010000001_f64, f64::EPSILON);
+        check_ne(-0.0000000000010000001_f64, -0.00000000000010000002_f64, f64::EPSILON);
+
+        check_ne( 0.00000000000010000002_f64,  0.000000000000010000001_f64, f64::EPSILON);
+        check_ne( 0.00000000000010000001_f64,  0.000000000000010000002_f64, f64::EPSILON);
+        check_ne(-0.00000000000010000002_f64, -0.000000000000010000001_f64, f64::EPSILON);
+        check_ne(-0.00000000000010000001_f64, -0.000000000000010000002_f64, f64::EPSILON);
+
+        check_ne( 0.000000000000010000002_f64,  0.0000000000000010000001_f64, f64::EPSILON);
+        check_ne( 0.000000000000010000001_f64,  0.0000000000000010000002_f64, f64::EPSILON);
+        check_ne(-0.000000000000010000002_f64, -0.0000000000000010000001_f64, f64::EPSILON);
+        check_ne(-0.000000000000010000001_f64, -0.0000000000000010000002_f64, f64::EPSILON);
+
+        check_ne( 0.0000000000000010000002_f64,  0.00000000000000010000001_f64, f64::EPSILON);
+        check_ne( 0.0000000000000010000001_f64,  0.00000000000000010000002_f64, f64::EPSILON);
+        check_ne(-0.0000000000000010000002_f64, -0.00000000000000010000001_f64, f64::EPSILON);
+        check_ne(-0.0000000000000010000001_f64, -0.00000000000000010000002_f64, f64::EPSILON);
+    }
+}
+/*
 #[cfg(test)]
 mod abs_diff_compare_f64_tests {
     use approx_cmp::{
@@ -692,7 +1340,7 @@ mod abs_diff_compare_f64_tests {
         assert_abs_diff_ne!(-f64::MIN_POSITIVE, 0.000000000000001_f64, abs_diff <= f64::EPSILON);
     }
 }
-
+*/
 
 #[cfg(test)]
 mod abs_diff_array_tests {
