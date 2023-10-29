@@ -1,114 +1,6 @@
 extern crate approx_cmp;
 
 
-macro_rules! impl_abs_diff_eq_integer_exhaustive_tests {
-    ($(($module_name:ident, $T:ty)),*) => {$(
-        #[cfg(test)]
-        mod $module_name {
-            use approx_cmp::{
-                AbsDiffEq,
-                assert_abs_diff_eq,
-                assert_abs_diff_ne,
-                abs_diff_eq,
-                abs_diff_ne,
-            };
-    
-    
-            #[test]
-            fn test_abs_diff_eq_exhaustive() {
-                for i in <$T>::MIN..=<$T>::MAX {
-                    assert!(i.abs_diff_eq(&i, &0));
-                    assert!(abs_diff_eq!(i, i, abs_diff <= 0));
-                    assert_abs_diff_eq!(i, i, abs_diff <= 0);
-                }
-            }
-    
-            #[test]
-            fn test_abs_diff_ne_exhaustive() {
-                for i in <$T>::MIN..<$T>::MAX {
-                    assert!(i.abs_diff_ne(&(i + 1), &0));
-                    assert!(abs_diff_ne!(i, i + 1, abs_diff <= 0));
-                    assert_abs_diff_ne!(i, i + 1, abs_diff <= 0);
-
-                    assert!((i + 1).abs_diff_ne(&i, &0));
-                    assert!(abs_diff_ne!(i + 1, i, abs_diff <= 0));
-                    assert_abs_diff_ne!(i + 1, i, abs_diff <= 0);
-                }
-            }
-        }
-    )*};
-}
-
-impl_abs_diff_eq_integer_exhaustive_tests!(
-    (abs_diff_eq_u8_exhaustive_tests,  u8), 
-    (abs_diff_eq_u16_exhaustive_tests, u16), 
-    (abs_diff_eq_i8_exhaustive_tests,  i8), 
-    (abs_diff_eq_i16_exhaustive_tests, i16)
-);
-
-macro_rules! impl_abs_diff_eq_float_exact_exhaustive_tests {
-    ($(($module_name:ident, $FloatType:ty, $IntegerType:ty)),*) => {$(
-        #[cfg(test)]
-        mod $module_name {
-            use approx_cmp::{
-                AbsDiffEq,
-                assert_abs_diff_eq,
-                assert_abs_diff_ne,
-                abs_diff_eq,
-                abs_diff_ne,
-            };
-    
-            #[test]
-            fn test_abs_diff_eq_exactly_representable_exhaustive1() {
-                for i in <$IntegerType>::MIN..<$IntegerType>::MAX {
-                    assert!((i as $FloatType).abs_diff_eq(&(i as $FloatType), &0.0));
-                    assert!(abs_diff_eq!(i as $FloatType, i as $FloatType, abs_diff <= 0.0));
-                    assert_abs_diff_eq!(i as $FloatType, i as $FloatType, abs_diff <= 0.0);
-                }
-            }
-        
-            #[test]
-            fn test_abs_diff_eq_exactly_representable_exhaustive2() {
-                for i in <$IntegerType>::MIN..<$IntegerType>::MAX {
-                    assert_abs_diff_eq!(i as $FloatType, i as $FloatType, abs_diff <= 0.0);
-                }
-            }
-        
-            #[test]
-            fn test_abs_diff_ne_exactly_representable_exhaustive1() {
-                for i in <$IntegerType>::MIN..<$IntegerType>::MAX {
-                    assert!(((i + 1) as $FloatType).abs_diff_ne(&(i as $FloatType), &0.0));
-                    assert!(abs_diff_ne!((i + 1) as $FloatType, i as $FloatType, abs_diff <= 0.0));
-                    assert_abs_diff_ne!((i + 1) as $FloatType, i as $FloatType, abs_diff <= 0.0);
-
-                    assert!((i as $FloatType).abs_diff_ne(&((i + 1) as $FloatType), &0.0));
-                    assert!(abs_diff_ne!(i as $FloatType, (i + 1) as $FloatType, abs_diff <= 0.0));
-                    assert_abs_diff_ne!(i as $FloatType, (i + 1) as $FloatType, abs_diff <= 0.0);
-                }
-            }
-        
-            #[test]
-            fn test_abs_diff_ne_exactly_representable_exhaustive2() {
-                for i in <$IntegerType>::MIN..<$IntegerType>::MAX {
-                    assert_abs_diff_ne!((i + 1) as $FloatType, i as $FloatType, abs_diff <= 0.0);
-                    assert_abs_diff_ne!(i as $FloatType, (i + 1) as $FloatType, abs_diff <= 0.0);
-                }
-            }
-        }
-    )*};
-}
-
-impl_abs_diff_eq_float_exact_exhaustive_tests!(
-    (abs_diff_eq_f32_u8_exact_exhaustive_tests,  f32, u8),
-    (abs_diff_eq_f32_u16_exact_exhaustive_tests, f32, u16),
-    (abs_diff_eq_f32_i8_exact_exhaustive_tests,  f32, i8),
-    (abs_diff_eq_f32_i16_exact_exhaustive_tests, f32, i16),
-    (abs_diff_eq_f64_u8_exact_exhaustive_tests,  f64, u8),
-    (abs_diff_eq_f64_u16_exact_exhaustive_tests, f64, u16),
-    (abs_diff_eq_f64_i8_exact_exhaustive_tests,  f64, i8),
-    (abs_diff_eq_f64_i16_exact_exhaustive_tests, f64, i16)
-);
-
 #[cfg(test)]
 mod abs_diff_compare_f32_tests {
     use approx_cmp::{
@@ -1187,191 +1079,332 @@ mod abs_diff_compare_f64_tests {
     }
 }
 
+macro_rules! impl_abs_diff_eq_integer_exhaustive_tests {
+    ($(($module_name:ident, $T:ty)),*) => {$(
+        #[cfg(test)]
+        mod $module_name {
+            use approx_cmp::{
+                AbsDiffEq,
+                assert_abs_diff_eq,
+                assert_abs_diff_ne,
+                abs_diff_eq,
+                abs_diff_ne,
+            };
+    
+    
+            #[test]
+            fn test_abs_diff_eq_exhaustive() {
+                for i in <$T>::MIN..=<$T>::MAX {
+                    assert!(i.abs_diff_eq(&i, &0));
+                    assert!(abs_diff_eq!(i, i, abs_diff <= 0));
+                    assert_abs_diff_eq!(i, i, abs_diff <= 0);
+                }
+            }
+    
+            #[test]
+            fn test_abs_diff_ne_exhaustive() {
+                for i in <$T>::MIN..<$T>::MAX {
+                    assert!(i.abs_diff_ne(&(i + 1), &0));
+                    assert!(abs_diff_ne!(i, i + 1, abs_diff <= 0));
+                    assert_abs_diff_ne!(i, i + 1, abs_diff <= 0);
+
+                    assert!((i + 1).abs_diff_ne(&i, &0));
+                    assert!(abs_diff_ne!(i + 1, i, abs_diff <= 0));
+                    assert_abs_diff_ne!(i + 1, i, abs_diff <= 0);
+                }
+            }
+        }
+    )*};
+}
+
+impl_abs_diff_eq_integer_exhaustive_tests!(
+    (abs_diff_eq_u8_exhaustive_tests,  u8), 
+    (abs_diff_eq_u16_exhaustive_tests, u16), 
+    (abs_diff_eq_i8_exhaustive_tests,  i8), 
+    (abs_diff_eq_i16_exhaustive_tests, i16)
+);
+
+macro_rules! impl_abs_diff_eq_float_exact_exhaustive_tests {
+    ($(($module_name:ident, $FloatType:ty, $IntegerType:ty)),*) => {$(
+        #[cfg(test)]
+        mod $module_name {
+            use approx_cmp::{
+                AbsDiffEq,
+                assert_abs_diff_eq,
+                assert_abs_diff_ne,
+                abs_diff_eq,
+                abs_diff_ne,
+            };
+    
+            #[test]
+            fn test_abs_diff_eq_exactly_representable_exhaustive() {
+                for i in <$IntegerType>::MIN..<$IntegerType>::MAX {
+                    assert!((i as $FloatType).abs_diff_eq(&(i as $FloatType), &0.0));
+                    assert!(abs_diff_eq!(i as $FloatType, i as $FloatType, abs_diff <= 0.0));
+                    assert_abs_diff_eq!(i as $FloatType, i as $FloatType, abs_diff <= 0.0);
+                }
+            }
+        
+            #[test]
+            fn test_abs_diff_ne_exactly_representable_exhaustive1() {
+                for i in <$IntegerType>::MIN..<$IntegerType>::MAX {
+                    assert!(((i + 1) as $FloatType).abs_diff_ne(&(i as $FloatType), &0.0));
+                    assert!(abs_diff_ne!((i + 1) as $FloatType, i as $FloatType, abs_diff <= 0.0));
+                    assert_abs_diff_ne!((i + 1) as $FloatType, i as $FloatType, abs_diff <= 0.0);
+
+                    assert!((i as $FloatType).abs_diff_ne(&((i + 1) as $FloatType), &0.0));
+                    assert!(abs_diff_ne!(i as $FloatType, (i + 1) as $FloatType, abs_diff <= 0.0));
+                    assert_abs_diff_ne!(i as $FloatType, (i + 1) as $FloatType, abs_diff <= 0.0);
+                }
+            }
+        }
+    )*};
+}
+
+impl_abs_diff_eq_float_exact_exhaustive_tests!(
+    (abs_diff_eq_f32_u8_exact_exhaustive_tests,  f32, u8),
+    (abs_diff_eq_f32_u16_exact_exhaustive_tests, f32, u16),
+    (abs_diff_eq_f32_i8_exact_exhaustive_tests,  f32, i8),
+    (abs_diff_eq_f32_i16_exact_exhaustive_tests, f32, i16),
+    (abs_diff_eq_f64_u8_exact_exhaustive_tests,  f64, u8),
+    (abs_diff_eq_f64_u16_exact_exhaustive_tests, f64, u16),
+    (abs_diff_eq_f64_i8_exact_exhaustive_tests,  f64, i8),
+    (abs_diff_eq_f64_i16_exact_exhaustive_tests, f64, i16)
+);
+
+
 #[cfg(test)]
-mod abs_diff_array_tests {
+mod abs_diff_array_f32_tests {
     use approx_cmp::{
+        AbsDiffEq,
+        AbsDiffAllEq,
         assert_abs_diff_eq,
-        assert_abs_diff_ne
+        assert_abs_diff_ne,
+        abs_diff_eq,
+        abs_diff_ne,
     };
 
+    fn array_uniform<const N: usize>(value: f32) -> [f32; N] {
+        [value; N]
+    }
+
+    fn array_range<const N: usize>(min_value: f32) -> [f32; N] {
+        let mut array = [0_f32; N];
+        for i in 0..N {
+            array[i] = (min_value + (i as f32)) as f32;
+        }
+
+        array
+    }
+
+    fn check_eq_array<const N: usize>(value: f32) {
+        let lhs = array_uniform::<N>(value);
+        let rhs = array_uniform::<N>(value);
+        let max_abs_diff = array_uniform::<N>(f32::EPSILON);
+
+        assert!(lhs.abs_diff_eq(&rhs, &max_abs_diff));
+        assert!(abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff));
+        assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
+    }
+
+    fn check_ne_array<const N: usize>(value: f32, min_value: f32) {
+        let lhs = array_uniform::<N>(value);
+        let rhs = array_range::<N>(min_value);
+        let max_abs_diff = array_uniform::<N>(f32::EPSILON);
+
+        assert!(lhs.abs_diff_ne(&rhs, &max_abs_diff));
+        assert!(abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff));
+        assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+    }
+
+    fn check_all_eq_array<const N: usize>(value: f32) {
+        let lhs = array_uniform::<N>(value);
+        let rhs = array_uniform::<N>(value);
+
+        assert!(lhs.abs_diff_all_eq(&rhs, &f32::EPSILON));
+        assert!(abs_diff_eq!(lhs, rhs, abs_diff_all <= f32::EPSILON));
+        assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= f32::EPSILON);
+    }
+
+    fn check_all_ne_array<const N: usize>(value: f32, min_value: f32) {
+        let lhs = array_uniform::<N>(value);
+        let rhs = array_range::<N>(min_value);
+
+        assert!(lhs.abs_diff_all_ne(&rhs, &f32::EPSILON));
+        assert!(abs_diff_ne!(lhs, rhs, abs_diff_all <= f32::EPSILON));
+        assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= f32::EPSILON);
+    }
 
     #[test]
-    fn test_basic_eq_array2() {
-        let lhs = [1.0_f64, 1.0_f64];
-        let rhs = [1.0_f64, 1.0_f64];
+    fn test_eq_array_empty() {
+        check_eq_array::<0>(1_f32);
+        check_all_eq_array::<0>(1_f32);
+    }
 
+    #[test]
+    fn test_eq_array() {
+        check_eq_array::<1>(1_f32);
+        check_eq_array::<2>(1_f32);
+        check_eq_array::<3>(1_f32);
+        check_eq_array::<4>(1_f32);
+        check_eq_array::<8>(1_f32);
+        check_eq_array::<16>(1_f32);
+        check_eq_array::<32>(1_f32);
+        check_eq_array::<64>(1_f32);
+    }
+
+    #[test]
+    fn test_ne_array() {
+        check_ne_array::<1>(1_f32, 2_f32);
+        check_ne_array::<2>(1_f32, 2_f32);
+        check_ne_array::<3>(1_f32, 2_f32);
+        check_ne_array::<4>(1_f32, 2_f32);
+        check_ne_array::<8>(1_f32, 2_f32);
+        check_ne_array::<16>(1_f32, 2_f32);
+        check_ne_array::<32>(1_f32, 2_f32);
+        check_ne_array::<64>(1_f32, 2_f32);
+    }
+
+    #[test]
+    fn test_all_eq_array() {
+        check_all_eq_array::<1>(1_f32);
+        check_all_eq_array::<2>(1_f32);
+        check_all_eq_array::<3>(1_f32);
+        check_all_eq_array::<4>(1_f32);
+        check_all_eq_array::<8>(1_f32);
+        check_all_eq_array::<16>(1_f32);
+        check_all_eq_array::<32>(1_f32);
+        check_all_eq_array::<64>(1_f32);
+    }
+
+    #[test]
+    fn test_all_ne_array() {
+        check_all_ne_array::<1>(1_f32, 2_f32);
+        check_all_ne_array::<2>(1_f32, 2_f32);
+        check_all_ne_array::<3>(1_f32, 2_f32);
+        check_all_ne_array::<4>(1_f32, 2_f32);
+        check_all_ne_array::<8>(1_f32, 2_f32);
+        check_all_ne_array::<16>(1_f32, 2_f32);
+        check_all_ne_array::<32>(1_f32, 2_f32);
+        check_all_ne_array::<64>(1_f32, 2_f32);
+    }
+}
+
+
+#[cfg(test)]
+mod abs_diff_array_f64_tests {
+    use approx_cmp::{
+        AbsDiffEq,
+        AbsDiffAllEq,
+        assert_abs_diff_eq,
+        assert_abs_diff_ne,
+        abs_diff_eq,
+        abs_diff_ne,
+    };
+
+    fn array_uniform<const N: usize>(value: f64) -> [f64; N] {
+        [value; N]
+    }
+
+    fn array_range<const N: usize>(min_value: f64) -> [f64; N] {
+        let mut array = [0_f64; N];
+        for i in 0..N {
+            array[i] = (min_value + (i as f64)) as f64;
+        }
+
+        array
+    }
+
+    fn check_eq_array<const N: usize>(value: f64) {
+        let lhs = array_uniform::<N>(value);
+        let rhs = array_uniform::<N>(value);
+        let max_abs_diff = array_uniform::<N>(f64::EPSILON);
+
+        assert!(lhs.abs_diff_eq(&rhs, &max_abs_diff));
+        assert!(abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff));
+        assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
+    }
+
+    fn check_ne_array<const N: usize>(value: f64, min_value: f64) {
+        let lhs = array_uniform::<N>(value);
+        let rhs = array_range::<N>(min_value);
+        let max_abs_diff = array_uniform::<N>(f64::EPSILON);
+
+        assert!(lhs.abs_diff_ne(&rhs, &max_abs_diff));
+        assert!(abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff));
+        assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+    }
+
+    fn check_all_eq_array<const N: usize>(value: f64) {
+        let lhs = array_uniform::<N>(value);
+        let rhs = array_uniform::<N>(value);
+
+        assert!(lhs.abs_diff_all_eq(&rhs, &f64::EPSILON));
+        assert!(abs_diff_eq!(lhs, rhs, abs_diff_all <= f64::EPSILON));
         assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= f64::EPSILON);
     }
-    
-    #[test]
-    fn test_basic_ne_array2() {
-        let lhs = [1.0_f64, 1.0_f64];
-        let rhs = [2.0_f64, 3.0_f64];
 
-        assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= f64::EPSILON);
-    }
-    
-    #[test]
-    fn test_basic_eq_array3() {
-        let lhs = [1.0_f64, 1.0_f64, 1.0_f64];
-        let rhs =  [1.0_f64, 1.0_f64, 1.0_f64];
+    fn check_all_ne_array<const N: usize>(value: f64, min_value: f64) {
+        let lhs = array_uniform::<N>(value);
+        let rhs = array_range::<N>(min_value);
 
-        assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= f64::EPSILON);
+        assert!(lhs.abs_diff_all_ne(&rhs, &f64::EPSILON));
+        assert!(abs_diff_ne!(lhs, rhs, abs_diff_all <= f64::EPSILON));
+        assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= f64::EPSILON);
     }
-    
-    #[test]
-    fn test_basic_ne_array3() {
-        let lhs = [1.0_f64, 1.0_f64, 1.0_f64];
-        let rhs = [2.0_f64, 3.0_f64, 4.0_f64];
 
-        assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= f64::EPSILON);
-    }
-    
     #[test]
-    fn test_basic_eq_array4() {
-        let lhs = [1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64];
-        let rhs = [1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64];
-        
-        assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= f64::EPSILON);
+    fn test_eq_array_empty() {
+        check_eq_array::<0>(1_f64);
+        check_all_eq_array::<0>(1_f64);
     }
-    
-    #[test]
-    fn test_basic_ne_array4() {
-        let lhs = [1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64];
-        let rhs = [2.0_f64, 3.0_f64, 4.0_f64, 5.0_f64];
 
-        assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= f64::EPSILON);
-    }
-    
     #[test]
-    fn test_basic_eq_array8() {
-        let lhs = [1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64];
-        let rhs = [1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64];
-            
-        assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= f64::EPSILON);
+    fn test_eq_array() {
+        check_eq_array::<1>(1_f64);
+        check_eq_array::<2>(1_f64);
+        check_eq_array::<3>(1_f64);
+        check_eq_array::<4>(1_f64);
+        check_eq_array::<8>(1_f64);
+        check_eq_array::<16>(1_f64);
+        check_eq_array::<32>(1_f64);
+        check_eq_array::<64>(1_f64);
     }
-    
-    #[test]
-    fn test_basic_ne_array8() {
-        let lhs = [1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64];
-        let rhs = [2.0_f64, 3.0_f64, 4.0_f64, 5.0_f64, 6.0_f64, 7.0_f64, 8.0_f64, 9.0_f64];
 
-        assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= f64::EPSILON);
-    }
-    
     #[test]
-    fn test_basic_eq_array16() {
-        let lhs = [
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64
-        ];
-        let rhs = [
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64
-        ];
-        assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= f64::EPSILON);
+    fn test_ne_array() {
+        check_ne_array::<1>(1_f64, 2_f64);
+        check_ne_array::<2>(1_f64, 2_f64);
+        check_ne_array::<3>(1_f64, 2_f64);
+        check_ne_array::<4>(1_f64, 2_f64);
+        check_ne_array::<8>(1_f64, 2_f64);
+        check_ne_array::<16>(1_f64, 2_f64);
+        check_ne_array::<32>(1_f64, 2_f64);
+        check_ne_array::<64>(1_f64, 2_f64);
     }
-    
-    #[test]
-    fn test_basic_ne_array16() {
-        let lhs = [
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64
-        ];
-        let rhs = [
-            2.0_f64,  3.0_f64,  4.0_f64,  5.0_f64,  6.0_f64,  7.0_f64,  8.0_f64,  9.0_f64,
-            10.0_f64, 11.0_f64, 12.0_f64, 13.0_f64, 14.0_f64, 15.0_f64, 16.0_f64, 17.0_f64
-        ];
-        
-        assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= f64::EPSILON);
-    }
-    
-    #[test]
-    fn test_basic_eq_array32() {
-        let lhs = [
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64
-        ];
-        let rhs = [
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64
-        ];
-            
-        assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= f64::EPSILON);
-    }
-    
-    #[test]
-    fn test_basic_ne_array32() {
-        let lhs = [
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64
-        ];
-        let rhs = [
-            2.0_f64,  3.0_f64,  4.0_f64,  5.0_f64,  6.0_f64,  7.0_f64,  8.0_f64,  9.0_f64,
-            10.0_f64, 11.0_f64, 12.0_f64, 13.0_f64, 14.0_f64, 15.0_f64, 16.0_f64, 17.0_f64,
-            18.0_f64, 19.0_f64, 20.0_f64, 21.0_f64, 22.0_f64, 23.0_f64, 24.0_f64, 25.0_f64,
-            26.0_f64, 27.0_f64, 28.0_f64, 29.0_f64, 30.0_f64, 31.0_f64, 32.0_f64, 33.0_f64
-        ];
 
-        assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= f64::EPSILON);
-    }
-    
     #[test]
-    fn test_basic_eq_array64() {
-        let lhs = [
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64
-        ];
-        let rhs = [
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64
-        ];
-            
-        assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= f64::EPSILON);
+    fn test_all_eq_array() {
+        check_all_eq_array::<1>(1_f64);
+        check_all_eq_array::<2>(1_f64);
+        check_all_eq_array::<3>(1_f64);
+        check_all_eq_array::<4>(1_f64);
+        check_all_eq_array::<8>(1_f64);
+        check_all_eq_array::<16>(1_f64);
+        check_all_eq_array::<32>(1_f64);
+        check_all_eq_array::<64>(1_f64);
     }
-    
+
     #[test]
-    fn test_basic_ne_array64() {
-        let lhs = [
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64,
-            1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64, 1.0_f64
-        ];
-        let rhs = [
-            2.0_f64,  3.0_f64,  4.0_f64,  5.0_f64,  6.0_f64,  7.0_f64,  8.0_f64,  9.0_f64,
-            10.0_f64, 11.0_f64, 12.0_f64, 13.0_f64, 14.0_f64, 15.0_f64, 16.0_f64, 17.0_f64,
-            18.0_f64, 19.0_f64, 20.0_f64, 21.0_f64, 22.0_f64, 23.0_f64, 24.0_f64, 25.0_f64,
-            26.0_f64, 27.0_f64, 28.0_f64, 29.0_f64, 30.0_f64, 31.0_f64, 32.0_f64, 33.0_f64,
-            34.0_f64, 35.0_f64, 36.0_f64, 37.0_f64, 38.0_f64, 39.0_f64, 40.0_f64, 41.0_f64,
-            42.0_f64, 43.0_f64, 44.0_f64, 45.0_f64, 46.0_f64, 47.0_f64, 48.0_f64, 49.0_f64,
-            50.0_f64, 51.0_f64, 52.0_f64, 53.0_f64, 54.0_f64, 55.0_f64, 56.0_f64, 57.0_f64,
-            58.0_f64, 59.0_f64, 60.0_f64, 61.0_f64, 62.0_f64, 63.0_f64, 64.0_f64, 65.0_f64
-        ];
-        
-        assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= f64::EPSILON);
+    fn test_all_ne_array() {
+        check_all_ne_array::<1>(1_f64, 2_f64);
+        check_all_ne_array::<2>(1_f64, 2_f64);
+        check_all_ne_array::<3>(1_f64, 2_f64);
+        check_all_ne_array::<4>(1_f64, 2_f64);
+        check_all_ne_array::<8>(1_f64, 2_f64);
+        check_all_ne_array::<16>(1_f64, 2_f64);
+        check_all_ne_array::<32>(1_f64, 2_f64);
+        check_all_ne_array::<64>(1_f64, 2_f64);
     }
 }
 
