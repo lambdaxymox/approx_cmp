@@ -125,7 +125,7 @@ macro_rules! impl_abs_diff_eq_signed {
 
             #[inline]
             fn abs_diff_eq(&self, other: &$T, max_abs_diff: &Self::Tolerance) -> bool {
-                $T::abs(self - other) <= *max_abs_diff
+                (self == other) || ($T::abs(self - other) <= *max_abs_diff)
             }
         }
     )*};

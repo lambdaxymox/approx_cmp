@@ -95,6 +95,7 @@ macro_rules! impl_relative_eq_float {
                 }
             
                 // Now check whether `self` and `other` are really close together.
+                // This is necessary when `self` and `other` are near zero.
                 let abs_diff = $T::abs(self - other);
                 if abs_diff <= *max_abs_diff {
                     return true;
