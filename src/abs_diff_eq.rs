@@ -199,6 +199,23 @@ where
     }
 }
 
+impl<'a, 'b, A, B> AbsDiffEq<&'b [B]> for &'a [A]
+where
+    A: AbsDiffEq<B>,
+    A::Tolerance: Sized
+{
+    type Tolerance = [A::Tolerance];
+
+    #[inline]
+    fn abs_diff_eq(&self, other: &&'b [B], max_abs_diff: &Self::Tolerance) -> bool {
+        self.len() == other.len() && 
+        self.iter()
+            .zip(other.iter())
+            .zip(max_abs_diff.iter())
+            .all(|((a, b), tol)| a.abs_diff_eq(b, tol))
+    }
+}
+
 impl<A, B, const N: usize> AbsDiffEq<[B; N]> for [A; N]
 where
     A: AbsDiffEq<B>,
@@ -358,6 +375,21 @@ where
 
     #[inline]
     fn abs_diff_all_eq(&self, other: &[B], max_abs_diff: &Self::AllTolerance) -> bool {
+        self.len() == other.len() && 
+        self.iter()
+            .zip(other.iter())
+            .all(|(a, b)| a.abs_diff_all_eq(b, max_abs_diff))
+    }
+}
+
+impl<'a, 'b, A, B> AbsDiffAllEq<&'b [B]> for &'a [A]
+where
+    A: AbsDiffAllEq<B>
+{
+    type AllTolerance = A::AllTolerance;
+
+    #[inline]
+    fn abs_diff_all_eq(&self, other: &&'b [B], max_abs_diff: &Self::AllTolerance) -> bool {
         self.len() == other.len() && 
         self.iter()
             .zip(other.iter())
@@ -576,6 +608,43 @@ where
     }
 }
 
+impl<'a, 'b, A, B> AssertAbsDiffEq<&'b [B]> for &'a [A]
+where
+    A: AssertAbsDiffEq<B>,
+    A::Tolerance: Sized,
+    A::DebugTolerance: Sized,
+{
+    type DebugAbsDiff = Option<Vec<A::DebugAbsDiff>>;
+    type DebugTolerance = Option<Vec<A::DebugTolerance>>;
+
+    #[inline]
+    fn debug_abs_diff(&self, other: &&'b [B]) -> Self::DebugAbsDiff {
+        if self.len() == other.len() {
+            Some(self.iter()
+                .zip(other.iter())
+                .map(|(a, b)| a.debug_abs_diff(b))
+                .collect()
+            )
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_abs_diff_tolerance(&self, other: &&'b [B], max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        if (self.len() == other.len()) && (self.len() == max_abs_diff.len()) {
+            Some(self.iter()
+                .zip(other.iter())
+                .zip(max_abs_diff.iter())
+                .map(|((a, b), tol)| { AssertAbsDiffEq::debug_abs_diff_tolerance(a, b, tol) })
+                .collect()
+            )
+        } else {
+            None
+        }
+    }
+}
+
 #[inline(always)]
 fn uninit_array<T, const N: usize>() -> [mem::MaybeUninit<T>; N] {
     unsafe { 
@@ -757,6 +826,27 @@ where
 
     #[inline]
     fn debug_abs_diff_all_tolerance(&self, other: &[B], max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        if self.len() == other.len() {
+            Some(self.iter()
+                .zip(other.iter())
+                .map(|(a, b)| a.debug_abs_diff_all_tolerance(b, max_abs_diff))
+                .collect(),
+            )
+        } else {
+            None
+        }
+    }
+}
+
+impl<'a, 'b, A, B> AssertAbsDiffAllEq<&'b [B]> for &'a [A]
+where
+    A: AssertAbsDiffAllEq<B>,
+    A::AllDebugTolerance: Sized,
+{
+    type AllDebugTolerance = Option<Vec<A::AllDebugTolerance>>;
+
+    #[inline]
+    fn debug_abs_diff_all_tolerance(&self, other: &&'b [B], max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
         if self.len() == other.len() {
             Some(self.iter()
                 .zip(other.iter())

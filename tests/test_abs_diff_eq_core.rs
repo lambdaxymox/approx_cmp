@@ -1815,7 +1815,7 @@ mod abs_diff_eq_slice_tests {
         ];
 
         assert!(abs_diff_eq!(lhs[..], rhs[..], abs_diff <= max_abs_diff));
-        // assert_abs_diff_eq!(lhs[..], rhs[..], abs_diff <= &max_abs_diff);
+        assert_abs_diff_eq!(&lhs[..], &rhs[..], abs_diff <= max_abs_diff);
     }
 
     #[test]
@@ -1832,7 +1832,7 @@ mod abs_diff_eq_slice_tests {
         let max_abs_diff = [eps; 8];
 
         assert!(abs_diff_ne!(lhs[..], rhs[..], abs_diff <= max_abs_diff));
-        // assert_abs_diff_ne!(lhs[..], rhs[..], abs_diff <= max_abs_diff);
+        assert_abs_diff_ne!(&lhs[..], &rhs[..], abs_diff <= max_abs_diff);
     }
 
     #[test]
@@ -1852,7 +1852,7 @@ mod abs_diff_eq_slice_tests {
         ];
 
         assert!(abs_diff_ne!(lhs[..], rhs[..], abs_diff <= max_abs_diff));
-        // assert_abs_diff_ne!(lhs[..], rhs[..], abs_diff <= max_abs_diff);
+        assert_abs_diff_ne!(&lhs[..], &rhs[..], abs_diff <= max_abs_diff);
     }
 
     #[test]
@@ -1868,7 +1868,7 @@ mod abs_diff_eq_slice_tests {
         let max_abs_diff = 6.0_f32 * f32::EPSILON;
 
         assert!(abs_diff_eq!(lhs[..], rhs[..], abs_diff_all <= max_abs_diff));
-        // assert_abs_diff_eq!(lhs[..], rhs[..], abs_diff_all <= &max_abs_diff);
+        assert_abs_diff_eq!(&lhs[..], &rhs[..], abs_diff_all <= &max_abs_diff);
     }
 
     #[test]
@@ -1884,7 +1884,7 @@ mod abs_diff_eq_slice_tests {
         let max_abs_diff = 2.0_f32 * f32::EPSILON;
 
         assert!(abs_diff_ne!(lhs[..], rhs[..], abs_diff_all <= max_abs_diff));
-        // assert_abs_diff_ne!(lhs[..], rhs[..], abs_diff_all <= max_abs_diff);
+        assert_abs_diff_ne!(&lhs[..], &rhs[..], abs_diff_all <= max_abs_diff);
     }
 }
 
