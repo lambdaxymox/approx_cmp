@@ -1246,3 +1246,13 @@ macro_rules! assert_relative_ne {
     }};
 }
 
+#[macro_export]
+macro_rules! debug_assert_relative_eq {
+    ($($arg:tt)*) => (if cfg!(debug_assertions) { $crate::assert_relative_eq!($($arg)*); })
+}
+
+#[macro_export]
+macro_rules! debug_assert_relative_ne {
+    ($($arg:tt)*) => (if cfg!(debug_assertions) { $crate::assert_relative_ne!($($arg)*); })
+}
+

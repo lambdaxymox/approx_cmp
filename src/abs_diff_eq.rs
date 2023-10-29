@@ -1117,3 +1117,13 @@ macro_rules! assert_abs_diff_ne {
     }};
 }
 
+#[macro_export]
+macro_rules! debug_assert_abs_diff_eq {
+    ($($arg:tt)*) => (if cfg!(debug_assertions) { $crate::assert_abs_diff_eq!($($arg)*); })
+}
+
+#[macro_export]
+macro_rules! debug_assert_abs_diff_ne {
+    ($($arg:tt)*) => (if cfg!(debug_assertions) { $crate::assert_abs_diff_ne!($($arg)*); })
+}
+
