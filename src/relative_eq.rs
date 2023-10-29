@@ -34,16 +34,16 @@ where
     }
 }
 
-pub trait RelativeEqAll<Rhs = Self>
+pub trait RelativeAllEq<Rhs = Self>
 where
     Rhs: ?Sized
 {
     type AllTolerance: ?Sized;
 
-    fn all_relative_eq(&self, other: &Rhs, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool;
+    fn relative_all_eq(&self, other: &Rhs, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool;
 
-    fn all_relative_ne(&self, other: &Rhs, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
-        !Self::all_relative_eq(self, other, max_abs_diff, max_relative)
+    fn relative_all_ne(&self, other: &Rhs, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
+        !Self::relative_all_eq(self, other, max_abs_diff, max_relative)
     }
 }
 
@@ -61,15 +61,15 @@ where
     fn debug_relative_tolerance(&self, other: &Rhs, max_relative: &Self::Tolerance) -> Self::DebugTolerance;
 }
 
-pub trait AssertRelativeEqAll<Rhs = Self>: RelativeEqAll<Rhs> 
+pub trait AssertRelativeAllEq<Rhs = Self>: RelativeAllEq<Rhs> 
 where
     Rhs: ?Sized
 {
     type AllDebugTolerance: fmt::Debug;
 
-    fn debug_all_abs_diff_tolerance(&self, other: &Rhs, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance;
+    fn debug_abs_diff_all_tolerance(&self, other: &Rhs, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance;
 
-    fn debug_all_relative_tolerance(&self, other: &Rhs, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance;
+    fn debug_relative_all_tolerance(&self, other: &Rhs, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance;
 }
 
 #[macro_export]
@@ -273,11 +273,11 @@ where
 
 macro_rules! impl_relative_eq_all_float {
     ($($T:ident),* $(,)?) => {$(
-        impl RelativeEqAll for $T {
+        impl RelativeAllEq for $T {
             type AllTolerance = $T;
 
             #[inline]
-            fn all_relative_eq(&self, other: &Self, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
+            fn relative_all_eq(&self, other: &Self, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
                 self.relative_eq(other, max_abs_diff, max_relative)
             }
         }
@@ -287,120 +287,120 @@ macro_rules! impl_relative_eq_all_float {
 impl_relative_eq_all_float!(f32, f64);
 
 
-impl<A, B> RelativeEqAll<&B> for &A
+impl<A, B> RelativeAllEq<&B> for &A
 where
-    A: RelativeEqAll<B>
+    A: RelativeAllEq<B>
 {
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn all_relative_eq(&self, other: &&B, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
-        RelativeEqAll::all_relative_eq(*self, *other, max_abs_diff, max_relative)
+    fn relative_all_eq(&self, other: &&B, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
+        RelativeAllEq::relative_all_eq(*self, *other, max_abs_diff, max_relative)
     }
 }
 
-impl<A, B> RelativeEqAll<&mut B> for &A
+impl<A, B> RelativeAllEq<&mut B> for &A
 where
-    A: RelativeEqAll<B>
+    A: RelativeAllEq<B>
 {
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn all_relative_eq(&self, other: &&mut B, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
-        RelativeEqAll::all_relative_eq(*self, *other, max_abs_diff, max_relative)
+    fn relative_all_eq(&self, other: &&mut B, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
+        RelativeAllEq::relative_all_eq(*self, *other, max_abs_diff, max_relative)
     }
 }
 
-impl<A, B> RelativeEqAll<&B> for &mut A
+impl<A, B> RelativeAllEq<&B> for &mut A
 where
-    A: RelativeEqAll<B>
+    A: RelativeAllEq<B>
 {
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn all_relative_eq(&self, other: &&B, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
-        RelativeEqAll::all_relative_eq(*self, *other, max_abs_diff, max_relative)
+    fn relative_all_eq(&self, other: &&B, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
+        RelativeAllEq::relative_all_eq(*self, *other, max_abs_diff, max_relative)
     }
 }
 
-impl<A, B> RelativeEqAll<&mut B> for &mut A
+impl<A, B> RelativeAllEq<&mut B> for &mut A
 where
-    A: RelativeEqAll<B>
+    A: RelativeAllEq<B>
 {
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn all_relative_eq(&self, other: &&mut B, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
-        RelativeEqAll::all_relative_eq(*self, *other, max_abs_diff, max_relative)
+    fn relative_all_eq(&self, other: &&mut B, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
+        RelativeAllEq::relative_all_eq(*self, *other, max_abs_diff, max_relative)
     }
 }
 
-impl<A, B> RelativeEqAll<[B]> for [A]
+impl<A, B> RelativeAllEq<[B]> for [A]
 where
-    A: RelativeEqAll<B>
+    A: RelativeAllEq<B>
 {
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn all_relative_eq(&self, other: &[B], max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
+    fn relative_all_eq(&self, other: &[B], max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
         self.len() == other.len() && 
         self.iter()
             .zip(other.iter())
-            .all(|(a, b)| a.all_relative_eq(b, max_abs_diff, max_relative))
+            .all(|(a, b)| a.relative_all_eq(b, max_abs_diff, max_relative))
     }
 }
 
-impl<'a, 'b, A, B> RelativeEqAll<&'b [B]> for &'a [A]
+impl<'a, 'b, A, B> RelativeAllEq<&'b [B]> for &'a [A]
 where
-    A: RelativeEqAll<B>
+    A: RelativeAllEq<B>
 {
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn all_relative_eq(&self, other: &&'b [B], max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
+    fn relative_all_eq(&self, other: &&'b [B], max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
         self.len() == other.len() && 
         self.iter()
             .zip(other.iter())
-            .all(|(a, b)| a.all_relative_eq(b, max_abs_diff, max_relative))
+            .all(|(a, b)| a.relative_all_eq(b, max_abs_diff, max_relative))
     }
 }
 
-impl<A, B, const N: usize> RelativeEqAll<[B; N]> for [A; N]
+impl<A, B, const N: usize> RelativeAllEq<[B; N]> for [A; N]
 where
-    A: RelativeEqAll<B>
+    A: RelativeAllEq<B>
 {
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn all_relative_eq(&self, other: &[B; N], max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
+    fn relative_all_eq(&self, other: &[B; N], max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
         self.iter()
             .zip(other.iter())
-            .all(|(a, b)| a.all_relative_eq(b, max_abs_diff, max_relative))
+            .all(|(a, b)| a.relative_all_eq(b, max_abs_diff, max_relative))
     }
 }
 
-impl<A, B> RelativeEqAll<cell::Cell<B>> for cell::Cell<A> 
+impl<A, B> RelativeAllEq<cell::Cell<B>> for cell::Cell<A> 
 where
-    A: RelativeEqAll<B> + Copy,
+    A: RelativeAllEq<B> + Copy,
     B: Copy
 {
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn all_relative_eq(&self, other: &cell::Cell<B>, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
-        RelativeEqAll::all_relative_eq(&self.get(), &other.get(), max_abs_diff, max_relative)
+    fn relative_all_eq(&self, other: &cell::Cell<B>, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
+        RelativeAllEq::relative_all_eq(&self.get(), &other.get(), max_abs_diff, max_relative)
     }
 }
 
-impl<A, B> RelativeEqAll<cell::RefCell<B>> for cell::RefCell<A> 
+impl<A, B> RelativeAllEq<cell::RefCell<B>> for cell::RefCell<A> 
 where
-    A: RelativeEqAll<B> + ?Sized
+    A: RelativeAllEq<B> + ?Sized
 {
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn all_relative_eq(&self, other: &cell::RefCell<B>, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
-        RelativeEqAll::all_relative_eq(&*self.borrow(), &*other.borrow(), max_abs_diff, max_relative)
+    fn relative_all_eq(&self, other: &cell::RefCell<B>, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
+        RelativeAllEq::relative_all_eq(&*self.borrow(), &*other.borrow(), max_abs_diff, max_relative)
     }
 }
 
@@ -763,16 +763,16 @@ where
 
 macro_rules! impl_assert_relative_eq_all_float {
     ($($T:ident),* $(,)?) => {$(
-        impl AssertRelativeEqAll for $T {
+        impl AssertRelativeAllEq for $T {
             type AllDebugTolerance = Self::AllTolerance;
 
             #[inline]
-            fn debug_all_abs_diff_tolerance(&self, other: &$T, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+            fn debug_abs_diff_all_tolerance(&self, other: &$T, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
                 self.debug_abs_diff_tolerance(other, max_abs_diff)
             }
 
             #[inline]
-            fn debug_all_relative_tolerance(&self, other: &$T, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
+            fn debug_relative_all_tolerance(&self, other: &$T, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
                 self.debug_relative_tolerance(other, max_relative)
             }
         }
@@ -782,88 +782,88 @@ macro_rules! impl_assert_relative_eq_all_float {
 impl_assert_relative_eq_all_float!(f32, f64);
 
 
-impl<A, B> AssertRelativeEqAll<&B> for &A
+impl<A, B> AssertRelativeAllEq<&B> for &A
 where
-    A: AssertRelativeEqAll<B>
+    A: AssertRelativeAllEq<B>
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
     #[inline]
-    fn debug_all_abs_diff_tolerance(&self, other: &&B, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        AssertRelativeEqAll::debug_all_abs_diff_tolerance(*self, *other, max_abs_diff)
+    fn debug_abs_diff_all_tolerance(&self, other: &&B, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        AssertRelativeAllEq::debug_abs_diff_all_tolerance(*self, *other, max_abs_diff)
     }
 
     #[inline]
-    fn debug_all_relative_tolerance(&self, other: &&B, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        AssertRelativeEqAll::debug_all_relative_tolerance(*self, *other, max_relative)
+    fn debug_relative_all_tolerance(&self, other: &&B, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        AssertRelativeAllEq::debug_relative_all_tolerance(*self, *other, max_relative)
     }
 }
 
-impl<A, B> AssertRelativeEqAll<&mut B> for &A
+impl<A, B> AssertRelativeAllEq<&mut B> for &A
 where
-    A: AssertRelativeEqAll<B>
+    A: AssertRelativeAllEq<B>
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
     #[inline]
-    fn debug_all_abs_diff_tolerance(&self, other: &&mut B, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        AssertRelativeEqAll::debug_all_abs_diff_tolerance(*self, *other, max_abs_diff)
+    fn debug_abs_diff_all_tolerance(&self, other: &&mut B, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        AssertRelativeAllEq::debug_abs_diff_all_tolerance(*self, *other, max_abs_diff)
     }
 
     #[inline]
-    fn debug_all_relative_tolerance(&self, other: &&mut B, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        AssertRelativeEqAll::debug_all_relative_tolerance(*self, *other, max_relative)
+    fn debug_relative_all_tolerance(&self, other: &&mut B, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        AssertRelativeAllEq::debug_relative_all_tolerance(*self, *other, max_relative)
     }
 }
 
-impl<A, B> AssertRelativeEqAll<&B> for &mut A
+impl<A, B> AssertRelativeAllEq<&B> for &mut A
 where
-    A: AssertRelativeEqAll<B>
+    A: AssertRelativeAllEq<B>
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
     #[inline]
-    fn debug_all_abs_diff_tolerance(&self, other: &&B, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        AssertRelativeEqAll::debug_all_abs_diff_tolerance(*self, *other, max_abs_diff)
+    fn debug_abs_diff_all_tolerance(&self, other: &&B, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        AssertRelativeAllEq::debug_abs_diff_all_tolerance(*self, *other, max_abs_diff)
     }
 
     #[inline]
-    fn debug_all_relative_tolerance(&self, other: &&B, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        AssertRelativeEqAll::debug_all_relative_tolerance(*self, *other, max_relative)
+    fn debug_relative_all_tolerance(&self, other: &&B, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        AssertRelativeAllEq::debug_relative_all_tolerance(*self, *other, max_relative)
     }
 }
 
-impl<A, B> AssertRelativeEqAll<&mut B> for &mut A
+impl<A, B> AssertRelativeAllEq<&mut B> for &mut A
 where
-    A: AssertRelativeEqAll<B>
+    A: AssertRelativeAllEq<B>
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
     #[inline]
-    fn debug_all_abs_diff_tolerance(&self, other: &&mut B, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        AssertRelativeEqAll::debug_all_abs_diff_tolerance(*self, *other, max_abs_diff)
+    fn debug_abs_diff_all_tolerance(&self, other: &&mut B, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        AssertRelativeAllEq::debug_abs_diff_all_tolerance(*self, *other, max_abs_diff)
     }
 
     #[inline]
-    fn debug_all_relative_tolerance(&self, other: &&mut B, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        AssertRelativeEqAll::debug_all_relative_tolerance(*self, *other, max_relative)
+    fn debug_relative_all_tolerance(&self, other: &&mut B, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        AssertRelativeAllEq::debug_relative_all_tolerance(*self, *other, max_relative)
     }
 }
 
-impl<A, B> AssertRelativeEqAll<[B]> for [A]
+impl<A, B> AssertRelativeAllEq<[B]> for [A]
 where
-    A: AssertRelativeEqAll<B>,
+    A: AssertRelativeAllEq<B>,
     A::AllTolerance: Sized,
     A::AllDebugTolerance: Sized,
 {
     type AllDebugTolerance = Option<Vec<A::AllDebugTolerance>>;
 
     #[inline]
-    fn debug_all_abs_diff_tolerance(&self, other: &[B], max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_abs_diff_all_tolerance(&self, other: &[B], max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
         if self.len() == other.len()  {
             Some(self.iter()
                 .zip(other.iter())
-                .map(|(a, b)| { AssertRelativeEqAll::debug_all_abs_diff_tolerance(a, b, max_abs_diff) })
+                .map(|(a, b)| { AssertRelativeAllEq::debug_abs_diff_all_tolerance(a, b, max_abs_diff) })
                 .collect()
             )
         } else {
@@ -872,11 +872,11 @@ where
     }
 
     #[inline]
-    fn debug_all_relative_tolerance(&self, other: &[B], max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_relative_all_tolerance(&self, other: &[B], max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
         if self.len() == other.len()  {
             Some(self.iter()
                 .zip(other.iter())
-                .map(|(a, b)| { AssertRelativeEqAll::debug_all_relative_tolerance(a, b, max_relative) })
+                .map(|(a, b)| { AssertRelativeAllEq::debug_relative_all_tolerance(a, b, max_relative) })
                 .collect()
             )
         } else {
@@ -885,20 +885,20 @@ where
     }
 }
 
-impl<'a, 'b, A, B> AssertRelativeEqAll<&'b [B]> for &'a [A]
+impl<'a, 'b, A, B> AssertRelativeAllEq<&'b [B]> for &'a [A]
 where
-    A: AssertRelativeEqAll<B>,
+    A: AssertRelativeAllEq<B>,
     A::AllTolerance: Sized,
     A::AllDebugTolerance: Sized,
 {
     type AllDebugTolerance = Option<Vec<A::AllDebugTolerance>>;
 
     #[inline]
-    fn debug_all_abs_diff_tolerance(&self, other: &&'b [B], max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_abs_diff_all_tolerance(&self, other: &&'b [B], max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
         if self.len() == other.len()  {
             Some(self.iter()
                 .zip(other.iter())
-                .map(|(a, b)| { AssertRelativeEqAll::debug_all_abs_diff_tolerance(a, b, max_abs_diff) })
+                .map(|(a, b)| { AssertRelativeAllEq::debug_abs_diff_all_tolerance(a, b, max_abs_diff) })
                 .collect()
             )
         } else {
@@ -907,11 +907,11 @@ where
     }
 
     #[inline]
-    fn debug_all_relative_tolerance(&self, other: &&'b [B], max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_relative_all_tolerance(&self, other: &&'b [B], max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
         if self.len() == other.len()  {
             Some(self.iter()
                 .zip(other.iter())
-                .map(|(a, b)| { AssertRelativeEqAll::debug_all_relative_tolerance(a, b, max_relative) })
+                .map(|(a, b)| { AssertRelativeAllEq::debug_relative_all_tolerance(a, b, max_relative) })
                 .collect()
             )
         } else {
@@ -920,17 +920,17 @@ where
     }
 }
 
-impl<A, B, const N: usize> AssertRelativeEqAll<[B; N]> for [A; N]
+impl<A, B, const N: usize> AssertRelativeAllEq<[B; N]> for [A; N]
 where
-    A: AssertRelativeEqAll<B>,
+    A: AssertRelativeAllEq<B>,
 {
     type AllDebugTolerance = [A::AllDebugTolerance; N];
 
     #[inline]
-    fn debug_all_abs_diff_tolerance(&self, other: &[B; N], max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_abs_diff_all_tolerance(&self, other: &[B; N], max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
         let mut result: [mem::MaybeUninit<A::AllDebugTolerance>; N] = uninit_array();
         for i in 0..N {
-            result[i] = mem::MaybeUninit::new(self[i].debug_all_abs_diff_tolerance(&other[i], max_abs_diff));
+            result[i] = mem::MaybeUninit::new(self[i].debug_abs_diff_all_tolerance(&other[i], max_abs_diff));
         }
 
         unsafe { 
@@ -939,10 +939,10 @@ where
     }
 
     #[inline]
-    fn debug_all_relative_tolerance(&self, other: &[B; N], max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_relative_all_tolerance(&self, other: &[B; N], max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
         let mut result: [mem::MaybeUninit<A::AllDebugTolerance>; N] = uninit_array();
         for i in 0..N {
-            result[i] = mem::MaybeUninit::new(self[i].debug_all_relative_tolerance(&other[i], max_relative));
+            result[i] = mem::MaybeUninit::new(self[i].debug_relative_all_tolerance(&other[i], max_relative));
         }
 
         unsafe { 
@@ -951,39 +951,39 @@ where
     }
 }
 
-impl<A, B> AssertRelativeEqAll<cell::Cell<B>> for cell::Cell<A> 
+impl<A, B> AssertRelativeAllEq<cell::Cell<B>> for cell::Cell<A> 
 where
-    A: AssertRelativeEqAll<B> + Copy,
+    A: AssertRelativeAllEq<B> + Copy,
     B: Copy
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
     #[inline]
-    fn debug_all_abs_diff_tolerance(&self, other: &cell::Cell<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        AssertRelativeEqAll::debug_all_abs_diff_tolerance(&self.get(), &other.get(), max_abs_diff)
+    fn debug_abs_diff_all_tolerance(&self, other: &cell::Cell<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        AssertRelativeAllEq::debug_abs_diff_all_tolerance(&self.get(), &other.get(), max_abs_diff)
     }
 
     #[inline]
-    fn debug_all_relative_tolerance(&self, other: &cell::Cell<B>, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        AssertRelativeEqAll::debug_all_relative_tolerance(&self.get(), &other.get(), max_relative)
+    fn debug_relative_all_tolerance(&self, other: &cell::Cell<B>, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        AssertRelativeAllEq::debug_relative_all_tolerance(&self.get(), &other.get(), max_relative)
     }
 }
 
-impl<A, B> AssertRelativeEqAll<cell::RefCell<B>> for cell::RefCell<A> 
+impl<A, B> AssertRelativeAllEq<cell::RefCell<B>> for cell::RefCell<A> 
 where
-    A: AssertRelativeEqAll<B> + Copy,
+    A: AssertRelativeAllEq<B> + Copy,
     B: Copy
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
     #[inline]
-    fn debug_all_abs_diff_tolerance(&self, other: &cell::RefCell<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        AssertRelativeEqAll::debug_all_relative_tolerance(&*self.borrow(), &*other.borrow(), max_abs_diff)
+    fn debug_abs_diff_all_tolerance(&self, other: &cell::RefCell<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        AssertRelativeAllEq::debug_relative_all_tolerance(&*self.borrow(), &*other.borrow(), max_abs_diff)
     }
 
     #[inline]
-    fn debug_all_relative_tolerance(&self, other: &cell::RefCell<B>, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        AssertRelativeEqAll::debug_all_relative_tolerance(&*self.borrow(), &*other.borrow(), max_relative)
+    fn debug_relative_all_tolerance(&self, other: &cell::RefCell<B>, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        AssertRelativeAllEq::debug_relative_all_tolerance(&*self.borrow(), &*other.borrow(), max_relative)
     }
 }
 
@@ -1013,19 +1013,19 @@ impl RelativeCmp {
     #[inline]
     pub fn all_eq<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance, max_relative: &A::AllTolerance) -> bool 
     where
-        A: RelativeEqAll<B> + ?Sized,
+        A: RelativeAllEq<B> + ?Sized,
         B: ?Sized
     {
-        A::all_relative_eq(lhs, rhs, max_abs_diff, max_relative)
+        A::relative_all_eq(lhs, rhs, max_abs_diff, max_relative)
     }
 
     #[inline]
     pub fn all_ne<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance, max_relative: &A::AllTolerance) -> bool 
     where
-        A: RelativeEqAll<B> + ?Sized,
+        A: RelativeAllEq<B> + ?Sized,
         B: ?Sized
     {
-        A::all_relative_ne(lhs, rhs, max_abs_diff, max_relative)
+        A::relative_all_ne(lhs, rhs, max_abs_diff, max_relative)
     }
 }
 
@@ -1045,9 +1045,9 @@ impl RelativeCmpOpTol {
     #[inline]
     pub fn abs_diff_all<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance) -> A::AllDebugTolerance 
     where
-        A: RelativeEqAll<B> + AssertRelativeEqAll<B>
+        A: RelativeAllEq<B> + AssertRelativeAllEq<B>
     {
-        A::debug_all_abs_diff_tolerance(lhs, rhs, max_abs_diff)
+        A::debug_abs_diff_all_tolerance(lhs, rhs, max_abs_diff)
     }
 
     #[inline]
@@ -1061,9 +1061,9 @@ impl RelativeCmpOpTol {
     #[inline]
     pub fn relative_all<A, B>(lhs: &A, rhs: &B, max_relative: &A::AllTolerance) -> A::AllDebugTolerance
     where
-        A: RelativeEqAll<B> + AssertRelativeEqAll<B>
+        A: RelativeAllEq<B> + AssertRelativeAllEq<B>
     {
-        A::debug_all_relative_tolerance(lhs,rhs, max_relative)
+        A::debug_relative_all_tolerance(lhs,rhs, max_relative)
     }
 }
 
