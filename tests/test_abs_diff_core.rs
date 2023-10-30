@@ -2,7 +2,7 @@ extern crate approx_cmp;
 
 
 #[cfg(test)]
-mod abs_diff_compare_f32_tests {
+mod abs_diff_eq_f32_tests {
     use approx_cmp::{
         AbsDiffEq,
         AbsDiffAllEq,
@@ -431,7 +431,7 @@ mod abs_diff_compare_f32_tests {
 }
 
 #[cfg(test)]
-mod abs_diff_compare_f64_tests {
+mod abs_diff_eq_f64_tests {
     use approx_cmp::{
         AbsDiffEq,
         AbsDiffAllEq,
@@ -1174,7 +1174,7 @@ impl_abs_diff_eq_float_exact_exhaustive_tests!(
 
 
 #[cfg(test)]
-mod abs_diff_array_f32_tests {
+mod abs_diff_eq_array_f32_tests {
     use approx_cmp::{
         AbsDiffEq,
         AbsDiffAllEq,
@@ -1292,7 +1292,7 @@ mod abs_diff_array_f32_tests {
 
 
 #[cfg(test)]
-mod abs_diff_array_f64_tests {
+mod abs_diff_eq_array_f64_tests {
     use approx_cmp::{
         AbsDiffEq,
         AbsDiffAllEq,
@@ -1410,7 +1410,7 @@ mod abs_diff_array_f64_tests {
 }
 
 #[cfg(test)]
-mod abs_diff_array_f32_debug_tests {
+mod abs_diff_eq_array_f32_debug_tests {
     use approx_cmp::{
         AssertAbsDiffEq,
         AssertAbsDiffAllEq,
@@ -1469,7 +1469,7 @@ mod abs_diff_array_f32_debug_tests {
     }
 
     #[test]
-    fn test_debug_abs_diff_all() {
+    fn test_debug_abs_diff_all_tolerance1() {
         let lhs = array_uniform::<32>(1_f32);
         let rhs = array_uniform::<32>(1_f32);
         let tolerance = 4.0_f32 * f32::EPSILON;
@@ -1479,7 +1479,7 @@ mod abs_diff_array_f32_debug_tests {
     }
 
     #[test]
-    fn test_debug_abs_diff_all_tolerance() {
+    fn test_debug_abs_diff_all_tolerance2() {
         let lhs = array_uniform::<32>(1_f32);
         let rhs = array_range::<32>(2_f32);
         let tolerance = 4.0_f32 * f32::EPSILON;
@@ -1490,7 +1490,7 @@ mod abs_diff_array_f32_debug_tests {
 }
 
 #[cfg(test)]
-mod abs_diff_array_f64_debug_tests {
+mod abs_diff_eq_array_f64_debug_tests {
     use approx_cmp::{
         AssertAbsDiffEq,
         AssertAbsDiffAllEq,
@@ -1549,7 +1549,7 @@ mod abs_diff_array_f64_debug_tests {
     }
 
     #[test]
-    fn test_debug_abs_diff_all() {
+    fn test_debug_abs_diff_all_tolerance1() {
         let lhs = array_uniform::<32>(1_f64);
         let rhs = array_uniform::<32>(1_f64);
         let tolerance = 4.0_f64 * f64::EPSILON;
@@ -1559,7 +1559,7 @@ mod abs_diff_array_f64_debug_tests {
     }
 
     #[test]
-    fn test_debug_abs_diff_all_tolerance() {
+    fn test_debug_abs_diff_all_tolerance2() {
         let lhs = array_uniform::<32>(1_f64);
         let rhs = array_range::<32>(2_f64);
         let tolerance = 4.0_f64 * f64::EPSILON;
@@ -1570,7 +1570,7 @@ mod abs_diff_array_f64_debug_tests {
 }
 
 #[cfg(test)]
-mod abs_diff_ref_tests {
+mod abs_diff_eq_ref_tests {
     use approx_cmp::{
         AssertAbsDiffEq,
         AssertAbsDiffAllEq,
