@@ -2,12 +2,15 @@ extern crate approx_cmp;
 
 
 #[cfg(test)]
-mod abs_diff_eq_box_tests {
+mod relative_eq_box_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
-        AssertAbsDiffAllEq,
-        assert_abs_diff_eq,
-        assert_abs_diff_ne,
+        AssertRelativeEq,
+        AssertRelativeAllEq,
+        assert_relative_eq,
+        assert_relative_ne,
+    };
+    use std::boxed::{
+        Box,
     };
 
 
@@ -26,8 +29,12 @@ mod abs_diff_eq_box_tests {
             1.0 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
             1.0 * eps, 1.0 * eps, 4.0 * eps, 4.0 * eps,
         ];
+        let max_relative = [
+            1.0 * eps, 2.0 * eps, 2.0 * eps, 2.0 * eps,
+            1.0 * eps, 1.0 * eps, 2.0 * eps, 2.0 * eps,
+        ];
 
-        assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_relative_eq!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
     }
 
     #[test]
@@ -45,8 +52,12 @@ mod abs_diff_eq_box_tests {
             0.5 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
             0.5 * eps, 0.5 * eps, 4.0 * eps, 4.0 * eps,
         ];
+        let max_relative = [
+            0.5 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
+            0.5 * eps, 0.5 * eps, 4.0 * eps, 4.0 * eps,
+        ];
 
-        assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
     }
 
     #[test]
@@ -64,8 +75,9 @@ mod abs_diff_eq_box_tests {
             1.0 * eps, 2.0 * eps, 2.0 * eps, 2.0 * eps,
             1.0 * eps, 1.0 * eps, 2.0 * eps, 2.0 * eps,
         ];
+        let max_relative = [eps; 8];
 
-        assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
     }
 
     #[test]
@@ -79,8 +91,9 @@ mod abs_diff_eq_box_tests {
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let max_abs_diff = 4.0 * f32::EPSILON;
+        let max_relative = 4.0 * f32::EPSILON;
 
-        assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_relative_eq!(lhs, rhs, abs_diff_all <= max_abs_diff, relative_all <= max_relative);
     }
 
     #[test]
@@ -94,8 +107,9 @@ mod abs_diff_eq_box_tests {
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let max_abs_diff = 2.0 * f32::EPSILON;
+        let max_relative = 1.0 * f32::EPSILON;
 
-        assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_relative_ne!(lhs, rhs, abs_diff_all <= max_abs_diff, relative_all <= max_relative);
     }
 
     #[test]
@@ -158,16 +172,35 @@ mod abs_diff_eq_box_tests {
 
         assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), max_abs_diff);
     }
+
+    #[test]
+    fn test_debug_relative_tolerance() {
+        let lhs = Box::new([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
+        let rhs = Box::new([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
+        let max_relative = [0.10_f32, 0.20_f32, 0.30_f32, 0.40_f32];
+
+        assert_eq!(lhs.debug_relative_tolerance(&rhs, &max_relative), max_relative);
+    }
+
+    #[test]
+    fn test_debug_relative_all_tolerance() {
+        let lhs = Box::new([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
+        let rhs = Box::new([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
+        let max_relative_all = 0.20_f32;
+        let max_relative = [max_relative_all; 4];
+
+        assert_eq!(lhs.debug_relative_all_tolerance(&rhs, &max_relative_all), max_relative);
+    }
 }
 
 
 #[cfg(test)]
-mod abs_diff_eq_rc_tests {
+mod relative_eq_rc_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
-        AssertAbsDiffAllEq,
-        assert_abs_diff_eq,
-        assert_abs_diff_ne,
+        AssertRelativeEq,
+        AssertRelativeAllEq,
+        assert_relative_eq,
+        assert_relative_ne,
     };
     use std::rc::{
         Rc,
@@ -189,8 +222,12 @@ mod abs_diff_eq_rc_tests {
             1.0 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
             1.0 * eps, 1.0 * eps, 4.0 * eps, 4.0 * eps,
         ];
+        let max_relative = [
+            1.0 * eps, 2.0 * eps, 2.0 * eps, 2.0 * eps,
+            1.0 * eps, 1.0 * eps, 2.0 * eps, 2.0 * eps,
+        ];
 
-        assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_relative_eq!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
     }
 
     #[test]
@@ -208,8 +245,12 @@ mod abs_diff_eq_rc_tests {
             0.5 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
             0.5 * eps, 0.5 * eps, 4.0 * eps, 4.0 * eps,
         ];
+        let max_relative = [
+            0.5 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
+            0.5 * eps, 0.5 * eps, 4.0 * eps, 4.0 * eps,
+        ];
 
-        assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
     }
 
     #[test]
@@ -227,8 +268,9 @@ mod abs_diff_eq_rc_tests {
             1.0 * eps, 2.0 * eps, 2.0 * eps, 2.0 * eps,
             1.0 * eps, 1.0 * eps, 2.0 * eps, 2.0 * eps,
         ];
+        let max_relative = [eps; 8];
 
-        assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
     }
 
     #[test]
@@ -242,8 +284,9 @@ mod abs_diff_eq_rc_tests {
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let max_abs_diff = 4.0 * f32::EPSILON;
+        let max_relative = 4.0 * f32::EPSILON;
 
-        assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_relative_eq!(lhs, rhs, abs_diff_all <= max_abs_diff, relative_all <= max_relative);
     }
 
     #[test]
@@ -257,8 +300,9 @@ mod abs_diff_eq_rc_tests {
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let max_abs_diff = 2.0 * f32::EPSILON;
+        let max_relative = 1.0 * f32::EPSILON;
 
-        assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_relative_ne!(lhs, rhs, abs_diff_all <= max_abs_diff, relative_all <= max_relative);
     }
 
     #[test]
@@ -321,16 +365,35 @@ mod abs_diff_eq_rc_tests {
 
         assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), max_abs_diff);
     }
+
+    #[test]
+    fn test_debug_relative_tolerance() {
+        let lhs = Rc::new([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
+        let rhs = Rc::new([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
+        let max_relative = [0.10_f32, 0.20_f32, 0.30_f32, 0.40_f32];
+
+        assert_eq!(lhs.debug_relative_tolerance(&rhs, &max_relative), max_relative);
+    }
+
+    #[test]
+    fn test_debug_relative_all_tolerance() {
+        let lhs = Rc::new([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
+        let rhs = Rc::new([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
+        let max_relative_all = 0.20_f32;
+        let max_relative = [max_relative_all; 4];
+
+        assert_eq!(lhs.debug_relative_all_tolerance(&rhs, &max_relative_all), max_relative);
+    }
 }
 
 
 #[cfg(test)]
-mod abs_diff_eq_arc_tests {
+mod relative_eq_arc_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
-        AssertAbsDiffAllEq,
-        assert_abs_diff_eq,
-        assert_abs_diff_ne,
+        AssertRelativeEq,
+        AssertRelativeAllEq,
+        assert_relative_eq,
+        assert_relative_ne,
     };
     use std::sync::{
         Arc,
@@ -352,8 +415,12 @@ mod abs_diff_eq_arc_tests {
             1.0 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
             1.0 * eps, 1.0 * eps, 4.0 * eps, 4.0 * eps,
         ];
+        let max_relative = [
+            1.0 * eps, 2.0 * eps, 2.0 * eps, 2.0 * eps,
+            1.0 * eps, 1.0 * eps, 2.0 * eps, 2.0 * eps,
+        ];
 
-        assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_relative_eq!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
     }
 
     #[test]
@@ -371,8 +438,12 @@ mod abs_diff_eq_arc_tests {
             0.5 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
             0.5 * eps, 0.5 * eps, 4.0 * eps, 4.0 * eps,
         ];
+        let max_relative = [
+            0.5 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
+            0.5 * eps, 0.5 * eps, 4.0 * eps, 4.0 * eps,
+        ];
 
-        assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
     }
 
     #[test]
@@ -390,8 +461,9 @@ mod abs_diff_eq_arc_tests {
             1.0 * eps, 2.0 * eps, 2.0 * eps, 2.0 * eps,
             1.0 * eps, 1.0 * eps, 2.0 * eps, 2.0 * eps,
         ];
+        let max_relative = [eps; 8];
 
-        assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
     }
 
     #[test]
@@ -405,8 +477,9 @@ mod abs_diff_eq_arc_tests {
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let max_abs_diff = 4.0 * f32::EPSILON;
+        let max_relative = 4.0 * f32::EPSILON;
 
-        assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_relative_eq!(lhs, rhs, abs_diff_all <= max_abs_diff, relative_all <= max_relative);
     }
 
     #[test]
@@ -420,8 +493,9 @@ mod abs_diff_eq_arc_tests {
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let max_abs_diff = 2.0 * f32::EPSILON;
+        let max_relative = 1.0 * f32::EPSILON;
 
-        assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_relative_ne!(lhs, rhs, abs_diff_all <= max_abs_diff, relative_all <= max_relative);
     }
 
     #[test]
@@ -483,6 +557,25 @@ mod abs_diff_eq_arc_tests {
         let max_abs_diff = [max_abs_diff_all; 4];
 
         assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), max_abs_diff);
+    }
+
+    #[test]
+    fn test_debug_relative_tolerance() {
+        let lhs = Arc::new([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
+        let rhs = Arc::new([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
+        let max_relative = [0.10_f32, 0.20_f32, 0.30_f32, 0.40_f32];
+
+        assert_eq!(lhs.debug_relative_tolerance(&rhs, &max_relative), max_relative);
+    }
+
+    #[test]
+    fn test_debug_relative_all_tolerance() {
+        let lhs = Arc::new([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
+        let rhs = Arc::new([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
+        let max_relative_all = 0.20_f32;
+        let max_relative = [max_relative_all; 4];
+
+        assert_eq!(lhs.debug_relative_all_tolerance(&rhs, &max_relative_all), max_relative);
     }
 }
 
