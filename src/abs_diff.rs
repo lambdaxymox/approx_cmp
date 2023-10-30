@@ -75,27 +75,6 @@ where
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 macro_rules! impl_abs_diff_eq_unsigned {
     ($($T:ident),* $(,)?) => {$(
         impl AbsDiffEq for $T {
@@ -260,6 +239,23 @@ where
     }
 }
 
+impl<A, B> AbsDiffEq<Option<B>> for Option<A>
+where
+    A: AbsDiffEq<B>,
+    A::Tolerance: Sized
+{
+    type Tolerance = Option<A::Tolerance>;
+
+    #[inline]
+    fn abs_diff_eq(&self, other: &Option<B>, max_abs_diff: &Self::Tolerance) -> bool {
+        if let (Some(a), Some(b), Some(tol)) = (self, other, max_abs_diff) {
+            a.abs_diff_eq(b, tol)
+        } else {
+            false
+        }
+    }
+}
+
 
 macro_rules! impl_abs_diff_eq_all_unsigned {
     ($($T:ident),* $(,)?) => {$(
@@ -407,6 +403,23 @@ where
     #[inline]
     fn abs_diff_all_eq(&self, other: &cell::RefCell<B>, max_abs_diff: &Self::AllTolerance) -> bool {
         AbsDiffAllEq::abs_diff_all_eq(&*self.borrow(), &*other.borrow(), max_abs_diff)
+    }
+}
+
+impl<A, B> AbsDiffAllEq<Option<B>> for Option<A>
+where
+    A: AbsDiffAllEq<B>,
+    A::AllTolerance: Sized
+{
+    type AllTolerance = Option<A::AllTolerance>;
+
+    #[inline]
+    fn abs_diff_all_eq(&self, other: &Option<B>, max_abs_diff: &Self::AllTolerance) -> bool {
+        if let (Some(a), Some(b), Some(tol)) = (self, other, max_abs_diff) {
+            a.abs_diff_all_eq(b, tol)
+        } else {
+            false
+        }
     }
 }
 
@@ -689,6 +702,32 @@ where
     }
 }
 
+impl<A, B> AssertAbsDiffEq<Option<B>> for Option<A>
+where
+    A: AssertAbsDiffEq<B>,
+    A::Tolerance: Sized
+{
+    type DebugAbsDiff = Option<A::DebugAbsDiff>;
+    type DebugTolerance = Option<A::DebugTolerance>;
+
+    #[inline]
+    fn debug_abs_diff(&self, other: &Option<B>) -> Self::DebugAbsDiff {
+        let ref_self = self.as_ref()?;
+        let ref_other = other.as_ref()?;
+
+        Some(AssertAbsDiffEq::debug_abs_diff(ref_self, ref_other))
+    }
+
+    #[inline]
+    fn debug_abs_diff_tolerance(&self, other: &Option<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        let ref_self = self.as_ref()?;
+        let ref_other = other.as_ref()?;
+        let ref_max_abs_diff = max_abs_diff.as_ref()?;
+
+        Some(AssertAbsDiffEq::debug_abs_diff_tolerance(ref_self, ref_other, ref_max_abs_diff))
+    }
+}
+
 
 macro_rules! impl_assert_all_abs_diff_eq_unsigned {
     ($($T:ident),* $(,)?) => {$(
@@ -853,6 +892,23 @@ where
     #[inline]
     fn debug_abs_diff_all_tolerance(&self, other: &cell::RefCell<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
         AssertAbsDiffAllEq::debug_abs_diff_all_tolerance(&*self.borrow(), &*other.borrow(), max_abs_diff)
+    }
+}
+
+impl<A, B> AssertAbsDiffAllEq<Option<B>> for Option<A>
+where
+    A: AssertAbsDiffAllEq<B>,
+    A::AllTolerance: Sized
+{
+    type AllDebugTolerance = Option<A::AllDebugTolerance>;
+
+    #[inline]
+    fn debug_abs_diff_all_tolerance(&self, other: &Option<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        let ref_self = self.as_ref()?;
+        let ref_other = other.as_ref()?;
+        let ref_max_abs_diff = max_abs_diff.as_ref()?;
+
+        Some(AssertAbsDiffAllEq::debug_abs_diff_all_tolerance(ref_self, ref_other, ref_max_abs_diff))
     }
 }
 
