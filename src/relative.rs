@@ -70,3 +70,192 @@ where
     fn debug_relative_all_tolerance(&self, other: &Rhs, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance;
 }
 
+
+#[macro_export]
+macro_rules! relative_eq {
+    ($left:expr, $right:expr, abs_diff <= $tol_1:expr, relative <= $tol_2:expr $(,)?) => {{
+        match (&$left, &$right, &$tol_1, &$tol_2) {
+            (left_val, right_val, tol_1_val, tol_2_val) => {
+                $crate::RelativeCmp::eq(left_val, right_val, tol_1_val, tol_2_val)
+            }
+        }
+    }};
+    ($left:expr, $right:expr, relative <= $tol_2:expr, abs_diff <= $tol_1:expr $(,)?) => {{
+        match (&$left, &$right, &$tol_1, &$tol_2) {
+            (left_val, right_val, tol_1_val, tol_2_val) => {
+                $crate::RelativeCmp::eq(left_val, right_val, tol_1_val, tol_2_val)
+            }
+        }
+    }};
+    ($left:expr, $right:expr, abs_diff_all <= $tol_1:expr, relative_all <= $tol_2:expr $(,)?) => {{
+        match (&$left, &$right, &$tol_1, &$tol_2) {
+            (left_val, right_val, tol_1_val, tol_2_val) => {
+                $crate::RelativeCmp::all_eq(left_val, right_val, tol_1_val, tol_2_val)
+            }
+        }
+    }};
+    ($left:expr, $right:expr, relative_all <= $tol_2:expr, abs_diff_all <= $tol_1:expr $(,)?) => {{
+        match (&$left, &$right, &$tol_1, &$tol_2) {
+            (left_val, right_val, tol_1_val, tol_2_val) => {
+                $crate::RelativeCmp::all_eq(left_val, right_val, tol_1_val, tol_2_val)
+            }
+        }
+    }};
+}
+
+#[macro_export]
+macro_rules! relative_ne {
+    ($left:expr, $right:expr, abs_diff <= $tol_1:expr, relative <= $tol_2:expr $(,)?) => {{
+        match (&$left, &$right, &$tol_1, &$tol_2) {
+            (left_val, right_val, tol_1_val, tol_2_val) => {
+                $crate::RelativeCmp::ne(left_val, right_val, tol_1_val, tol_2_val)
+            }
+        }
+    }};
+    ($left:expr, $right:expr, relative <= $tol_2:expr, abs_diff <= $tol_1:expr $(,)?) => {{
+        match (&$left, &$right, &$tol_1, &$tol_2) {
+            (left_val, right_val, tol_1_val, tol_2_val) => {
+                $crate::RelativeCmp::ne(left_val, right_val, tol_1_val, tol_2_val)
+            }
+        }
+    }};
+    ($left:expr, $right:expr, abs_diff_all <= $tol_1:expr, relative_all <= $tol_2:expr $(,)?) => {{
+        match (&$left, &$right, &$tol_1, &$tol_2) {
+            (left_val, right_val, tol_1_val, tol_2_val) => {
+                $crate::RelativeCmp::all_ne(left_val, right_val, tol_1_val, tol_2_val)
+            }
+        }
+    }};
+    ($left:expr, $right:expr, relative_all <= $tol_2:expr, abs_diff_all <= $tol_1:expr $(,)?) => {{
+        match (&$left, &$right, &$tol_1, &$tol_2) {
+            (left_val, right_val, tol_1_val, tol_2_val) => {
+                $crate::RelativeCmp::all_ne(left_val, right_val, tol_1_val, tol_2_val)
+            }
+        }
+    }};
+}
+
+#[macro_export]
+macro_rules! assert_relative_eq {
+    ($left:expr, $right:expr, $eq1:ident <= $tol_1:expr, $eq2:ident <= $tol_2:expr $(,)?) => {{
+        match (&$left, &$right, &$tol_1, &$tol_2) {
+            (left_val, right_val, tol_1_val, tol_2_val) => {
+                if !$crate::relative_eq!(*left_val, *right_val, $eq1 <= *tol_1_val, $eq2 <= *tol_2_val) {
+                    // The reborrows below are intentional. Without them, the stack slot for the
+                    // borrow is initialized even before the values are compared, leading to a
+                    // noticeable slow down. See the documentation for `core::approx_eq`.
+                    panic!(concat!(
+"assertion failed: `assert_relative_eq!(left, right, ", stringify!($eq1), " <= t, ", stringify!($eq2),  " <= t)`", r#"
+        left: `{:?}`,
+       right: `{:?}`,
+    abs_diff: `{:?}`,
+{:>10} t: `{:?}`,
+{:>10} t: `{:?}`"#),
+                        &*left_val,
+                        &*right_val,
+                        $crate::AssertRelativeEq::debug_abs_diff(&*left_val, &*right_val),
+                        concat!("[", stringify!($eq1), "]"),
+                        $crate::RelativeCmpOpTol::$eq1(&*left_val, &*right_val, &*tol_1_val),
+                        concat!("[", stringify!($eq2), "]"),
+                        $crate::RelativeCmpOpTol::$eq2(&*left_val, &*right_val, &*tol_2_val),
+                    )
+                }
+            }
+        }
+    }};
+    ($left:expr, $right:expr, $eq1:ident <= $tol_1:expr, $eq2:ident <= $tol_2:expr, $($arg:tt)+) => {{
+        match (&$left, &$right, &$tol_1, &$tol_2) {
+            (left_val, right_val, tol_1_val, tol_2_val) => {
+                if !$crate::relative_eq!(*left_val, *right_val, $eq1 <= *tol_1_val, $eq2 <= *tol_2_val) {
+                    // The reborrows below are intentional. Without them, the stack slot for the
+                    // borrow is initialized even before the values are compared, leading to a
+                    // noticeable slow down. See the documentation for `core::approx_eq`.
+                    panic!(concat!(
+"assertion failed: `assert_relative_eq!(left, right, ", stringify!($eq1), " <= t, ", stringify!($eq2),  " <= t)`", r#"
+        left: `{:?}`,
+       right: `{:?}`,
+    abs_diff: `{:?}`,
+{:>10} t: `{:?}`,
+{:>10} t: `{:?}`: {}"#),
+                        &*left_val,
+                        &*right_val,
+                        $crate::AssertRelativeEq::debug_abs_diff(&*left_val, &*right_val),
+                        concat!("[", stringify!($eq1), "]"),
+                        $crate::RelativeCmpOpTol::$eq1(&*left_val, &*right_val, &*tol_1_val),
+                        concat!("[", stringify!($eq2), "]"),
+                        $crate::RelativeCmpOpTol::$eq2(&*left_val, &*right_val, &*tol_2_val),
+                        format_args!($($arg)+),
+                    )
+                }
+            }
+        }
+    }};
+}
+
+#[macro_export]
+macro_rules! assert_relative_ne {
+    ($left:expr, $right:expr, $eq1:ident <= $tol_1:expr, $eq2:ident <= $tol_2:expr $(,)?) => {{
+        match (&$left, &$right, &$tol_1, &$tol_2) {
+            (left_val, right_val, tol_1_val, tol_2_val) => {
+                if !$crate::relative_ne!(*left_val, *right_val, $eq1 <= *tol_1_val, $eq2 <= *tol_2_val) {
+                    // The reborrows below are intentional. Without them, the stack slot for the
+                    // borrow is initialized even before the values are compared, leading to a
+                    // noticeable slow down. See the documentation for `core::approx_eq`.
+                    panic!(concat!(
+"assertion failed: `assert_relative_ne!(left, right, ", stringify!($eq1), " <= t, ", stringify!($eq2),  " <= t)`", r#"
+        left: `{:?}`,
+       right: `{:?}`,
+    abs_diff: `{:?}`,
+{:>10} t: `{:?}`,
+{:>10} t: `{:?}`"#),
+                        &*left_val,
+                        &*right_val,
+                        $crate::AssertRelativeEq::debug_abs_diff(&*left_val, &*right_val),
+                        concat!("[", stringify!($eq1), "]"),
+                        $crate::RelativeCmpOpTol::$eq1(&*left_val, &*right_val, &*tol_1_val),
+                        concat!("[", stringify!($eq2), "]"),
+                        $crate::RelativeCmpOpTol::$eq2(&*left_val, &*right_val, &*tol_2_val),
+                    )
+                }
+            }
+        }
+    }};
+    ($left:expr, $right:expr, $eq1:ident <= $tol_1:expr, $eq2:ident <= $tol_2:expr, $($arg:tt)+) => {{
+        match (&$left, &$right, &$tol_1, &$tol_2) {
+            (left_val, right_val, tol_1_val, tol_2_val) => {
+                if !$crate::relative_ne!(*left_val, *right_val, $eq1 <= *tol_1_val, $eq2 <= *tol_2_val) {
+                    // The reborrows below are intentional. Without them, the stack slot for the
+                    // borrow is initialized even before the values are compared, leading to a
+                    // noticeable slow down. See the documentation for `core::approx_eq`.
+                    panic!(concat!(
+"assertion failed: `assert_relative_ne!(left, right, ", stringify!($eq1), " <= t, ", stringify!($eq2),  " <= t)`", r#"
+        left: `{:?}`,
+       right: `{:?}`,
+    abs_diff: `{:?}`,
+{:>10} t: `{:?}`,
+{:>10} t: `{:?}`: {}"#),
+                        &*left_val,
+                        &*right_val,
+                        $crate::AssertRelativeEq::debug_abs_diff(&*left_val, &*right_val),
+                        concat!("[", stringify!($eq1), "]"),
+                        $crate::RelativeCmpOpTol::$eq1(&*left_val, &*right_val, &*tol_1_val),
+                        concat!("[", stringify!($eq2), "]"),
+                        $crate::RelativeCmpOpTol::$eq2(&*left_val, &*right_val, &*tol_2_val),
+                        format_args!($($arg)+),
+                    )
+                }
+            }
+        }
+    }};
+}
+
+#[macro_export]
+macro_rules! debug_assert_relative_eq {
+    ($($arg:tt)*) => (if cfg!(debug_assertions) { $crate::assert_relative_eq!($($arg)*); })
+}
+
+#[macro_export]
+macro_rules! debug_assert_relative_ne {
+    ($($arg:tt)*) => (if cfg!(debug_assertions) { $crate::assert_relative_ne!($($arg)*); })
+}
+
