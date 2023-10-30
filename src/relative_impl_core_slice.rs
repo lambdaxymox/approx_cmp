@@ -1,8 +1,6 @@
 use crate::relative::{
     RelativeEq,
     RelativeAllEq,
-    AssertRelativeEq,
-    AssertRelativeAllEq,
 };
 
 
