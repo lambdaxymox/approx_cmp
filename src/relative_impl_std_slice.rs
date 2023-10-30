@@ -2,6 +2,9 @@ use crate::relative::{
     AssertRelativeEq,
     AssertRelativeAllEq,
 };
+use std::vec::{
+    Vec,
+};
 
 
 impl<A, B> AssertRelativeEq<[B]> for [A]

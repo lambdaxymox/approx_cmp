@@ -5,5 +5,14 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[features]
+default = ["std"]
+# Option: "core" is a platform-agnostic option that works in environments that cannot
+# allocate memory. The environment needs to supply its own implementations of 
+# `eh_personality`.
+core = []
+# Option: "std" enables support for environments that use the full standard library.
+std = []
+
 [dependencies]
 

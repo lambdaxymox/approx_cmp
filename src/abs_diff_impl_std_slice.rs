@@ -2,6 +2,9 @@ use crate::abs_diff::{
     AssertAbsDiffEq,
     AssertAbsDiffAllEq,
 };
+use std::vec::{
+    Vec,
+};
 
 
 impl<A, B> AssertAbsDiffEq<[B]> for [A]
