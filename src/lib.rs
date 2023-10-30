@@ -1,7 +1,7 @@
-mod abs_diff_eq;
-mod relative_eq;
+mod abs_diff;
+mod relative;
 
 
-pub use abs_diff_eq::*;
-pub use relative_eq::*;
+pub use abs_diff::*;
+pub use relative::*;
 
