@@ -255,22 +255,6 @@ where
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 macro_rules! impl_relative_eq_all_float {
     ($($T:ident),* $(,)?) => {$(
         impl RelativeAllEq for $T {
@@ -403,18 +387,6 @@ where
         RelativeAllEq::relative_all_eq(&*self.borrow(), &*other.borrow(), max_abs_diff, max_relative)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -746,19 +718,6 @@ where
         AssertRelativeEq::debug_relative_tolerance(&*self.borrow(), &*other.borrow(), max_relative)
     }
 }
-
-
-
-
- 
-
-
-
-
-
-
-
-
 
 
 macro_rules! impl_assert_relative_eq_all_float {

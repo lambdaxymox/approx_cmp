@@ -261,32 +261,6 @@ where
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 macro_rules! impl_abs_diff_eq_all_unsigned {
     ($($T:ident),* $(,)?) => {$(
         impl AbsDiffAllEq for $T {
@@ -435,20 +409,6 @@ where
         AbsDiffAllEq::abs_diff_all_eq(&*self.borrow(), &*other.borrow(), max_abs_diff)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 macro_rules! impl_assert_abs_diff_eq_unsigned {
@@ -730,13 +690,6 @@ where
 }
 
 
-
-
-
-
-
-
-
 macro_rules! impl_assert_all_abs_diff_eq_unsigned {
     ($($T:ident),* $(,)?) => {$(
         impl AssertAbsDiffAllEq for $T {
@@ -902,19 +855,6 @@ where
         AssertAbsDiffAllEq::debug_abs_diff_all_tolerance(&*self.borrow(), &*other.borrow(), max_abs_diff)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #[doc(hidden)]
