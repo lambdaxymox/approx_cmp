@@ -168,6 +168,23 @@ where
     }
 }
 
+impl<A, B> RelativeEq<cell::OnceCell<B>> for cell::OnceCell<A>
+where
+    A: RelativeEq<B>,
+    A::Tolerance: Sized
+{
+    type Tolerance = A::Tolerance;
+
+    #[inline]
+    fn relative_eq(&self, other: &cell::OnceCell<B>, max_abs_diff: &Self::Tolerance, max_relative: &Self::Tolerance) -> bool {
+        if let (Some(a), Some(b)) = (self.get(), other.get()) {
+            RelativeEq::relative_eq(a, b, max_abs_diff, max_relative)
+        } else {
+            false
+        }
+    }
+}
+
 
 macro_rules! impl_relative_eq_all_float {
     ($($T:ident),* $(,)?) => {$(
@@ -283,6 +300,23 @@ where
     fn relative_all_eq(&self, other: &Option<B>, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
         if let (Some(a), Some(b), Some(abs_tol), Some(rel_tol)) = (self, other, max_abs_diff, max_relative) {
             a.relative_all_eq(b, abs_tol, rel_tol)
+        } else {
+            false
+        }
+    }
+}
+
+impl<A, B> RelativeAllEq<cell::OnceCell<B>> for cell::OnceCell<A>
+where
+    A: RelativeAllEq<B>,
+    A::AllTolerance: Sized
+{
+    type AllTolerance = A::AllTolerance;
+
+    #[inline]
+    fn relative_all_eq(&self, other: &cell::OnceCell<B>, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
+        if let (Some(a), Some(b)) = (self.get(), other.get()) {
+            a.relative_all_eq(b, max_abs_diff, max_relative)
         } else {
             false
         }
@@ -409,42 +443,6 @@ where
     }
 }
 
-impl<A, B> AssertRelativeEq<Option<B>> for Option<A>
-where
-    A: AssertRelativeEq<B>,
-    A::Tolerance: Sized
-{
-    type DebugAbsDiff = Option<A::DebugAbsDiff>;
-    type DebugTolerance = Option<A::DebugTolerance>;
-
-    #[inline]
-    fn debug_abs_diff(&self, other: &Option<B>) -> Self::DebugAbsDiff {
-        let ref_self = self.as_ref()?;
-        let ref_other = other.as_ref()?;
-
-        Some(AssertRelativeEq::debug_abs_diff(ref_self, ref_other))
-    }
-
-    #[inline]
-    fn debug_abs_diff_tolerance(&self, other: &Option<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
-        let ref_self = self.as_ref()?;
-        let ref_other = other.as_ref()?;
-        let ref_max_abs_diff = max_abs_diff.as_ref()?;
-
-        Some(AssertRelativeEq::debug_abs_diff_tolerance(ref_self, ref_other, ref_max_abs_diff))
-    }
-
-    #[inline]
-    fn debug_relative_tolerance(&self, other: &Option<B>, max_relative: &Self::Tolerance) -> Self::DebugTolerance {
-        let ref_self = self.as_ref()?;
-        let ref_other = other.as_ref()?;
-        let ref_max_relative = max_relative.as_ref()?;
-
-        Some(AssertRelativeEq::debug_relative_tolerance(ref_self, ref_other, ref_max_relative))
-    }
-}
-
-
 #[inline(always)]
 fn uninit_array<T, const N: usize>() -> [mem::MaybeUninit<T>; N] {
     unsafe { 
@@ -549,6 +547,77 @@ where
     #[inline]
     fn debug_relative_tolerance(&self, other: &cell::RefCell<B>, max_relative: &Self::Tolerance) -> Self::DebugTolerance {
         AssertRelativeEq::debug_relative_tolerance(&*self.borrow(), &*other.borrow(), max_relative)
+    }
+}
+
+impl<A, B> AssertRelativeEq<Option<B>> for Option<A>
+where
+    A: AssertRelativeEq<B>,
+    A::Tolerance: Sized
+{
+    type DebugAbsDiff = Option<A::DebugAbsDiff>;
+    type DebugTolerance = Option<A::DebugTolerance>;
+
+    #[inline]
+    fn debug_abs_diff(&self, other: &Option<B>) -> Self::DebugAbsDiff {
+        let ref_self = self.as_ref()?;
+        let ref_other = other.as_ref()?;
+
+        Some(AssertRelativeEq::debug_abs_diff(ref_self, ref_other))
+    }
+
+    #[inline]
+    fn debug_abs_diff_tolerance(&self, other: &Option<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        let ref_self = self.as_ref()?;
+        let ref_other = other.as_ref()?;
+        let ref_max_abs_diff = max_abs_diff.as_ref()?;
+
+        Some(AssertRelativeEq::debug_abs_diff_tolerance(ref_self, ref_other, ref_max_abs_diff))
+    }
+
+    #[inline]
+    fn debug_relative_tolerance(&self, other: &Option<B>, max_relative: &Self::Tolerance) -> Self::DebugTolerance {
+        let ref_self = self.as_ref()?;
+        let ref_other = other.as_ref()?;
+        let ref_max_relative = max_relative.as_ref()?;
+
+        Some(AssertRelativeEq::debug_relative_tolerance(ref_self, ref_other, ref_max_relative))
+    }
+}
+
+impl<A, B> AssertRelativeEq<cell::OnceCell<B>> for cell::OnceCell<A>
+where
+    A: AssertRelativeEq<B>,
+    A::Tolerance: Sized
+{
+    type DebugAbsDiff = Option<A::DebugAbsDiff>;
+    type DebugTolerance = Option<A::DebugTolerance>;
+
+    #[inline]
+    fn debug_abs_diff(&self, other: &cell::OnceCell<B>) -> Self::DebugAbsDiff {
+        if let (Some(a), Some(b)) = (self.get(), other.get()) {
+            Some(AssertRelativeEq::debug_abs_diff(a, b))
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_abs_diff_tolerance(&self, other: &cell::OnceCell<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        if let (Some(a), Some(b)) = (self.get(), other.get()) {
+            Some(AssertRelativeEq::debug_abs_diff_tolerance(a, b, max_abs_diff))
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_relative_tolerance(&self, other: &cell::OnceCell<B>, max_relative: &Self::Tolerance) -> Self::DebugTolerance {
+        if let (Some(a), Some(b)) = (self.get(), other.get()) {
+            Some(AssertRelativeEq::debug_relative_tolerance(a, b, max_relative))
+        } else {
+            None
+        }
     }
 }
 
@@ -732,6 +801,32 @@ where
         let ref_max_relative = max_relative.as_ref()?;
 
         Some(AssertRelativeAllEq::debug_relative_all_tolerance(ref_self, ref_other, ref_max_relative))
+    }
+}
+
+impl<A, B> AssertRelativeAllEq<cell::OnceCell<B>> for cell::OnceCell<A>
+where
+    A: AssertRelativeAllEq<B>,
+    A::AllTolerance: Sized
+{
+    type AllDebugTolerance = Option<A::AllDebugTolerance>;
+
+    #[inline]
+    fn debug_abs_diff_all_tolerance(&self, other: &cell::OnceCell<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        if let (Some(a), Some(b)) = (self.get(), other.get()) {
+            Some(AssertRelativeAllEq::debug_abs_diff_all_tolerance(a, b, max_abs_diff))
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_relative_all_tolerance(&self, other: &cell::OnceCell<B>, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        if let (Some(a), Some(b)) = (self.get(), other.get()) {
+            Some(AssertRelativeAllEq::debug_relative_all_tolerance(a, b, max_relative))
+        } else {
+            None
+        }
     }
 }
 
