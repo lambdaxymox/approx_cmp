@@ -495,9 +495,6 @@ mod abs_diff_eq_vec_tests {
         assert_abs_diff_eq,
         assert_abs_diff_ne,
     };
-    use std::vec::{
-        Vec,
-    };
 
 
     #[test]

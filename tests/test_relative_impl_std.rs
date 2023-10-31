@@ -588,9 +588,6 @@ mod relative_eq_vec_tests {
         assert_relative_eq,
         assert_relative_ne,
     };
-    use std::vec::{
-        Vec,
-    };
 
 
     #[test]
