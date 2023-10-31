@@ -53,6 +53,7 @@ mod abs_diff_eq_f32_tests {
         check_eq(value, value, f32::INFINITY);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq_zero() {
         check_eq_self(0.0);
@@ -63,6 +64,7 @@ mod abs_diff_eq_f32_tests {
         check_eq(-0.0, -0.0, f32::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_zero() {
         check_ne( 0.000001_f32, 0.0_f32,      f32::EPSILON);
@@ -71,6 +73,7 @@ mod abs_diff_eq_f32_tests {
         check_ne( 0.0_f32,     -0.000001_f32, f32::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq_tolerance() {
         check_eq( 0.0_f32,    1e-40_f32, 1e-40_f32);
@@ -79,6 +82,7 @@ mod abs_diff_eq_f32_tests {
         check_eq(-1e-40_f32,  0.0_f32,   1e-40_f32);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_tolerance() {
         check_ne( 1e-40_f32,  0.0_f32,   1e-41_f32);
@@ -124,6 +128,7 @@ mod abs_diff_eq_f32_tests {
         check_eq_self(16.0_f32);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne() {
         check_ne( 1.0_f32,  2.0_f32, f32::EPSILON);
@@ -136,6 +141,7 @@ mod abs_diff_eq_f32_tests {
         check_ne(-1.0_f32, -2.0_f32, f32::MIN_POSITIVE);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq_rounding1() {
         check_eq( 100000000.0_f32,  100000001.0_f32, f32::EPSILON);
@@ -164,6 +170,7 @@ mod abs_diff_eq_f32_tests {
         check_eq(-1000000000001.0_f32, -1000000000000.0_f32, f32::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_rounding1() {
         check_ne( 1000.0_f32,  1001.0_f32, f32::EPSILON);
@@ -192,6 +199,7 @@ mod abs_diff_eq_f32_tests {
         check_ne(-10000001.0_f32, -10000000.0_f32, f32::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq_rounding2() {
         check_eq( 1.0000001_f32,  1.0000002_f32, f32::EPSILON);
@@ -220,6 +228,7 @@ mod abs_diff_eq_f32_tests {
         check_eq(-1.00000000002_f32, -1.00000000001_f32, f32::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_rounding2() {
         check_ne( 1.01_f32,  1.02_f32, f32::EPSILON);
@@ -248,11 +257,14 @@ mod abs_diff_eq_f32_tests {
         check_ne(-1.000002_f32, -1.000001_f32, f32::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq_max() {
         check_eq( f32::MAX,  f32::MAX, f32::EPSILON);
+        check_eq(-f32::MAX, -f32::MAX, f32::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_max() {
         check_ne( f32::MAX, -f32::MAX,           f32::EPSILON);
@@ -262,6 +274,7 @@ mod abs_diff_eq_f32_tests {
         check_ne(-f32::MAX,  f32::MAX / 2.0_f32, f32::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_nan1() {
         check_ne( f32::NAN,  f32::NAN, 0_f32);
@@ -270,6 +283,7 @@ mod abs_diff_eq_f32_tests {
         check_ne(-f32::NAN, -f32::NAN, 0_f32);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_nan2() {
         for i in 0..=i16::MAX {
@@ -280,6 +294,7 @@ mod abs_diff_eq_f32_tests {
         }
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_nan3() {
         for i in 0..=i16::MAX {
@@ -290,6 +305,7 @@ mod abs_diff_eq_f32_tests {
         }
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_nan4() {
         check_ne(f32::NAN, f32::NAN, f32::EPSILON);
@@ -320,6 +336,7 @@ mod abs_diff_eq_f32_tests {
         check_ne(-1_f32,     f32::NAN, f32::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_nan5() {
         check_ne(f32::NAN, f32::NAN, 1_f32);
@@ -350,6 +367,7 @@ mod abs_diff_eq_f32_tests {
         check_ne(-1_f32,     f32::NAN, 1_f32);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq_infinity() {
         check_eq(f32::INFINITY,     f32::INFINITY,     f32::INFINITY);
@@ -358,6 +376,7 @@ mod abs_diff_eq_f32_tests {
         check_eq(f32::NEG_INFINITY, f32::MAX,          f32::INFINITY);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_infinity() {
         // check_ne(f32::INFINITY,     f32::INFINITY,     f32::MAX);
@@ -366,6 +385,7 @@ mod abs_diff_eq_f32_tests {
         check_ne(f32::NEG_INFINITY, f32::MAX,          f32::MAX);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq_near_zero1() {
         check_eq( f32::MIN_POSITIVE,  f32::MIN_POSITIVE, f32::EPSILON);
@@ -383,6 +403,7 @@ mod abs_diff_eq_f32_tests {
         check_eq(-f32::MIN_POSITIVE,  0.0000001_f32,      f32::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq_near_zero2() {
         check_eq( 0.000010001_f32,  0.000010002_f32, f32::EPSILON);
@@ -391,6 +412,7 @@ mod abs_diff_eq_f32_tests {
         check_eq(-0.000010002_f32, -0.000010001_f32, f32::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq_near_zero3() {
         check_eq( 0.000011001_f32,  0.000011002_f32, f32::EPSILON);
@@ -399,6 +421,7 @@ mod abs_diff_eq_f32_tests {
         check_eq(-0.000011002_f32, -0.000011001_f32, f32::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq_near_zero4() {
         check_eq(1e-8_f32,  -1e-8_f32,  f32::EPSILON);
@@ -416,6 +439,7 @@ mod abs_diff_eq_f32_tests {
         check_eq(1e-20_f32, -1e-20_f32, f32::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_near_zero1() {
         check_ne( 0.000001_f32,      -f32::MIN_POSITIVE, f32::EPSILON);
@@ -429,6 +453,7 @@ mod abs_diff_eq_f32_tests {
         check_ne(-f32::MIN_POSITIVE, -0.000001_f32,      f32::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_near_zero2() {
         check_ne( 0.000001002_f32,  0.0000001001_f32, f32::EPSILON);
@@ -437,6 +462,7 @@ mod abs_diff_eq_f32_tests {
         check_ne(-0.000001001_f32, -0.0000001002_f32, f32::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_near_zero3() {
         check_ne( 0.000001102_f32,  0.0000001101_f32, f32::EPSILON);
@@ -499,6 +525,7 @@ mod abs_diff_eq_f64_tests {
         check_eq(value, value, f64::INFINITY);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq_zero() {
         check_eq_self(0.0);
@@ -509,6 +536,7 @@ mod abs_diff_eq_f64_tests {
         check_eq(-0.0, -0.0, f64::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_zero() {
         check_ne( 0.000001_f64, 0.0_f64,      f64::EPSILON);
@@ -517,6 +545,7 @@ mod abs_diff_eq_f64_tests {
         check_ne( 0.0_f64,     -0.000001_f64, f64::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq_tolerance() {
         check_eq( 0.0_f64,    1e-40_f64, 1e-40_f64);
@@ -525,6 +554,7 @@ mod abs_diff_eq_f64_tests {
         check_eq(-1e-40_f64,  0.0_f64,   1e-40_f64);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_tolerance() {
         check_ne( 1e-40_f64,  0.0_f64,   1e-41_f64);
@@ -570,6 +600,7 @@ mod abs_diff_eq_f64_tests {
         check_eq_self(16.0_f64);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne() {
         check_ne( 1.0_f64,  2.0_f64, f64::EPSILON);
@@ -582,6 +613,7 @@ mod abs_diff_eq_f64_tests {
         check_ne(-1.0_f64, -2.0_f64, f64::MIN_POSITIVE);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq_rounding1() {
         check_eq( 10000000000000000.0_f64,  10000000000000001.0_f64, f64::EPSILON);
@@ -610,6 +642,7 @@ mod abs_diff_eq_f64_tests {
         check_eq(-100000000000000000001.0_f64, -100000000000000000000.0_f64, f64::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_rounding1() {
         check_ne( 1000.0_f64,  1001.0_f64, f64::EPSILON);
@@ -678,6 +711,7 @@ mod abs_diff_eq_f64_tests {
         check_ne(-1000000000000001.0_f64, -1000000000000000.0_f64, f64::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq_rounding2() {
         check_eq( 1.0000000000000001_f64,  1.0000000000000002_f64, f64::EPSILON);
@@ -706,6 +740,7 @@ mod abs_diff_eq_f64_tests {
         check_eq(-1.00000000000000000002_f64, -1.00000000000000000001_f64, f64::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_rounding2() {
         check_ne( 1.01_f64,  1.02_f64, f64::EPSILON);
@@ -779,11 +814,14 @@ mod abs_diff_eq_f64_tests {
         check_ne(-1.000000000000002_f64, -1.000000000000001_f64, f64::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq_max() {
         check_eq( f64::MAX,  f64::MAX, f64::EPSILON);
+        check_eq(-f64::MAX, -f64::MAX, f64::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_max() {
         check_ne( f64::MAX, -f64::MAX,           f64::EPSILON);
@@ -793,6 +831,7 @@ mod abs_diff_eq_f64_tests {
         check_ne(-f64::MAX,  f64::MAX / 2.0_f64, f64::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_nan1() {
         check_ne( f64::NAN,  f64::NAN, 0_f64);
@@ -801,6 +840,7 @@ mod abs_diff_eq_f64_tests {
         check_ne(-f64::NAN, -f64::NAN, 0_f64);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_nan2() {
         for i in 0..=i16::MAX {
@@ -811,6 +851,7 @@ mod abs_diff_eq_f64_tests {
         }
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_nan3() {
         for i in 0..=i16::MAX {
@@ -821,6 +862,7 @@ mod abs_diff_eq_f64_tests {
         }
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_nan4() {
         check_ne(f64::NAN, f64::NAN, f64::EPSILON);
@@ -851,6 +893,7 @@ mod abs_diff_eq_f64_tests {
         check_ne(-1_f64,     f64::NAN, f64::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_nan5() {
         check_ne(f64::NAN, f64::NAN, 1_f64);
@@ -881,6 +924,7 @@ mod abs_diff_eq_f64_tests {
         check_ne(-1_f64,     f64::NAN, 1_f64);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq_infinity() {
         check_eq(f64::INFINITY,     f64::INFINITY,     f64::INFINITY);
@@ -889,6 +933,7 @@ mod abs_diff_eq_f64_tests {
         check_eq(f64::NEG_INFINITY, f64::MAX,          f64::INFINITY);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_infinity() {
         // check_ne(f64::INFINITY,     f64::INFINITY,     f64::MAX);
@@ -897,6 +942,7 @@ mod abs_diff_eq_f64_tests {
         check_ne(f64::NEG_INFINITY, f64::MAX,          f64::MAX);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq_near_zero1() {
         check_eq( f64::MIN_POSITIVE,  f64::MIN_POSITIVE, f64::EPSILON);
@@ -914,6 +960,7 @@ mod abs_diff_eq_f64_tests {
         check_eq(-f64::MIN_POSITIVE,       0.0000000000000001_f64, f64::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq_near_zero2() {
         check_eq( 0.0000000010000001_f64,  0.0000000010000002_f64, f64::EPSILON);
@@ -922,6 +969,7 @@ mod abs_diff_eq_f64_tests {
         check_eq(-0.0000000010000002_f64, -0.0000000010000001_f64, f64::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq_near_zero3() {
         check_eq( 0.0000000011000001_f64,  0.0000000011000002_f64, f64::EPSILON);
@@ -949,6 +997,7 @@ mod abs_diff_eq_f64_tests {
         check_eq(1e-30_f64, -1e-30_f64, f64::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_near_zero1() {
         check_ne( 0.000001_f64,      -f64::MIN_POSITIVE, f64::EPSILON);
@@ -1052,6 +1101,7 @@ mod abs_diff_eq_f64_tests {
         check_ne(-f64::MIN_POSITIVE,     -0.000000000000001_f64, f64::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_near_zero2() {
         check_ne( 0.0000010000002_f64,  0.00000010000001_f64, f64::EPSILON);
@@ -1105,6 +1155,7 @@ mod abs_diff_eq_f64_tests {
         check_ne(-0.0000000000000010000001_f64, -0.00000000000000010000002_f64, f64::EPSILON);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne_near_zero3() {
         check_ne( 0.0000011000002_f64,  0.00000011000001_f64, f64::EPSILON);
@@ -1663,6 +1714,7 @@ mod abs_diff_eq_ref_tests {
     };
 
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq1() {
         let a = &1.0_f32;
@@ -1677,6 +1729,7 @@ mod abs_diff_eq_ref_tests {
         assert_abs_diff_eq!(&mut a_mut, &mut b_mut, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq2() {
         let a = &1.0_f32;
@@ -1691,6 +1744,7 @@ mod abs_diff_eq_ref_tests {
         assert_abs_diff_eq!(&mut a_mut, &mut b_mut, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq3() {
         let a = &1.0_f32;
@@ -1705,6 +1759,7 @@ mod abs_diff_eq_ref_tests {
         assert_abs_diff_eq!(&mut a_mut, &mut b_mut, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne1() {
         let a = &1.0_f32;
@@ -1719,6 +1774,7 @@ mod abs_diff_eq_ref_tests {
         assert_abs_diff_ne!(&mut a_mut, &mut b_mut, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne2() {
         let a = &1.0_f32;
@@ -1733,6 +1789,7 @@ mod abs_diff_eq_ref_tests {
         assert_abs_diff_ne!(&mut a_mut, &mut b_mut, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne3() {
         let a = &1.0_f32;
@@ -1747,6 +1804,7 @@ mod abs_diff_eq_ref_tests {
         assert_abs_diff_ne!(&mut a_mut, &mut b_mut, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_eq1() {
         let a = &1.0_f32;
@@ -1761,6 +1819,7 @@ mod abs_diff_eq_ref_tests {
         assert_abs_diff_eq!(&mut a_mut, &mut b_mut, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_eq2() {
         let a = &1.0_f32;
@@ -1775,6 +1834,7 @@ mod abs_diff_eq_ref_tests {
         assert_abs_diff_eq!(&mut a_mut, &mut b_mut, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_eq3() {
         let a = &1.0_f32;
@@ -1789,6 +1849,7 @@ mod abs_diff_eq_ref_tests {
         assert_abs_diff_eq!(&mut a_mut, &mut b_mut, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_ne1() {
         let a = &1.0_f32;
@@ -1803,6 +1864,7 @@ mod abs_diff_eq_ref_tests {
         assert_abs_diff_ne!(&mut a_mut, &mut b_mut, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_ne2() {
         let a = &1.0_f32;
@@ -1817,6 +1879,7 @@ mod abs_diff_eq_ref_tests {
         assert_abs_diff_ne!(&mut a_mut, &mut b_mut, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_ne3() {
         let a = &1.0_f32;
@@ -1883,14 +1946,15 @@ mod abs_diff_eq_cell_tests {
     use core::cell;
 
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq() {
         let lhs = cell::Cell::new([
-            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32, 
+            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ]);
         let rhs = cell::Cell::new([
-            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let eps = f32::EPSILON;
@@ -1902,14 +1966,15 @@ mod abs_diff_eq_cell_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne1() {
         let lhs = cell::Cell::new([
-            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32, 
+            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ]);
         let rhs = cell::Cell::new([
-            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let eps = f32::EPSILON;
@@ -1921,14 +1986,15 @@ mod abs_diff_eq_cell_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne2() {
         let lhs = cell::Cell::new([
-            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32, 
+            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ]);
         let rhs = cell::Cell::new([
-            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let eps = f32::EPSILON;
@@ -1940,14 +2006,15 @@ mod abs_diff_eq_cell_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_eq() {
         let lhs = cell::Cell::new([
-            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32, 
+            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ]);
         let rhs = cell::Cell::new([
-            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let max_abs_diff = 4.0 * f32::EPSILON;
@@ -1955,14 +2022,15 @@ mod abs_diff_eq_cell_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_ne() {
         let lhs = cell::Cell::new([
-            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32, 
+            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ]);
         let rhs = cell::Cell::new([
-            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let max_abs_diff = 2.0 * f32::EPSILON;
@@ -1970,14 +2038,15 @@ mod abs_diff_eq_cell_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff1() {
         let lhs = cell::Cell::new([
-            1.00_f32, 1.25_f32, 1.50_f32, 2.00_f32, 
+            1.00_f32, 1.25_f32, 1.50_f32, 2.00_f32,
             2.50_f32, 3.00_f32, 4.00_f32, 5.00_f32,
         ]);
         let rhs = cell::Cell::new([
-            1.10_f32, 1.15_f32, 1.70_f32, 1.80_f32, 
+            1.10_f32, 1.15_f32, 1.70_f32, 1.80_f32,
             2.80_f32, 2.70_f32, 4.40_f32, 4.60_f32,
         ]);
         let abs_diff_self = [0.0000000_f32; 8];
@@ -1991,19 +2060,20 @@ mod abs_diff_eq_cell_tests {
         assert_eq!(rhs.debug_abs_diff(&lhs), abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff2() {
         let lhs = cell::Cell::new([
-            0.9999500_f32, 2.0000000_f32, 2.9999500_f32, 4.0000000_f32, 
+            0.9999500_f32, 2.0000000_f32, 2.9999500_f32, 4.0000000_f32,
             4.9999500_f32, 6.0000000_f32, 6.9999500_f32, 8.0000000_f32,
         ]);
         let rhs = cell::Cell::new([
-            1.0000000_f32, 1.9999500_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999500_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000000_f32, 7.0000000_f32, 8.0000000_f32,
         ]);
         let abs_diff_self = [0.00000000000000_f32; 8];
         let abs_diff = [
-            0.00005000829700_f32, 0.00004994869200_f32, 0.00005006790000_f32, 0.00000047683716_f32, 
+            0.00005000829700_f32, 0.00004994869200_f32, 0.00005006790000_f32, 0.00000047683716_f32,
             0.00005006790000_f32, 0.00000000000000_f32, 0.00005006790000_f32, 0.00000000000000_f32,
         ];
 
@@ -2044,14 +2114,15 @@ mod abs_diff_eq_refcell_tests {
     use core::cell;
 
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq() {
         let lhs = cell::RefCell::new([
-            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32, 
+            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ]);
         let rhs = cell::RefCell::new([
-            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let eps = f32::EPSILON;
@@ -2063,14 +2134,15 @@ mod abs_diff_eq_refcell_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne1() {
         let lhs = cell::RefCell::new([
-            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32, 
+            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ]);
         let rhs = cell::RefCell::new([
-            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let eps = f32::EPSILON;
@@ -2082,14 +2154,15 @@ mod abs_diff_eq_refcell_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne2() {
         let lhs = cell::RefCell::new([
-            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32, 
+            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ]);
         let rhs = cell::RefCell::new([
-            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let eps = f32::EPSILON;
@@ -2101,14 +2174,15 @@ mod abs_diff_eq_refcell_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_eq() {
         let lhs = cell::RefCell::new([
-            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32, 
+            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ]);
         let rhs = cell::RefCell::new([
-            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let max_abs_diff = 4.0 * f32::EPSILON;
@@ -2116,14 +2190,15 @@ mod abs_diff_eq_refcell_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_ne() {
         let lhs = cell::RefCell::new([
-            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32, 
+            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ]);
         let rhs = cell::RefCell::new([
-            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let max_abs_diff = 2.0 * f32::EPSILON;
@@ -2131,14 +2206,15 @@ mod abs_diff_eq_refcell_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff1() {
         let lhs = cell::RefCell::new([
-            1.00_f32, 1.25_f32, 1.50_f32, 2.00_f32, 
+            1.00_f32, 1.25_f32, 1.50_f32, 2.00_f32,
             2.50_f32, 3.00_f32, 4.00_f32, 5.00_f32,
         ]);
         let rhs = cell::RefCell::new([
-            1.10_f32, 1.15_f32, 1.70_f32, 1.80_f32, 
+            1.10_f32, 1.15_f32, 1.70_f32, 1.80_f32,
             2.80_f32, 2.70_f32, 4.40_f32, 4.60_f32,
         ]);
         let abs_diff_self = [0.0000000_f32; 8];
@@ -2152,19 +2228,20 @@ mod abs_diff_eq_refcell_tests {
         assert_eq!(rhs.debug_abs_diff(&lhs), abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff2() {
         let lhs = cell::RefCell::new([
-            0.9999500_f32, 2.0000000_f32, 2.9999500_f32, 4.0000000_f32, 
+            0.9999500_f32, 2.0000000_f32, 2.9999500_f32, 4.0000000_f32,
             4.9999500_f32, 6.0000000_f32, 6.9999500_f32, 8.0000000_f32,
         ]);
         let rhs = cell::RefCell::new([
-            1.0000000_f32, 1.9999500_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999500_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000000_f32, 7.0000000_f32, 8.0000000_f32,
         ]);
         let abs_diff_self = [0.00000000000000_f32; 8];
         let abs_diff = [
-            0.00005000829700_f32, 0.00004994869200_f32, 0.00005006790000_f32, 0.00000047683716_f32, 
+            0.00005000829700_f32, 0.00004994869200_f32, 0.00005006790000_f32, 0.00000047683716_f32,
             0.00005006790000_f32, 0.00000000000000_f32, 0.00005006790000_f32, 0.00000000000000_f32,
         ];
 
@@ -2204,14 +2281,15 @@ mod abs_diff_eq_option_tests {
     };
 
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq() {
         let lhs = Some([
-            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32, 
+            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ]);
         let rhs = Some([
-            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let eps = f32::EPSILON;
@@ -2223,14 +2301,15 @@ mod abs_diff_eq_option_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne1() {
         let lhs = Some([
-            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32, 
+            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ]);
         let rhs = Some([
-            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let eps = f32::EPSILON;
@@ -2242,14 +2321,15 @@ mod abs_diff_eq_option_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne2() {
         let lhs = Some([
-            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32, 
+            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ]);
         let rhs = Some([
-            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let eps = f32::EPSILON;
@@ -2261,14 +2341,15 @@ mod abs_diff_eq_option_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_eq() {
         let lhs = Some([
-            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32, 
+            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ]);
         let rhs = Some([
-            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let max_abs_diff = Some(4.0 * f32::EPSILON);
@@ -2276,14 +2357,15 @@ mod abs_diff_eq_option_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_ne() {
         let lhs = Some([
-            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32, 
+            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ]);
         let rhs = Some([
-            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let max_abs_diff = Some(2.0 * f32::EPSILON);
@@ -2291,14 +2373,15 @@ mod abs_diff_eq_option_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff1() {
         let lhs = Some([
-            1.00_f32, 1.25_f32, 1.50_f32, 2.00_f32, 
+            1.00_f32, 1.25_f32, 1.50_f32, 2.00_f32,
             2.50_f32, 3.00_f32, 4.00_f32, 5.00_f32,
         ]);
         let rhs = Some([
-            1.10_f32, 1.15_f32, 1.70_f32, 1.80_f32, 
+            1.10_f32, 1.15_f32, 1.70_f32, 1.80_f32,
             2.80_f32, 2.70_f32, 4.40_f32, 4.60_f32,
         ]);
         let abs_diff_self = Some([0.0000000_f32; 8]);
@@ -2312,19 +2395,20 @@ mod abs_diff_eq_option_tests {
         assert_eq!(rhs.debug_abs_diff(&lhs), abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff2() {
         let lhs = Some([
-            0.9999500_f32, 2.0000000_f32, 2.9999500_f32, 4.0000000_f32, 
+            0.9999500_f32, 2.0000000_f32, 2.9999500_f32, 4.0000000_f32,
             4.9999500_f32, 6.0000000_f32, 6.9999500_f32, 8.0000000_f32,
         ]);
         let rhs = Some([
-            1.0000000_f32, 1.9999500_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999500_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000000_f32, 7.0000000_f32, 8.0000000_f32,
         ]);
         let abs_diff_self = Some([0.00000000000000_f32; 8]);
         let abs_diff = Some([
-            0.00005000829700_f32, 0.00004994869200_f32, 0.00005006790000_f32, 0.00000047683716_f32, 
+            0.00005000829700_f32, 0.00004994869200_f32, 0.00005006790000_f32, 0.00000047683716_f32,
             0.00005006790000_f32, 0.00000000000000_f32, 0.00005006790000_f32, 0.00000000000000_f32,
         ]);
 
@@ -2459,14 +2543,15 @@ mod abs_diff_eq_oncecell_tests {
     use core::cell;
 
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq() {
         let lhs = cell::OnceCell::from([
-            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32, 
+            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ]);
         let rhs = cell::OnceCell::from([
-            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let eps = f32::EPSILON;
@@ -2478,14 +2563,15 @@ mod abs_diff_eq_oncecell_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne1() {
         let lhs = cell::OnceCell::from([
-            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32, 
+            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ]);
         let rhs = cell::OnceCell::from([
-            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let eps = f32::EPSILON;
@@ -2497,14 +2583,15 @@ mod abs_diff_eq_oncecell_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne2() {
         let lhs = cell::OnceCell::from([
-            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32, 
+            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ]);
         let rhs = cell::OnceCell::from([
-            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let eps = f32::EPSILON;
@@ -2516,14 +2603,15 @@ mod abs_diff_eq_oncecell_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_eq() {
         let lhs = cell::OnceCell::from([
-            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32, 
+            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ]);
         let rhs = cell::OnceCell::from([
-            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let max_abs_diff = 4.0 * f32::EPSILON;
@@ -2531,14 +2619,15 @@ mod abs_diff_eq_oncecell_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_ne() {
         let lhs = cell::OnceCell::from([
-            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32, 
+            0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ]);
         let rhs = cell::OnceCell::from([
-            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
         let max_abs_diff = 2.0 * f32::EPSILON;
@@ -2546,14 +2635,15 @@ mod abs_diff_eq_oncecell_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff1() {
         let lhs = cell::OnceCell::from([
-            1.00_f32, 1.25_f32, 1.50_f32, 2.00_f32, 
+            1.00_f32, 1.25_f32, 1.50_f32, 2.00_f32,
             2.50_f32, 3.00_f32, 4.00_f32, 5.00_f32,
         ]);
         let rhs = cell::OnceCell::from([
-            1.10_f32, 1.15_f32, 1.70_f32, 1.80_f32, 
+            1.10_f32, 1.15_f32, 1.70_f32, 1.80_f32,
             2.80_f32, 2.70_f32, 4.40_f32, 4.60_f32,
         ]);
         let abs_diff_self = [0.0000000_f32; 8];
@@ -2567,19 +2657,20 @@ mod abs_diff_eq_oncecell_tests {
         assert_eq!(rhs.debug_abs_diff(&lhs), Some(abs_diff));
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff2() {
         let lhs = cell::OnceCell::from([
-            0.9999500_f32, 2.0000000_f32, 2.9999500_f32, 4.0000000_f32, 
+            0.9999500_f32, 2.0000000_f32, 2.9999500_f32, 4.0000000_f32,
             4.9999500_f32, 6.0000000_f32, 6.9999500_f32, 8.0000000_f32,
         ]);
         let rhs = cell::OnceCell::from([
-            1.0000000_f32, 1.9999500_f32, 3.0000000_f32, 4.0000005_f32, 
+            1.0000000_f32, 1.9999500_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000000_f32, 7.0000000_f32, 8.0000000_f32,
         ]);
         let abs_diff_self = [0.00000000000000_f32; 8];
         let abs_diff = [
-            0.00005000829700_f32, 0.00004994869200_f32, 0.00005006790000_f32, 0.00000047683716_f32, 
+            0.00005000829700_f32, 0.00004994869200_f32, 0.00005006790000_f32, 0.00000047683716_f32,
             0.00005006790000_f32, 0.00000000000000_f32, 0.00005006790000_f32, 0.00000000000000_f32,
         ];
 
