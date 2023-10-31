@@ -1,8 +1,8 @@
 use crate::relative::{
-    RelativeEq, 
-    RelativeAllEq,
-    AssertRelativeEq,
     AssertRelativeAllEq,
+    AssertRelativeEq,
+    RelativeAllEq,
+    RelativeEq,
 };
 
 use core::cell;
@@ -23,32 +23,32 @@ macro_rules! impl_relative_eq_float {
                 if self == other {
                     return true;
                 }
-    
+
                 // If `self` and `other` are finite, this clause does not apply. If one
                 // of `self` and `other` is finite, and the other one is infinite, they
                 // are not equal.
                 if $T::is_infinite(*self) || $T::is_infinite(*other) {
                     return false;
                 }
-            
+
                 // Now check whether `self` and `other` are really close together.
                 // This is necessary when `self` and `other` are near zero.
                 let abs_diff = $T::abs(self - other);
                 if abs_diff <= *max_abs_diff {
                     return true;
                 }
-    
+
                 // Finally, if the other cases have failed, we check their relative
                 // absolute difference against the largest absolute value of `other` and
                 // `self`.
                 let abs_self = $T::abs(*self);
                 let abs_other = $T::abs(*other);
-                let largest = if abs_other > abs_self { 
+                let largest = if abs_other > abs_self {
                     abs_other
                 } else {
                     abs_self
                 };
-    
+
                 return abs_diff <= largest * max_relative
             }
         }
@@ -264,7 +264,7 @@ where
     }
 }
 
-impl<A, B> RelativeAllEq<cell::Cell<B>> for cell::Cell<A> 
+impl<A, B> RelativeAllEq<cell::Cell<B>> for cell::Cell<A>
 where
     A: RelativeAllEq<B> + Copy,
     B: Copy,
@@ -277,7 +277,7 @@ where
     }
 }
 
-impl<A, B> RelativeAllEq<cell::RefCell<B>> for cell::RefCell<A> 
+impl<A, B> RelativeAllEq<cell::RefCell<B>> for cell::RefCell<A>
 where
     A: RelativeAllEq<B> + ?Sized,
 {
@@ -445,9 +445,7 @@ where
 
 #[inline(always)]
 fn uninit_array<T, const N: usize>() -> [mem::MaybeUninit<T>; N] {
-    unsafe { 
-        mem::MaybeUninit::<[mem::MaybeUninit<T>; N]>::uninit().assume_init() 
-    }
+    unsafe { mem::MaybeUninit::<[mem::MaybeUninit<T>; N]>::uninit().assume_init() }
 }
 
 #[inline(always)]
@@ -471,10 +469,8 @@ where
         for i in 0..N {
             result[i] = mem::MaybeUninit::new(self[i].debug_abs_diff(&other[i]));
         }
-        
-        unsafe { 
-            array_assume_init(result)
-        }
+
+        unsafe { array_assume_init(result) }
     }
 
     #[inline]
@@ -484,9 +480,7 @@ where
             result[i] = mem::MaybeUninit::new(self[i].debug_abs_diff_tolerance(&other[i], &max_abs_diff[i]));
         }
 
-        unsafe { 
-            array_assume_init(result) 
-        }
+        unsafe { array_assume_init(result) }
     }
 
     #[inline]
@@ -496,13 +490,11 @@ where
             result[i] = mem::MaybeUninit::new(self[i].debug_relative_tolerance(&other[i], &max_relative[i]));
         }
 
-        unsafe { 
-            array_assume_init(result) 
-        }
+        unsafe { array_assume_init(result) }
     }
 }
 
-impl<A, B> AssertRelativeEq<cell::Cell<B>> for cell::Cell<A> 
+impl<A, B> AssertRelativeEq<cell::Cell<B>> for cell::Cell<A>
 where
     A: AssertRelativeEq<B> + Copy,
     B: Copy,
@@ -526,7 +518,7 @@ where
     }
 }
 
-impl<A, B> AssertRelativeEq<cell::RefCell<B>> for cell::RefCell<A> 
+impl<A, B> AssertRelativeEq<cell::RefCell<B>> for cell::RefCell<A>
 where
     A: AssertRelativeEq<B> + Copy,
     B: Copy,
@@ -724,9 +716,7 @@ where
             result[i] = mem::MaybeUninit::new(self[i].debug_abs_diff_all_tolerance(&other[i], max_abs_diff));
         }
 
-        unsafe { 
-            array_assume_init(result) 
-        }
+        unsafe { array_assume_init(result) }
     }
 
     #[inline]
@@ -736,13 +726,11 @@ where
             result[i] = mem::MaybeUninit::new(self[i].debug_relative_all_tolerance(&other[i], max_relative));
         }
 
-        unsafe { 
-            array_assume_init(result) 
-        }
+        unsafe { array_assume_init(result) }
     }
 }
 
-impl<A, B> AssertRelativeAllEq<cell::Cell<B>> for cell::Cell<A> 
+impl<A, B> AssertRelativeAllEq<cell::Cell<B>> for cell::Cell<A>
 where
     A: AssertRelativeAllEq<B> + Copy,
     B: Copy,
@@ -760,7 +748,7 @@ where
     }
 }
 
-impl<A, B> AssertRelativeAllEq<cell::RefCell<B>> for cell::RefCell<A> 
+impl<A, B> AssertRelativeAllEq<cell::RefCell<B>> for cell::RefCell<A>
 where
     A: AssertRelativeAllEq<B> + Copy,
     B: Copy,
@@ -791,7 +779,11 @@ where
         let ref_other = other.as_ref()?;
         let ref_max_abs_diff = max_abs_diff.as_ref()?;
 
-        Some(AssertRelativeAllEq::debug_abs_diff_all_tolerance(ref_self, ref_other, ref_max_abs_diff))
+        Some(AssertRelativeAllEq::debug_abs_diff_all_tolerance(
+            ref_self,
+            ref_other,
+            ref_max_abs_diff,
+        ))
     }
 
     #[inline]
@@ -800,7 +792,11 @@ where
         let ref_other = other.as_ref()?;
         let ref_max_relative = max_relative.as_ref()?;
 
-        Some(AssertRelativeAllEq::debug_relative_all_tolerance(ref_self, ref_other, ref_max_relative))
+        Some(AssertRelativeAllEq::debug_relative_all_tolerance(
+            ref_self,
+            ref_other,
+            ref_max_relative,
+        ))
     }
 }
 
@@ -829,4 +825,3 @@ where
         }
     }
 }
-

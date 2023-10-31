@@ -1,8 +1,8 @@
 use crate::abs_diff::{
-    AbsDiffEq,
     AbsDiffAllEq,
-    AssertAbsDiffEq,
+    AbsDiffEq,
     AssertAbsDiffAllEq,
+    AssertAbsDiffEq,
 };
 
 use core::cell;
@@ -16,7 +16,7 @@ macro_rules! impl_abs_diff_eq_unsigned {
 
             #[inline]
             fn abs_diff_eq(&self, other: &$T, max_abs_diff: &Self::Tolerance) -> bool {
-                let abs_diff = if self > other { 
+                let abs_diff = if self > other {
                     self - other
                 } else {
                     other - self
@@ -118,7 +118,7 @@ where
     }
 }
 
-impl<A, B> AbsDiffEq<cell::Cell<B>> for cell::Cell<A> 
+impl<A, B> AbsDiffEq<cell::Cell<B>> for cell::Cell<A>
 where
     A: AbsDiffEq<B> + Copy,
     B: Copy,
@@ -131,7 +131,7 @@ where
     }
 }
 
-impl<A, B> AbsDiffEq<cell::RefCell<B>> for cell::RefCell<A> 
+impl<A, B> AbsDiffEq<cell::RefCell<B>> for cell::RefCell<A>
 where
     A: AbsDiffEq<B> + ?Sized,
     B: ?Sized,
@@ -161,7 +161,7 @@ where
     }
 }
 
-impl<A, B> AbsDiffEq<cell::OnceCell<B>> for cell::OnceCell<A> 
+impl<A, B> AbsDiffEq<cell::OnceCell<B>> for cell::OnceCell<A>
 where
     A: AbsDiffEq<B>,
     A::Tolerance: Sized,
@@ -271,13 +271,11 @@ where
 
     #[inline]
     fn abs_diff_all_eq(&self, other: &[B; N], max_abs_diff: &Self::AllTolerance) -> bool {
-        self.iter()
-            .zip(other.iter())
-            .all(|(a, b)| a.abs_diff_all_eq(b, max_abs_diff))
+        self.iter().zip(other.iter()).all(|(a, b)| a.abs_diff_all_eq(b, max_abs_diff))
     }
 }
 
-impl<A, B> AbsDiffAllEq<cell::Cell<B>> for cell::Cell<A> 
+impl<A, B> AbsDiffAllEq<cell::Cell<B>> for cell::Cell<A>
 where
     A: AbsDiffAllEq<B> + Copy,
     B: Copy,
@@ -290,7 +288,7 @@ where
     }
 }
 
-impl<A, B> AbsDiffAllEq<cell::RefCell<B>> for cell::RefCell<A> 
+impl<A, B> AbsDiffAllEq<cell::RefCell<B>> for cell::RefCell<A>
 where
     A: AbsDiffAllEq<B> + ?Sized,
     B: ?Sized,
@@ -346,7 +344,7 @@ macro_rules! impl_assert_abs_diff_eq_unsigned {
 
             #[inline]
             fn debug_abs_diff(&self, other: &Self) -> Self::DebugAbsDiff {
-                if self > other { 
+                if self > other {
                     self - other
                 } else {
                     other - self
@@ -427,7 +425,7 @@ where
 impl<A, B> AssertAbsDiffEq<&B> for &mut A
 where
     A: AssertAbsDiffEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -464,9 +462,7 @@ where
 
 #[inline(always)]
 fn uninit_array<T, const N: usize>() -> [mem::MaybeUninit<T>; N] {
-    unsafe { 
-        mem::MaybeUninit::<[mem::MaybeUninit<T>; N]>::uninit().assume_init() 
-    }
+    unsafe { mem::MaybeUninit::<[mem::MaybeUninit<T>; N]>::uninit().assume_init() }
 }
 
 #[inline(always)]
@@ -489,10 +485,8 @@ where
         for i in 0..N {
             result[i] = mem::MaybeUninit::new(self[i].debug_abs_diff(&other[i]));
         }
-        
-        unsafe { 
-            array_assume_init(result)
-        }
+
+        unsafe { array_assume_init(result) }
     }
 
     #[inline]
@@ -502,13 +496,11 @@ where
             result[i] = mem::MaybeUninit::new(self[i].debug_abs_diff_tolerance(&other[i], &max_abs_diff[i]));
         }
 
-        unsafe { 
-            array_assume_init(result) 
-        }
+        unsafe { array_assume_init(result) }
     }
 }
 
-impl<A, B> AssertAbsDiffEq<cell::Cell<B>> for cell::Cell<A> 
+impl<A, B> AssertAbsDiffEq<cell::Cell<B>> for cell::Cell<A>
 where
     A: AssertAbsDiffEq<B> + Copy,
     B: Copy,
@@ -527,7 +519,7 @@ where
     }
 }
 
-impl<A, B> AssertAbsDiffEq<cell::RefCell<B>> for cell::RefCell<A> 
+impl<A, B> AssertAbsDiffEq<cell::RefCell<B>> for cell::RefCell<A>
 where
     A: AssertAbsDiffEq<B> + ?Sized + Copy,
     B: ?Sized + Copy,
@@ -697,13 +689,11 @@ where
             result[i] = mem::MaybeUninit::new(self[i].debug_abs_diff_all_tolerance(&other[i], &max_abs_diff));
         }
 
-        unsafe { 
-            array_assume_init(result) 
-        }
+        unsafe { array_assume_init(result) }
     }
 }
 
-impl<A, B> AssertAbsDiffAllEq<cell::Cell<B>> for cell::Cell<A> 
+impl<A, B> AssertAbsDiffAllEq<cell::Cell<B>> for cell::Cell<A>
 where
     A: AssertAbsDiffAllEq<B> + Copy,
     B: Copy,
@@ -716,7 +706,7 @@ where
     }
 }
 
-impl<A, B> AssertAbsDiffAllEq<cell::RefCell<B>> for cell::RefCell<A> 
+impl<A, B> AssertAbsDiffAllEq<cell::RefCell<B>> for cell::RefCell<A>
 where
     A: AssertAbsDiffAllEq<B> + ?Sized + Copy,
     B: ?Sized + Copy,
@@ -742,7 +732,11 @@ where
         let ref_other = other.as_ref()?;
         let ref_max_abs_diff = max_abs_diff.as_ref()?;
 
-        Some(AssertAbsDiffAllEq::debug_abs_diff_all_tolerance(ref_self, ref_other, ref_max_abs_diff))
+        Some(AssertAbsDiffAllEq::debug_abs_diff_all_tolerance(
+            ref_self,
+            ref_other,
+            ref_max_abs_diff,
+        ))
     }
 }
 
@@ -762,4 +756,3 @@ where
         }
     }
 }
-

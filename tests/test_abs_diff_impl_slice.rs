@@ -2,10 +2,10 @@ extern crate approx_cmp;
 
 
 use approx_cmp::{
-    assert_abs_diff_eq,
-    assert_abs_diff_ne,
     abs_diff_eq,
     abs_diff_ne,
+    assert_abs_diff_eq,
+    assert_abs_diff_ne,
 };
 
 
@@ -102,4 +102,3 @@ fn test_all_ne() {
     assert!(abs_diff_ne!(lhs[..], rhs[..], abs_diff_all <= max_abs_diff));
     assert_abs_diff_ne!(&lhs[..], &rhs[..], abs_diff_all <= max_abs_diff);
 }
-

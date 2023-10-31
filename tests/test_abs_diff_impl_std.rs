@@ -4,10 +4,10 @@ extern crate approx_cmp;
 #[cfg(test)]
 mod abs_diff_eq_box_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
-        AssertAbsDiffAllEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffAllEq,
+        AssertAbsDiffEq,
     };
 
 
@@ -171,14 +171,12 @@ mod abs_diff_eq_box_tests {
 #[cfg(test)]
 mod abs_diff_eq_rc_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
-        AssertAbsDiffAllEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffAllEq,
+        AssertAbsDiffEq,
     };
-    use std::rc::{
-        Rc,
-    };
+    use std::rc::Rc;
 
 
     #[rustfmt::skip]
@@ -341,14 +339,12 @@ mod abs_diff_eq_rc_tests {
 #[cfg(test)]
 mod abs_diff_eq_arc_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
-        AssertAbsDiffAllEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffAllEq,
+        AssertAbsDiffEq,
     };
-    use std::sync::{
-        Arc,
-    };
+    use std::sync::Arc;
 
 
     #[rustfmt::skip]
@@ -511,10 +507,10 @@ mod abs_diff_eq_arc_tests {
 #[cfg(test)]
 mod abs_diff_eq_vec_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
-        AssertAbsDiffAllEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffAllEq,
+        AssertAbsDiffEq,
     };
 
 
@@ -673,4 +669,3 @@ mod abs_diff_eq_vec_tests {
         assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), Some(max_abs_diff));
     }
 }
-

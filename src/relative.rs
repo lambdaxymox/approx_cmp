@@ -59,7 +59,7 @@ where
     fn debug_relative_tolerance(&self, other: &Rhs, max_relative: &Self::Tolerance) -> Self::DebugTolerance;
 }
 
-pub trait AssertRelativeAllEq<Rhs = Self>: RelativeAllEq<Rhs> 
+pub trait AssertRelativeAllEq<Rhs = Self>: RelativeAllEq<Rhs>
 where
     Rhs: ?Sized,
 {
@@ -71,13 +71,12 @@ where
 }
 
 
-
 #[doc(hidden)]
 pub struct RelativeCmp {}
 
 impl RelativeCmp {
     #[inline]
-    pub fn eq<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance, max_relative: &A::Tolerance) -> bool 
+    pub fn eq<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance, max_relative: &A::Tolerance) -> bool
     where
         A: RelativeEq<B> + ?Sized,
         B: ?Sized,
@@ -86,7 +85,7 @@ impl RelativeCmp {
     }
 
     #[inline]
-    pub fn ne<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance, max_relative: &A::Tolerance) -> bool 
+    pub fn ne<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance, max_relative: &A::Tolerance) -> bool
     where
         A: RelativeEq<B> + ?Sized,
         B: ?Sized,
@@ -95,7 +94,7 @@ impl RelativeCmp {
     }
 
     #[inline]
-    pub fn all_eq<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance, max_relative: &A::AllTolerance) -> bool 
+    pub fn all_eq<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance, max_relative: &A::AllTolerance) -> bool
     where
         A: RelativeAllEq<B> + ?Sized,
         B: ?Sized,
@@ -104,7 +103,7 @@ impl RelativeCmp {
     }
 
     #[inline]
-    pub fn all_ne<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance, max_relative: &A::AllTolerance) -> bool 
+    pub fn all_ne<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance, max_relative: &A::AllTolerance) -> bool
     where
         A: RelativeAllEq<B> + ?Sized,
         B: ?Sized,
@@ -119,7 +118,7 @@ pub struct RelativeCmpOpTol {}
 
 impl RelativeCmpOpTol {
     #[inline]
-    pub fn abs_diff<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance) -> A::DebugTolerance 
+    pub fn abs_diff<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance) -> A::DebugTolerance
     where
         A: RelativeEq<B> + AssertRelativeEq<B>,
     {
@@ -127,7 +126,7 @@ impl RelativeCmpOpTol {
     }
 
     #[inline]
-    pub fn abs_diff_all<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance) -> A::AllDebugTolerance 
+    pub fn abs_diff_all<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance) -> A::AllDebugTolerance
     where
         A: RelativeAllEq<B> + AssertRelativeAllEq<B>,
     {
@@ -139,7 +138,7 @@ impl RelativeCmpOpTol {
     where
         A: RelativeEq<B> + AssertRelativeEq<B>,
     {
-        A::debug_relative_tolerance(lhs,rhs, max_relative)
+        A::debug_relative_tolerance(lhs, rhs, max_relative)
     }
 
     #[inline]
@@ -147,7 +146,7 @@ impl RelativeCmpOpTol {
     where
         A: RelativeAllEq<B> + AssertRelativeAllEq<B>,
     {
-        A::debug_relative_all_tolerance(lhs,rhs, max_relative)
+        A::debug_relative_all_tolerance(lhs, rhs, max_relative)
     }
 }
 
@@ -155,30 +154,22 @@ impl RelativeCmpOpTol {
 macro_rules! relative_eq {
     ($left:expr, $right:expr, abs_diff <= $tol_1:expr, relative <= $tol_2:expr $(,)?) => {{
         match (&$left, &$right, &$tol_1, &$tol_2) {
-            (left_val, right_val, tol_1_val, tol_2_val) => {
-                $crate::RelativeCmp::eq(left_val, right_val, tol_1_val, tol_2_val)
-            }
+            (left_val, right_val, tol_1_val, tol_2_val) => $crate::RelativeCmp::eq(left_val, right_val, tol_1_val, tol_2_val),
         }
     }};
     ($left:expr, $right:expr, relative <= $tol_2:expr, abs_diff <= $tol_1:expr $(,)?) => {{
         match (&$left, &$right, &$tol_1, &$tol_2) {
-            (left_val, right_val, tol_1_val, tol_2_val) => {
-                $crate::RelativeCmp::eq(left_val, right_val, tol_1_val, tol_2_val)
-            }
+            (left_val, right_val, tol_1_val, tol_2_val) => $crate::RelativeCmp::eq(left_val, right_val, tol_1_val, tol_2_val),
         }
     }};
     ($left:expr, $right:expr, abs_diff_all <= $tol_1:expr, relative_all <= $tol_2:expr $(,)?) => {{
         match (&$left, &$right, &$tol_1, &$tol_2) {
-            (left_val, right_val, tol_1_val, tol_2_val) => {
-                $crate::RelativeCmp::all_eq(left_val, right_val, tol_1_val, tol_2_val)
-            }
+            (left_val, right_val, tol_1_val, tol_2_val) => $crate::RelativeCmp::all_eq(left_val, right_val, tol_1_val, tol_2_val),
         }
     }};
     ($left:expr, $right:expr, relative_all <= $tol_2:expr, abs_diff_all <= $tol_1:expr $(,)?) => {{
         match (&$left, &$right, &$tol_1, &$tol_2) {
-            (left_val, right_val, tol_1_val, tol_2_val) => {
-                $crate::RelativeCmp::all_eq(left_val, right_val, tol_1_val, tol_2_val)
-            }
+            (left_val, right_val, tol_1_val, tol_2_val) => $crate::RelativeCmp::all_eq(left_val, right_val, tol_1_val, tol_2_val),
         }
     }};
 }
@@ -187,30 +178,22 @@ macro_rules! relative_eq {
 macro_rules! relative_ne {
     ($left:expr, $right:expr, abs_diff <= $tol_1:expr, relative <= $tol_2:expr $(,)?) => {{
         match (&$left, &$right, &$tol_1, &$tol_2) {
-            (left_val, right_val, tol_1_val, tol_2_val) => {
-                $crate::RelativeCmp::ne(left_val, right_val, tol_1_val, tol_2_val)
-            }
+            (left_val, right_val, tol_1_val, tol_2_val) => $crate::RelativeCmp::ne(left_val, right_val, tol_1_val, tol_2_val),
         }
     }};
     ($left:expr, $right:expr, relative <= $tol_2:expr, abs_diff <= $tol_1:expr $(,)?) => {{
         match (&$left, &$right, &$tol_1, &$tol_2) {
-            (left_val, right_val, tol_1_val, tol_2_val) => {
-                $crate::RelativeCmp::ne(left_val, right_val, tol_1_val, tol_2_val)
-            }
+            (left_val, right_val, tol_1_val, tol_2_val) => $crate::RelativeCmp::ne(left_val, right_val, tol_1_val, tol_2_val),
         }
     }};
     ($left:expr, $right:expr, abs_diff_all <= $tol_1:expr, relative_all <= $tol_2:expr $(,)?) => {{
         match (&$left, &$right, &$tol_1, &$tol_2) {
-            (left_val, right_val, tol_1_val, tol_2_val) => {
-                $crate::RelativeCmp::all_ne(left_val, right_val, tol_1_val, tol_2_val)
-            }
+            (left_val, right_val, tol_1_val, tol_2_val) => $crate::RelativeCmp::all_ne(left_val, right_val, tol_1_val, tol_2_val),
         }
     }};
     ($left:expr, $right:expr, relative_all <= $tol_2:expr, abs_diff_all <= $tol_1:expr $(,)?) => {{
         match (&$left, &$right, &$tol_1, &$tol_2) {
-            (left_val, right_val, tol_1_val, tol_2_val) => {
-                $crate::RelativeCmp::all_ne(left_val, right_val, tol_1_val, tol_2_val)
-            }
+            (left_val, right_val, tol_1_val, tol_2_val) => $crate::RelativeCmp::all_ne(left_val, right_val, tol_1_val, tol_2_val),
         }
     }};
 }
@@ -338,4 +321,3 @@ macro_rules! debug_assert_relative_eq {
 macro_rules! debug_assert_relative_ne {
     ($($arg:tt)*) => (if cfg!(debug_assertions) { $crate::assert_relative_ne!($($arg)*); })
 }
-

@@ -4,19 +4,19 @@ extern crate approx_cmp;
 #[cfg(test)]
 mod relative_eq_f32_tests {
     use approx_cmp::{
-        RelativeEq,
-        RelativeAllEq,
         assert_relative_eq,
         assert_relative_ne,
         relative_eq,
         relative_ne,
+        RelativeAllEq,
+        RelativeEq,
     };
 
     fn check_relative_eq(a: f32, b: f32, max_abs_diff: f32, max_relative: f32) {
         assert!(a.relative_eq(&b, &max_abs_diff, &max_relative));
         assert!(relative_eq!(a, b, abs_diff <= max_abs_diff, relative <= max_relative));
         assert_relative_eq!(a, b, abs_diff <= max_abs_diff, relative <= max_relative);
-        
+
         assert!(a.relative_all_eq(&b, &max_abs_diff, &max_relative));
         assert!(relative_eq!(a, b, abs_diff_all <= max_abs_diff, relative_all <= max_relative));
         assert_relative_eq!(a, b, abs_diff_all <= max_abs_diff, relative_all <= max_relative);
@@ -478,19 +478,19 @@ mod relative_eq_f32_tests {
 #[cfg(test)]
 mod relative_eq_f64_tests {
     use approx_cmp::{
-        RelativeEq,
-        RelativeAllEq,
         assert_relative_eq,
         assert_relative_ne,
         relative_eq,
         relative_ne,
+        RelativeAllEq,
+        RelativeEq,
     };
 
     fn check_relative_eq(a: f64, b: f64, max_abs_diff: f64, max_relative: f64) {
         assert!(a.relative_eq(&b, &max_abs_diff, &max_relative));
         assert!(relative_eq!(a, b, abs_diff <= max_abs_diff, relative <= max_relative));
         assert_relative_eq!(a, b, abs_diff <= max_abs_diff, relative <= max_relative);
-        
+
         assert!(a.relative_all_eq(&b, &max_abs_diff, &max_relative));
         assert!(relative_eq!(a, b, abs_diff_all <= max_abs_diff, relative_all <= max_relative));
         assert_relative_eq!(a, b, abs_diff_all <= max_abs_diff, relative_all <= max_relative);
@@ -926,7 +926,7 @@ mod relative_eq_f64_tests {
         check_ne( 1_f64,     f64::NAN, 1_f64, 2_f64);
         check_ne(-1_f64,     f64::NAN, 1_f64, 2_f64);
     }
-    
+
     #[rustfmt::skip]
     #[test]
     fn test_eq_infinity() {
@@ -1226,7 +1226,7 @@ macro_rules! impl_relative_eq_float_exact_exhaustive_tests {
                 relative_eq,
                 relative_ne,
             };
-    
+
             #[test]
             fn test_abs_relative_exactly_representable_exhaustive() {
                 for i in <$IntegerType>::MIN..<$IntegerType>::MAX {
@@ -1235,7 +1235,7 @@ macro_rules! impl_relative_eq_float_exact_exhaustive_tests {
                     assert_relative_eq!(i as $FloatType, i as $FloatType, abs_diff <= 0.0, relative <= <$FloatType>::EPSILON);
                 }
             }
-        
+
             #[test]
             fn test_relative_ne_exactly_representable_exhaustive1() {
                 for i in <$IntegerType>::MIN..<$IntegerType>::MAX {
@@ -1253,13 +1253,13 @@ macro_rules! impl_relative_eq_float_exact_exhaustive_tests {
 }
 
 impl_relative_eq_float_exact_exhaustive_tests!(
-    (relative_eq_f32_u8_exact_exhaustive_tests,  f32, u8),
+    (relative_eq_f32_u8_exact_exhaustive_tests, f32, u8),
     (relative_eq_f32_u16_exact_exhaustive_tests, f32, u16),
-    (relative_eq_f32_i8_exact_exhaustive_tests,  f32, i8),
+    (relative_eq_f32_i8_exact_exhaustive_tests, f32, i8),
     (relative_eq_f32_i16_exact_exhaustive_tests, f32, i16),
-    (relative_eq_f64_u8_exact_exhaustive_tests,  f64, u8),
+    (relative_eq_f64_u8_exact_exhaustive_tests, f64, u8),
     (relative_eq_f64_u16_exact_exhaustive_tests, f64, u16),
-    (relative_eq_f64_i8_exact_exhaustive_tests,  f64, i8),
+    (relative_eq_f64_i8_exact_exhaustive_tests, f64, i8),
     (relative_eq_f64_i16_exact_exhaustive_tests, f64, i16)
 );
 
@@ -1267,12 +1267,12 @@ impl_relative_eq_float_exact_exhaustive_tests!(
 #[cfg(test)]
 mod relative_eq_array_f32_tests {
     use approx_cmp::{
-        RelativeEq,
-        RelativeAllEq,
         assert_relative_eq,
         assert_relative_ne,
         relative_eq,
         relative_ne,
+        RelativeAllEq,
+        RelativeEq,
     };
 
     fn array_uniform<const N: usize>(value: f32) -> [f32; N] {
@@ -1387,12 +1387,12 @@ mod relative_eq_array_f32_tests {
 #[cfg(test)]
 mod relative_eq_array_f64_tests {
     use approx_cmp::{
-        RelativeEq,
-        RelativeAllEq,
         assert_relative_eq,
         assert_relative_ne,
         relative_eq,
         relative_ne,
+        RelativeAllEq,
+        RelativeEq,
     };
 
     fn array_uniform<const N: usize>(value: f64) -> [f64; N] {
@@ -1508,8 +1508,8 @@ mod relative_eq_array_f64_tests {
 #[cfg(test)]
 mod relative_eq_array_f32_debug_tests {
     use approx_cmp::{
-        AssertRelativeEq,
         AssertRelativeAllEq,
+        AssertRelativeEq,
     };
 
     fn array_uniform<const N: usize>(value: f32) -> [f32; N] {
@@ -1629,8 +1629,8 @@ mod relative_eq_array_f32_debug_tests {
 #[cfg(test)]
 mod relative_eq_array_f64_debug_tests {
     use approx_cmp::{
-        AssertRelativeEq,
         AssertRelativeAllEq,
+        AssertRelativeEq,
     };
 
     fn array_uniform<const N: usize>(value: f64) -> [f64; N] {
@@ -1750,10 +1750,10 @@ mod relative_eq_array_f64_debug_tests {
 #[cfg(test)]
 mod relative_eq_ref_tests {
     use approx_cmp::{
-        AssertRelativeEq,
-        AssertRelativeAllEq,
         assert_relative_eq,
         assert_relative_ne,
+        AssertRelativeAllEq,
+        AssertRelativeEq,
     };
 
 
@@ -2019,10 +2019,10 @@ mod relative_eq_ref_tests {
 #[cfg(test)]
 mod relative_eq_cell_tests {
     use approx_cmp::{
-        AssertRelativeEq,
-        AssertRelativeAllEq,
         assert_relative_eq,
         assert_relative_ne,
+        AssertRelativeAllEq,
+        AssertRelativeEq,
     };
     use core::cell;
 
@@ -2217,10 +2217,10 @@ mod relative_eq_cell_tests {
 #[cfg(test)]
 mod relative_eq_refcell_tests {
     use approx_cmp::{
-        AssertRelativeEq,
-        AssertRelativeAllEq,
         assert_relative_eq,
         assert_relative_ne,
+        AssertRelativeAllEq,
+        AssertRelativeEq,
     };
     use core::cell;
 
@@ -2415,10 +2415,10 @@ mod relative_eq_refcell_tests {
 #[cfg(test)]
 mod relative_eq_option_tests {
     use approx_cmp::{
-        AssertRelativeEq,
-        AssertRelativeAllEq,
         assert_relative_eq,
         assert_relative_ne,
+        AssertRelativeAllEq,
+        AssertRelativeEq,
     };
 
 
@@ -2817,10 +2817,10 @@ mod relative_eq_option_tests {
 #[cfg(test)]
 mod relative_eq_oncecell_tests {
     use approx_cmp::{
-        AssertRelativeEq,
-        AssertRelativeAllEq,
         assert_relative_eq,
         assert_relative_ne,
+        AssertRelativeAllEq,
+        AssertRelativeEq,
     };
     use core::cell;
 
@@ -3100,4 +3100,3 @@ mod relative_eq_oncecell_tests {
         assert_eq!(empty_cell.debug_relative_all_tolerance(&rhs, &max_abs_diff_all), None);
     }
 }
-

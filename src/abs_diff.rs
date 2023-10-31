@@ -63,7 +63,7 @@ where
     fn debug_abs_diff_tolerance(&self, other: &Rhs, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance;
 }
 
-pub trait AssertAbsDiffAllEq<Rhs = Self>: AbsDiffAllEq<Rhs> 
+pub trait AssertAbsDiffAllEq<Rhs = Self>: AbsDiffAllEq<Rhs>
 where
     Rhs: ?Sized,
 {
@@ -78,7 +78,7 @@ pub struct AbsDiffCmp {}
 
 impl AbsDiffCmp {
     #[inline]
-    pub fn eq<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance) -> bool 
+    pub fn eq<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance) -> bool
     where
         A: AbsDiffEq<B> + ?Sized,
         B: ?Sized,
@@ -87,7 +87,7 @@ impl AbsDiffCmp {
     }
 
     #[inline]
-    pub fn ne<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance) -> bool 
+    pub fn ne<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance) -> bool
     where
         A: AbsDiffEq<B> + ?Sized,
         B: ?Sized,
@@ -96,7 +96,7 @@ impl AbsDiffCmp {
     }
 
     #[inline]
-    pub fn all_eq<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance) -> bool 
+    pub fn all_eq<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance) -> bool
     where
         A: AbsDiffAllEq<B> + ?Sized,
         B: ?Sized,
@@ -105,7 +105,7 @@ impl AbsDiffCmp {
     }
 
     #[inline]
-    pub fn all_ne<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance) -> bool 
+    pub fn all_ne<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance) -> bool
     where
         A: AbsDiffAllEq<B> + ?Sized,
         B: ?Sized,
@@ -119,7 +119,7 @@ pub struct AbsDiffCmpOpTol {}
 
 impl AbsDiffCmpOpTol {
     #[inline]
-    pub fn abs_diff<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance) -> A::DebugTolerance 
+    pub fn abs_diff<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance) -> A::DebugTolerance
     where
         A: AbsDiffEq<B> + AssertAbsDiffEq<B>,
     {
@@ -127,7 +127,7 @@ impl AbsDiffCmpOpTol {
     }
 
     #[inline]
-    pub fn abs_diff_all<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance) -> A::AllDebugTolerance 
+    pub fn abs_diff_all<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance) -> A::AllDebugTolerance
     where
         A: AbsDiffAllEq<B> + AssertAbsDiffAllEq<B>,
     {
@@ -139,16 +139,12 @@ impl AbsDiffCmpOpTol {
 macro_rules! abs_diff_eq {
     ($left:expr, $right:expr, abs_diff <= $tol:expr $(,)?) => {{
         match (&$left, &$right) {
-            (left_val, right_val) => {
-                $crate::AbsDiffCmp::eq(left_val, right_val, &$tol)
-            }
+            (left_val, right_val) => $crate::AbsDiffCmp::eq(left_val, right_val, &$tol),
         }
     }};
     ($left:expr, $right:expr, abs_diff_all <= $tol:expr $(,)?) => {{
         match (&$left, &$right) {
-            (left_val, right_val) => {
-                $crate::AbsDiffCmp::all_eq(left_val, right_val, &$tol)
-            }
+            (left_val, right_val) => $crate::AbsDiffCmp::all_eq(left_val, right_val, &$tol),
         }
     }};
 }
@@ -157,16 +153,12 @@ macro_rules! abs_diff_eq {
 macro_rules! abs_diff_ne {
     ($left:expr, $right:expr, abs_diff <= $tol:expr $(,)?) => {{
         match (&$left, &$right) {
-            (left_val, right_val) => {
-                $crate::AbsDiffCmp::ne(left_val, right_val, &$tol)
-            }
+            (left_val, right_val) => $crate::AbsDiffCmp::ne(left_val, right_val, &$tol),
         }
     }};
     ($left:expr, $right:expr, abs_diff_all <= $tol:expr $(,)?) => {{
         match (&$left, &$right) {
-            (left_val, right_val) => {
-                $crate::AbsDiffCmp::all_ne(left_val, right_val, &$tol)
-            }
+            (left_val, right_val) => $crate::AbsDiffCmp::all_ne(left_val, right_val, &$tol),
         }
     }};
 }
@@ -282,4 +274,3 @@ macro_rules! debug_assert_abs_diff_eq {
 macro_rules! debug_assert_abs_diff_ne {
     ($($arg:tt)*) => (if cfg!(debug_assertions) { $crate::assert_abs_diff_ne!($($arg)*); })
 }
-

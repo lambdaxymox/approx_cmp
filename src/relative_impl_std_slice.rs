@@ -1,10 +1,8 @@
 use crate::relative::{
-    AssertRelativeEq,
     AssertRelativeAllEq,
+    AssertRelativeEq,
 };
-use std::vec::{
-    Vec,
-};
+use std::vec::Vec;
 
 
 impl<A, B> AssertRelativeEq<[B]> for [A]
@@ -19,11 +17,7 @@ where
     #[inline]
     fn debug_abs_diff(&self, other: &[B]) -> Self::DebugAbsDiff {
         if self.len() == other.len() {
-            Some(self.iter()
-                .zip(other.iter())
-                .map(|(a, b)| a.debug_abs_diff(b))
-                .collect()
-            )
+            Some(self.iter().zip(other.iter()).map(|(a, b)| a.debug_abs_diff(b)).collect())
         } else {
             None
         }
@@ -32,11 +26,12 @@ where
     #[inline]
     fn debug_abs_diff_tolerance(&self, other: &[B], max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
         if (self.len() == other.len()) && (self.len() == max_abs_diff.len()) {
-            Some(self.iter()
-                .zip(other.iter())
-                .zip(max_abs_diff.iter())
-                .map(|((a, b), tol)| { AssertRelativeEq::debug_abs_diff_tolerance(a, b, tol) })
-                .collect()
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .zip(max_abs_diff.iter())
+                    .map(|((a, b), tol)| AssertRelativeEq::debug_abs_diff_tolerance(a, b, tol))
+                    .collect(),
             )
         } else {
             None
@@ -46,11 +41,12 @@ where
     #[inline]
     fn debug_relative_tolerance(&self, other: &[B], max_relative: &Self::Tolerance) -> Self::DebugTolerance {
         if (self.len() == other.len()) && (self.len() == max_relative.len()) {
-            Some(self.iter()
-                .zip(other.iter())
-                .zip(max_relative.iter())
-                .map(|((a, b), tol)| { AssertRelativeEq::debug_relative_tolerance(a, b, tol) })
-                .collect()
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .zip(max_relative.iter())
+                    .map(|((a, b), tol)| AssertRelativeEq::debug_relative_tolerance(a, b, tol))
+                    .collect(),
             )
         } else {
             None
@@ -70,11 +66,7 @@ where
     #[inline]
     fn debug_abs_diff(&self, other: &&'b [B]) -> Self::DebugAbsDiff {
         if self.len() == other.len() {
-            Some(self.iter()
-                .zip(other.iter())
-                .map(|(a, b)| a.debug_abs_diff(b))
-                .collect()
-            )
+            Some(self.iter().zip(other.iter()).map(|(a, b)| a.debug_abs_diff(b)).collect())
         } else {
             None
         }
@@ -83,11 +75,12 @@ where
     #[inline]
     fn debug_abs_diff_tolerance(&self, other: &&'b [B], max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
         if (self.len() == other.len()) && (self.len() == max_abs_diff.len()) {
-            Some(self.iter()
-                .zip(other.iter())
-                .zip(max_abs_diff.iter())
-                .map(|((a, b), tol)| { AssertRelativeEq::debug_abs_diff_tolerance(a, b, tol) })
-                .collect()
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .zip(max_abs_diff.iter())
+                    .map(|((a, b), tol)| AssertRelativeEq::debug_abs_diff_tolerance(a, b, tol))
+                    .collect(),
             )
         } else {
             None
@@ -97,11 +90,12 @@ where
     #[inline]
     fn debug_relative_tolerance(&self, other: &&'b [B], max_relative: &Self::Tolerance) -> Self::DebugTolerance {
         if (self.len() == other.len()) && (self.len() == max_relative.len()) {
-            Some(self.iter()
-                .zip(other.iter())
-                .zip(max_relative.iter())
-                .map(|((a, b), tol)| { AssertRelativeEq::debug_relative_tolerance(a, b, tol) })
-                .collect()
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .zip(max_relative.iter())
+                    .map(|((a, b), tol)| AssertRelativeEq::debug_relative_tolerance(a, b, tol))
+                    .collect(),
             )
         } else {
             None
@@ -119,11 +113,12 @@ where
 
     #[inline]
     fn debug_abs_diff_all_tolerance(&self, other: &[B], max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        if self.len() == other.len()  {
-            Some(self.iter()
-                .zip(other.iter())
-                .map(|(a, b)| { AssertRelativeAllEq::debug_abs_diff_all_tolerance(a, b, max_abs_diff) })
-                .collect()
+        if self.len() == other.len() {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| AssertRelativeAllEq::debug_abs_diff_all_tolerance(a, b, max_abs_diff))
+                    .collect(),
             )
         } else {
             None
@@ -132,11 +127,12 @@ where
 
     #[inline]
     fn debug_relative_all_tolerance(&self, other: &[B], max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        if self.len() == other.len()  {
-            Some(self.iter()
-                .zip(other.iter())
-                .map(|(a, b)| { AssertRelativeAllEq::debug_relative_all_tolerance(a, b, max_relative) })
-                .collect()
+        if self.len() == other.len() {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| AssertRelativeAllEq::debug_relative_all_tolerance(a, b, max_relative))
+                    .collect(),
             )
         } else {
             None
@@ -154,11 +150,12 @@ where
 
     #[inline]
     fn debug_abs_diff_all_tolerance(&self, other: &&'b [B], max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        if self.len() == other.len()  {
-            Some(self.iter()
-                .zip(other.iter())
-                .map(|(a, b)| { AssertRelativeAllEq::debug_abs_diff_all_tolerance(a, b, max_abs_diff) })
-                .collect()
+        if self.len() == other.len() {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| AssertRelativeAllEq::debug_abs_diff_all_tolerance(a, b, max_abs_diff))
+                    .collect(),
             )
         } else {
             None
@@ -167,15 +164,15 @@ where
 
     #[inline]
     fn debug_relative_all_tolerance(&self, other: &&'b [B], max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        if self.len() == other.len()  {
-            Some(self.iter()
-                .zip(other.iter())
-                .map(|(a, b)| { AssertRelativeAllEq::debug_relative_all_tolerance(a, b, max_relative) })
-                .collect()
+        if self.len() == other.len() {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| AssertRelativeAllEq::debug_relative_all_tolerance(a, b, max_relative))
+                    .collect(),
             )
         } else {
             None
         }
     }
 }
-

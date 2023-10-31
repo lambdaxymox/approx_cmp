@@ -113,4 +113,3 @@ fn test_all_ne() {
     assert!(relative_ne!(lhs[..], rhs[..], abs_diff_all <= max_abs_diff, relative_all <= max_relative));
     assert_relative_ne!(&lhs[..], &rhs[..], abs_diff_all <= max_abs_diff, relative_all <= max_relative);
 }
-

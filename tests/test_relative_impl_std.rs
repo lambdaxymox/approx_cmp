@@ -4,14 +4,12 @@ extern crate approx_cmp;
 #[cfg(test)]
 mod relative_eq_box_tests {
     use approx_cmp::{
-        AssertRelativeEq,
-        AssertRelativeAllEq,
         assert_relative_eq,
         assert_relative_ne,
+        AssertRelativeAllEq,
+        AssertRelativeEq,
     };
-    use std::boxed::{
-        Box,
-    };
+    use std::boxed::Box;
 
 
     #[rustfmt::skip]
@@ -204,14 +202,12 @@ mod relative_eq_box_tests {
 #[cfg(test)]
 mod relative_eq_rc_tests {
     use approx_cmp::{
-        AssertRelativeEq,
-        AssertRelativeAllEq,
         assert_relative_eq,
         assert_relative_ne,
+        AssertRelativeAllEq,
+        AssertRelativeEq,
     };
-    use std::rc::{
-        Rc,
-    };
+    use std::rc::Rc;
 
 
     #[rustfmt::skip]
@@ -404,14 +400,12 @@ mod relative_eq_rc_tests {
 #[cfg(test)]
 mod relative_eq_arc_tests {
     use approx_cmp::{
-        AssertRelativeEq,
-        AssertRelativeAllEq,
         assert_relative_eq,
         assert_relative_ne,
+        AssertRelativeAllEq,
+        AssertRelativeEq,
     };
-    use std::sync::{
-        Arc,
-    };
+    use std::sync::Arc;
 
 
     #[rustfmt::skip]
@@ -604,10 +598,10 @@ mod relative_eq_arc_tests {
 #[cfg(test)]
 mod relative_eq_vec_tests {
     use approx_cmp::{
-        AssertRelativeEq,
-        AssertRelativeAllEq,
         assert_relative_eq,
         assert_relative_ne,
+        AssertRelativeAllEq,
+        AssertRelativeEq,
     };
 
 
@@ -796,4 +790,3 @@ mod relative_eq_vec_tests {
         assert_eq!(lhs.debug_relative_all_tolerance(&rhs, &max_relative_all), Some(max_relative));
     }
 }
-

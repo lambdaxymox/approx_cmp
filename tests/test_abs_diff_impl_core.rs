@@ -4,19 +4,19 @@ extern crate approx_cmp;
 #[cfg(test)]
 mod abs_diff_eq_f32_tests {
     use approx_cmp::{
-        AbsDiffEq,
-        AbsDiffAllEq,
-        assert_abs_diff_eq,
-        assert_abs_diff_ne,
         abs_diff_eq,
         abs_diff_ne,
+        assert_abs_diff_eq,
+        assert_abs_diff_ne,
+        AbsDiffAllEq,
+        AbsDiffEq,
     };
 
     fn check_abs_diff_eq(a: f32, b: f32, tolerance: f32) {
         assert!(a.abs_diff_eq(&b, &tolerance));
         assert!(abs_diff_eq!(a, b, abs_diff <= tolerance));
         assert_abs_diff_eq!(a, b, abs_diff <= tolerance);
-        
+
         assert!(a.abs_diff_all_eq(&b, &tolerance));
         assert!(abs_diff_eq!(a, b, abs_diff_all <= tolerance));
         assert_abs_diff_eq!(a, b, abs_diff_all <= tolerance);
@@ -476,19 +476,19 @@ mod abs_diff_eq_f32_tests {
 #[cfg(test)]
 mod abs_diff_eq_f64_tests {
     use approx_cmp::{
-        AbsDiffEq,
-        AbsDiffAllEq,
-        assert_abs_diff_eq,
-        assert_abs_diff_ne,
         abs_diff_eq,
         abs_diff_ne,
+        assert_abs_diff_eq,
+        assert_abs_diff_ne,
+        AbsDiffAllEq,
+        AbsDiffEq,
     };
 
     fn check_abs_diff_eq(a: f64, b: f64, tolerance: f64) {
         assert!(a.abs_diff_eq(&b, &tolerance));
         assert!(abs_diff_eq!(a, b, abs_diff <= tolerance));
         assert_abs_diff_eq!(a, b, abs_diff <= tolerance);
-        
+
         assert!(a.abs_diff_all_eq(&b, &tolerance));
         assert!(abs_diff_eq!(a, b, abs_diff_all <= tolerance));
         assert_abs_diff_eq!(a, b, abs_diff_all <= tolerance);
@@ -1222,8 +1222,8 @@ macro_rules! impl_abs_diff_eq_integer_exhaustive_tests {
                 abs_diff_eq,
                 abs_diff_ne,
             };
-    
-    
+
+
             #[test]
             fn test_abs_diff_eq_exhaustive() {
                 for i in <$T>::MIN..=<$T>::MAX {
@@ -1232,7 +1232,7 @@ macro_rules! impl_abs_diff_eq_integer_exhaustive_tests {
                     assert_abs_diff_eq!(i, i, abs_diff <= 0);
                 }
             }
-    
+
             #[test]
             fn test_abs_diff_ne_exhaustive() {
                 for i in <$T>::MIN..<$T>::MAX {
@@ -1251,9 +1251,9 @@ macro_rules! impl_abs_diff_eq_integer_exhaustive_tests {
 
 
 impl_abs_diff_eq_integer_exhaustive_tests!(
-    (abs_diff_eq_u8_exhaustive_tests,  u8), 
-    (abs_diff_eq_u16_exhaustive_tests, u16), 
-    (abs_diff_eq_i8_exhaustive_tests,  i8), 
+    (abs_diff_eq_u8_exhaustive_tests, u8),
+    (abs_diff_eq_u16_exhaustive_tests, u16),
+    (abs_diff_eq_i8_exhaustive_tests, i8),
     (abs_diff_eq_i16_exhaustive_tests, i16)
 );
 
@@ -1268,7 +1268,7 @@ macro_rules! impl_abs_diff_eq_float_exact_exhaustive_tests {
                 abs_diff_eq,
                 abs_diff_ne,
             };
-    
+
             #[test]
             fn test_abs_diff_eq_exactly_representable_exhaustive() {
                 for i in <$IntegerType>::MIN..<$IntegerType>::MAX {
@@ -1277,7 +1277,7 @@ macro_rules! impl_abs_diff_eq_float_exact_exhaustive_tests {
                     assert_abs_diff_eq!(i as $FloatType, i as $FloatType, abs_diff <= 0.0);
                 }
             }
-        
+
             #[test]
             fn test_abs_diff_ne_exactly_representable_exhaustive1() {
                 for i in <$IntegerType>::MIN..<$IntegerType>::MAX {
@@ -1295,13 +1295,13 @@ macro_rules! impl_abs_diff_eq_float_exact_exhaustive_tests {
 }
 
 impl_abs_diff_eq_float_exact_exhaustive_tests!(
-    (abs_diff_eq_f32_u8_exact_exhaustive_tests,  f32, u8),
+    (abs_diff_eq_f32_u8_exact_exhaustive_tests, f32, u8),
     (abs_diff_eq_f32_u16_exact_exhaustive_tests, f32, u16),
-    (abs_diff_eq_f32_i8_exact_exhaustive_tests,  f32, i8),
+    (abs_diff_eq_f32_i8_exact_exhaustive_tests, f32, i8),
     (abs_diff_eq_f32_i16_exact_exhaustive_tests, f32, i16),
-    (abs_diff_eq_f64_u8_exact_exhaustive_tests,  f64, u8),
+    (abs_diff_eq_f64_u8_exact_exhaustive_tests, f64, u8),
     (abs_diff_eq_f64_u16_exact_exhaustive_tests, f64, u16),
-    (abs_diff_eq_f64_i8_exact_exhaustive_tests,  f64, i8),
+    (abs_diff_eq_f64_i8_exact_exhaustive_tests, f64, i8),
     (abs_diff_eq_f64_i16_exact_exhaustive_tests, f64, i16)
 );
 
@@ -1309,12 +1309,12 @@ impl_abs_diff_eq_float_exact_exhaustive_tests!(
 #[cfg(test)]
 mod abs_diff_eq_array_f32_tests {
     use approx_cmp::{
-        AbsDiffEq,
-        AbsDiffAllEq,
-        assert_abs_diff_eq,
-        assert_abs_diff_ne,
         abs_diff_eq,
         abs_diff_ne,
+        assert_abs_diff_eq,
+        assert_abs_diff_ne,
+        AbsDiffAllEq,
+        AbsDiffEq,
     };
 
     fn array_uniform<const N: usize>(value: f32) -> [f32; N] {
@@ -1427,12 +1427,12 @@ mod abs_diff_eq_array_f32_tests {
 #[cfg(test)]
 mod abs_diff_eq_array_f64_tests {
     use approx_cmp::{
-        AbsDiffEq,
-        AbsDiffAllEq,
-        assert_abs_diff_eq,
-        assert_abs_diff_ne,
         abs_diff_eq,
         abs_diff_ne,
+        assert_abs_diff_eq,
+        assert_abs_diff_ne,
+        AbsDiffAllEq,
+        AbsDiffEq,
     };
 
     fn array_uniform<const N: usize>(value: f64) -> [f64; N] {
@@ -1545,8 +1545,8 @@ mod abs_diff_eq_array_f64_tests {
 #[cfg(test)]
 mod abs_diff_eq_array_f32_debug_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
         AssertAbsDiffAllEq,
+        AssertAbsDiffEq,
     };
 
     fn array_uniform<const N: usize>(value: f32) -> [f32; N] {
@@ -1626,8 +1626,8 @@ mod abs_diff_eq_array_f32_debug_tests {
 #[cfg(test)]
 mod abs_diff_eq_array_f64_debug_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
         AssertAbsDiffAllEq,
+        AssertAbsDiffEq,
     };
 
     fn array_uniform<const N: usize>(value: f64) -> [f64; N] {
@@ -1707,10 +1707,10 @@ mod abs_diff_eq_array_f64_debug_tests {
 #[cfg(test)]
 mod abs_diff_eq_ref_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
-        AssertAbsDiffAllEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffAllEq,
+        AssertAbsDiffEq,
     };
 
 
@@ -1938,10 +1938,10 @@ mod abs_diff_eq_ref_tests {
 #[cfg(test)]
 mod abs_diff_eq_cell_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
-        AssertAbsDiffAllEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffAllEq,
+        AssertAbsDiffEq,
     };
     use core::cell;
 
@@ -2106,10 +2106,10 @@ mod abs_diff_eq_cell_tests {
 #[cfg(test)]
 mod abs_diff_eq_refcell_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
-        AssertAbsDiffAllEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffAllEq,
+        AssertAbsDiffEq,
     };
     use core::cell;
 
@@ -2274,10 +2274,10 @@ mod abs_diff_eq_refcell_tests {
 #[cfg(test)]
 mod abs_diff_eq_option_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
-        AssertAbsDiffAllEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffAllEq,
+        AssertAbsDiffEq,
     };
 
 
@@ -2535,10 +2535,10 @@ mod abs_diff_eq_option_tests {
 #[cfg(test)]
 mod abs_diff_eq_oncecell_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
-        AssertAbsDiffAllEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffAllEq,
+        AssertAbsDiffEq,
     };
     use core::cell;
 
@@ -2759,4 +2759,3 @@ mod abs_diff_eq_oncecell_tests {
         assert_eq!(empty_cell.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), None);
     }
 }
-
