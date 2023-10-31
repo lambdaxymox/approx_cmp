@@ -50,7 +50,7 @@ impl_abs_diff_eq_signed!(i8, i16, i32, i64, i128, isize, f32, f64);
 impl<A, B> AbsDiffEq<&B> for &A
 where
     A: AbsDiffEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type Tolerance = A::Tolerance;
 
@@ -63,7 +63,7 @@ where
 impl<A, B> AbsDiffEq<&mut B> for &A
 where
     A: AbsDiffEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type Tolerance = A::Tolerance;
 
@@ -76,7 +76,7 @@ where
 impl<A, B> AbsDiffEq<&B> for &mut A
 where
     A: AbsDiffEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type Tolerance = A::Tolerance;
 
@@ -89,7 +89,7 @@ where
 impl<A, B> AbsDiffEq<&mut B> for &mut A
 where
     A: AbsDiffEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type Tolerance = A::Tolerance;
 
@@ -102,7 +102,7 @@ where
 impl<A, B, const N: usize> AbsDiffEq<[B; N]> for [A; N]
 where
     A: AbsDiffEq<B>,
-    A::Tolerance: Sized
+    A::Tolerance: Sized,
 {
     type Tolerance = [A::Tolerance; N];
 
@@ -121,7 +121,7 @@ where
 impl<A, B> AbsDiffEq<cell::Cell<B>> for cell::Cell<A> 
 where
     A: AbsDiffEq<B> + Copy,
-    B: Copy
+    B: Copy,
 {
     type Tolerance = A::Tolerance;
 
@@ -134,7 +134,7 @@ where
 impl<A, B> AbsDiffEq<cell::RefCell<B>> for cell::RefCell<A> 
 where
     A: AbsDiffEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type Tolerance = A::Tolerance;
 
@@ -147,7 +147,7 @@ where
 impl<A, B> AbsDiffEq<Option<B>> for Option<A>
 where
     A: AbsDiffEq<B>,
-    A::Tolerance: Sized
+    A::Tolerance: Sized,
 {
     type Tolerance = Option<A::Tolerance>;
 
@@ -164,7 +164,7 @@ where
 impl<A, B> AbsDiffEq<cell::OnceCell<B>> for cell::OnceCell<A> 
 where
     A: AbsDiffEq<B>,
-    A::Tolerance: Sized
+    A::Tolerance: Sized,
 {
     type Tolerance = A::Tolerance;
 
@@ -214,7 +214,7 @@ impl_abs_diff_eq_all_signed!(i8, i16, i32, i64, i128, isize, f32, f64);
 impl<A, B> AbsDiffAllEq<&B> for &A
 where
     A: AbsDiffAllEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -227,7 +227,7 @@ where
 impl<A, B> AbsDiffAllEq<&mut B> for &A
 where
     A: AbsDiffAllEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -240,7 +240,7 @@ where
 impl<A, B> AbsDiffAllEq<&B> for &mut A
 where
     A: AbsDiffAllEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -253,7 +253,7 @@ where
 impl<A, B> AbsDiffAllEq<&mut B> for &mut A
 where
     A: AbsDiffAllEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -265,7 +265,7 @@ where
 
 impl<A, B, const N: usize> AbsDiffAllEq<[B; N]> for [A; N]
 where
-    A: AbsDiffAllEq<B>
+    A: AbsDiffAllEq<B>,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -280,7 +280,7 @@ where
 impl<A, B> AbsDiffAllEq<cell::Cell<B>> for cell::Cell<A> 
 where
     A: AbsDiffAllEq<B> + Copy,
-    B: Copy
+    B: Copy,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -293,7 +293,7 @@ where
 impl<A, B> AbsDiffAllEq<cell::RefCell<B>> for cell::RefCell<A> 
 where
     A: AbsDiffAllEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -306,7 +306,7 @@ where
 impl<A, B> AbsDiffAllEq<Option<B>> for Option<A>
 where
     A: AbsDiffAllEq<B>,
-    A::AllTolerance: Sized
+    A::AllTolerance: Sized,
 {
     type AllTolerance = Option<A::AllTolerance>;
 
@@ -323,7 +323,7 @@ where
 impl<A, B> AbsDiffAllEq<cell::OnceCell<B>> for cell::OnceCell<A>
 where
     A: AbsDiffAllEq<B>,
-    A::AllTolerance: Sized
+    A::AllTolerance: Sized,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -389,7 +389,7 @@ impl_assert_abs_diff_eq_signed!(i8, i16, i32, i64, i128, isize, f32, f64);
 impl<A, B> AssertAbsDiffEq<&B> for &A
 where
     A: AssertAbsDiffEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -408,7 +408,7 @@ where
 impl<A, B> AssertAbsDiffEq<&mut B> for &A
 where
     A: AssertAbsDiffEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -446,7 +446,7 @@ where
 impl<A, B> AssertAbsDiffEq<&mut B> for &mut A
 where
     A: AssertAbsDiffEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -511,7 +511,7 @@ where
 impl<A, B> AssertAbsDiffEq<cell::Cell<B>> for cell::Cell<A> 
 where
     A: AssertAbsDiffEq<B> + Copy,
-    B: Copy
+    B: Copy,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -530,7 +530,7 @@ where
 impl<A, B> AssertAbsDiffEq<cell::RefCell<B>> for cell::RefCell<A> 
 where
     A: AssertAbsDiffEq<B> + ?Sized + Copy,
-    B: ?Sized + Copy
+    B: ?Sized + Copy,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -549,7 +549,7 @@ where
 impl<A, B> AssertAbsDiffEq<Option<B>> for Option<A>
 where
     A: AssertAbsDiffEq<B>,
-    A::Tolerance: Sized
+    A::Tolerance: Sized,
 {
     type DebugAbsDiff = Option<A::DebugAbsDiff>;
     type DebugTolerance = Option<A::DebugTolerance>;
@@ -575,7 +575,7 @@ where
 impl<A, B> AssertAbsDiffEq<cell::OnceCell<B>> for cell::OnceCell<A>
 where
     A: AssertAbsDiffEq<B>,
-    A::Tolerance: Sized
+    A::Tolerance: Sized,
 {
     type DebugAbsDiff = Option<A::DebugAbsDiff>;
     type DebugTolerance = Option<A::DebugTolerance>;
@@ -635,7 +635,7 @@ impl_assert_all_abs_diff_eq_signed!(i8, i16, i32, i64, i128, isize, f32, f64);
 impl<A, B> AssertAbsDiffAllEq<&B> for &A
 where
     A: AssertAbsDiffAllEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -648,7 +648,7 @@ where
 impl<A, B> AssertAbsDiffAllEq<&mut B> for &A
 where
     A: AssertAbsDiffAllEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -661,7 +661,7 @@ where
 impl<A, B> AssertAbsDiffAllEq<&B> for &mut A
 where
     A: AssertAbsDiffAllEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -674,7 +674,7 @@ where
 impl<A, B> AssertAbsDiffAllEq<&mut B> for &mut A
 where
     A: AssertAbsDiffAllEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -686,7 +686,7 @@ where
 
 impl<A, B, const N: usize> AssertAbsDiffAllEq<[B; N]> for [A; N]
 where
-    A: AssertAbsDiffAllEq<B>
+    A: AssertAbsDiffAllEq<B>,
 {
     type AllDebugTolerance = [A::AllDebugTolerance; N];
 
@@ -706,7 +706,7 @@ where
 impl<A, B> AssertAbsDiffAllEq<cell::Cell<B>> for cell::Cell<A> 
 where
     A: AssertAbsDiffAllEq<B> + Copy,
-    B: Copy
+    B: Copy,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -719,7 +719,7 @@ where
 impl<A, B> AssertAbsDiffAllEq<cell::RefCell<B>> for cell::RefCell<A> 
 where
     A: AssertAbsDiffAllEq<B> + ?Sized + Copy,
-    B: ?Sized + Copy
+    B: ?Sized + Copy,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -732,7 +732,7 @@ where
 impl<A, B> AssertAbsDiffAllEq<Option<B>> for Option<A>
 where
     A: AssertAbsDiffAllEq<B>,
-    A::AllTolerance: Sized
+    A::AllTolerance: Sized,
 {
     type AllDebugTolerance = Option<A::AllDebugTolerance>;
 
@@ -749,7 +749,7 @@ where
 impl<A, B> AssertAbsDiffAllEq<cell::OnceCell<B>> for cell::OnceCell<A>
 where
     A: AssertAbsDiffAllEq<B>,
-    A::AllTolerance: Sized
+    A::AllTolerance: Sized,
 {
     type AllDebugTolerance = Option<A::AllDebugTolerance>;
 

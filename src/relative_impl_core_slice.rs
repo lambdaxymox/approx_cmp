@@ -7,7 +7,7 @@ use crate::relative::{
 impl<A, B> RelativeEq<[B]> for [A]
 where
     A: RelativeEq<B>,
-    A::Tolerance: Sized
+    A::Tolerance: Sized,
 {
     type Tolerance = [A::Tolerance];
 
@@ -27,7 +27,7 @@ where
 impl<'a, 'b, A, B> RelativeEq<&'b [B]> for &'a [A]
 where
     A: RelativeEq<B>,
-    A::Tolerance: Sized
+    A::Tolerance: Sized,
 {
     type Tolerance = [A::Tolerance];
 
@@ -46,7 +46,7 @@ where
 
 impl<A, B> RelativeAllEq<[B]> for [A]
 where
-    A: RelativeAllEq<B>
+    A: RelativeAllEq<B>,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -61,7 +61,7 @@ where
 
 impl<'a, 'b, A, B> RelativeAllEq<&'b [B]> for &'a [A]
 where
-    A: RelativeAllEq<B>
+    A: RelativeAllEq<B>,
 {
     type AllTolerance = A::AllTolerance;
 

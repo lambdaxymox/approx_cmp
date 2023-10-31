@@ -7,7 +7,7 @@ use crate::abs_diff::{
 impl<A, B> AbsDiffEq<[B]> for [A]
 where
     A: AbsDiffEq<B>,
-    A::Tolerance: Sized
+    A::Tolerance: Sized,
 {
     type Tolerance = [A::Tolerance];
 
@@ -24,7 +24,7 @@ where
 
 impl<A, B> AbsDiffAllEq<[B]> for [A]
 where
-    A: AbsDiffAllEq<B>
+    A: AbsDiffAllEq<B>,
 {
     type AllTolerance = A::AllTolerance;
 

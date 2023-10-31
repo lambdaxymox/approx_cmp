@@ -3,7 +3,7 @@ use core::fmt;
 
 pub trait AbsDiffEq<Rhs = Self>
 where
-    Rhs: ?Sized
+    Rhs: ?Sized,
 {
     type Tolerance: ?Sized;
 
@@ -41,7 +41,7 @@ where
 
 pub trait AbsDiffAllEq<Rhs = Self>
 where
-    Rhs: ?Sized
+    Rhs: ?Sized,
 {
     type AllTolerance: ?Sized;
 
@@ -53,7 +53,7 @@ where
 }
 pub trait AssertAbsDiffEq<Rhs = Self>: AbsDiffEq<Rhs>
 where
-    Rhs: ?Sized
+    Rhs: ?Sized,
 {
     type DebugAbsDiff: fmt::Debug + Sized;
     type DebugTolerance: fmt::Debug;
@@ -65,7 +65,7 @@ where
 
 pub trait AssertAbsDiffAllEq<Rhs = Self>: AbsDiffAllEq<Rhs> 
 where
-    Rhs: ?Sized
+    Rhs: ?Sized,
 {
     type AllDebugTolerance: fmt::Debug;
 
@@ -81,7 +81,7 @@ impl AbsDiffCmp {
     pub fn eq<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance) -> bool 
     where
         A: AbsDiffEq<B> + ?Sized,
-        B: ?Sized
+        B: ?Sized,
     {
         A::abs_diff_eq(lhs, rhs, max_abs_diff)
     }
@@ -90,7 +90,7 @@ impl AbsDiffCmp {
     pub fn ne<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance) -> bool 
     where
         A: AbsDiffEq<B> + ?Sized,
-        B: ?Sized
+        B: ?Sized,
     {
         A::abs_diff_ne(lhs, rhs, max_abs_diff)
     }
@@ -99,7 +99,7 @@ impl AbsDiffCmp {
     pub fn all_eq<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance) -> bool 
     where
         A: AbsDiffAllEq<B> + ?Sized,
-        B: ?Sized
+        B: ?Sized,
     {
         A::abs_diff_all_eq(lhs, rhs, max_abs_diff)
     }
@@ -108,7 +108,7 @@ impl AbsDiffCmp {
     pub fn all_ne<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance) -> bool 
     where
         A: AbsDiffAllEq<B> + ?Sized,
-        B: ?Sized
+        B: ?Sized,
     {
         A::abs_diff_all_ne(lhs, rhs, max_abs_diff)
     }
@@ -121,7 +121,7 @@ impl AbsDiffCmpOpTol {
     #[inline]
     pub fn abs_diff<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance) -> A::DebugTolerance 
     where
-        A: AbsDiffEq<B> + AssertAbsDiffEq<B>
+        A: AbsDiffEq<B> + AssertAbsDiffEq<B>,
     {
         A::debug_abs_diff_tolerance(lhs, rhs, max_abs_diff)
     }
@@ -129,7 +129,7 @@ impl AbsDiffCmpOpTol {
     #[inline]
     pub fn abs_diff_all<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance) -> A::AllDebugTolerance 
     where
-        A: AbsDiffAllEq<B> + AssertAbsDiffAllEq<B>
+        A: AbsDiffAllEq<B> + AssertAbsDiffAllEq<B>,
     {
         A::debug_abs_diff_all_tolerance(lhs, rhs, max_abs_diff)
     }

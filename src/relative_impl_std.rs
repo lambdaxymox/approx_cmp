@@ -21,7 +21,7 @@ use std::vec::{
 impl<A, B> RelativeEq<Box<B>> for Box<A>
 where
     A: RelativeEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type Tolerance = A::Tolerance;
 
@@ -34,7 +34,7 @@ where
 impl<A, B> RelativeEq<Rc<B>> for Rc<A>
 where
     A: RelativeEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type Tolerance = A::Tolerance;
 
@@ -47,7 +47,7 @@ where
 impl<A, B> RelativeEq<Arc<B>> for Arc<A>
 where
     A: RelativeEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type Tolerance = A::Tolerance;
 
@@ -60,7 +60,7 @@ where
 impl<A, B> RelativeEq<Vec<B>> for Vec<A>
 where
     A: RelativeEq<B>,
-    A::Tolerance: Sized
+    A::Tolerance: Sized,
 {
     type Tolerance = Vec<A::Tolerance>;
 
@@ -80,7 +80,7 @@ where
 impl<A, B> RelativeAllEq<Box<B>> for Box<A> 
 where
     A: RelativeAllEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -93,7 +93,7 @@ where
 impl<A, B> RelativeAllEq<Rc<B>> for Rc<A> 
 where
     A: RelativeAllEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -106,7 +106,7 @@ where
 impl<A, B> RelativeAllEq<Arc<B>> for Arc<A> 
 where
     A: RelativeAllEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -118,7 +118,7 @@ where
 
 impl<A, B> RelativeAllEq<Vec<B>> for Vec<A>
 where
-    A: RelativeAllEq<B>
+    A: RelativeAllEq<B>,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -134,7 +134,7 @@ where
 impl<A, B> AssertRelativeEq<Box<B>> for Box<A> 
 where
     A: AssertRelativeEq<B> + ?Sized + Copy,
-    B: ?Sized + Copy
+    B: ?Sized + Copy,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -158,7 +158,7 @@ where
 impl<A, B> AssertRelativeEq<Rc<B>> for Rc<A> 
 where
     A: AssertRelativeEq<B> + ?Sized + Copy,
-    B: ?Sized + Copy
+    B: ?Sized + Copy,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -182,7 +182,7 @@ where
 impl<A, B> AssertRelativeEq<Arc<B>> for Arc<A> 
 where
     A: AssertRelativeEq<B> + ?Sized + Copy,
-    B: ?Sized + Copy
+    B: ?Sized + Copy,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -208,7 +208,7 @@ where
     A: AssertRelativeEq<B> + ?Sized + Copy,
     B: ?Sized + Copy,
     A::Tolerance: Sized,
-    A::DebugTolerance: Sized
+    A::DebugTolerance: Sized,
 {
     type DebugAbsDiff = Option<Vec<A::DebugAbsDiff>>;
     type DebugTolerance = Option<Vec<A::DebugTolerance>>;
@@ -258,7 +258,7 @@ where
 impl<A, B> AssertRelativeAllEq<Box<B>> for Box<A> 
 where
     A: AssertRelativeAllEq<B> + ?Sized + Copy,
-    B: ?Sized + Copy
+    B: ?Sized + Copy,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -276,7 +276,7 @@ where
 impl<A, B> AssertRelativeAllEq<Rc<B>> for Rc<A> 
 where
     A: AssertRelativeAllEq<B> + ?Sized + Copy,
-    B: ?Sized + Copy
+    B: ?Sized + Copy,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -294,7 +294,7 @@ where
 impl<A, B> AssertRelativeAllEq<Arc<B>> for Arc<A> 
 where
     A: AssertRelativeAllEq<B> + ?Sized + Copy,
-    B: ?Sized + Copy
+    B: ?Sized + Copy,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -313,7 +313,7 @@ impl<A, B> AssertRelativeAllEq<Vec<B>> for Vec<A>
 where
     A: AssertRelativeAllEq<B> + ?Sized + Copy,
     B: ?Sized + Copy,
-    A::AllDebugTolerance: Sized
+    A::AllDebugTolerance: Sized,
 {
     type AllDebugTolerance = Option<Vec<A::AllDebugTolerance>>;
 

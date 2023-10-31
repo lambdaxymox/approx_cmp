@@ -21,7 +21,7 @@ use std::vec::{
 impl<A, B> AbsDiffEq<Box<B>> for Box<A> 
 where
     A: AbsDiffEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type Tolerance = A::Tolerance;
 
@@ -34,7 +34,7 @@ where
 impl<A, B> AbsDiffEq<Rc<B>> for Rc<A> 
 where
     A: AbsDiffEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type Tolerance = A::Tolerance;
 
@@ -47,7 +47,7 @@ where
 impl<A, B> AbsDiffEq<Arc<B>> for Arc<A> 
 where
     A: AbsDiffEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type Tolerance = A::Tolerance;
 
@@ -60,7 +60,7 @@ where
 impl<A, B> AbsDiffEq<Vec<B>> for Vec<A>
 where
     A: AbsDiffEq<B>,
-    A::Tolerance: Sized
+    A::Tolerance: Sized,
 {
     type Tolerance = Vec<A::Tolerance>;
 
@@ -78,7 +78,7 @@ where
 impl<A, B> AbsDiffAllEq<Box<B>> for Box<A> 
 where
     A: AbsDiffAllEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -91,7 +91,7 @@ where
 impl<A, B> AbsDiffAllEq<Rc<B>> for Rc<A> 
 where
     A: AbsDiffAllEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -104,7 +104,7 @@ where
 impl<A, B> AbsDiffAllEq<Arc<B>> for Arc<A> 
 where
     A: AbsDiffAllEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -116,7 +116,7 @@ where
 
 impl<A, B> AbsDiffAllEq<Vec<B>> for Vec<A>
 where
-    A: AbsDiffAllEq<B>
+    A: AbsDiffAllEq<B>,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -132,7 +132,7 @@ where
 impl<A, B> AssertAbsDiffEq<Box<B>> for Box<A> 
 where
     A: AssertAbsDiffEq<B> + ?Sized + Copy,
-    B: ?Sized + Copy
+    B: ?Sized + Copy,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -151,7 +151,7 @@ where
 impl<A, B> AssertAbsDiffEq<Rc<B>> for Rc<A> 
 where
     A: AssertAbsDiffEq<B> + ?Sized + Copy,
-    B: ?Sized + Copy
+    B: ?Sized + Copy,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -170,7 +170,7 @@ where
 impl<A, B> AssertAbsDiffEq<Arc<B>> for Arc<A> 
 where
     A: AssertAbsDiffEq<B> + ?Sized + Copy,
-    B: ?Sized + Copy
+    B: ?Sized + Copy,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -191,7 +191,7 @@ where
     A: AssertAbsDiffEq<B> + ?Sized + Copy,
     B: ?Sized + Copy,
     A::Tolerance: Sized,
-    A::DebugTolerance: Sized
+    A::DebugTolerance: Sized,
 {
     type DebugAbsDiff = Option<Vec<A::DebugAbsDiff>>;
     type DebugTolerance = Option<Vec<A::DebugTolerance>>;
@@ -227,7 +227,7 @@ where
 impl<A, B> AssertAbsDiffAllEq<Box<B>> for Box<A> 
 where
     A: AssertAbsDiffAllEq<B> + ?Sized + Copy,
-    B: ?Sized + Copy
+    B: ?Sized + Copy,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -240,7 +240,7 @@ where
 impl<A, B> AssertAbsDiffAllEq<Rc<B>> for Rc<A> 
 where
     A: AssertAbsDiffAllEq<B> + ?Sized + Copy,
-    B: ?Sized + Copy
+    B: ?Sized + Copy,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -253,7 +253,7 @@ where
 impl<A, B> AssertAbsDiffAllEq<Arc<B>> for Arc<A> 
 where
     A: AssertAbsDiffAllEq<B> + ?Sized + Copy,
-    B: ?Sized + Copy
+    B: ?Sized + Copy,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -267,7 +267,7 @@ impl<A, B> AssertAbsDiffAllEq<Vec<B>> for Vec<A>
 where
     A: AssertAbsDiffAllEq<B> + ?Sized + Copy,
     B: ?Sized + Copy,
-    A::AllDebugTolerance: Sized
+    A::AllDebugTolerance: Sized,
 {
     type AllDebugTolerance = Option<Vec<A::AllDebugTolerance>>;
 

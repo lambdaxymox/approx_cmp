@@ -3,7 +3,7 @@ use core::fmt;
 
 pub trait RelativeEq<Rhs = Self>
 where
-    Rhs: ?Sized
+    Rhs: ?Sized,
 {
     type Tolerance: ?Sized;
 
@@ -34,7 +34,7 @@ where
 
 pub trait RelativeAllEq<Rhs = Self>
 where
-    Rhs: ?Sized
+    Rhs: ?Sized,
 {
     type AllTolerance: ?Sized;
 
@@ -47,7 +47,7 @@ where
 
 pub trait AssertRelativeEq<Rhs = Self>: RelativeEq<Rhs>
 where
-    Rhs: ?Sized
+    Rhs: ?Sized,
 {
     type DebugAbsDiff: fmt::Debug + Sized;
     type DebugTolerance: fmt::Debug;
@@ -61,7 +61,7 @@ where
 
 pub trait AssertRelativeAllEq<Rhs = Self>: RelativeAllEq<Rhs> 
 where
-    Rhs: ?Sized
+    Rhs: ?Sized,
 {
     type AllDebugTolerance: fmt::Debug;
 
@@ -80,7 +80,7 @@ impl RelativeCmp {
     pub fn eq<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance, max_relative: &A::Tolerance) -> bool 
     where
         A: RelativeEq<B> + ?Sized,
-        B: ?Sized
+        B: ?Sized,
     {
         A::relative_eq(lhs, rhs, max_abs_diff, max_relative)
     }
@@ -89,7 +89,7 @@ impl RelativeCmp {
     pub fn ne<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance, max_relative: &A::Tolerance) -> bool 
     where
         A: RelativeEq<B> + ?Sized,
-        B: ?Sized
+        B: ?Sized,
     {
         A::relative_ne(lhs, rhs, max_abs_diff, max_relative)
     }
@@ -98,7 +98,7 @@ impl RelativeCmp {
     pub fn all_eq<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance, max_relative: &A::AllTolerance) -> bool 
     where
         A: RelativeAllEq<B> + ?Sized,
-        B: ?Sized
+        B: ?Sized,
     {
         A::relative_all_eq(lhs, rhs, max_abs_diff, max_relative)
     }
@@ -107,7 +107,7 @@ impl RelativeCmp {
     pub fn all_ne<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance, max_relative: &A::AllTolerance) -> bool 
     where
         A: RelativeAllEq<B> + ?Sized,
-        B: ?Sized
+        B: ?Sized,
     {
         A::relative_all_ne(lhs, rhs, max_abs_diff, max_relative)
     }
@@ -121,7 +121,7 @@ impl RelativeCmpOpTol {
     #[inline]
     pub fn abs_diff<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance) -> A::DebugTolerance 
     where
-        A: RelativeEq<B> + AssertRelativeEq<B>
+        A: RelativeEq<B> + AssertRelativeEq<B>,
     {
         A::debug_abs_diff_tolerance(lhs, rhs, max_abs_diff)
     }
@@ -129,7 +129,7 @@ impl RelativeCmpOpTol {
     #[inline]
     pub fn abs_diff_all<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance) -> A::AllDebugTolerance 
     where
-        A: RelativeAllEq<B> + AssertRelativeAllEq<B>
+        A: RelativeAllEq<B> + AssertRelativeAllEq<B>,
     {
         A::debug_abs_diff_all_tolerance(lhs, rhs, max_abs_diff)
     }
@@ -137,7 +137,7 @@ impl RelativeCmpOpTol {
     #[inline]
     pub fn relative<A, B>(lhs: &A, rhs: &B, max_relative: &A::Tolerance) -> A::DebugTolerance
     where
-        A: RelativeEq<B> + AssertRelativeEq<B>
+        A: RelativeEq<B> + AssertRelativeEq<B>,
     {
         A::debug_relative_tolerance(lhs,rhs, max_relative)
     }
@@ -145,7 +145,7 @@ impl RelativeCmpOpTol {
     #[inline]
     pub fn relative_all<A, B>(lhs: &A, rhs: &B, max_relative: &A::AllTolerance) -> A::AllDebugTolerance
     where
-        A: RelativeAllEq<B> + AssertRelativeAllEq<B>
+        A: RelativeAllEq<B> + AssertRelativeAllEq<B>,
     {
         A::debug_relative_all_tolerance(lhs,rhs, max_relative)
     }

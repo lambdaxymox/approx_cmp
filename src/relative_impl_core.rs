@@ -60,7 +60,7 @@ impl_relative_eq_float!(f32, f64);
 
 impl<A, B> RelativeEq<&B> for &A
 where
-    A: RelativeEq<B>
+    A: RelativeEq<B>,
 {
     type Tolerance = A::Tolerance;
 
@@ -72,7 +72,7 @@ where
 
 impl<A, B> RelativeEq<&mut B> for &A
 where
-    A: RelativeEq<B>
+    A: RelativeEq<B>,
 {
     type Tolerance = A::Tolerance;
 
@@ -84,7 +84,7 @@ where
 
 impl<A, B> RelativeEq<&B> for &mut A
 where
-    A: RelativeEq<B>
+    A: RelativeEq<B>,
 {
     type Tolerance = A::Tolerance;
 
@@ -96,7 +96,7 @@ where
 
 impl<A, B> RelativeEq<&mut B> for &mut A
 where
-    A: RelativeEq<B>
+    A: RelativeEq<B>,
 {
     type Tolerance = A::Tolerance;
 
@@ -128,7 +128,7 @@ where
 impl<A, B> RelativeEq<cell::Cell<B>> for cell::Cell<A>
 where
     A: RelativeEq<B> + Copy,
-    B: Copy
+    B: Copy,
 {
     type Tolerance = A::Tolerance;
 
@@ -141,7 +141,7 @@ where
 impl<A, B> RelativeEq<cell::RefCell<B>> for cell::RefCell<A>
 where
     A: RelativeEq<B> + ?Sized,
-    B: ?Sized
+    B: ?Sized,
 {
     type Tolerance = A::Tolerance;
 
@@ -154,7 +154,7 @@ where
 impl<A, B> RelativeEq<Option<B>> for Option<A>
 where
     A: RelativeEq<B>,
-    A::Tolerance: Sized
+    A::Tolerance: Sized,
 {
     type Tolerance = Option<A::Tolerance>;
 
@@ -171,7 +171,7 @@ where
 impl<A, B> RelativeEq<cell::OnceCell<B>> for cell::OnceCell<A>
 where
     A: RelativeEq<B>,
-    A::Tolerance: Sized
+    A::Tolerance: Sized,
 {
     type Tolerance = A::Tolerance;
 
@@ -204,7 +204,7 @@ impl_relative_eq_all_float!(f32, f64);
 
 impl<A, B> RelativeAllEq<&B> for &A
 where
-    A: RelativeAllEq<B>
+    A: RelativeAllEq<B>,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -216,7 +216,7 @@ where
 
 impl<A, B> RelativeAllEq<&mut B> for &A
 where
-    A: RelativeAllEq<B>
+    A: RelativeAllEq<B>,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -228,7 +228,7 @@ where
 
 impl<A, B> RelativeAllEq<&B> for &mut A
 where
-    A: RelativeAllEq<B>
+    A: RelativeAllEq<B>,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -240,7 +240,7 @@ where
 
 impl<A, B> RelativeAllEq<&mut B> for &mut A
 where
-    A: RelativeAllEq<B>
+    A: RelativeAllEq<B>,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -252,7 +252,7 @@ where
 
 impl<A, B, const N: usize> RelativeAllEq<[B; N]> for [A; N]
 where
-    A: RelativeAllEq<B>
+    A: RelativeAllEq<B>,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -267,7 +267,7 @@ where
 impl<A, B> RelativeAllEq<cell::Cell<B>> for cell::Cell<A> 
 where
     A: RelativeAllEq<B> + Copy,
-    B: Copy
+    B: Copy,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -279,7 +279,7 @@ where
 
 impl<A, B> RelativeAllEq<cell::RefCell<B>> for cell::RefCell<A> 
 where
-    A: RelativeAllEq<B> + ?Sized
+    A: RelativeAllEq<B> + ?Sized,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -292,7 +292,7 @@ where
 impl<A, B> RelativeAllEq<Option<B>> for Option<A>
 where
     A: RelativeAllEq<B>,
-    A::AllTolerance: Sized
+    A::AllTolerance: Sized,
 {
     type AllTolerance = Option<A::AllTolerance>;
 
@@ -309,7 +309,7 @@ where
 impl<A, B> RelativeAllEq<cell::OnceCell<B>> for cell::OnceCell<A>
 where
     A: RelativeAllEq<B>,
-    A::AllTolerance: Sized
+    A::AllTolerance: Sized,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -353,7 +353,7 @@ impl_assert_relative_eq_float!(f32, f64);
 
 impl<A, B> AssertRelativeEq<&B> for &A
 where
-    A: AssertRelativeEq<B>
+    A: AssertRelativeEq<B>,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -376,7 +376,7 @@ where
 
 impl<A, B> AssertRelativeEq<&mut B> for &A
 where
-    A: AssertRelativeEq<B>
+    A: AssertRelativeEq<B>,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -399,7 +399,7 @@ where
 
 impl<A, B> AssertRelativeEq<&B> for &mut A
 where
-    A: AssertRelativeEq<B>
+    A: AssertRelativeEq<B>,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -422,7 +422,7 @@ where
 
 impl<A, B> AssertRelativeEq<&mut B> for &mut A
 where
-    A: AssertRelativeEq<B>
+    A: AssertRelativeEq<B>,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -505,7 +505,7 @@ where
 impl<A, B> AssertRelativeEq<cell::Cell<B>> for cell::Cell<A> 
 where
     A: AssertRelativeEq<B> + Copy,
-    B: Copy
+    B: Copy,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -529,7 +529,7 @@ where
 impl<A, B> AssertRelativeEq<cell::RefCell<B>> for cell::RefCell<A> 
 where
     A: AssertRelativeEq<B> + Copy,
-    B: Copy
+    B: Copy,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -553,7 +553,7 @@ where
 impl<A, B> AssertRelativeEq<Option<B>> for Option<A>
 where
     A: AssertRelativeEq<B>,
-    A::Tolerance: Sized
+    A::Tolerance: Sized,
 {
     type DebugAbsDiff = Option<A::DebugAbsDiff>;
     type DebugTolerance = Option<A::DebugTolerance>;
@@ -588,7 +588,7 @@ where
 impl<A, B> AssertRelativeEq<cell::OnceCell<B>> for cell::OnceCell<A>
 where
     A: AssertRelativeEq<B>,
-    A::Tolerance: Sized
+    A::Tolerance: Sized,
 {
     type DebugAbsDiff = Option<A::DebugAbsDiff>;
     type DebugTolerance = Option<A::DebugTolerance>;
@@ -645,7 +645,7 @@ impl_assert_relative_eq_all_float!(f32, f64);
 
 impl<A, B> AssertRelativeAllEq<&B> for &A
 where
-    A: AssertRelativeAllEq<B>
+    A: AssertRelativeAllEq<B>,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -662,7 +662,7 @@ where
 
 impl<A, B> AssertRelativeAllEq<&mut B> for &A
 where
-    A: AssertRelativeAllEq<B>
+    A: AssertRelativeAllEq<B>,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -679,7 +679,7 @@ where
 
 impl<A, B> AssertRelativeAllEq<&B> for &mut A
 where
-    A: AssertRelativeAllEq<B>
+    A: AssertRelativeAllEq<B>,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -696,7 +696,7 @@ where
 
 impl<A, B> AssertRelativeAllEq<&mut B> for &mut A
 where
-    A: AssertRelativeAllEq<B>
+    A: AssertRelativeAllEq<B>,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -745,7 +745,7 @@ where
 impl<A, B> AssertRelativeAllEq<cell::Cell<B>> for cell::Cell<A> 
 where
     A: AssertRelativeAllEq<B> + Copy,
-    B: Copy
+    B: Copy,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -763,7 +763,7 @@ where
 impl<A, B> AssertRelativeAllEq<cell::RefCell<B>> for cell::RefCell<A> 
 where
     A: AssertRelativeAllEq<B> + Copy,
-    B: Copy
+    B: Copy,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -781,7 +781,7 @@ where
 impl<A, B> AssertRelativeAllEq<Option<B>> for Option<A>
 where
     A: AssertRelativeAllEq<B>,
-    A::AllTolerance: Sized
+    A::AllTolerance: Sized,
 {
     type AllDebugTolerance = Option<A::AllDebugTolerance>;
 
@@ -807,7 +807,7 @@ where
 impl<A, B> AssertRelativeAllEq<cell::OnceCell<B>> for cell::OnceCell<A>
 where
     A: AssertRelativeAllEq<B>,
-    A::AllTolerance: Sized
+    A::AllTolerance: Sized,
 {
     type AllDebugTolerance = Option<A::AllDebugTolerance>;
 
