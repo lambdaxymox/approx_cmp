@@ -43,7 +43,7 @@ where
         }
     }
 }
-
+/*
 impl<'a, 'b, A, B> AssertAbsDiffEq<&'b [B]> for &'a [A]
 where
     A: AssertAbsDiffEq<B>,
@@ -80,7 +80,7 @@ where
         }
     }
 }
-
+*/
 impl<A, B> AssertAbsDiffAllEq<[B]> for [A]
 where
     A: AssertAbsDiffAllEq<B>,
@@ -101,7 +101,7 @@ where
         }
     }
 }
-
+/*
 impl<'a, 'b, A, B> AssertAbsDiffAllEq<&'b [B]> for &'a [A]
 where
     A: AssertAbsDiffAllEq<B>,
@@ -122,4 +122,4 @@ where
         }
     }
 }
-
+*/

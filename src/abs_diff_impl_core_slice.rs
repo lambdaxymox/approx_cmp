@@ -20,7 +20,7 @@ where
             .all(|((a, b), tol)| a.abs_diff_eq(b, tol))
     }
 }
-
+/*
 impl<'a, 'b, A, B> AbsDiffEq<&'b [B]> for &'a [A]
 where
     A: AbsDiffEq<B>,
@@ -37,7 +37,7 @@ where
             .all(|((a, b), tol)| a.abs_diff_eq(b, tol))
     }
 }
-
+*/
 impl<A, B> AbsDiffAllEq<[B]> for [A]
 where
     A: AbsDiffAllEq<B>
@@ -52,7 +52,7 @@ where
             .all(|(a, b)| a.abs_diff_all_eq(b, max_abs_diff))
     }
 }
-
+/*
 impl<'a, 'b, A, B> AbsDiffAllEq<&'b [B]> for &'a [A]
 where
     A: AbsDiffAllEq<B>
@@ -67,4 +67,4 @@ where
             .all(|(a, b)| a.abs_diff_all_eq(b, max_abs_diff))
     }
 }
-
+*/

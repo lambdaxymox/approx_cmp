@@ -13,6 +13,9 @@ use std::rc::{
 use std::sync::{
     Arc,
 };
+use std::vec::{
+    Vec,
+};
 
 
 impl<A, B> RelativeEq<Box<B>> for Box<A>
@@ -51,6 +54,26 @@ where
     #[inline]
     fn relative_eq(&self, other: &Arc<B>, max_abs_diff: &Self::Tolerance, max_relative: &Self::Tolerance) -> bool {
         RelativeEq::relative_eq(&**self, &**other, max_abs_diff, max_relative)
+    }
+}
+
+impl<A, B> RelativeEq<Vec<B>> for Vec<A>
+where
+    A: RelativeEq<B>,
+    A::Tolerance: Sized
+{
+    type Tolerance = Vec<A::Tolerance>;
+
+    #[inline]
+    fn relative_eq(&self, other: &Vec<B>, max_abs_diff: &Self::Tolerance, max_relative: &Self::Tolerance) -> bool {
+        self.len() == other.len() &&
+        self.len() == max_abs_diff.len() &&
+        self.len() == max_relative.len() &&
+        self.iter()
+            .zip(other.iter())
+            .zip(max_abs_diff.iter())
+            .zip(max_relative.iter())
+            .all(|(((a, b), abs_tol), rel_tol)| RelativeEq::relative_eq(a, b, abs_tol, rel_tol))
     }
 }
 
@@ -93,10 +116,25 @@ where
     }
 }
 
+impl<A, B> RelativeAllEq<Vec<B>> for Vec<A>
+where
+    A: RelativeAllEq<B>
+{
+    type AllTolerance = A::AllTolerance;
+
+    #[inline]
+    fn relative_all_eq(&self, other: &Vec<B>, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
+        self.len() == other.len() &&
+        self.iter()
+            .zip(other.iter())
+            .all(|(a, b)| RelativeAllEq::relative_all_eq(a, b, max_abs_diff, max_relative))
+    }
+}
+
 impl<A, B> AssertRelativeEq<Box<B>> for Box<A> 
 where
-    A: AssertRelativeEq<B> + Copy,
-    B: Copy
+    A: AssertRelativeEq<B> + ?Sized + Copy,
+    B: ?Sized + Copy
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -119,8 +157,8 @@ where
 
 impl<A, B> AssertRelativeEq<Rc<B>> for Rc<A> 
 where
-    A: AssertRelativeEq<B> + Copy,
-    B: Copy
+    A: AssertRelativeEq<B> + ?Sized + Copy,
+    B: ?Sized + Copy
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -143,8 +181,8 @@ where
 
 impl<A, B> AssertRelativeEq<Arc<B>> for Arc<A> 
 where
-    A: AssertRelativeEq<B> + Copy,
-    B: Copy
+    A: AssertRelativeEq<B> + ?Sized + Copy,
+    B: ?Sized + Copy
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -165,10 +203,62 @@ where
     }
 }
 
+impl<A, B> AssertRelativeEq<Vec<B>> for Vec<A>
+where
+    A: AssertRelativeEq<B> + ?Sized + Copy,
+    B: ?Sized + Copy,
+    A::Tolerance: Sized,
+    A::DebugTolerance: Sized
+{
+    type DebugAbsDiff = Option<Vec<A::DebugAbsDiff>>;
+    type DebugTolerance = Option<Vec<A::DebugTolerance>>;
+
+    #[inline]
+    fn debug_abs_diff(&self, other: &Vec<B>) -> Self::DebugAbsDiff {
+        if self.len() == other.len() {
+            Some(self.iter()
+                .zip(other.iter())
+                .map(|(a, b)| AssertRelativeEq::debug_abs_diff(a, b))
+                .collect()
+            )
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_abs_diff_tolerance(&self, other: &Vec<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        if (self.len() == other.len()) && (self.len() == max_abs_diff.len()) {
+            Some(self.iter()
+                .zip(other.iter())
+                .zip(max_abs_diff.iter())
+                .map(|((a, b), tol)| AssertRelativeEq::debug_abs_diff_tolerance(a, b, tol))
+                .collect()
+            )
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_relative_tolerance(&self, other: &Vec<B>, max_relative: &Self::Tolerance) -> Self::DebugTolerance {
+        if (self.len() == other.len()) && (self.len() == max_relative.len()) {
+            Some(self.iter()
+                .zip(other.iter())
+                .zip(max_relative.iter())
+                .map(|((a, b), tol)| AssertRelativeEq::debug_relative_tolerance(a, b, tol))
+                .collect()
+            )
+        } else {
+            None
+        }
+    }
+}
+
 impl<A, B> AssertRelativeAllEq<Box<B>> for Box<A> 
 where
-    A: AssertRelativeAllEq<B> + Copy,
-    B: Copy
+    A: AssertRelativeAllEq<B> + ?Sized + Copy,
+    B: ?Sized + Copy
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -185,8 +275,8 @@ where
 
 impl<A, B> AssertRelativeAllEq<Rc<B>> for Rc<A> 
 where
-    A: AssertRelativeAllEq<B> + Copy,
-    B: Copy
+    A: AssertRelativeAllEq<B> + ?Sized + Copy,
+    B: ?Sized + Copy
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -203,8 +293,8 @@ where
 
 impl<A, B> AssertRelativeAllEq<Arc<B>> for Arc<A> 
 where
-    A: AssertRelativeAllEq<B> + Copy,
-    B: Copy
+    A: AssertRelativeAllEq<B> + ?Sized + Copy,
+    B: ?Sized + Copy
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -216,6 +306,41 @@ where
     #[inline]
     fn debug_relative_all_tolerance(&self, other: &Arc<B>, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
         AssertRelativeAllEq::debug_relative_all_tolerance(&**self, &**other, max_relative)
+    }
+}
+
+impl<A, B> AssertRelativeAllEq<Vec<B>> for Vec<A>
+where
+    A: AssertRelativeAllEq<B> + ?Sized + Copy,
+    B: ?Sized + Copy,
+    A::AllDebugTolerance: Sized
+{
+    type AllDebugTolerance = Option<Vec<A::AllDebugTolerance>>;
+
+    #[inline]
+    fn debug_abs_diff_all_tolerance(&self, other: &Vec<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        if self.len() == other.len() {
+            Some(self.iter()
+                .zip(other.iter())
+                .map(|(a, b)| AssertRelativeAllEq::debug_abs_diff_all_tolerance(a, b, max_abs_diff))
+                .collect()
+            )
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_relative_all_tolerance(&self, other: &Vec<B>, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        if self.len() == other.len() {
+            Some(self.iter()
+                .zip(other.iter())
+                .map(|(a, b)| AssertRelativeAllEq::debug_relative_all_tolerance(a, b, max_relative))
+                .collect()
+            )
+        } else {
+            None
+        }
     }
 }
 

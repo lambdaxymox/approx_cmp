@@ -20,7 +20,7 @@ where
             .zip(other.iter())
             .zip(max_abs_diff.iter())
             .zip(max_relative.iter())
-            .all(|(((a, b), abs_diff_tol), relative_tol)| a.relative_eq(b, abs_diff_tol, relative_tol))
+            .all(|(((a, b), abs_tol), rel_tol)| a.relative_eq(b, abs_tol, rel_tol))
     }
 }
 
@@ -40,7 +40,7 @@ where
             .zip(other.iter())
             .zip(max_abs_diff.iter())
             .zip(max_relative.iter())
-            .all(|(((a, b), abs_diff_tol), relative_tol)| a.relative_eq(b, abs_diff_tol, relative_tol))
+            .all(|(((a, b), abs_tol), rel_tol)| a.relative_eq(b, abs_tol, rel_tol))
     }
 }
 
