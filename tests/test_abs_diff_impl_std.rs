@@ -1399,4 +1399,3 @@ mod abs_diff_eq_linked_list_tests {
         assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), None);
     }
 }
-

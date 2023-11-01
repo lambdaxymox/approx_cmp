@@ -5,11 +5,11 @@ use crate::abs_diff::{
     AssertAbsDiffEq,
 };
 use std::boxed::Box;
+use std::collections::LinkedList;
 use std::collections::VecDeque;
 use std::rc::Rc;
 use std::sync::Arc;
 use std::vec::Vec;
-use std::collections::LinkedList;
 
 
 impl<A, B> AbsDiffEq<Box<B>> for Box<A>
@@ -482,4 +482,3 @@ where
         }
     }
 }
-
