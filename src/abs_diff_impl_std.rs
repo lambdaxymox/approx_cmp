@@ -9,6 +9,7 @@ use std::collections::VecDeque;
 use std::rc::Rc;
 use std::sync::Arc;
 use std::vec::Vec;
+use std::collections::LinkedList;
 
 
 impl<A, B> AbsDiffEq<Box<B>> for Box<A>
@@ -88,6 +89,25 @@ where
     }
 }
 
+impl<A, B> AbsDiffEq<LinkedList<B>> for LinkedList<A>
+where
+    A: AbsDiffEq<B>,
+    A::Tolerance: Sized,
+{
+    type Tolerance = LinkedList<A::Tolerance>;
+
+    #[inline]
+    fn abs_diff_eq(&self, other: &LinkedList<B>, max_abs_diff: &Self::Tolerance) -> bool {
+        self.len() == other.len()
+            && self.len() == max_abs_diff.len()
+            && self
+                .iter()
+                .zip(other.iter())
+                .zip(max_abs_diff)
+                .all(|((a, b), tol)| AbsDiffEq::abs_diff_eq(a, b, tol))
+    }
+}
+
 
 impl<A, B> AbsDiffAllEq<Box<B>> for Box<A>
 where
@@ -152,6 +172,22 @@ where
 
     #[inline]
     fn abs_diff_all_eq(&self, other: &VecDeque<B>, max_abs_diff: &Self::AllTolerance) -> bool {
+        self.len() == other.len()
+            && self
+                .iter()
+                .zip(other.iter())
+                .all(|(a, b)| AbsDiffAllEq::abs_diff_all_eq(a, b, max_abs_diff))
+    }
+}
+
+impl<A, B> AbsDiffAllEq<LinkedList<B>> for LinkedList<A>
+where
+    A: AbsDiffAllEq<B>,
+{
+    type AllTolerance = A::AllTolerance;
+
+    #[inline]
+    fn abs_diff_all_eq(&self, other: &LinkedList<B>, max_abs_diff: &Self::AllTolerance) -> bool {
         self.len() == other.len()
             && self
                 .iter()
@@ -298,6 +334,46 @@ where
     }
 }
 
+impl<A, B> AssertAbsDiffEq<LinkedList<B>> for LinkedList<A>
+where
+    A: AssertAbsDiffEq<B> + ?Sized + Copy,
+    B: ?Sized + Copy,
+    A::Tolerance: Sized,
+    A::DebugTolerance: Sized,
+{
+    type DebugAbsDiff = Option<LinkedList<A::DebugAbsDiff>>;
+    type DebugTolerance = Option<LinkedList<A::DebugTolerance>>;
+
+    #[inline]
+    fn debug_abs_diff(&self, other: &LinkedList<B>) -> Self::DebugAbsDiff {
+        if self.len() == other.len() {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| AssertAbsDiffEq::debug_abs_diff(a, b))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_abs_diff_tolerance(&self, other: &LinkedList<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        if self.len() == other.len() && self.len() == max_abs_diff.len() {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .zip(max_abs_diff.iter())
+                    .map(|((a, b), tol)| AssertAbsDiffEq::debug_abs_diff_tolerance(a, b, tol))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+}
+
 
 impl<A, B> AssertAbsDiffAllEq<Box<B>> for Box<A>
 where
@@ -383,3 +459,27 @@ where
         }
     }
 }
+
+impl<A, B> AssertAbsDiffAllEq<LinkedList<B>> for LinkedList<A>
+where
+    A: AssertAbsDiffAllEq<B> + ?Sized + Copy,
+    B: ?Sized + Copy,
+    A::AllDebugTolerance: Sized,
+{
+    type AllDebugTolerance = Option<LinkedList<A::AllDebugTolerance>>;
+
+    #[inline]
+    fn debug_abs_diff_all_tolerance(&self, other: &LinkedList<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        if self.len() == other.len() {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| AssertAbsDiffAllEq::debug_abs_diff_all_tolerance(a, b, max_abs_diff))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+}
+
