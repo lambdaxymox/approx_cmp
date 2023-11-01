@@ -715,24 +715,46 @@ mod relative_eq_vec_tests {
             1.00_f32, 1.25_f32, 1.50_f32, 2.00_f32,
             2.50_f32, 3.00_f32, 4.00_f32, 5.00_f32,
         ];
+        let abs_diff = vec![0.0000000_f32; 8];
+
+        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff));
+    }
+
+    #[rustfmt::skip]
+    #[test]
+    fn test_debug_abs_diff2() {
+        let lhs = vec![
+            1.00_f32, 1.25_f32, 1.50_f32, 2.00_f32,
+            2.50_f32, 3.00_f32, 4.00_f32, 5.00_f32,
+        ];
         let rhs = vec![
             1.10_f32, 1.15_f32, 1.70_f32, 1.80_f32,
             2.80_f32, 2.70_f32, 4.40_f32, 4.60_f32,
         ];
-        let abs_diff_self = vec![0.0000000_f32; 8];
         let abs_diff = vec![
             0.100000024_f32, 0.100000024_f32, 0.20000005_f32, 0.20000005_f32,
             0.299999950_f32, 0.299999950_f32, 0.40000010_f32, 0.40000010_f32,
         ];
 
-        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff_self));
         assert_eq!(lhs.debug_abs_diff(&rhs), Some(abs_diff.clone()));
         assert_eq!(rhs.debug_abs_diff(&lhs), Some(abs_diff.clone()));
     }
 
     #[rustfmt::skip]
     #[test]
-    fn test_debug_abs_diff2() {
+    fn test_debug_abs_diff3() {
+        let lhs = vec![
+            0.9999500_f32, 2.0000000_f32, 2.9999500_f32, 4.0000000_f32,
+            4.9999500_f32, 6.0000000_f32, 6.9999500_f32, 8.0000000_f32,
+        ];
+        let abs_diff = vec![0.00000000000000_f32; 8];
+
+        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff.clone()));
+    }
+
+    #[rustfmt::skip]
+    #[test]
+    fn test_debug_abs_diff4() {
         let lhs = vec![
             0.9999500_f32, 2.0000000_f32, 2.9999500_f32, 4.0000000_f32,
             4.9999500_f32, 6.0000000_f32, 6.9999500_f32, 8.0000000_f32,
@@ -741,13 +763,11 @@ mod relative_eq_vec_tests {
             1.0000000_f32, 1.9999500_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000000_f32, 7.0000000_f32, 8.0000000_f32,
         ];
-        let abs_diff_self = vec![0.00000000000000_f32; 8];
         let abs_diff = vec![
             0.00005000829700_f32, 0.00004994869200_f32, 0.00005006790000_f32, 0.00000047683716_f32,
             0.00005006790000_f32, 0.00000000000000_f32, 0.00005006790000_f32, 0.00000000000000_f32,
         ];
 
-        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff_self.clone()));
         assert_eq!(lhs.debug_abs_diff(&rhs), Some(abs_diff.clone()));
         assert_eq!(rhs.debug_abs_diff(&lhs), Some(abs_diff.clone()));
     }
@@ -1285,24 +1305,46 @@ mod relative_eq_vecdeque_tests {
             1.00_f32, 1.25_f32, 1.50_f32, 2.00_f32,
             2.50_f32, 3.00_f32, 4.00_f32, 5.00_f32,
         ]);
+        let abs_diff = VecDeque::from([0.0000000_f32; 8]);
+
+        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff));
+    }
+
+    #[rustfmt::skip]
+    #[test]
+    fn test_debug_abs_diff2() {
+        let lhs = VecDeque::from([
+            1.00_f32, 1.25_f32, 1.50_f32, 2.00_f32,
+            2.50_f32, 3.00_f32, 4.00_f32, 5.00_f32,
+        ]);
         let rhs = VecDeque::from([
             1.10_f32, 1.15_f32, 1.70_f32, 1.80_f32,
             2.80_f32, 2.70_f32, 4.40_f32, 4.60_f32,
         ]);
-        let abs_diff_self = VecDeque::from([0.0000000_f32; 8]);
         let abs_diff = VecDeque::from([
             0.100000024_f32, 0.100000024_f32, 0.20000005_f32, 0.20000005_f32,
             0.299999950_f32, 0.299999950_f32, 0.40000010_f32, 0.40000010_f32,
         ]);
 
-        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff_self));
         assert_eq!(lhs.debug_abs_diff(&rhs), Some(abs_diff.clone()));
         assert_eq!(rhs.debug_abs_diff(&lhs), Some(abs_diff.clone()));
     }
 
     #[rustfmt::skip]
     #[test]
-    fn test_debug_abs_diff2() {
+    fn test_debug_abs_diff3() {
+        let lhs = VecDeque::from([
+            0.9999500_f32, 2.0000000_f32, 2.9999500_f32, 4.0000000_f32,
+            4.9999500_f32, 6.0000000_f32, 6.9999500_f32, 8.0000000_f32,
+        ]);
+        let abs_diff = VecDeque::from([0.00000000000000_f32; 8]);
+
+        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff.clone()));
+    }
+
+    #[rustfmt::skip]
+    #[test]
+    fn test_debug_abs_diff4() {
         let lhs = VecDeque::from([
             0.9999500_f32, 2.0000000_f32, 2.9999500_f32, 4.0000000_f32,
             4.9999500_f32, 6.0000000_f32, 6.9999500_f32, 8.0000000_f32,
@@ -1311,13 +1353,11 @@ mod relative_eq_vecdeque_tests {
             1.0000000_f32, 1.9999500_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000000_f32, 7.0000000_f32, 8.0000000_f32,
         ]);
-        let abs_diff_self = VecDeque::from([0.00000000000000_f32; 8]);
         let abs_diff = VecDeque::from([
             0.00005000829700_f32, 0.00004994869200_f32, 0.00005006790000_f32, 0.00000047683716_f32,
             0.00005006790000_f32, 0.00000000000000_f32, 0.00005006790000_f32, 0.00000000000000_f32,
         ]);
 
-        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff_self.clone()));
         assert_eq!(lhs.debug_abs_diff(&rhs), Some(abs_diff.clone()));
         assert_eq!(rhs.debug_abs_diff(&lhs), Some(abs_diff.clone()));
     }
@@ -1865,24 +1905,46 @@ mod relative_eq_linked_list_tests {
             1.00_f32, 1.25_f32, 1.50_f32, 2.00_f32,
             2.50_f32, 3.00_f32, 4.00_f32, 5.00_f32,
         ]);
+        let abs_diff = LinkedList::from([0.0000000_f32; 8]);
+
+        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff));
+    }
+
+    #[rustfmt::skip]
+    #[test]
+    fn test_debug_abs_diff2() {
+        let lhs = LinkedList::from([
+            1.00_f32, 1.25_f32, 1.50_f32, 2.00_f32,
+            2.50_f32, 3.00_f32, 4.00_f32, 5.00_f32,
+        ]);
         let rhs = LinkedList::from([
             1.10_f32, 1.15_f32, 1.70_f32, 1.80_f32,
             2.80_f32, 2.70_f32, 4.40_f32, 4.60_f32,
         ]);
-        let abs_diff_self = LinkedList::from([0.0000000_f32; 8]);
         let abs_diff = LinkedList::from([
             0.100000024_f32, 0.100000024_f32, 0.20000005_f32, 0.20000005_f32,
             0.299999950_f32, 0.299999950_f32, 0.40000010_f32, 0.40000010_f32,
         ]);
 
-        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff_self));
         assert_eq!(lhs.debug_abs_diff(&rhs), Some(abs_diff.clone()));
         assert_eq!(rhs.debug_abs_diff(&lhs), Some(abs_diff.clone()));
     }
 
     #[rustfmt::skip]
     #[test]
-    fn test_debug_abs_diff2() {
+    fn test_debug_abs_diff3() {
+        let lhs = LinkedList::from([
+            0.9999500_f32, 2.0000000_f32, 2.9999500_f32, 4.0000000_f32,
+            4.9999500_f32, 6.0000000_f32, 6.9999500_f32, 8.0000000_f32,
+        ]);
+        let abs_diff = LinkedList::from([0.00000000000000_f32; 8]);
+
+        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff.clone()));
+    }
+
+    #[rustfmt::skip]
+    #[test]
+    fn test_debug_abs_diff4() {
         let lhs = LinkedList::from([
             0.9999500_f32, 2.0000000_f32, 2.9999500_f32, 4.0000000_f32,
             4.9999500_f32, 6.0000000_f32, 6.9999500_f32, 8.0000000_f32,
@@ -1891,13 +1953,11 @@ mod relative_eq_linked_list_tests {
             1.0000000_f32, 1.9999500_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000000_f32, 7.0000000_f32, 8.0000000_f32,
         ]);
-        let abs_diff_self = LinkedList::from([0.00000000000000_f32; 8]);
         let abs_diff = LinkedList::from([
             0.00005000829700_f32, 0.00004994869200_f32, 0.00005006790000_f32, 0.00000047683716_f32,
             0.00005006790000_f32, 0.00000000000000_f32, 0.00005006790000_f32, 0.00000000000000_f32,
         ]);
 
-        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff_self.clone()));
         assert_eq!(lhs.debug_abs_diff(&rhs), Some(abs_diff.clone()));
         assert_eq!(rhs.debug_abs_diff(&lhs), Some(abs_diff.clone()));
     }
@@ -2565,7 +2625,7 @@ mod relative_eq_hash_map_tests {
             ("7", 4.40_f32),
             ("8", 4.60_f32),
         ]);
-        let abs_diff_self = HashMap::from([
+        let abs_diff = HashMap::from([
             ("0", 0.0000000_f32),
             ("1", 0.0000000_f32),
             ("2", 0.0000000_f32),
@@ -2575,6 +2635,35 @@ mod relative_eq_hash_map_tests {
             ("6", 0.0000000_f32),
             ("7", 0.0000000_f32),
             ("8", 0.0000000_f32),
+        ]);
+
+        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff));
+    }
+
+    #[rustfmt::skip]
+    #[test]
+    fn test_debug_abs_diff2() {
+        let lhs = HashMap::from([
+            ("0", 0.00_f32),
+            ("1", 1.00_f32),
+            ("2", 1.25_f32),
+            ("3", 1.50_f32),
+            ("4", 2.00_f32),
+            ("5", 2.50_f32),
+            ("6", 3.00_f32),
+            ("7", 4.00_f32),
+            ("8", 5.00_f32),
+        ]);
+        let rhs = HashMap::from([
+            ("0", 0.10_f32),
+            ("1", 1.10_f32), 
+            ("2", 1.15_f32), 
+            ("3", 1.70_f32), 
+            ("4", 1.80_f32),
+            ("5", 2.80_f32),
+            ("6", 2.70_f32),
+            ("7", 4.40_f32),
+            ("8", 4.60_f32),
         ]);
         let abs_diff = HashMap::from([
             ("0", 0.100000000_f32),
@@ -2588,14 +2677,13 @@ mod relative_eq_hash_map_tests {
             ("8", 0.400000100_f32),
         ]);
 
-        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff_self));
         assert_eq!(lhs.debug_abs_diff(&rhs), Some(abs_diff.clone()));
         assert_eq!(rhs.debug_abs_diff(&lhs), Some(abs_diff.clone()));
     }
 
     #[rustfmt::skip]
     #[test]
-    fn test_debug_abs_diff2() {
+    fn test_debug_abs_diff3() {
         let lhs = HashMap::from([
             ("0", 0.0000500_f32),
             ("1", 0.9999500_f32),
@@ -2618,7 +2706,7 @@ mod relative_eq_hash_map_tests {
             ("7", 7.0000000_f32),
             ("8", 8.0000000_f32),
         ]);
-        let abs_diff_self = HashMap::from([
+        let abs_diff = HashMap::from([
             ("0", 0.00000000000000_f32),
             ("1", 0.00000000000000_f32),
             ("2", 0.00000000000000_f32),
@@ -2628,6 +2716,35 @@ mod relative_eq_hash_map_tests {
             ("6", 0.00000000000000_f32),
             ("7", 0.00000000000000_f32),
             ("8", 0.00000000000000_f32),
+        ]);
+
+        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff.clone()));
+    }
+
+    #[rustfmt::skip]
+    #[test]
+    fn test_debug_abs_diff4() {
+        let lhs = HashMap::from([
+            ("0", 0.0000500_f32),
+            ("1", 0.9999500_f32),
+            ("2", 2.0000000_f32),
+            ("3", 2.9999500_f32),
+            ("4", 4.0000000_f32),
+            ("5", 4.9999500_f32),
+            ("6", 6.0000000_f32),
+            ("7", 6.9999500_f32),
+            ("8", 8.0000000_f32),
+        ]);
+        let rhs = HashMap::from([
+            ("0", 0.0000000_f32),
+            ("1", 1.0000000_f32),
+            ("2", 1.9999500_f32),
+            ("3", 3.0000000_f32),
+            ("4", 4.0000005_f32),
+            ("5", 5.0000000_f32),
+            ("6", 6.0000000_f32),
+            ("7", 7.0000000_f32),
+            ("8", 8.0000000_f32),
         ]);
         let abs_diff = HashMap::from([
             ("0", 0.00005000000000_f32),
@@ -2641,7 +2758,6 @@ mod relative_eq_hash_map_tests {
             ("8", 0.00000000000000_f32),
         ]);
 
-        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff_self.clone()));
         assert_eq!(lhs.debug_abs_diff(&rhs), Some(abs_diff.clone()));
         assert_eq!(rhs.debug_abs_diff(&lhs), Some(abs_diff.clone()));
     }
@@ -3613,6 +3729,35 @@ mod relative_eq_btree_map_tests {
             ("7", 4.00_f32),
             ("8", 5.00_f32),
         ]);
+        let abs_diff = BTreeMap::from([
+            ("0", 0.0000000_f32),
+            ("1", 0.0000000_f32),
+            ("2", 0.0000000_f32),
+            ("3", 0.0000000_f32),
+            ("4", 0.0000000_f32),
+            ("5", 0.0000000_f32),
+            ("6", 0.0000000_f32),
+            ("7", 0.0000000_f32),
+            ("8", 0.0000000_f32),
+        ]);
+
+        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff));
+    }
+
+    #[rustfmt::skip]
+    #[test]
+    fn test_debug_abs_diff2() {
+        let lhs = BTreeMap::from([
+            ("0", 0.00_f32),
+            ("1", 1.00_f32),
+            ("2", 1.25_f32),
+            ("3", 1.50_f32),
+            ("4", 2.00_f32),
+            ("5", 2.50_f32),
+            ("6", 3.00_f32),
+            ("7", 4.00_f32),
+            ("8", 5.00_f32),
+        ]);
         let rhs = BTreeMap::from([
             ("0", 0.10_f32),
             ("1", 1.10_f32), 
@@ -3623,17 +3768,6 @@ mod relative_eq_btree_map_tests {
             ("6", 2.70_f32),
             ("7", 4.40_f32),
             ("8", 4.60_f32),
-        ]);
-        let abs_diff_self = BTreeMap::from([
-            ("0", 0.0000000_f32),
-            ("1", 0.0000000_f32),
-            ("2", 0.0000000_f32),
-            ("3", 0.0000000_f32),
-            ("4", 0.0000000_f32),
-            ("5", 0.0000000_f32),
-            ("6", 0.0000000_f32),
-            ("7", 0.0000000_f32),
-            ("8", 0.0000000_f32),
         ]);
         let abs_diff = BTreeMap::from([
             ("0", 0.100000000_f32),
@@ -3647,14 +3781,42 @@ mod relative_eq_btree_map_tests {
             ("8", 0.400000100_f32),
         ]);
 
-        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff_self));
         assert_eq!(lhs.debug_abs_diff(&rhs), Some(abs_diff.clone()));
         assert_eq!(rhs.debug_abs_diff(&lhs), Some(abs_diff.clone()));
     }
 
     #[rustfmt::skip]
     #[test]
-    fn test_debug_abs_diff2() {
+    fn test_debug_abs_diff3() {
+        let lhs = BTreeMap::from([
+            ("0", 0.0000500_f32),
+            ("1", 0.9999500_f32),
+            ("2", 2.0000000_f32),
+            ("3", 2.9999500_f32),
+            ("4", 4.0000000_f32),
+            ("5", 4.9999500_f32),
+            ("6", 6.0000000_f32),
+            ("7", 6.9999500_f32),
+            ("8", 8.0000000_f32),
+        ]);
+        let abs_diff = BTreeMap::from([
+            ("0", 0.00000000000000_f32),
+            ("1", 0.00000000000000_f32),
+            ("2", 0.00000000000000_f32),
+            ("3", 0.00000000000000_f32),
+            ("4", 0.00000000000000_f32),
+            ("5", 0.00000000000000_f32),
+            ("6", 0.00000000000000_f32),
+            ("7", 0.00000000000000_f32),
+            ("8", 0.00000000000000_f32),
+        ]);
+
+        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff.clone()));
+    }
+
+    #[rustfmt::skip]
+    #[test]
+    fn test_debug_abs_diff4() {
         let lhs = BTreeMap::from([
             ("0", 0.0000500_f32),
             ("1", 0.9999500_f32),
@@ -3677,17 +3839,6 @@ mod relative_eq_btree_map_tests {
             ("7", 7.0000000_f32),
             ("8", 8.0000000_f32),
         ]);
-        let abs_diff_self = BTreeMap::from([
-            ("0", 0.00000000000000_f32),
-            ("1", 0.00000000000000_f32),
-            ("2", 0.00000000000000_f32),
-            ("3", 0.00000000000000_f32),
-            ("4", 0.00000000000000_f32),
-            ("5", 0.00000000000000_f32),
-            ("6", 0.00000000000000_f32),
-            ("7", 0.00000000000000_f32),
-            ("8", 0.00000000000000_f32),
-        ]);
         let abs_diff = BTreeMap::from([
             ("0", 0.00005000000000_f32),
             ("1", 0.00005000829700_f32),
@@ -3700,7 +3851,6 @@ mod relative_eq_btree_map_tests {
             ("8", 0.00000000000000_f32),
         ]);
 
-        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff_self.clone()));
         assert_eq!(lhs.debug_abs_diff(&rhs), Some(abs_diff.clone()));
         assert_eq!(rhs.debug_abs_diff(&lhs), Some(abs_diff.clone()));
     }
