@@ -8,6 +8,7 @@ use std::boxed::Box;
 use std::collections::LinkedList;
 use std::collections::VecDeque;
 use std::collections::HashMap;
+use std::collections::BTreeMap;
 use std::rc::Rc;
 use std::sync::Arc;
 use std::vec::Vec;
@@ -145,6 +146,33 @@ where
     }
 }
 
+impl<K, VA, VB> RelativeEq<BTreeMap<K, VB>> for BTreeMap<K, VA>
+where
+    K: Eq + Ord,
+    VA: RelativeEq<VB>,
+    VA::Tolerance: Sized,
+{
+    type Tolerance = BTreeMap<K, VA::Tolerance>;
+
+    #[inline]
+    fn relative_eq(&self, other: &BTreeMap<K, VB>, max_abs_diff: &Self::Tolerance, max_relative: &Self::Tolerance) -> bool {
+        self.len() == other.len()
+            && self.len() == max_abs_diff.len()
+            && self.len() == max_relative.len()
+            && self.iter().all(|(key, a)| {
+                if let Some(b) = other.get(key) {
+                    if let (Some(abs_tol), Some(rel_tol)) = (max_abs_diff.get(key), max_relative.get(key)) {
+                        RelativeEq::relative_eq(a, b, abs_tol, rel_tol)
+                    } else {
+                        false
+                    }
+                } else {
+                    false
+                }
+            })
+    }
+}
+
 
 impl<A, B> RelativeAllEq<Box<B>> for Box<A>
 where
@@ -251,6 +279,26 @@ where
                     false
                 }
             }) 
+    }
+}
+
+impl<K, VA, VB> RelativeAllEq<BTreeMap<K, VB>> for BTreeMap<K, VA>
+where
+    K: Eq + Ord,
+    VA: RelativeAllEq<VB>,
+{
+    type AllTolerance = VA::AllTolerance;
+
+    #[inline]
+    fn relative_all_eq(&self, other: &BTreeMap<K, VB>, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
+        self.len() == other.len()
+            && self.iter().all(|(key, a)| {
+                if let Some(b) = other.get(key) {
+                    RelativeAllEq::relative_all_eq(a, b, max_abs_diff, max_relative)
+                } else {
+                    false
+                }
+            })
     }
 }
 
@@ -543,6 +591,56 @@ where
     }
 }
 
+impl<K, VA, VB> AssertRelativeEq<BTreeMap<K, VB>> for BTreeMap<K, VA>
+where
+    K: Eq + Ord + Clone + fmt::Debug,
+    VA: AssertRelativeEq<VB>,
+    VA::Tolerance: Sized,
+    VA::DebugTolerance: Sized,
+{
+    type DebugAbsDiff = Option<BTreeMap<K, VA::DebugAbsDiff>>;
+    type DebugTolerance = Option<BTreeMap<K, VA::DebugTolerance>>;
+
+    #[inline]
+    fn debug_abs_diff(&self, other: &BTreeMap<K, VB>) -> Self::DebugAbsDiff {
+        if self.len() == other.len() {
+            let mut result = BTreeMap::new();
+            for (key, v) in self {
+                result.insert(key.clone(), v.debug_abs_diff(other.get(key)?));
+            }
+            Some(result)
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_abs_diff_tolerance(&self, other: &BTreeMap<K, VB>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        if self.len() == other.len() && self.len() == max_abs_diff.len() {
+            let mut result = BTreeMap::new();
+            for (key, v) in self {
+                result.insert(key.clone(), v.debug_abs_diff_tolerance(other.get(key)?, max_abs_diff.get(key)?));
+            }
+            Some(result)
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_relative_tolerance(&self, other: &BTreeMap<K, VB>, max_relative: &Self::Tolerance) -> Self::DebugTolerance {
+        if self.len() == other.len() && self.len() == max_relative.len() {
+            let mut result = BTreeMap::new();
+            for (key, v) in self {
+                result.insert(key.clone(), v.debug_relative_tolerance(other.get(key)?, max_relative.get(key)?));
+            }
+            Some(result)
+        } else {
+            None
+        }
+    }
+}
+
 
 impl<A, B> AssertRelativeAllEq<Box<B>> for Box<A>
 where
@@ -735,6 +833,41 @@ where
     fn debug_relative_all_tolerance(&self, other: &HashMap<K, VB, S>, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
         if self.len() == other.len() {
             let mut result = HashMap::with_hasher(self.hasher().clone());
+            for (key, v) in self {
+                result.insert(key.clone(), v.debug_relative_all_tolerance(other.get(key)?, max_relative));
+            }
+            Some(result)
+        } else {
+            None
+        }
+    }
+}
+
+impl<K, VA, VB> AssertRelativeAllEq<BTreeMap<K, VB>> for BTreeMap<K, VA>
+where
+    K: Eq + Ord + Clone + fmt::Debug,
+    VA: AssertRelativeAllEq<VB>,
+    VA::AllDebugTolerance: Sized,
+{
+    type AllDebugTolerance = Option<BTreeMap<K, VA::AllDebugTolerance>>;
+
+    #[inline]
+    fn debug_abs_diff_all_tolerance(&self, other: &BTreeMap<K, VB>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        if self.len() == other.len() {
+            let mut result = BTreeMap::new();
+            for (key, v) in self {
+                result.insert(key.clone(), v.debug_abs_diff_all_tolerance(other.get(key)?, max_abs_diff));
+            }
+            Some(result)
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_relative_all_tolerance(&self, other: &BTreeMap<K, VB>, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        if self.len() == other.len() {
+            let mut result = BTreeMap::new();
             for (key, v) in self {
                 result.insert(key.clone(), v.debug_relative_all_tolerance(other.get(key)?, max_relative));
             }

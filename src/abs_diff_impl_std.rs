@@ -8,6 +8,7 @@ use std::boxed::Box;
 use std::collections::LinkedList;
 use std::collections::VecDeque;
 use std::collections::HashMap;
+use std::collections::BTreeMap;
 use std::rc::Rc;
 use std::sync::Arc;
 use std::vec::Vec;
@@ -138,6 +139,32 @@ where
     }
 }
 
+impl<K, VA, VB> AbsDiffEq<BTreeMap<K, VB>> for BTreeMap<K, VA>
+where
+    K: Eq + Ord,
+    VA: AbsDiffEq<VB>,
+    VA::Tolerance: Sized,
+{
+    type Tolerance = BTreeMap<K, VA::Tolerance>;
+
+    #[inline]
+    fn abs_diff_eq(&self, other: &BTreeMap<K, VB>, max_abs_diff: &Self::Tolerance) -> bool {
+        self.len() == other.len()
+            && self.len() == max_abs_diff.len()
+            && self.iter().all(|(key, a)| {
+                if let Some(b) = other.get(key) {
+                    if let Some(tol) = max_abs_diff.get(key) {
+                        AbsDiffEq::abs_diff_eq(a, b, tol)
+                    } else {
+                        false
+                    }
+                } else {
+                    false
+                }
+            })
+    }
+}
+
 
 impl<A, B> AbsDiffAllEq<Box<B>> for Box<A>
 where
@@ -236,6 +263,26 @@ where
 
     #[inline]
     fn abs_diff_all_eq(&self, other: &HashMap<K, VB, S>, max_abs_diff: &Self::AllTolerance) -> bool {
+        self.len() == other.len()
+            && self.iter().all(|(key, a)| {
+                if let Some(b) = other.get(key) {
+                    AbsDiffAllEq::abs_diff_all_eq(a, b, max_abs_diff)
+                } else {
+                    false
+                }
+            })
+    }
+}
+
+impl<K, VA, VB> AbsDiffAllEq<BTreeMap<K, VB>> for BTreeMap<K, VA>
+where
+    K: Eq + Ord,
+    VA: AbsDiffAllEq<VB>,
+{
+    type AllTolerance = VA::AllTolerance;
+
+    #[inline]
+    fn abs_diff_all_eq(&self, other: &BTreeMap<K, VB>, max_abs_diff: &Self::AllTolerance) -> bool {
         self.len() == other.len()
             && self.iter().all(|(key, a)| {
                 if let Some(b) = other.get(key) {
@@ -463,6 +510,43 @@ where
     }
 }
 
+impl<K, VA, VB> AssertAbsDiffEq<BTreeMap<K, VB>> for BTreeMap<K, VA>
+where
+    K: Eq + Ord + Clone + fmt::Debug,
+    VA: AssertAbsDiffEq<VB>,
+    VA::Tolerance: Sized,
+    VA::DebugTolerance: Sized,
+{
+    type DebugAbsDiff = Option<BTreeMap<K, VA::DebugAbsDiff>>;
+    type DebugTolerance = Option<BTreeMap<K, VA::DebugTolerance>>;
+
+    #[inline]
+    fn debug_abs_diff(&self, other: &BTreeMap<K, VB>) -> Self::DebugAbsDiff {
+        if self.len() == other.len() {
+            let mut result = BTreeMap::new();
+            for (k, v) in self {
+                result.insert(k.clone(), v.debug_abs_diff(other.get(k)?));
+            }
+            Some(result)
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_abs_diff_tolerance(&self, other: &BTreeMap<K, VB>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        if self.len() == other.len() && self.len() == max_abs_diff.len() {
+            let mut result = BTreeMap::new();
+            for (k, v) in self {
+                result.insert(k.clone(), v.debug_abs_diff_tolerance(other.get(k)?, max_abs_diff.get(k)?));
+            }
+            Some(result)
+        } else {
+            None
+        }
+    }
+}
+
 
 impl<A, B> AssertAbsDiffAllEq<Box<B>> for Box<A>
 where
@@ -585,6 +669,28 @@ where
     fn debug_abs_diff_all_tolerance(&self, other: &HashMap<K, VB, S>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
         if self.len() == other.len() {
             let mut result = HashMap::with_hasher(self.hasher().clone());
+            for (key, v) in self {
+                result.insert(key.clone(), v.debug_abs_diff_all_tolerance(other.get(key)?, max_abs_diff));
+            }
+            Some(result)
+        } else {
+            None
+        }
+    }
+}
+
+impl<K, VA, VB> AssertAbsDiffAllEq<BTreeMap<K, VB>> for BTreeMap<K, VA>
+where
+    K: Eq + Ord + Clone + fmt::Debug,
+    VA: AssertAbsDiffAllEq<VB>,
+    VA::AllDebugTolerance: Sized,
+{
+    type AllDebugTolerance = Option<BTreeMap<K, VA::AllDebugTolerance>>;
+
+    #[inline]
+    fn debug_abs_diff_all_tolerance(&self, other: &BTreeMap<K, VB>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        if self.len() == other.len() {
+            let mut result = BTreeMap::new();
             for (key, v) in self {
                 result.insert(key.clone(), v.debug_abs_diff_all_tolerance(other.get(key)?, max_abs_diff));
             }
