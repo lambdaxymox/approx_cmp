@@ -5,10 +5,10 @@ use crate::relative::{
     RelativeEq,
 };
 use std::boxed::Box;
+use std::collections::VecDeque;
 use std::rc::Rc;
 use std::sync::Arc;
 use std::vec::Vec;
-use std::collections::VecDeque;
 
 
 impl<A, B> RelativeEq<Box<B>> for Box<A>
@@ -474,4 +474,3 @@ where
         }
     }
 }
-

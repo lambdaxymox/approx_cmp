@@ -1742,4 +1742,3 @@ mod relative_eq_vecdeque_tests {
         assert_eq!(rhs.debug_relative_all_tolerance(&lhs, &max_relative_all), None);
     }
 }
-

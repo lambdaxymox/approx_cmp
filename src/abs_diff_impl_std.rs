@@ -5,10 +5,10 @@ use crate::abs_diff::{
     AssertAbsDiffEq,
 };
 use std::boxed::Box;
+use std::collections::VecDeque;
 use std::rc::Rc;
 use std::sync::Arc;
 use std::vec::Vec;
-use std::collections::VecDeque;
 
 
 impl<A, B> AbsDiffEq<Box<B>> for Box<A>
@@ -72,7 +72,7 @@ where
 impl<A, B> AbsDiffEq<VecDeque<B>> for VecDeque<A>
 where
     A: AbsDiffEq<B>,
-    A::Tolerance: Sized
+    A::Tolerance: Sized,
 {
     type Tolerance = VecDeque<A::Tolerance>;
 
@@ -383,4 +383,3 @@ where
         }
     }
 }
-
