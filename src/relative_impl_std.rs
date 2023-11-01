@@ -8,6 +8,7 @@ use std::boxed::Box;
 use std::rc::Rc;
 use std::sync::Arc;
 use std::vec::Vec;
+use std::collections::VecDeque;
 
 
 impl<A, B> RelativeEq<Box<B>> for Box<A>
@@ -70,6 +71,28 @@ where
     }
 }
 
+impl<A, B> RelativeEq<VecDeque<B>> for VecDeque<A>
+where
+    A: RelativeEq<B>,
+    A::Tolerance: Sized,
+{
+    type Tolerance = VecDeque<A::Tolerance>;
+
+    #[inline]
+    fn relative_eq(&self, other: &VecDeque<B>, max_abs_diff: &Self::Tolerance, max_relative: &Self::Tolerance) -> bool {
+        self.len() == other.len()
+            && self.len() == max_abs_diff.len()
+            && self.len() == max_relative.len()
+            && self
+                .iter()
+                .zip(other.iter())
+                .zip(max_abs_diff.iter())
+                .zip(max_relative.iter())
+                .all(|(((a, b), abs_tol), rel_tol)| RelativeEq::relative_eq(a, b, abs_tol, rel_tol))
+    }
+}
+
+
 impl<A, B> RelativeAllEq<Box<B>> for Box<A>
 where
     A: RelativeAllEq<B> + ?Sized,
@@ -117,6 +140,22 @@ where
 
     #[inline]
     fn relative_all_eq(&self, other: &Vec<B>, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
+        self.len() == other.len()
+            && self
+                .iter()
+                .zip(other.iter())
+                .all(|(a, b)| RelativeAllEq::relative_all_eq(a, b, max_abs_diff, max_relative))
+    }
+}
+
+impl<A, B> RelativeAllEq<VecDeque<B>> for VecDeque<A>
+where
+    A: RelativeAllEq<B>,
+{
+    type AllTolerance = A::AllTolerance;
+
+    #[inline]
+    fn relative_all_eq(&self, other: &VecDeque<B>, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
         self.len() == other.len()
             && self
                 .iter()
@@ -252,6 +291,62 @@ where
     }
 }
 
+impl<A, B> AssertRelativeEq<VecDeque<B>> for VecDeque<A>
+where
+    A: AssertRelativeEq<B> + ?Sized + Copy,
+    B: ?Sized + Copy,
+    A::Tolerance: Sized,
+    A::DebugTolerance: Sized,
+{
+    type DebugAbsDiff = Option<VecDeque<A::DebugAbsDiff>>;
+    type DebugTolerance = Option<VecDeque<A::DebugTolerance>>;
+
+    #[inline]
+    fn debug_abs_diff(&self, other: &VecDeque<B>) -> Self::DebugAbsDiff {
+        if self.len() == other.len() {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| AssertRelativeEq::debug_abs_diff(a, b))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_abs_diff_tolerance(&self, other: &VecDeque<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        if (self.len() == other.len()) && (self.len() == max_abs_diff.len()) {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .zip(max_abs_diff.iter())
+                    .map(|((a, b), tol)| AssertRelativeEq::debug_abs_diff_tolerance(a, b, tol))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_relative_tolerance(&self, other: &VecDeque<B>, max_relative: &Self::Tolerance) -> Self::DebugTolerance {
+        if (self.len() == other.len()) && (self.len() == max_relative.len()) {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .zip(max_relative.iter())
+                    .map(|((a, b), tol)| AssertRelativeEq::debug_relative_tolerance(a, b, tol))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+}
+
+
 impl<A, B> AssertRelativeAllEq<Box<B>> for Box<A>
 where
     A: AssertRelativeAllEq<B> + ?Sized + Copy,
@@ -342,3 +437,41 @@ where
         }
     }
 }
+
+impl<A, B> AssertRelativeAllEq<VecDeque<B>> for VecDeque<A>
+where
+    A: AssertRelativeAllEq<B> + ?Sized + Copy,
+    B: ?Sized + Copy,
+    A::AllDebugTolerance: Sized,
+{
+    type AllDebugTolerance = Option<VecDeque<A::AllDebugTolerance>>;
+
+    #[inline]
+    fn debug_abs_diff_all_tolerance(&self, other: &VecDeque<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        if self.len() == other.len() {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| AssertRelativeAllEq::debug_abs_diff_all_tolerance(a, b, max_abs_diff))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_relative_all_tolerance(&self, other: &VecDeque<B>, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        if self.len() == other.len() {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| AssertRelativeAllEq::debug_relative_all_tolerance(a, b, max_relative))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+}
+
