@@ -793,10 +793,10 @@ mod relative_eq_vec_tests {
     #[rustfmt::skip]
     #[test]
     fn test_eq_empty1() {
-        let lhs: Vec<f32> = vec![];
-        let rhs: Vec<f32> = vec![];
-        let max_abs_diff = vec![];
-        let max_relative = vec![];
+        let lhs: Vec<f32> = Vec::new();
+        let rhs: Vec<f32> = Vec::new();
+        let max_abs_diff = Vec::new();
+        let max_relative = Vec::new();
 
         assert_relative_eq!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
     }
@@ -804,8 +804,8 @@ mod relative_eq_vec_tests {
     #[rustfmt::skip]
     #[test]
     fn test_ne_empty1() {
-        let lhs: Vec<f32> = vec![];
-        let rhs: Vec<f32> = vec![];
+        let lhs: Vec<f32> = Vec::new();
+        let rhs: Vec<f32> = Vec::new();
         let eps = f32::EPSILON;
         let max_abs_diff = vec![
             1.0 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
@@ -822,14 +822,14 @@ mod relative_eq_vec_tests {
     #[rustfmt::skip]
     #[test]
     fn test_ne_empty2() {
-        let lhs: Vec<f32> = vec![];
-        let rhs: Vec<f32> = vec![];
+        let lhs: Vec<f32> = Vec::new();
+        let rhs: Vec<f32> = Vec::new();
         let eps = f32::EPSILON;
         let max_abs_diff = vec![
             1.0 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
             1.0 * eps, 1.0 * eps, 4.0 * eps, 4.0 * eps,
         ];
-        let max_relative = vec![];
+        let max_relative = Vec::new();
 
         assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
     }
@@ -837,10 +837,10 @@ mod relative_eq_vec_tests {
     #[rustfmt::skip]
     #[test]
     fn test_ne_empty3() {
-        let lhs: Vec<f32> = vec![];
-        let rhs: Vec<f32> = vec![];
+        let lhs: Vec<f32> = Vec::new();
+        let rhs: Vec<f32> = Vec::new();
         let eps = f32::EPSILON;
-        let max_abs_diff = vec![];
+        let max_abs_diff = Vec::new();
         let max_relative = vec![
             1.0 * eps, 2.0 * eps, 2.0 * eps, 2.0 * eps,
             1.0 * eps, 1.0 * eps, 2.0 * eps, 2.0 * eps,
@@ -856,7 +856,7 @@ mod relative_eq_vec_tests {
             0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ];
-        let rhs = vec![];
+        let rhs = Vec::new();
         let eps = f32::EPSILON;
         let max_abs_diff = vec![
             0.5 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
@@ -878,13 +878,13 @@ mod relative_eq_vec_tests {
             0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ];
-        let rhs = vec![];
+        let rhs = Vec::new();
         let eps = f32::EPSILON;
         let max_abs_diff = vec![
             0.5 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
             0.5 * eps, 0.5 * eps, 4.0 * eps, 4.0 * eps,
         ];
-        let max_relative = vec![];
+        let max_relative = Vec::new();
 
         assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
         assert_relative_ne!(rhs, lhs, abs_diff <= max_abs_diff, relative <= max_relative);
@@ -897,9 +897,9 @@ mod relative_eq_vec_tests {
             0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ];
-        let rhs = vec![];
+        let rhs = Vec::new();
         let eps = f32::EPSILON;
-        let max_abs_diff = vec![];
+        let max_abs_diff = Vec::new();
         let max_relative = vec![
             0.5 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
             0.5 * eps, 0.5 * eps, 4.0 * eps, 4.0 * eps,
@@ -916,9 +916,9 @@ mod relative_eq_vec_tests {
             0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ];
-        let rhs = vec![];
-        let max_abs_diff = vec![];
-        let max_relative = vec![];
+        let rhs = Vec::new();
+        let max_abs_diff = Vec::new();
+        let max_relative = Vec::new();
 
         assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
         assert_relative_ne!(rhs, lhs, abs_diff <= max_abs_diff, relative <= max_relative);
@@ -927,7 +927,7 @@ mod relative_eq_vec_tests {
     #[rustfmt::skip]
     #[test]
     fn test_ne_empty8() {
-        let lhs: Vec<f32> = vec![];
+        let lhs: Vec<f32> = Vec::new();
         let rhs = vec![
             1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
@@ -946,7 +946,7 @@ mod relative_eq_vec_tests {
     #[rustfmt::skip]
     #[test]
     fn test_ne_empty9() {
-        let lhs: Vec<f32> = vec![];
+        let lhs: Vec<f32> = Vec::new();
         let rhs = vec![
             1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
@@ -956,7 +956,7 @@ mod relative_eq_vec_tests {
             1.0 * eps, 2.0 * eps, 2.0 * eps, 2.0 * eps,
             1.0 * eps, 1.0 * eps, 2.0 * eps, 2.0 * eps,
         ];
-        let max_relative = vec![];
+        let max_relative = Vec::new();
 
         assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
         assert_relative_ne!(rhs, lhs, abs_diff <= max_abs_diff, relative <= max_relative);
@@ -965,13 +965,13 @@ mod relative_eq_vec_tests {
     #[rustfmt::skip]
     #[test]
     fn test_ne_empty10() {
-        let lhs: Vec<f32> = vec![];
+        let lhs: Vec<f32> = Vec::new();
         let rhs = vec![
             1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ];
         let eps = f32::EPSILON;
-        let max_abs_diff = vec![];
+        let max_abs_diff = Vec::new();
         let max_relative = vec![eps; 8];
 
         assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
@@ -981,13 +981,13 @@ mod relative_eq_vec_tests {
     #[rustfmt::skip]
     #[test]
     fn test_ne_empty11() {
-        let lhs: Vec<f32> = vec![];
+        let lhs: Vec<f32> = Vec::new();
         let rhs = vec![
             1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ];
-        let max_abs_diff = vec![];
-        let max_relative = vec![];
+        let max_abs_diff = Vec::new();
+        let max_relative = Vec::new();
 
         assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
         assert_relative_ne!(rhs, lhs, abs_diff <= max_abs_diff, relative <= max_relative);
@@ -1004,8 +1004,8 @@ mod relative_eq_vec_tests {
             1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ];
-        let max_abs_diff = vec![];
-        let max_relative = vec![];
+        let max_abs_diff = Vec::new();
+        let max_relative = Vec::new();
 
         assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
         assert_relative_ne!(rhs, lhs, abs_diff <= max_abs_diff, relative <= max_relative);
@@ -1027,7 +1027,7 @@ mod relative_eq_vec_tests {
             1.0 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
             1.0 * eps, 1.0 * eps, 4.0 * eps, 4.0 * eps,
         ];
-        let max_relative = vec![];
+        let max_relative = Vec::new();
 
         assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
         assert_relative_ne!(rhs, lhs, abs_diff <= max_abs_diff, relative <= max_relative);
@@ -1045,7 +1045,7 @@ mod relative_eq_vec_tests {
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ];
         let eps = f32::EPSILON;
-        let max_abs_diff = vec![];
+        let max_abs_diff = Vec::new();
         let max_relative = vec![
             1.0 * eps, 2.0 * eps, 2.0 * eps, 2.0 * eps,
             1.0 * eps, 1.0 * eps, 2.0 * eps, 2.0 * eps,
@@ -1058,8 +1058,8 @@ mod relative_eq_vec_tests {
     #[rustfmt::skip]
     #[test]
     fn test_all_eq_empty() {
-        let lhs: Vec<f32> = vec![];
-        let rhs: Vec<f32> = vec![];
+        let lhs: Vec<f32> = Vec::new();
+        let rhs: Vec<f32> = Vec::new();
         let max_abs_diff = 4.0 * f32::EPSILON;
         let max_relative = 4.0 * f32::EPSILON;
 
@@ -1073,7 +1073,7 @@ mod relative_eq_vec_tests {
             0.9999999_f32, 2.0000000_f32, 2.9999995_f32, 4.0000000_f32,
             4.9999999_f32, 6.0000000_f32, 6.9999995_f32, 8.0000000_f32,
         ];
-        let rhs = vec![];
+        let rhs = Vec::new();
         let max_abs_diff = 2.0 * f32::EPSILON;
         let max_relative = 1.0 * f32::EPSILON;
 
@@ -1084,7 +1084,7 @@ mod relative_eq_vec_tests {
     #[rustfmt::skip]
     #[test]
     fn test_all_ne_empty2() {
-        let lhs: Vec<f32> = vec![];
+        let lhs: Vec<f32> = Vec::new();
         let rhs = vec![
             1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
@@ -1103,7 +1103,7 @@ mod relative_eq_vec_tests {
             1.00_f32, 1.25_f32, 1.50_f32, 2.00_f32,
             2.50_f32, 3.00_f32, 4.00_f32, 5.00_f32,
         ];
-        let rhs = vec![];
+        let rhs = Vec::new();
 
         assert_eq!(lhs.debug_abs_diff(&rhs), None);
         assert_eq!(rhs.debug_abs_diff(&lhs), None);
@@ -1112,7 +1112,7 @@ mod relative_eq_vec_tests {
     #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_empty2() {
-        let lhs = vec![];
+        let lhs = Vec::new();
         let rhs = vec![
             1.0000000_f32, 1.9999500_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000000_f32, 7.0000000_f32, 8.0000000_f32,
@@ -1125,7 +1125,7 @@ mod relative_eq_vec_tests {
     #[test]
     fn test_debug_abs_diff_tolerance_empty() {
         let lhs = vec![2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32];
-        let rhs = vec![];
+        let rhs = Vec::new();
         let max_abs_diff = vec![0.10_f32, 0.20_f32, 0.30_f32, 0.40_f32];
 
         assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), None);
@@ -1134,7 +1134,7 @@ mod relative_eq_vec_tests {
 
     #[test]
     fn test_debug_abs_diff_all_tolerance_empty() {
-        let lhs: Vec<f32> = vec![];
+        let lhs: Vec<f32> = Vec::new();
         let rhs = vec![2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32];
         let max_abs_diff_all = 0.20_f32;
 
@@ -1144,7 +1144,7 @@ mod relative_eq_vec_tests {
 
     #[test]
     fn test_debug_relative_tolerance_empty() {
-        let lhs = vec![];
+        let lhs = Vec::new();
         let rhs = vec![2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32];
         let max_relative = vec![0.10_f32, 0.20_f32, 0.30_f32, 0.40_f32];
 
@@ -1155,7 +1155,7 @@ mod relative_eq_vec_tests {
     #[test]
     fn test_debug_relative_all_tolerance_empty() {
         let lhs = vec![2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32];
-        let rhs = vec![];
+        let rhs = Vec::new();
         let max_relative_all = 0.20_f32;
 
         assert_eq!(lhs.debug_relative_all_tolerance(&rhs, &max_relative_all), None);
