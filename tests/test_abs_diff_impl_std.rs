@@ -1698,6 +1698,7 @@ mod abs_diff_eq_hash_map_tests {
         assert_eq!(rhs.debug_abs_diff(&lhs), Some(abs_diff.clone()));
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_tolerance() {
         let lhs = HashMap::from([
@@ -1722,6 +1723,7 @@ mod abs_diff_eq_hash_map_tests {
         assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), Some(max_abs_diff));
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_all_tolerance() {
         let lhs = HashMap::from([
@@ -1909,6 +1911,7 @@ mod abs_diff_eq_hash_map_tests {
         assert_eq!(rhs.debug_abs_diff(&lhs), None);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_tolerance_empty() {
         let lhs: HashMap<&str, f32> = HashMap::new();
@@ -1929,6 +1932,7 @@ mod abs_diff_eq_hash_map_tests {
         assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), None);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_all_tolerance_empty() {
         let lhs = HashMap::from([
@@ -2243,6 +2247,7 @@ mod abs_diff_eq_btree_map_tests {
         assert_eq!(rhs.debug_abs_diff(&lhs), Some(abs_diff.clone()));
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_tolerance() {
         let lhs = BTreeMap::from([
@@ -2267,6 +2272,7 @@ mod abs_diff_eq_btree_map_tests {
         assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), Some(max_abs_diff));
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_all_tolerance() {
         let lhs = BTreeMap::from([
@@ -2454,6 +2460,7 @@ mod abs_diff_eq_btree_map_tests {
         assert_eq!(rhs.debug_abs_diff(&lhs), None);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_tolerance_empty() {
         let lhs: BTreeMap<&str, f32> = BTreeMap::new();
@@ -2474,6 +2481,7 @@ mod abs_diff_eq_btree_map_tests {
         assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), None);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_all_tolerance_empty() {
         let lhs = BTreeMap::from([
@@ -2489,4 +2497,3 @@ mod abs_diff_eq_btree_map_tests {
         assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), None);
     }
 }
-

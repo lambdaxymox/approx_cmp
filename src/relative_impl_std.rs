@@ -5,15 +5,15 @@ use crate::relative::{
     RelativeEq,
 };
 use std::boxed::Box;
+use std::collections::BTreeMap;
+use std::collections::HashMap;
 use std::collections::LinkedList;
 use std::collections::VecDeque;
-use std::collections::HashMap;
-use std::collections::BTreeMap;
+use std::fmt;
+use std::hash;
 use std::rc::Rc;
 use std::sync::Arc;
 use std::vec::Vec;
-use std::hash;
-use std::fmt;
 
 
 impl<A, B> RelativeEq<Box<B>> for Box<A>
@@ -142,7 +142,7 @@ where
                 } else {
                     false
                 }
-            }) 
+            })
     }
 }
 
@@ -278,7 +278,7 @@ where
                 } else {
                     false
                 }
-            }) 
+            })
     }
 }
 
@@ -877,4 +877,3 @@ where
         }
     }
 }
-

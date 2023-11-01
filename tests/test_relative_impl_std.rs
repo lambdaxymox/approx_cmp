@@ -2646,6 +2646,7 @@ mod relative_eq_hash_map_tests {
         assert_eq!(rhs.debug_abs_diff(&lhs), Some(abs_diff.clone()));
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_tolerance() {
         let lhs = HashMap::from([
@@ -2670,6 +2671,7 @@ mod relative_eq_hash_map_tests {
         assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), Some(max_abs_diff));
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_all_tolerance() {
         let lhs = HashMap::from([
@@ -2695,6 +2697,7 @@ mod relative_eq_hash_map_tests {
         assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), Some(max_abs_diff));
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_relative_tolerance() {
         let lhs = HashMap::from([
@@ -2719,6 +2722,7 @@ mod relative_eq_hash_map_tests {
         assert_eq!(lhs.debug_relative_tolerance(&rhs, &max_relative), Some(max_relative));
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_relative_all_tolerance() {
         let lhs = HashMap::from([
@@ -2744,17 +2748,6 @@ mod relative_eq_hash_map_tests {
         assert_eq!(lhs.debug_relative_all_tolerance(&rhs, &max_relative_all), Some(max_relative));
     }
 
-    #[test]
-    fn test_eq_empty() {
-        let lhs: HashMap<&str, f32> = HashMap::new();
-        let rhs: HashMap<&str, f32> = HashMap::new();
-        let max_abs_diff = HashMap::new();
-        let max_relative = HashMap::new();
-
-        assert_relative_eq!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
-    }
-
-    #[rustfmt::skip]
     #[test]
     fn test_eq_empty1() {
         let lhs: HashMap<&str, f32> = HashMap::new();
@@ -3210,7 +3203,6 @@ mod relative_eq_hash_map_tests {
         assert_relative_ne!(rhs, lhs, abs_diff <= max_abs_diff, relative <= max_relative);
     }
 
-    #[rustfmt::skip]
     #[test]
     fn test_all_eq_empty() {
         let lhs: HashMap<&str, f32> = HashMap::new();
@@ -3305,6 +3297,7 @@ mod relative_eq_hash_map_tests {
         assert_eq!(rhs.debug_abs_diff(&lhs), None);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_tolerance_empty() {
         let lhs = HashMap::from([
@@ -3325,6 +3318,7 @@ mod relative_eq_hash_map_tests {
         assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), None);
     }
 
+    #[rustfmt::skip]    
     #[test]
     fn test_debug_abs_diff_all_tolerance_empty() {
         let lhs: HashMap<&str, f32> = HashMap::new();
@@ -3340,6 +3334,7 @@ mod relative_eq_hash_map_tests {
         assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), None);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_relative_tolerance_empty() {
         let lhs = HashMap::new();
@@ -3360,6 +3355,7 @@ mod relative_eq_hash_map_tests {
         assert_eq!(rhs.debug_relative_tolerance(&lhs, &max_relative), None);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_relative_all_tolerance_empty() {
         let lhs = HashMap::from([
@@ -3709,6 +3705,7 @@ mod relative_eq_btree_map_tests {
         assert_eq!(rhs.debug_abs_diff(&lhs), Some(abs_diff.clone()));
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_tolerance() {
         let lhs = BTreeMap::from([
@@ -3733,6 +3730,7 @@ mod relative_eq_btree_map_tests {
         assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), Some(max_abs_diff));
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_all_tolerance() {
         let lhs = BTreeMap::from([
@@ -3758,6 +3756,7 @@ mod relative_eq_btree_map_tests {
         assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), Some(max_abs_diff));
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_relative_tolerance() {
         let lhs = BTreeMap::from([
@@ -3782,6 +3781,7 @@ mod relative_eq_btree_map_tests {
         assert_eq!(lhs.debug_relative_tolerance(&rhs, &max_relative), Some(max_relative));
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_relative_all_tolerance() {
         let lhs = BTreeMap::from([
@@ -3807,17 +3807,6 @@ mod relative_eq_btree_map_tests {
         assert_eq!(lhs.debug_relative_all_tolerance(&rhs, &max_relative_all), Some(max_relative));
     }
 
-    #[test]
-    fn test_eq_empty() {
-        let lhs: BTreeMap<&str, f32> = BTreeMap::new();
-        let rhs: BTreeMap<&str, f32> = BTreeMap::new();
-        let max_abs_diff = BTreeMap::new();
-        let max_relative = BTreeMap::new();
-
-        assert_relative_eq!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
-    }
-
-    #[rustfmt::skip]
     #[test]
     fn test_eq_empty1() {
         let lhs: BTreeMap<&str, f32> = BTreeMap::new();
@@ -4273,7 +4262,6 @@ mod relative_eq_btree_map_tests {
         assert_relative_ne!(rhs, lhs, abs_diff <= max_abs_diff, relative <= max_relative);
     }
 
-    #[rustfmt::skip]
     #[test]
     fn test_all_eq_empty() {
         let lhs: BTreeMap<&str, f32> = BTreeMap::new();
@@ -4368,6 +4356,7 @@ mod relative_eq_btree_map_tests {
         assert_eq!(rhs.debug_abs_diff(&lhs), None);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_tolerance_empty() {
         let lhs = BTreeMap::from([
@@ -4388,6 +4377,7 @@ mod relative_eq_btree_map_tests {
         assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), None);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_all_tolerance_empty() {
         let lhs: BTreeMap<&str, f32> = BTreeMap::new();
@@ -4403,6 +4393,7 @@ mod relative_eq_btree_map_tests {
         assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), None);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_relative_tolerance_empty() {
         let lhs = BTreeMap::new();
@@ -4423,6 +4414,7 @@ mod relative_eq_btree_map_tests {
         assert_eq!(rhs.debug_relative_tolerance(&lhs, &max_relative), None);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_relative_all_tolerance_empty() {
         let lhs = BTreeMap::from([
@@ -4438,4 +4430,3 @@ mod relative_eq_btree_map_tests {
         assert_eq!(rhs.debug_relative_all_tolerance(&lhs, &max_relative_all), None);
     }
 }
-
