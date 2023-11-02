@@ -22,12 +22,12 @@ fn test_eq() {
     ];
     let eps = f32::EPSILON;
     let max_abs_diff = [
-        1.0 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
-        1.0 * eps, 1.0 * eps, 4.0 * eps, 4.0 * eps,
+        1.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
+        1.0_f32 * eps, 1.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
     ];
     let max_relative = [
-        1.0 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
-        1.0 * eps, 1.0 * eps, 4.0 * eps, 4.0 * eps,
+        1.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
+        1.0_f32 * eps, 1.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
     ];
 
     assert!(relative_eq!(lhs[..], rhs[..], abs_diff <= max_abs_diff, relative <= max_relative));
@@ -66,12 +66,12 @@ fn test_ne2() {
     ];
     let eps = f32::EPSILON;
     let max_abs_diff = [
-        1.0 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
-        1.0 * eps, 1.0 * eps, eps / 2.0, 4.0 * eps,
+        1.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
+        1.0_f32 * eps, 1.0_f32 * eps, eps / 2.0_f32, 4.0_f32 * eps,
     ];
     let max_relative = [
-        1.0 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
-        1.0 * eps, 1.0 * eps, eps / 2.0, 4.0 * eps,
+        1.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
+        1.0_f32 * eps, 1.0_f32 * eps, eps / 2.0_f32, 4.0_f32 * eps,
     ];
 
     assert!(relative_ne!(lhs[..], rhs[..], abs_diff <= max_abs_diff, relative <= max_relative));

@@ -48,7 +48,7 @@ mod relative_eq_f32_tests {
 
     #[rustfmt::skip]
     fn check_eq_self(value: f32) {
-        check_eq(value, value, 0.0,               f32::EPSILON);
+        check_eq(value, value, 0.0_f32,           f32::EPSILON);
         check_eq(value, value, f32::MIN_POSITIVE, f32::MIN_POSITIVE);
         check_eq(value, value, f32::MAX,          f32::MAX);
         check_eq(value, value, f32::INFINITY,     f32::INFINITY);
@@ -59,10 +59,10 @@ mod relative_eq_f32_tests {
     fn test_eq_zero() {
         check_eq_self(0.0);
 
-        check_eq( 0.0,  0.0, f32::EPSILON, f32::EPSILON);
-        check_eq(-0.0,  0.0, f32::EPSILON, f32::EPSILON);
-        check_eq( 0.0, -0.0, f32::EPSILON, f32::EPSILON);
-        check_eq(-0.0, -0.0, f32::EPSILON, f32::EPSILON);
+        check_eq( 0.0_f32,  0.0_f32, f32::EPSILON, f32::EPSILON);
+        check_eq(-0.0_f32,  0.0_f32, f32::EPSILON, f32::EPSILON);
+        check_eq( 0.0_f32, -0.0_f32, f32::EPSILON, f32::EPSILON);
+        check_eq(-0.0_f32, -0.0_f32, f32::EPSILON, f32::EPSILON);
     }
 
     #[rustfmt::skip]
@@ -278,20 +278,20 @@ mod relative_eq_f32_tests {
     #[rustfmt::skip]
     #[test]
     fn test_ne_nan1() {
-        check_ne( f32::NAN,  f32::NAN, 0_f32, f32::EPSILON);
-        check_ne( f32::NAN, -f32::NAN, 0_f32, f32::EPSILON);
-        check_ne(-f32::NAN,  f32::NAN, 0_f32, f32::EPSILON);
-        check_ne(-f32::NAN, -f32::NAN, 0_f32, f32::EPSILON);
+        check_ne( f32::NAN,  f32::NAN, 0.0_f32, f32::EPSILON);
+        check_ne( f32::NAN, -f32::NAN, 0.0_f32, f32::EPSILON);
+        check_ne(-f32::NAN,  f32::NAN, 0.0_f32, f32::EPSILON);
+        check_ne(-f32::NAN, -f32::NAN, 0.0_f32, f32::EPSILON);
     }
 
     #[rustfmt::skip]
     #[test]
     fn test_ne_nan2() {
         for i in 0..=i16::MAX {
-            check_ne( f32::NAN , f32::NAN, 1_f32 / (i as f32), 1_f32 / (i as f32));
-            check_ne( f32::NAN, -f32::NAN, 1_f32 / (i as f32), 1_f32 / (i as f32));
-            check_ne(-f32::NAN,  f32::NAN, 1_f32 / (i as f32), 1_f32 / (i as f32));
-            check_ne(-f32::NAN, -f32::NAN, 1_f32 / (i as f32), 1_f32 / (i as f32));
+            check_ne( f32::NAN , f32::NAN, 1.0_f32 / (i as f32), 1.0_f32 / (i as f32));
+            check_ne( f32::NAN, -f32::NAN, 1.0_f32 / (i as f32), 1.0_f32 / (i as f32));
+            check_ne(-f32::NAN,  f32::NAN, 1.0_f32 / (i as f32), 1.0_f32 / (i as f32));
+            check_ne(-f32::NAN, -f32::NAN, 1.0_f32 / (i as f32), 1.0_f32 / (i as f32));
         }
     }
 
@@ -312,60 +312,60 @@ mod relative_eq_f32_tests {
         check_ne(f32::NAN, f32::NAN, f32::EPSILON, f32::EPSILON);
         
         check_ne( f32::NAN,  0.0_f32,  f32::EPSILON, f32::EPSILON);
-        check_ne(-0_f32,     f32::NAN, f32::EPSILON, f32::EPSILON);
+        check_ne(-0.0_f32,   f32::NAN, f32::EPSILON, f32::EPSILON);
         check_ne( f32::NAN, -0.0_f32,  f32::EPSILON, f32::EPSILON);
-        check_ne( 0_f32,     f32::NAN, f32::EPSILON, f32::EPSILON);
+        check_ne( 0.0_f32,   f32::NAN, f32::EPSILON, f32::EPSILON);
 
-        check_ne( f32::NAN, f32::INFINITY,  f32::EPSILON, f32::EPSILON);
-        check_ne( f32::INFINITY, f32::NAN,  f32::EPSILON, f32::EPSILON);
-        check_ne( f32::NAN, -f32::INFINITY, f32::EPSILON, f32::EPSILON);
-        check_ne(-f32::INFINITY, f32::NAN,  f32::EPSILON, f32::EPSILON);
+        check_ne( f32::NAN,       f32::INFINITY, f32::EPSILON, f32::EPSILON);
+        check_ne( f32::INFINITY,  f32::NAN,      f32::EPSILON, f32::EPSILON);
+        check_ne( f32::NAN,      -f32::INFINITY, f32::EPSILON, f32::EPSILON);
+        check_ne(-f32::INFINITY,  f32::NAN,      f32::EPSILON, f32::EPSILON);
 
-        check_ne( f32::NAN, f32::MAX,  f32::EPSILON, f32::EPSILON);
-        check_ne( f32::MAX, f32::NAN,  f32::EPSILON, f32::EPSILON);
+        check_ne( f32::NAN,  f32::MAX, f32::EPSILON, f32::EPSILON);
+        check_ne( f32::MAX,  f32::NAN, f32::EPSILON, f32::EPSILON);
         check_ne( f32::NAN, -f32::MAX, f32::EPSILON, f32::EPSILON);
-        check_ne(-f32::MAX, f32::NAN,  f32::EPSILON, f32::EPSILON);
+        check_ne(-f32::MAX,  f32::NAN, f32::EPSILON, f32::EPSILON);
 
-        check_ne( f32::NAN,          f32::MIN_POSITIVE,  f32::EPSILON, f32::EPSILON);
-        check_ne( f32::MIN_POSITIVE, f32::NAN,           f32::EPSILON, f32::EPSILON);
+        check_ne( f32::NAN,           f32::MIN_POSITIVE, f32::EPSILON, f32::EPSILON);
+        check_ne( f32::MIN_POSITIVE,  f32::NAN,          f32::EPSILON, f32::EPSILON);
         check_ne( f32::NAN,          -f32::MIN_POSITIVE, f32::EPSILON, f32::EPSILON);
-        check_ne(-f32::MIN_POSITIVE, f32::NAN,           f32::EPSILON, f32::EPSILON);
+        check_ne(-f32::MIN_POSITIVE,  f32::NAN,          f32::EPSILON, f32::EPSILON);
 
-        check_ne( f32::NAN,  1_f32,    f32::EPSILON, f32::EPSILON);
-        check_ne( f32::NAN, -1_f32,    f32::EPSILON, f32::EPSILON);
-        check_ne( 1_f32,     f32::NAN, f32::EPSILON, f32::EPSILON);
-        check_ne(-1_f32,     f32::NAN, f32::EPSILON, f32::EPSILON);
+        check_ne( f32::NAN,  1.0_f32,  f32::EPSILON, f32::EPSILON);
+        check_ne( f32::NAN, -1.0_f32,  f32::EPSILON, f32::EPSILON);
+        check_ne( 1.0_f32,   f32::NAN, f32::EPSILON, f32::EPSILON);
+        check_ne(-1.0_f32,   f32::NAN, f32::EPSILON, f32::EPSILON);
     }
 
     #[rustfmt::skip]
     #[test]
     fn test_nan5() {
-        check_ne(f32::NAN, f32::NAN, 1_f32, 2_f32);
+        check_ne(f32::NAN, f32::NAN, 1.0_f32, 2.0_f32);
         
-        check_ne( f32::NAN,  0.0_f32,  1_f32, 2_f32);
-        check_ne(-0_f32,     f32::NAN, 1_f32, 2_f32);
-        check_ne( f32::NAN, -0.0_f32,  1_f32, 2_f32);
-        check_ne( 0_f32,     f32::NAN, 1_f32, 2_f32);
+        check_ne( f32::NAN,  0.0_f32,  1.0_f32, 2.0_f32);
+        check_ne(-0.0_f32,   f32::NAN, 1.0_f32, 2.0_f32);
+        check_ne( f32::NAN, -0.0_f32,  1.0_f32, 2.0_f32);
+        check_ne( 0.0_f32,   f32::NAN, 1.0_f32, 2.0_f32);
 
-        check_ne( f32::NAN, f32::INFINITY,  1_f32, 2_f32);
-        check_ne( f32::INFINITY, f32::NAN,  1_f32, 2_f32);
-        check_ne( f32::NAN, -f32::INFINITY, 1_f32, 2_f32);
-        check_ne(-f32::INFINITY, f32::NAN,  1_f32, 2_f32);
+        check_ne( f32::NAN,       f32::INFINITY, 1.0_f32, 2.0_f32);
+        check_ne( f32::INFINITY,  f32::NAN,      1.0_f32, 2.0_f32);
+        check_ne( f32::NAN,      -f32::INFINITY, 1.0_f32, 2.0_f32);
+        check_ne(-f32::INFINITY,  f32::NAN,      1.0_f32, 2.0_f32);
 
-        check_ne( f32::NAN, f32::MAX,  1_f32, 2_f32);
-        check_ne( f32::MAX, f32::NAN,  1_f32, 2_f32);
-        check_ne( f32::NAN, -f32::MAX, 1_f32, 2_f32);
-        check_ne(-f32::MAX, f32::NAN,  1_f32, 2_f32);
+        check_ne( f32::NAN,  f32::MAX, 1.0_f32, 2.0_f32);
+        check_ne( f32::MAX,  f32::NAN, 1.0_f32, 2.0_f32);
+        check_ne( f32::NAN, -f32::MAX, 1.0_f32, 2.0_f32);
+        check_ne(-f32::MAX,  f32::NAN, 1.0_f32, 2.0_f32);
 
-        check_ne( f32::NAN,          f32::MIN_POSITIVE,  1_f32, 2_f32);
-        check_ne( f32::MIN_POSITIVE, f32::NAN,           1_f32, 2_f32);
-        check_ne( f32::NAN,          -f32::MIN_POSITIVE, 1_f32, 2_f32);
-        check_ne(-f32::MIN_POSITIVE, f32::NAN,           1_f32, 2_f32);
+        check_ne( f32::NAN,           f32::MIN_POSITIVE, 1.0_f32, 2.0_f32);
+        check_ne( f32::MIN_POSITIVE,  f32::NAN,          1.0_f32, 2.0_f32);
+        check_ne( f32::NAN,          -f32::MIN_POSITIVE, 1.0_f32, 2.0_f32);
+        check_ne(-f32::MIN_POSITIVE,  f32::NAN,          1.0_f32, 2.0_f32);
 
-        check_ne( f32::NAN,  1_f32,    1_f32, 2_f32);
-        check_ne( f32::NAN, -1_f32,    1_f32, 2_f32);
-        check_ne( 1_f32,     f32::NAN, 1_f32, 2_f32);
-        check_ne(-1_f32,     f32::NAN, 1_f32, 2_f32);
+        check_ne( f32::NAN,  1.0_f32,  1.0_f32, 2.0_f32);
+        check_ne( f32::NAN, -1.0_f32,  1.0_f32, 2.0_f32);
+        check_ne( 1.0_f32,   f32::NAN, 1.0_f32, 2.0_f32);
+        check_ne(-1.0_f32,   f32::NAN, 1.0_f32, 2.0_f32);
     }
 
     #[rustfmt::skip]
@@ -379,9 +379,9 @@ mod relative_eq_f32_tests {
     #[rustfmt::skip]
     #[test]
     fn test_ne_infinity() {
-        check_ne(f32::INFINITY,     f32::MAX,          f32::MAX, f32::MAX);
-        check_ne(f32::INFINITY,     f32::NEG_INFINITY, f32::MAX, f32::MAX);
-        check_ne(f32::NEG_INFINITY, f32::MAX,          f32::MAX, f32::MAX);
+        check_ne(f32::INFINITY,     f32::MAX,          f32::MAX,      f32::MAX);
+        check_ne(f32::INFINITY,     f32::NEG_INFINITY, f32::MAX,      f32::MAX);
+        check_ne(f32::NEG_INFINITY, f32::MAX,          f32::MAX,      f32::MAX);
         check_ne(f32::INFINITY,     f32::MAX,          f32::INFINITY, f32::INFINITY);
         check_ne(f32::INFINITY,     f32::NEG_INFINITY, f32::INFINITY, f32::INFINITY);
         check_ne(f32::NEG_INFINITY, f32::MAX,          f32::INFINITY, f32::INFINITY);
@@ -394,10 +394,10 @@ mod relative_eq_f32_tests {
         check_eq( f32::MIN_POSITIVE, -f32::MIN_POSITIVE, f32::EPSILON, f32::EPSILON);
         check_eq(-f32::MIN_POSITIVE,  f32::MIN_POSITIVE, f32::EPSILON, f32::EPSILON);
 
-        check_eq( f32::MIN_POSITIVE,  0_f32,             f32::EPSILON, f32::EPSILON);
-        check_eq( 0_f32,              f32::MIN_POSITIVE, f32::EPSILON, f32::EPSILON);
-        check_eq(-f32::MIN_POSITIVE,  0_f32,             f32::EPSILON, f32::EPSILON);
-        check_eq( 0_f32,             -f32::MIN_POSITIVE, f32::EPSILON, f32::EPSILON);
+        check_eq( f32::MIN_POSITIVE,  0.0_f32,           f32::EPSILON, f32::EPSILON);
+        check_eq( 0.0_f32,            f32::MIN_POSITIVE, f32::EPSILON, f32::EPSILON);
+        check_eq(-f32::MIN_POSITIVE,  0.0_f32,           f32::EPSILON, f32::EPSILON);
+        check_eq( 0.0_f32,           -f32::MIN_POSITIVE, f32::EPSILON, f32::EPSILON);
 
         check_eq( 0.0000001_f32,      -f32::MIN_POSITIVE, f32::EPSILON, f32::EPSILON);
         check_eq( 0.0000001_f32,       f32::MIN_POSITIVE, f32::EPSILON, f32::EPSILON);
@@ -522,7 +522,7 @@ mod relative_eq_f64_tests {
 
     #[rustfmt::skip]
     fn check_eq_self(value: f64) {
-        check_eq(value, value, 0.0,               f64::EPSILON);
+        check_eq(value, value, 0.0_f64,           f64::EPSILON);
         check_eq(value, value, f64::MIN_POSITIVE, f64::MIN_POSITIVE);
         check_eq(value, value, f64::MAX,          f64::MAX);
         check_eq(value, value, f64::INFINITY,     f64::INFINITY);
@@ -531,12 +531,12 @@ mod relative_eq_f64_tests {
     #[rustfmt::skip]
     #[test]
     fn test_eq_zero() {
-        check_eq_self(0.0);
+        check_eq_self(0.0_f64);
 
-        check_eq( 0.0,  0.0, f64::EPSILON, f64::EPSILON);
-        check_eq(-0.0,  0.0, f64::EPSILON, f64::EPSILON);
-        check_eq( 0.0, -0.0, f64::EPSILON, f64::EPSILON);
-        check_eq(-0.0, -0.0, f64::EPSILON, f64::EPSILON);
+        check_eq( 0.0_f64,  0.0_f64, f64::EPSILON, f64::EPSILON);
+        check_eq(-0.0_f64,  0.0_f64, f64::EPSILON, f64::EPSILON);
+        check_eq( 0.0_f64, -0.0_f64, f64::EPSILON, f64::EPSILON);
+        check_eq(-0.0_f64, -0.0_f64, f64::EPSILON, f64::EPSILON);
     }
 
     #[rustfmt::skip]
@@ -820,8 +820,8 @@ mod relative_eq_f64_tests {
     #[rustfmt::skip]
     #[test]
     fn test_eq_max() {
-        check_eq( f64::MAX,    f64::MAX, f64::EPSILON, f64::EPSILON);
-        check_eq(-f64::MAX,  -f64::MAX, f64::EPSILON, f64::EPSILON);
+        check_eq( f64::MAX,  f64::MAX, f64::EPSILON, f64::EPSILON);
+        check_eq(-f64::MAX, -f64::MAX, f64::EPSILON, f64::EPSILON);
     }
 
     #[rustfmt::skip]
@@ -837,20 +837,20 @@ mod relative_eq_f64_tests {
     #[rustfmt::skip]
     #[test]
     fn test_ne_nan1() {
-        check_ne( f64::NAN,  f64::NAN, 0_f64, f64::EPSILON);
-        check_ne( f64::NAN, -f64::NAN, 0_f64, f64::EPSILON);
-        check_ne(-f64::NAN,  f64::NAN, 0_f64, f64::EPSILON);
-        check_ne(-f64::NAN, -f64::NAN, 0_f64, f64::EPSILON);
+        check_ne( f64::NAN,  f64::NAN, 0.0_f64, f64::EPSILON);
+        check_ne( f64::NAN, -f64::NAN, 0.0_f64, f64::EPSILON);
+        check_ne(-f64::NAN,  f64::NAN, 0.0_f64, f64::EPSILON);
+        check_ne(-f64::NAN, -f64::NAN, 0.0_f64, f64::EPSILON);
     }
 
     #[rustfmt::skip]
     #[test]
     fn test_ne_nan2() {
         for i in 0..=i16::MAX {
-            check_ne( f64::NAN , f64::NAN, 1_f64 / (i as f64), 1_f64 / (i as f64));
-            check_ne( f64::NAN, -f64::NAN, 1_f64 / (i as f64), 1_f64 / (i as f64));
-            check_ne(-f64::NAN,  f64::NAN, 1_f64 / (i as f64), 1_f64 / (i as f64));
-            check_ne(-f64::NAN, -f64::NAN, 1_f64 / (i as f64), 1_f64 / (i as f64));
+            check_ne( f64::NAN , f64::NAN, 1.0_f64 / (i as f64), 1.0_f64 / (i as f64));
+            check_ne( f64::NAN, -f64::NAN, 1.0_f64 / (i as f64), 1.0_f64 / (i as f64));
+            check_ne(-f64::NAN,  f64::NAN, 1.0_f64 / (i as f64), 1.0_f64 / (i as f64));
+            check_ne(-f64::NAN, -f64::NAN, 1.0_f64 / (i as f64), 1.0_f64 / (i as f64));
         }
     }
 
@@ -871,60 +871,60 @@ mod relative_eq_f64_tests {
         check_ne(f64::NAN, f64::NAN, f64::EPSILON, f64::EPSILON);
         
         check_ne( f64::NAN,  0.0_f64,  f64::EPSILON, f64::EPSILON);
-        check_ne(-0_f64,     f64::NAN, f64::EPSILON, f64::EPSILON);
+        check_ne(-0.0_f64,   f64::NAN, f64::EPSILON, f64::EPSILON);
         check_ne( f64::NAN, -0.0_f64,  f64::EPSILON, f64::EPSILON);
-        check_ne( 0_f64,     f64::NAN, f64::EPSILON, f64::EPSILON);
+        check_ne( 0.0_f64,   f64::NAN, f64::EPSILON, f64::EPSILON);
 
-        check_ne( f64::NAN, f64::INFINITY,  f64::EPSILON, f64::EPSILON);
-        check_ne( f64::INFINITY, f64::NAN,  f64::EPSILON, f64::EPSILON);
-        check_ne( f64::NAN, -f64::INFINITY, f64::EPSILON, f64::EPSILON);
-        check_ne(-f64::INFINITY, f64::NAN,  f64::EPSILON, f64::EPSILON);
+        check_ne( f64::NAN,       f64::INFINITY, f64::EPSILON, f64::EPSILON);
+        check_ne( f64::INFINITY,  f64::NAN,      f64::EPSILON, f64::EPSILON);
+        check_ne( f64::NAN,      -f64::INFINITY, f64::EPSILON, f64::EPSILON);
+        check_ne(-f64::INFINITY,  f64::NAN,      f64::EPSILON, f64::EPSILON);
 
-        check_ne( f64::NAN, f64::MAX,  f64::EPSILON, f64::EPSILON);
-        check_ne( f64::MAX, f64::NAN,  f64::EPSILON, f64::EPSILON);
+        check_ne( f64::NAN,  f64::MAX, f64::EPSILON, f64::EPSILON);
+        check_ne( f64::MAX,  f64::NAN, f64::EPSILON, f64::EPSILON);
         check_ne( f64::NAN, -f64::MAX, f64::EPSILON, f64::EPSILON);
-        check_ne(-f64::MAX, f64::NAN,  f64::EPSILON, f64::EPSILON);
+        check_ne(-f64::MAX,  f64::NAN, f64::EPSILON, f64::EPSILON);
 
-        check_ne( f64::NAN,          f64::MIN_POSITIVE,  f64::EPSILON, f64::EPSILON);
-        check_ne( f64::MIN_POSITIVE, f64::NAN,           f64::EPSILON, f64::EPSILON);
+        check_ne( f64::NAN,           f64::MIN_POSITIVE, f64::EPSILON, f64::EPSILON);
+        check_ne( f64::MIN_POSITIVE,  f64::NAN,          f64::EPSILON, f64::EPSILON);
         check_ne( f64::NAN,          -f64::MIN_POSITIVE, f64::EPSILON, f64::EPSILON);
-        check_ne(-f64::MIN_POSITIVE, f64::NAN,           f64::EPSILON, f64::EPSILON);
+        check_ne(-f64::MIN_POSITIVE,  f64::NAN,          f64::EPSILON, f64::EPSILON);
 
-        check_ne( f64::NAN,  1_f64,    f64::EPSILON, f64::EPSILON);
-        check_ne( f64::NAN, -1_f64,    f64::EPSILON, f64::EPSILON);
-        check_ne( 1_f64,     f64::NAN, f64::EPSILON, f64::EPSILON);
-        check_ne(-1_f64,     f64::NAN, f64::EPSILON, f64::EPSILON);
+        check_ne( f64::NAN,  1.0_f64,  f64::EPSILON, f64::EPSILON);
+        check_ne( f64::NAN, -1.0_f64,  f64::EPSILON, f64::EPSILON);
+        check_ne( 1.0_f64,   f64::NAN, f64::EPSILON, f64::EPSILON);
+        check_ne(-1.0_f64,   f64::NAN, f64::EPSILON, f64::EPSILON);
     }
 
     #[rustfmt::skip]
     #[test]
     fn test_nan5() {
-        check_ne(f64::NAN, f64::NAN, 1_f64, 2_f64);
+        check_ne(f64::NAN, f64::NAN, 1.0_f64, 2.0_f64);
         
-        check_ne( f64::NAN,  0.0_f64,  1_f64, 2_f64);
-        check_ne(-0_f64,     f64::NAN, 1_f64, 2_f64);
-        check_ne( f64::NAN, -0.0_f64,  1_f64, 2_f64);
-        check_ne( 0_f64,     f64::NAN, 1_f64, 2_f64);
+        check_ne( f64::NAN,  0.0_f64,  1.0_f64, 2.0_f64);
+        check_ne(-0.0_f64,   f64::NAN, 1.0_f64, 2.0_f64);
+        check_ne( f64::NAN, -0.0_f64,  1.0_f64, 2.0_f64);
+        check_ne( 0.0_f64,   f64::NAN, 1.0_f64, 2.0_f64);
 
-        check_ne( f64::NAN, f64::INFINITY,  1_f64, 2_f64);
-        check_ne( f64::INFINITY, f64::NAN,  1_f64, 2_f64);
-        check_ne( f64::NAN, -f64::INFINITY, 1_f64, 2_f64);
-        check_ne(-f64::INFINITY, f64::NAN,  1_f64, 2_f64);
+        check_ne( f64::NAN,       f64::INFINITY, 1.0_f64, 2.0_f64);
+        check_ne( f64::INFINITY,  f64::NAN,      1.0_f64, 2.0_f64);
+        check_ne( f64::NAN,      -f64::INFINITY, 1.0_f64, 2.0_f64);
+        check_ne(-f64::INFINITY,  f64::NAN,      1.0_f64, 2.0_f64);
 
-        check_ne( f64::NAN, f64::MAX,  1_f64, 2_f64);
-        check_ne( f64::MAX, f64::NAN,  1_f64, 2_f64);
-        check_ne( f64::NAN, -f64::MAX, 1_f64, 2_f64);
-        check_ne(-f64::MAX, f64::NAN,  1_f64, 2_f64);
+        check_ne( f64::NAN,  f64::MAX, 1.0_f64, 2.0_f64);
+        check_ne( f64::MAX,  f64::NAN, 1.0_f64, 2.0_f64);
+        check_ne( f64::NAN, -f64::MAX, 1.0_f64, 2.0_f64);
+        check_ne(-f64::MAX,  f64::NAN, 1.0_f64, 2.0_f64);
 
-        check_ne( f64::NAN,          f64::MIN_POSITIVE,  1_f64, 2_f64);
-        check_ne( f64::MIN_POSITIVE, f64::NAN,           1_f64, 2_f64);
-        check_ne( f64::NAN,          -f64::MIN_POSITIVE, 1_f64, 2_f64);
-        check_ne(-f64::MIN_POSITIVE, f64::NAN,           1_f64, 2_f64);
+        check_ne( f64::NAN,           f64::MIN_POSITIVE, 1.0_f64, 2.0_f64);
+        check_ne( f64::MIN_POSITIVE,  f64::NAN,          1.0_f64, 2.0_f64);
+        check_ne( f64::NAN,          -f64::MIN_POSITIVE, 1.0_f64, 2.0_f64);
+        check_ne(-f64::MIN_POSITIVE,  f64::NAN,          1.0_f64, 2.0_f64);
 
-        check_ne( f64::NAN,  1_f64,    1_f64, 2_f64);
-        check_ne( f64::NAN, -1_f64,    1_f64, 2_f64);
-        check_ne( 1_f64,     f64::NAN, 1_f64, 2_f64);
-        check_ne(-1_f64,     f64::NAN, 1_f64, 2_f64);
+        check_ne( f64::NAN,  1.0_f64,  1.0_f64, 2.0_f64);
+        check_ne( f64::NAN, -1.0_f64,  1.0_f64, 2.0_f64);
+        check_ne( 1.0_f64,   f64::NAN, 1.0_f64, 2.0_f64);
+        check_ne(-1.0_f64,   f64::NAN, 1.0_f64, 2.0_f64);
     }
 
     #[rustfmt::skip]
@@ -953,10 +953,10 @@ mod relative_eq_f64_tests {
         check_eq( f64::MIN_POSITIVE, -f64::MIN_POSITIVE, f64::EPSILON, f64::EPSILON);
         check_eq(-f64::MIN_POSITIVE,  f64::MIN_POSITIVE, f64::EPSILON, f64::EPSILON);
 
-        check_eq( f64::MIN_POSITIVE,  0_f64,             f64::EPSILON, f64::EPSILON);
-        check_eq( 0_f64,              f64::MIN_POSITIVE, f64::EPSILON, f64::EPSILON);
-        check_eq(-f64::MIN_POSITIVE,  0_f64,             f64::EPSILON, f64::EPSILON);
-        check_eq( 0_f64,             -f64::MIN_POSITIVE, f64::EPSILON, f64::EPSILON);
+        check_eq( f64::MIN_POSITIVE,  0.0_f64,           f64::EPSILON, f64::EPSILON);
+        check_eq( 0.0_f64,            f64::MIN_POSITIVE, f64::EPSILON, f64::EPSILON);
+        check_eq(-f64::MIN_POSITIVE,  0.0_f64,           f64::EPSILON, f64::EPSILON);
+        check_eq( 0.0_f64,           -f64::MIN_POSITIVE, f64::EPSILON, f64::EPSILON);
 
         check_eq( 0.0000000000000001_f64, -f64::MIN_POSITIVE,      f64::EPSILON, f64::EPSILON);
         check_eq( 0.0000000000000001_f64,  f64::MIN_POSITIVE,      f64::EPSILON, f64::EPSILON);
@@ -1280,7 +1280,7 @@ mod relative_eq_array_f32_tests {
     }
 
     fn array_range<const N: usize>(min_value: f32) -> [f32; N] {
-        let mut array = [0_f32; N];
+        let mut array = [0.0_f32; N];
         for i in 0..N {
             array[i] = (min_value + (i as f32)) as f32;
         }
@@ -1330,56 +1330,56 @@ mod relative_eq_array_f32_tests {
 
     #[test]
     fn test_eq_array_empty() {
-        check_eq_array::<0>(1_f32);
-        check_all_eq_array::<0>(1_f32);
+        check_eq_array::<0>(1.0_f32);
+        check_all_eq_array::<0>(1.0_f32);
     }
 
     #[test]
     fn test_eq_array() {
-        check_eq_array::<1>(1_f32);
-        check_eq_array::<2>(1_f32);
-        check_eq_array::<3>(1_f32);
-        check_eq_array::<4>(1_f32);
-        check_eq_array::<8>(1_f32);
-        check_eq_array::<16>(1_f32);
-        check_eq_array::<32>(1_f32);
-        check_eq_array::<64>(1_f32);
+        check_eq_array::<1>(1.0_f32);
+        check_eq_array::<2>(1.0_f32);
+        check_eq_array::<3>(1.0_f32);
+        check_eq_array::<4>(1.0_f32);
+        check_eq_array::<8>(1.0_f32);
+        check_eq_array::<16>(1.0_f32);
+        check_eq_array::<32>(1.0_f32);
+        check_eq_array::<64>(1.0_f32);
     }
 
     #[test]
     fn test_ne_array() {
-        check_ne_array::<1>(1_f32, 2_f32);
-        check_ne_array::<2>(1_f32, 2_f32);
-        check_ne_array::<3>(1_f32, 2_f32);
-        check_ne_array::<4>(1_f32, 2_f32);
-        check_ne_array::<8>(1_f32, 2_f32);
-        check_ne_array::<16>(1_f32, 2_f32);
-        check_ne_array::<32>(1_f32, 2_f32);
-        check_ne_array::<64>(1_f32, 2_f32);
+        check_ne_array::<1>(1.0_f32, 2.0_f32);
+        check_ne_array::<2>(1.0_f32, 2.0_f32);
+        check_ne_array::<3>(1.0_f32, 2.0_f32);
+        check_ne_array::<4>(1.0_f32, 2.0_f32);
+        check_ne_array::<8>(1.0_f32, 2.0_f32);
+        check_ne_array::<16>(1.0_f32, 2.0_f32);
+        check_ne_array::<32>(1.0_f32, 2.0_f32);
+        check_ne_array::<64>(1.0_f32, 2.0_f32);
     }
 
     #[test]
     fn test_all_eq_array() {
-        check_all_eq_array::<1>(1_f32);
-        check_all_eq_array::<2>(1_f32);
-        check_all_eq_array::<3>(1_f32);
-        check_all_eq_array::<4>(1_f32);
-        check_all_eq_array::<8>(1_f32);
-        check_all_eq_array::<16>(1_f32);
-        check_all_eq_array::<32>(1_f32);
-        check_all_eq_array::<64>(1_f32);
+        check_all_eq_array::<1>(1.0_f32);
+        check_all_eq_array::<2>(1.0_f32);
+        check_all_eq_array::<3>(1.0_f32);
+        check_all_eq_array::<4>(1.0_f32);
+        check_all_eq_array::<8>(1.0_f32);
+        check_all_eq_array::<16>(1.0_f32);
+        check_all_eq_array::<32>(1.0_f32);
+        check_all_eq_array::<64>(1.0_f32);
     }
 
     #[test]
     fn test_all_ne_array() {
-        check_all_ne_array::<1>(1_f32, 2_f32);
-        check_all_ne_array::<2>(1_f32, 2_f32);
-        check_all_ne_array::<3>(1_f32, 2_f32);
-        check_all_ne_array::<4>(1_f32, 2_f32);
-        check_all_ne_array::<8>(1_f32, 2_f32);
-        check_all_ne_array::<16>(1_f32, 2_f32);
-        check_all_ne_array::<32>(1_f32, 2_f32);
-        check_all_ne_array::<64>(1_f32, 2_f32);
+        check_all_ne_array::<1>(1.0_f32, 2.0_f32);
+        check_all_ne_array::<2>(1.0_f32, 2.0_f32);
+        check_all_ne_array::<3>(1.0_f32, 2.0_f32);
+        check_all_ne_array::<4>(1.0_f32, 2.0_f32);
+        check_all_ne_array::<8>(1.0_f32, 2.0_f32);
+        check_all_ne_array::<16>(1.0_f32, 2.0_f32);
+        check_all_ne_array::<32>(1.0_f32, 2.0_f32);
+        check_all_ne_array::<64>(1.0_f32, 2.0_f32);
     }
 }
 
@@ -1400,7 +1400,7 @@ mod relative_eq_array_f64_tests {
     }
 
     fn array_range<const N: usize>(min_value: f64) -> [f64; N] {
-        let mut array = [0_f64; N];
+        let mut array = [0.0_f64; N];
         for i in 0..N {
             array[i] = (min_value + (i as f64)) as f64;
         }
@@ -1451,56 +1451,56 @@ mod relative_eq_array_f64_tests {
 
     #[test]
     fn test_eq_array_empty() {
-        check_eq_array::<0>(1_f64);
-        check_all_eq_array::<0>(1_f64);
+        check_eq_array::<0>(1.0_f64);
+        check_all_eq_array::<0>(1.0_f64);
     }
 
     #[test]
     fn test_eq_array() {
-        check_eq_array::<1>(1_f64);
-        check_eq_array::<2>(1_f64);
-        check_eq_array::<3>(1_f64);
-        check_eq_array::<4>(1_f64);
-        check_eq_array::<8>(1_f64);
-        check_eq_array::<16>(1_f64);
-        check_eq_array::<32>(1_f64);
-        check_eq_array::<64>(1_f64);
+        check_eq_array::<1>(1.0_f64);
+        check_eq_array::<2>(1.0_f64);
+        check_eq_array::<3>(1.0_f64);
+        check_eq_array::<4>(1.0_f64);
+        check_eq_array::<8>(1.0_f64);
+        check_eq_array::<16>(1.0_f64);
+        check_eq_array::<32>(1.0_f64);
+        check_eq_array::<64>(1.0_f64);
     }
 
     #[test]
     fn test_ne_array() {
-        check_ne_array::<1>(1_f64, 2_f64);
-        check_ne_array::<2>(1_f64, 2_f64);
-        check_ne_array::<3>(1_f64, 2_f64);
-        check_ne_array::<4>(1_f64, 2_f64);
-        check_ne_array::<8>(1_f64, 2_f64);
-        check_ne_array::<16>(1_f64, 2_f64);
-        check_ne_array::<32>(1_f64, 2_f64);
-        check_ne_array::<64>(1_f64, 2_f64);
+        check_ne_array::<1>(1.0_f64, 2.0_f64);
+        check_ne_array::<2>(1.0_f64, 2.0_f64);
+        check_ne_array::<3>(1.0_f64, 2.0_f64);
+        check_ne_array::<4>(1.0_f64, 2.0_f64);
+        check_ne_array::<8>(1.0_f64, 2.0_f64);
+        check_ne_array::<16>(1.0_f64, 2.0_f64);
+        check_ne_array::<32>(1.0_f64, 2.0_f64);
+        check_ne_array::<64>(1.0_f64, 2.0_f64);
     }
 
     #[test]
     fn test_all_eq_array() {
-        check_all_eq_array::<1>(1_f64);
-        check_all_eq_array::<2>(1_f64);
-        check_all_eq_array::<3>(1_f64);
-        check_all_eq_array::<4>(1_f64);
-        check_all_eq_array::<8>(1_f64);
-        check_all_eq_array::<16>(1_f64);
-        check_all_eq_array::<32>(1_f64);
-        check_all_eq_array::<64>(1_f64);
+        check_all_eq_array::<1>(1.0_f64);
+        check_all_eq_array::<2>(1.0_f64);
+        check_all_eq_array::<3>(1.0_f64);
+        check_all_eq_array::<4>(1.0_f64);
+        check_all_eq_array::<8>(1.0_f64);
+        check_all_eq_array::<16>(1.0_f64);
+        check_all_eq_array::<32>(1.0_f64);
+        check_all_eq_array::<64>(1.0_f64);
     }
 
     #[test]
     fn test_all_ne_array() {
-        check_all_ne_array::<1>(1_f64, 2_f64);
-        check_all_ne_array::<2>(1_f64, 2_f64);
-        check_all_ne_array::<3>(1_f64, 2_f64);
-        check_all_ne_array::<4>(1_f64, 2_f64);
-        check_all_ne_array::<8>(1_f64, 2_f64);
-        check_all_ne_array::<16>(1_f64, 2_f64);
-        check_all_ne_array::<32>(1_f64, 2_f64);
-        check_all_ne_array::<64>(1_f64, 2_f64);
+        check_all_ne_array::<1>(1.0_f64, 2.0_f64);
+        check_all_ne_array::<2>(1.0_f64, 2.0_f64);
+        check_all_ne_array::<3>(1.0_f64, 2.0_f64);
+        check_all_ne_array::<4>(1.0_f64, 2.0_f64);
+        check_all_ne_array::<8>(1.0_f64, 2.0_f64);
+        check_all_ne_array::<16>(1.0_f64, 2.0_f64);
+        check_all_ne_array::<32>(1.0_f64, 2.0_f64);
+        check_all_ne_array::<64>(1.0_f64, 2.0_f64);
     }
 }
 
@@ -1517,7 +1517,7 @@ mod relative_eq_array_f32_debug_tests {
     }
 
     fn array_range<const N: usize>(min_value: f32) -> [f32; N] {
-        let mut array = [0_f32; N];
+        let mut array = [0.0_f32; N];
         for i in 0..N {
             array[i] = (min_value + (i as f32)) as f32;
         }
@@ -1528,26 +1528,26 @@ mod relative_eq_array_f32_debug_tests {
 
     #[test]
     fn test_debug_abs_diff1() {
-        let lhs = array_uniform::<32>(1_f32);
-        let rhs = array_uniform::<32>(1_f32);
-        let abs_diff = [0_f32; 32];
+        let lhs = array_uniform::<32>(1.0_f32);
+        let rhs = array_uniform::<32>(1.0_f32);
+        let abs_diff = [0.0_f32; 32];
 
         assert_eq!(lhs.debug_abs_diff(&rhs), abs_diff);
     }
 
     #[test]
     fn test_debug_abs_diff2() {
-        let lhs = array_uniform::<32>(1_f32);
-        let rhs = array_range::<32>(2_f32);
-        let abs_diff = array_range::<32>(1_f32);
+        let lhs = array_uniform::<32>(1.0_f32);
+        let rhs = array_range::<32>(2.0_f32);
+        let abs_diff = array_range::<32>(1.0_f32);
 
         assert_eq!(lhs.debug_abs_diff(&rhs), abs_diff);
     }
 
     #[test]
     fn test_debug_abs_diff_tolerance1() {
-        let lhs = array_uniform::<32>(1_f32);
-        let rhs = array_uniform::<32>(1_f32);
+        let lhs = array_uniform::<32>(1.0_f32);
+        let rhs = array_uniform::<32>(1.0_f32);
         let tolerance = 4.0_f32 * f32::EPSILON;
         let max_abs_diff = array_uniform::<32>(tolerance);
 
@@ -1556,8 +1556,8 @@ mod relative_eq_array_f32_debug_tests {
 
     #[test]
     fn test_debug_abs_diff_tolerance2() {
-        let lhs = array_uniform::<32>(1_f32);
-        let rhs = array_range::<32>(2_f32);
+        let lhs = array_uniform::<32>(1.0_f32);
+        let rhs = array_range::<32>(2.0_f32);
         let tolerance = 4.0_f32 * f32::EPSILON;
         let max_abs_diff = array_uniform::<32>(tolerance);
 
@@ -1566,8 +1566,8 @@ mod relative_eq_array_f32_debug_tests {
 
     #[test]
     fn test_debug_relative_tolerance1() {
-        let lhs = array_uniform::<32>(1_f32);
-        let rhs = array_uniform::<32>(1_f32);
+        let lhs = array_uniform::<32>(1.0_f32);
+        let rhs = array_uniform::<32>(1.0_f32);
         let tolerance = 4.0_f32 * f32::EPSILON;
         let max_relative = array_uniform::<32>(tolerance);
 
@@ -1576,8 +1576,8 @@ mod relative_eq_array_f32_debug_tests {
 
     #[test]
     fn test_debug_relative_tolerance2() {
-        let lhs = array_uniform::<32>(1_f32);
-        let rhs = array_range::<32>(2_f32);
+        let lhs = array_uniform::<32>(1.0_f32);
+        let rhs = array_range::<32>(2.0_f32);
         let tolerance = 4.0_f32 * f32::EPSILON;
         let max_relative = array_uniform::<32>(tolerance);
 
@@ -1586,8 +1586,8 @@ mod relative_eq_array_f32_debug_tests {
 
     #[test]
     fn test_debug_abs_diff_all_tolerance1() {
-        let lhs = array_uniform::<32>(1_f32);
-        let rhs = array_uniform::<32>(1_f32);
+        let lhs = array_uniform::<32>(1.0_f32);
+        let rhs = array_uniform::<32>(1.0_f32);
         let tolerance = 4.0_f32 * f32::EPSILON;
         let max_abs_diff = array_uniform::<32>(tolerance);
 
@@ -1596,8 +1596,8 @@ mod relative_eq_array_f32_debug_tests {
 
     #[test]
     fn test_debug_abs_diff_all_tolerance2() {
-        let lhs = array_uniform::<32>(1_f32);
-        let rhs = array_range::<32>(2_f32);
+        let lhs = array_uniform::<32>(1.0_f32);
+        let rhs = array_range::<32>(2.0_f32);
         let tolerance = 4.0_f32 * f32::EPSILON;
         let max_abs_diff = array_uniform::<32>(tolerance);
 
@@ -1606,8 +1606,8 @@ mod relative_eq_array_f32_debug_tests {
 
     #[test]
     fn test_debug_relative_all_tolerance1() {
-        let lhs = array_uniform::<32>(1_f32);
-        let rhs = array_uniform::<32>(1_f32);
+        let lhs = array_uniform::<32>(1.0_f32);
+        let rhs = array_uniform::<32>(1.0_f32);
         let tolerance = 4.0_f32 * f32::EPSILON;
         let max_relative = array_uniform::<32>(tolerance);
 
@@ -1616,8 +1616,8 @@ mod relative_eq_array_f32_debug_tests {
 
     #[test]
     fn test_debug_relative_all_tolerance2() {
-        let lhs = array_uniform::<32>(1_f32);
-        let rhs = array_range::<32>(2_f32);
+        let lhs = array_uniform::<32>(1.0_f32);
+        let rhs = array_range::<32>(2.0_f32);
         let tolerance = 4.0_f32 * f32::EPSILON;
         let max_relative = array_uniform::<32>(tolerance);
 
@@ -1638,7 +1638,7 @@ mod relative_eq_array_f64_debug_tests {
     }
 
     fn array_range<const N: usize>(min_value: f64) -> [f64; N] {
-        let mut array = [0_f64; N];
+        let mut array = [0.0_f64; N];
         for i in 0..N {
             array[i] = (min_value + (i as f64)) as f64;
         }
@@ -1649,26 +1649,26 @@ mod relative_eq_array_f64_debug_tests {
 
     #[test]
     fn test_debug_abs_diff1() {
-        let lhs = array_uniform::<32>(1_f64);
-        let rhs = array_uniform::<32>(1_f64);
-        let abs_diff = [0_f64; 32];
+        let lhs = array_uniform::<32>(1.0_f64);
+        let rhs = array_uniform::<32>(1.0_f64);
+        let abs_diff = [0.0_f64; 32];
 
         assert_eq!(lhs.debug_abs_diff(&rhs), abs_diff);
     }
 
     #[test]
     fn test_debug_abs_diff2() {
-        let lhs = array_uniform::<32>(1_f64);
-        let rhs = array_range::<32>(2_f64);
-        let abs_diff = array_range::<32>(1_f64);
+        let lhs = array_uniform::<32>(1.0_f64);
+        let rhs = array_range::<32>(2.0_f64);
+        let abs_diff = array_range::<32>(1.0_f64);
 
         assert_eq!(lhs.debug_abs_diff(&rhs), abs_diff);
     }
 
     #[test]
     fn test_debug_abs_diff_tolerance1() {
-        let lhs = array_uniform::<32>(1_f64);
-        let rhs = array_uniform::<32>(1_f64);
+        let lhs = array_uniform::<32>(1.0_f64);
+        let rhs = array_uniform::<32>(1.0_f64);
         let tolerance = 4.0_f64 * f64::EPSILON;
         let max_abs_diff = array_uniform::<32>(tolerance);
 
@@ -1677,8 +1677,8 @@ mod relative_eq_array_f64_debug_tests {
 
     #[test]
     fn test_debug_abs_diff_tolerance2() {
-        let lhs = array_uniform::<32>(1_f64);
-        let rhs = array_range::<32>(2_f64);
+        let lhs = array_uniform::<32>(1.0_f64);
+        let rhs = array_range::<32>(2.0_f64);
         let tolerance = 4.0_f64 * f64::EPSILON;
         let max_abs_diff = array_uniform::<32>(tolerance);
 
@@ -1687,8 +1687,8 @@ mod relative_eq_array_f64_debug_tests {
 
     #[test]
     fn test_debug_relative_tolerance1() {
-        let lhs = array_uniform::<32>(1_f64);
-        let rhs = array_uniform::<32>(1_f64);
+        let lhs = array_uniform::<32>(1.0_f64);
+        let rhs = array_uniform::<32>(1.0_f64);
         let tolerance = 4.0_f64 * f64::EPSILON;
         let max_relative = array_uniform::<32>(tolerance);
 
@@ -1697,8 +1697,8 @@ mod relative_eq_array_f64_debug_tests {
 
     #[test]
     fn test_debug_relative_tolerance2() {
-        let lhs = array_uniform::<32>(1_f64);
-        let rhs = array_range::<32>(2_f64);
+        let lhs = array_uniform::<32>(1.0_f64);
+        let rhs = array_range::<32>(2.0_f64);
         let tolerance = 4.0_f64 * f64::EPSILON;
         let max_relative = array_uniform::<32>(tolerance);
 
@@ -1707,8 +1707,8 @@ mod relative_eq_array_f64_debug_tests {
 
     #[test]
     fn test_debug_abs_diff_all_tolerance1() {
-        let lhs = array_uniform::<32>(1_f64);
-        let rhs = array_uniform::<32>(1_f64);
+        let lhs = array_uniform::<32>(1.0_f64);
+        let rhs = array_uniform::<32>(1.0_f64);
         let tolerance = 4.0_f64 * f64::EPSILON;
         let max_abs_diff = array_uniform::<32>(tolerance);
 
@@ -1717,8 +1717,8 @@ mod relative_eq_array_f64_debug_tests {
 
     #[test]
     fn test_debug_abs_diff_all_tolerance2() {
-        let lhs = array_uniform::<32>(1_f64);
-        let rhs = array_range::<32>(2_f64);
+        let lhs = array_uniform::<32>(1.0_f64);
+        let rhs = array_range::<32>(2.0_f64);
         let tolerance = 4.0_f64 * f64::EPSILON;
         let max_abs_diff = array_uniform::<32>(tolerance);
 
@@ -1727,8 +1727,8 @@ mod relative_eq_array_f64_debug_tests {
 
     #[test]
     fn test_debug_relative_all_tolerance1() {
-        let lhs = array_uniform::<32>(1_f64);
-        let rhs = array_uniform::<32>(1_f64);
+        let lhs = array_uniform::<32>(1.0_f64);
+        let rhs = array_uniform::<32>(1.0_f64);
         let tolerance = 4.0_f64 * f64::EPSILON;
         let max_relative = array_uniform::<32>(tolerance);
 
@@ -1737,8 +1737,8 @@ mod relative_eq_array_f64_debug_tests {
 
     #[test]
     fn test_debug_relative_all_tolerance2() {
-        let lhs = array_uniform::<32>(1_f64);
-        let rhs = array_range::<32>(2_f64);
+        let lhs = array_uniform::<32>(1.0_f64);
+        let rhs = array_range::<32>(2.0_f64);
         let tolerance = 4.0_f64 * f64::EPSILON;
         let max_relative = array_uniform::<32>(tolerance);
 
@@ -1780,8 +1780,8 @@ mod relative_eq_ref_tests {
         let b = &0.9999999_f32;
         let mut a_mut = &mut 1.0_f32;
         let mut b_mut = &0.9999999_f32;
-        let max_abs_diff = 1.0 * f32::EPSILON;
-        let max_relative = 1.0 * f32::EPSILON;
+        let max_abs_diff = 1.0_f32 * f32::EPSILON;
+        let max_relative = 1.0_f32 * f32::EPSILON;
 
         assert_relative_eq!(&a,         &b,         abs_diff <= max_abs_diff, relative <= max_relative);
         assert_relative_eq!(&a,         &mut b_mut, abs_diff <= max_abs_diff, relative <= max_relative);
@@ -1796,8 +1796,8 @@ mod relative_eq_ref_tests {
         let b = &0.9999999_f32;
         let mut a_mut = &mut 1.0_f32;
         let mut b_mut = &0.9999999_f32;
-        let max_abs_diff = 2.0 * f32::EPSILON;
-        let max_relative = 2.0 * f32::EPSILON;
+        let max_abs_diff = 2.0_f32 * f32::EPSILON;
+        let max_relative = 2.0_f32 * f32::EPSILON;
 
         assert_relative_eq!(&a,         &b,         abs_diff <= max_abs_diff, relative <= max_relative);
         assert_relative_eq!(&a,         &mut b_mut, abs_diff <= max_abs_diff, relative <= max_relative);
@@ -1876,8 +1876,8 @@ mod relative_eq_ref_tests {
         let b = &0.9999999_f32;
         let mut a_mut = &mut 1.0_f32;
         let mut b_mut = &0.9999999_f32;
-        let max_abs_diff = 1.0 * f32::EPSILON;
-        let max_relative = 1.0 * f32::EPSILON;
+        let max_abs_diff = 1.0_f32 * f32::EPSILON;
+        let max_relative = 1.0_f32 * f32::EPSILON;
 
         assert_relative_eq!(&a,         &b,         abs_diff_all <= max_abs_diff, relative_all <= max_relative);
         assert_relative_eq!(&a,         &mut b_mut, abs_diff_all <= max_abs_diff, relative_all <= max_relative);
@@ -1892,8 +1892,8 @@ mod relative_eq_ref_tests {
         let b = &0.9999999_f32;
         let mut a_mut = &mut 1.0_f32;
         let mut b_mut = &0.9999999_f32;
-        let max_abs_diff = 2.0 * f32::EPSILON;
-        let max_relative = 2.0 * f32::EPSILON;
+        let max_abs_diff = 2.0_f32 * f32::EPSILON;
+        let max_relative = 2.0_f32 * f32::EPSILON;
 
         assert_relative_eq!(&a,         &b,         abs_diff_all <= max_abs_diff, relative_all <= max_relative);
         assert_relative_eq!(&a,         &mut b_mut, abs_diff_all <= max_abs_diff, relative_all <= max_relative);
@@ -2040,12 +2040,12 @@ mod relative_eq_cell_tests {
         ]);
         let eps = f32::EPSILON;
         let max_abs_diff = [
-            1.0 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
-            1.0 * eps, 1.0 * eps, 4.0 * eps, 4.0 * eps,
+            1.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
+            1.0_f32 * eps, 1.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
         ];
         let max_relative = [
-            1.0 * eps, 2.0 * eps, 2.0 * eps, 2.0 * eps,
-            1.0 * eps, 1.0 * eps, 2.0 * eps, 2.0 * eps,
+            1.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps,
+            1.0_f32 * eps, 1.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps,
         ];
 
         assert_relative_eq!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
@@ -2064,12 +2064,12 @@ mod relative_eq_cell_tests {
         ]);
         let eps = f32::EPSILON;
         let max_abs_diff = [
-            0.5 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
-            0.5 * eps, 0.5 * eps, 4.0 * eps, 4.0 * eps,
+            0.5_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
+            0.5_f32 * eps, 0.5_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
         ];
         let max_relative = [
-            0.5 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
-            0.5 * eps, 0.5 * eps, 4.0 * eps, 4.0 * eps,
+            0.5_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
+            0.5_f32 * eps, 0.5_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
         ];
 
         assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
@@ -2088,8 +2088,8 @@ mod relative_eq_cell_tests {
         ]);
         let eps = f32::EPSILON;
         let max_abs_diff = [
-            1.0 * eps, 2.0 * eps, 2.0 * eps, 2.0 * eps,
-            1.0 * eps, 1.0 * eps, 2.0 * eps, 2.0 * eps,
+            1.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps,
+            1.0_f32 * eps, 1.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps,
         ];
         let max_relative = [eps; 8];
 
@@ -2107,8 +2107,8 @@ mod relative_eq_cell_tests {
             1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
-        let max_abs_diff = 4.0 * f32::EPSILON;
-        let max_relative = 4.0 * f32::EPSILON;
+        let max_abs_diff = 4.0_f32 * f32::EPSILON;
+        let max_relative = 4.0_f32 * f32::EPSILON;
 
         assert_relative_eq!(lhs, rhs, abs_diff_all <= max_abs_diff, relative_all <= max_relative);
     }
@@ -2124,8 +2124,8 @@ mod relative_eq_cell_tests {
             1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
-        let max_abs_diff = 2.0 * f32::EPSILON;
-        let max_relative = 1.0 * f32::EPSILON;
+        let max_abs_diff = 2.0_f32 * f32::EPSILON;
+        let max_relative = 1.0_f32 * f32::EPSILON;
 
         assert_relative_ne!(lhs, rhs, abs_diff_all <= max_abs_diff, relative_all <= max_relative);
     }
@@ -2238,12 +2238,12 @@ mod relative_eq_refcell_tests {
         ]);
         let eps = f32::EPSILON;
         let max_abs_diff = [
-            1.0 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
-            1.0 * eps, 1.0 * eps, 4.0 * eps, 4.0 * eps,
+            1.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
+            1.0_f32 * eps, 1.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
         ];
         let max_relative = [
-            1.0 * eps, 2.0 * eps, 2.0 * eps, 2.0 * eps,
-            1.0 * eps, 1.0 * eps, 2.0 * eps, 2.0 * eps,
+            1.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps,
+            1.0_f32 * eps, 1.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps,
         ];
 
         assert_relative_eq!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
@@ -2262,12 +2262,12 @@ mod relative_eq_refcell_tests {
         ]);
         let eps = f32::EPSILON;
         let max_abs_diff = [
-            0.5 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
-            0.5 * eps, 0.5 * eps, 4.0 * eps, 4.0 * eps,
+            0.5_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
+            0.5_f32 * eps, 0.5_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
         ];
         let max_relative = [
-            0.5 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
-            0.5 * eps, 0.5 * eps, 4.0 * eps, 4.0 * eps,
+            0.5_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
+            0.5_f32 * eps, 0.5_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
         ];
 
         assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
@@ -2286,8 +2286,8 @@ mod relative_eq_refcell_tests {
         ]);
         let eps = f32::EPSILON;
         let max_abs_diff = [
-            1.0 * eps, 2.0 * eps, 2.0 * eps, 2.0 * eps,
-            1.0 * eps, 1.0 * eps, 2.0 * eps, 2.0 * eps,
+            1.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps,
+            1.0_f32 * eps, 1.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps,
         ];
         let max_relative = [eps; 8];
 
@@ -2305,8 +2305,8 @@ mod relative_eq_refcell_tests {
             1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
-        let max_abs_diff = 4.0 * f32::EPSILON;
-        let max_relative = 4.0 * f32::EPSILON;
+        let max_abs_diff = 4.0_f32 * f32::EPSILON;
+        let max_relative = 4.0_f32 * f32::EPSILON;
 
         assert_relative_eq!(lhs, rhs, abs_diff_all <= max_abs_diff, relative_all <= max_relative);
     }
@@ -2322,8 +2322,8 @@ mod relative_eq_refcell_tests {
             1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
-        let max_abs_diff = 2.0 * f32::EPSILON;
-        let max_relative = 1.0 * f32::EPSILON;
+        let max_abs_diff = 2.0_f32 * f32::EPSILON;
+        let max_relative = 1.0_f32 * f32::EPSILON;
 
         assert_relative_ne!(lhs, rhs, abs_diff_all <= max_abs_diff, relative_all <= max_relative);
     }
@@ -2435,12 +2435,12 @@ mod relative_eq_option_tests {
         ]);
         let eps = f32::EPSILON;
         let max_abs_diff = Some([
-            1.0 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
-            1.0 * eps, 1.0 * eps, 4.0 * eps, 4.0 * eps,
+            1.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
+            1.0_f32 * eps, 1.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
         ]);
         let max_relative = Some([
-            1.0 * eps, 2.0 * eps, 2.0 * eps, 2.0 * eps,
-            1.0 * eps, 1.0 * eps, 2.0 * eps, 2.0 * eps,
+            1.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps,
+            1.0_f32 * eps, 1.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps,
         ]);
 
         assert_relative_eq!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
@@ -2459,12 +2459,12 @@ mod relative_eq_option_tests {
         ]);
         let eps = f32::EPSILON;
         let max_abs_diff = Some([
-            0.5 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
-            0.5 * eps, 0.5 * eps, 4.0 * eps, 4.0 * eps,
+            0.5_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
+            0.5_f32 * eps, 0.5_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
         ]);
         let max_relative = Some([
-            0.5 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
-            0.5 * eps, 0.5 * eps, 4.0 * eps, 4.0 * eps,
+            0.5_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
+            0.5_f32 * eps, 0.5_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
         ]);
 
         assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
@@ -2483,8 +2483,8 @@ mod relative_eq_option_tests {
         ]);
         let eps = f32::EPSILON;
         let max_abs_diff = Some([
-            1.0 * eps, 2.0 * eps, 2.0 * eps, 2.0 * eps,
-            1.0 * eps, 1.0 * eps, 2.0 * eps, 2.0 * eps,
+            1.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps,
+            1.0_f32 * eps, 1.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps,
         ]);
         let max_relative = Some([eps; 8]);
 
@@ -2502,8 +2502,8 @@ mod relative_eq_option_tests {
             1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
-        let max_abs_diff = Some(4.0 * f32::EPSILON);
-        let max_relative = Some(4.0 * f32::EPSILON);
+        let max_abs_diff = Some(4.0_f32 * f32::EPSILON);
+        let max_relative = Some(4.0_f32 * f32::EPSILON);
 
         assert_relative_eq!(lhs, rhs, abs_diff_all <= max_abs_diff, relative_all <= max_relative);
     }
@@ -2519,8 +2519,8 @@ mod relative_eq_option_tests {
             1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
-        let max_abs_diff = Some(2.0 * f32::EPSILON);
-        let max_relative = Some(1.0 * f32::EPSILON);
+        let max_abs_diff = Some(2.0_f32 * f32::EPSILON);
+        let max_relative = Some(1.0_f32 * f32::EPSILON);
 
         assert_relative_ne!(lhs, rhs, abs_diff_all <= max_abs_diff, relative_all <= max_relative);
     }
@@ -2838,12 +2838,12 @@ mod relative_eq_oncecell_tests {
         ]);
         let eps = f32::EPSILON;
         let max_abs_diff = [
-            1.0 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
-            1.0 * eps, 1.0 * eps, 4.0 * eps, 4.0 * eps,
+            1.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
+            1.0_f32 * eps, 1.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
         ];
         let max_relative = [
-            1.0 * eps, 2.0 * eps, 2.0 * eps, 2.0 * eps,
-            1.0 * eps, 1.0 * eps, 2.0 * eps, 2.0 * eps,
+            1.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps,
+            1.0_f32 * eps, 1.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps,
         ];
 
         assert_relative_eq!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
@@ -2862,12 +2862,12 @@ mod relative_eq_oncecell_tests {
         ]);
         let eps = f32::EPSILON;
         let max_abs_diff = [
-            0.5 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
-            0.5 * eps, 0.5 * eps, 4.0 * eps, 4.0 * eps,
+            0.5_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
+            0.5_f32 * eps, 0.5_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
         ];
         let max_relative = [
-            0.5 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
-            0.5 * eps, 0.5 * eps, 4.0 * eps, 4.0 * eps,
+            0.5_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
+            0.5_f32 * eps, 0.5_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
         ];
 
         assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
@@ -2886,8 +2886,8 @@ mod relative_eq_oncecell_tests {
         ]);
         let eps = f32::EPSILON;
         let max_abs_diff = [
-            1.0 * eps, 2.0 * eps, 2.0 * eps, 2.0 * eps,
-            1.0 * eps, 1.0 * eps, 2.0 * eps, 2.0 * eps,
+            1.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps,
+            1.0_f32 * eps, 1.0_f32 * eps, 2.0_f32 * eps, 2.0_f32 * eps,
         ];
         let max_relative = [eps; 8];
 
@@ -2905,8 +2905,8 @@ mod relative_eq_oncecell_tests {
             1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
-        let max_abs_diff = 4.0 * f32::EPSILON;
-        let max_relative = 4.0 * f32::EPSILON;
+        let max_abs_diff = 4.0_f32 * f32::EPSILON;
+        let max_relative = 4.0_f32 * f32::EPSILON;
 
         assert_relative_eq!(lhs, rhs, abs_diff_all <= max_abs_diff, relative_all <= max_relative);
     }
@@ -2922,8 +2922,8 @@ mod relative_eq_oncecell_tests {
             1.0000000_f32, 1.9999995_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000001_f32, 7.0000000_f32, 7.9999995_f32,
         ]);
-        let max_abs_diff = 2.0 * f32::EPSILON;
-        let max_relative = 1.0 * f32::EPSILON;
+        let max_abs_diff = 2.0_f32 * f32::EPSILON;
+        let max_relative = 1.0_f32 * f32::EPSILON;
 
         assert_relative_ne!(lhs, rhs, abs_diff_all <= max_abs_diff, relative_all <= max_relative);
     }

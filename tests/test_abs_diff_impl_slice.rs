@@ -22,8 +22,8 @@ fn test_eq() {
     ];
     let eps = f32::EPSILON;
     let max_abs_diff = [
-        1.0 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
-        1.0 * eps, 1.0 * eps, 4.0 * eps, 4.0 * eps,
+        1.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
+        1.0_f32 * eps, 1.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
     ];
 
     assert!(abs_diff_eq!(lhs[..], rhs[..], abs_diff <= max_abs_diff));
@@ -61,8 +61,8 @@ fn test_ne2() {
     ];
     let eps = f32::EPSILON;
     let max_abs_diff = [
-        1.0 * eps, 4.0 * eps, 4.0 * eps, 4.0 * eps,
-        1.0 * eps, 1.0 * eps, eps / 2.0, 4.0 * eps,
+        1.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps, 4.0_f32 * eps,
+        1.0_f32 * eps, 1.0_f32 * eps, eps / 2.0_f32, 4.0_f32 * eps,
     ];
 
     assert!(abs_diff_ne!(lhs[..], rhs[..], abs_diff <= max_abs_diff));
