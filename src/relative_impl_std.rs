@@ -12,8 +12,8 @@ use std::collections::VecDeque;
 use std::fmt;
 use std::hash;
 use std::rc::Rc;
+use std::sync;
 use std::sync::Arc;
-use std::sync::OnceLock;
 use std::vec::Vec;
 
 
@@ -174,7 +174,7 @@ where
     }
 }
 
-impl<A, B> RelativeEq<OnceLock<B>> for OnceLock<A>
+impl<A, B> RelativeEq<sync::OnceLock<B>> for sync::OnceLock<A>
 where
     A: RelativeEq<B>,
     A::Tolerance: Sized,
@@ -182,7 +182,7 @@ where
     type Tolerance = A::Tolerance;
 
     #[inline]
-    fn relative_eq(&self, other: &OnceLock<B>, max_abs_diff: &Self::Tolerance, max_relative: &Self::Tolerance) -> bool {
+    fn relative_eq(&self, other: &sync::OnceLock<B>, max_abs_diff: &Self::Tolerance, max_relative: &Self::Tolerance) -> bool {
         if let (Some(a), Some(b)) = (self.get(), other.get()) {
             RelativeEq::relative_eq(a, b, max_abs_diff, max_relative)
         } else {
@@ -320,7 +320,7 @@ where
     }
 }
 
-impl<A, B> RelativeAllEq<OnceLock<B>> for OnceLock<A>
+impl<A, B> RelativeAllEq<sync::OnceLock<B>> for sync::OnceLock<A>
 where
     A: RelativeAllEq<B>,
     A::AllTolerance: Sized,
@@ -328,7 +328,7 @@ where
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn relative_all_eq(&self, other: &OnceLock<B>, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
+    fn relative_all_eq(&self, other: &sync::OnceLock<B>, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
         if let (Some(a), Some(b)) = (self.get(), other.get()) {
             a.relative_all_eq(b, max_abs_diff, max_relative)
         } else {
@@ -676,7 +676,7 @@ where
     }
 }
 
-impl<A, B> AssertRelativeEq<OnceLock<B>> for OnceLock<A>
+impl<A, B> AssertRelativeEq<sync::OnceLock<B>> for sync::OnceLock<A>
 where
     A: AssertRelativeEq<B>,
     A::Tolerance: Sized,
@@ -685,7 +685,7 @@ where
     type DebugTolerance = Option<A::DebugTolerance>;
 
     #[inline]
-    fn debug_abs_diff(&self, other: &OnceLock<B>) -> Self::DebugAbsDiff {
+    fn debug_abs_diff(&self, other: &sync::OnceLock<B>) -> Self::DebugAbsDiff {
         if let (Some(a), Some(b)) = (self.get(), other.get()) {
             Some(AssertRelativeEq::debug_abs_diff(a, b))
         } else {
@@ -694,7 +694,7 @@ where
     }
 
     #[inline]
-    fn debug_abs_diff_tolerance(&self, other: &OnceLock<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+    fn debug_abs_diff_tolerance(&self, other: &sync::OnceLock<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
         if let (Some(a), Some(b)) = (self.get(), other.get()) {
             Some(AssertRelativeEq::debug_abs_diff_tolerance(a, b, max_abs_diff))
         } else {
@@ -703,7 +703,7 @@ where
     }
 
     #[inline]
-    fn debug_relative_tolerance(&self, other: &OnceLock<B>, max_relative: &Self::Tolerance) -> Self::DebugTolerance {
+    fn debug_relative_tolerance(&self, other: &sync::OnceLock<B>, max_relative: &Self::Tolerance) -> Self::DebugTolerance {
         if let (Some(a), Some(b)) = (self.get(), other.get()) {
             Some(AssertRelativeEq::debug_relative_tolerance(a, b, max_relative))
         } else {
@@ -949,7 +949,7 @@ where
     }
 }
 
-impl<A, B> AssertRelativeAllEq<OnceLock<B>> for OnceLock<A>
+impl<A, B> AssertRelativeAllEq<sync::OnceLock<B>> for sync::OnceLock<A>
 where
     A: AssertRelativeAllEq<B>,
     A::AllTolerance: Sized,
@@ -957,7 +957,7 @@ where
     type AllDebugTolerance = Option<A::AllDebugTolerance>;
 
     #[inline]
-    fn debug_abs_diff_all_tolerance(&self, other: &OnceLock<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_abs_diff_all_tolerance(&self, other: &sync::OnceLock<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
         if let (Some(a), Some(b)) = (self.get(), other.get()) {
             Some(AssertRelativeAllEq::debug_abs_diff_all_tolerance(a, b, max_abs_diff))
         } else {
@@ -966,7 +966,7 @@ where
     }
 
     #[inline]
-    fn debug_relative_all_tolerance(&self, other: &OnceLock<B>, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_relative_all_tolerance(&self, other: &sync::OnceLock<B>, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
         if let (Some(a), Some(b)) = (self.get(), other.get()) {
             Some(AssertRelativeAllEq::debug_relative_all_tolerance(a, b, max_relative))
         } else {

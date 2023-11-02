@@ -12,8 +12,8 @@ use std::collections::VecDeque;
 use std::fmt;
 use std::hash;
 use std::rc::Rc;
+use std::sync;
 use std::sync::Arc;
-use std::sync::OnceLock;
 use std::vec::Vec;
 
 
@@ -166,7 +166,7 @@ where
     }
 }
 
-impl<A, B> AbsDiffEq<OnceLock<B>> for OnceLock<A>
+impl<A, B> AbsDiffEq<sync::OnceLock<B>> for sync::OnceLock<A>
 where
     A: AbsDiffEq<B>,
     A::Tolerance: Sized,
@@ -174,7 +174,7 @@ where
     type Tolerance = A::Tolerance;
 
     #[inline]
-    fn abs_diff_eq(&self, other: &OnceLock<B>, max_abs_diff: &Self::Tolerance) -> bool {
+    fn abs_diff_eq(&self, other: &sync::OnceLock<B>, max_abs_diff: &Self::Tolerance) -> bool {
         if let (Some(a), Some(b)) = (self.get(), other.get()) {
             AbsDiffEq::abs_diff_eq(a, b, max_abs_diff)
         } else {
@@ -312,7 +312,7 @@ where
     }
 }
 
-impl<A, B> AbsDiffAllEq<OnceLock<B>> for OnceLock<A>
+impl<A, B> AbsDiffAllEq<sync::OnceLock<B>> for sync::OnceLock<A>
 where
     A: AbsDiffAllEq<B>,
     A::AllTolerance: Sized,
@@ -320,7 +320,7 @@ where
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn abs_diff_all_eq(&self, other: &OnceLock<B>, max_abs_diff: &Self::AllTolerance) -> bool {
+    fn abs_diff_all_eq(&self, other: &sync::OnceLock<B>, max_abs_diff: &Self::AllTolerance) -> bool {
         if let (Some(a), Some(b)) = (self.get(), other.get()) {
             AbsDiffAllEq::abs_diff_all_eq(a, b, max_abs_diff)
         } else {
@@ -582,7 +582,7 @@ where
     }
 }
 
-impl<A, B> AssertAbsDiffEq<OnceLock<B>> for OnceLock<A>
+impl<A, B> AssertAbsDiffEq<sync::OnceLock<B>> for sync::OnceLock<A>
 where
     A: AssertAbsDiffEq<B>,
     A::Tolerance: Sized,
@@ -591,7 +591,7 @@ where
     type DebugTolerance = Option<A::DebugTolerance>;
 
     #[inline]
-    fn debug_abs_diff(&self, other: &OnceLock<B>) -> Self::DebugAbsDiff {
+    fn debug_abs_diff(&self, other: &sync::OnceLock<B>) -> Self::DebugAbsDiff {
         if let (Some(a), Some(b)) = (self.get(), other.get()) {
             Some(AssertAbsDiffEq::debug_abs_diff(a, b))
         } else {
@@ -600,7 +600,7 @@ where
     }
 
     #[inline]
-    fn debug_abs_diff_tolerance(&self, other: &OnceLock<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+    fn debug_abs_diff_tolerance(&self, other: &sync::OnceLock<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
         if let (Some(a), Some(b)) = (self.get(), other.get()) {
             Some(AssertAbsDiffEq::debug_abs_diff_tolerance(a, b, max_abs_diff))
         } else {
@@ -763,7 +763,7 @@ where
     }
 }
 
-impl<A, B> AssertAbsDiffAllEq<OnceLock<B>> for OnceLock<A>
+impl<A, B> AssertAbsDiffAllEq<sync::OnceLock<B>> for sync::OnceLock<A>
 where
     A: AssertAbsDiffAllEq<B>,
     A::AllTolerance: Sized,
@@ -771,7 +771,7 @@ where
     type AllDebugTolerance = Option<A::AllDebugTolerance>;
 
     #[inline]
-    fn debug_abs_diff_all_tolerance(&self, other: &OnceLock<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_abs_diff_all_tolerance(&self, other: &sync::OnceLock<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
         if let (Some(a), Some(b)) = (self.get(), other.get()) {
             Some(AssertAbsDiffAllEq::debug_abs_diff_all_tolerance(a, b, max_abs_diff))
         } else {
