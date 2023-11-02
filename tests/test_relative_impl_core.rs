@@ -2137,24 +2137,46 @@ mod relative_eq_cell_tests {
             1.00_f32, 1.25_f32, 1.50_f32, 2.00_f32,
             2.50_f32, 3.00_f32, 4.00_f32, 5.00_f32,
         ]);
+        let abs_diff = [0.0000000_f32; 8];
+
+        assert_eq!(lhs.debug_abs_diff(&lhs), abs_diff);
+    }
+
+    #[rustfmt::skip]
+    #[test]
+    fn test_debug_abs_diff2() {
+        let lhs = cell::Cell::new([
+            1.00_f32, 1.25_f32, 1.50_f32, 2.00_f32,
+            2.50_f32, 3.00_f32, 4.00_f32, 5.00_f32,
+        ]);
         let rhs = cell::Cell::new([
             1.10_f32, 1.15_f32, 1.70_f32, 1.80_f32,
             2.80_f32, 2.70_f32, 4.40_f32, 4.60_f32,
         ]);
-        let abs_diff_self = [0.0000000_f32; 8];
         let abs_diff = [
             0.100000024_f32, 0.100000024_f32, 0.20000005_f32, 0.20000005_f32,
             0.299999950_f32, 0.299999950_f32, 0.40000010_f32, 0.40000010_f32,
         ];
 
-        assert_eq!(lhs.debug_abs_diff(&lhs), abs_diff_self);
         assert_eq!(lhs.debug_abs_diff(&rhs), abs_diff);
         assert_eq!(rhs.debug_abs_diff(&lhs), abs_diff);
     }
 
     #[rustfmt::skip]
     #[test]
-    fn test_debug_abs_diff2() {
+    fn test_debug_abs_diff3() {
+        let lhs = cell::Cell::new([
+            0.9999500_f32, 2.0000000_f32, 2.9999500_f32, 4.0000000_f32,
+            4.9999500_f32, 6.0000000_f32, 6.9999500_f32, 8.0000000_f32,
+        ]);
+        let abs_diff = [0.00000000000000_f32; 8];
+
+        assert_eq!(lhs.debug_abs_diff(&lhs), abs_diff);
+    }
+
+    #[rustfmt::skip]
+    #[test]
+    fn test_debug_abs_diff4() {
         let lhs = cell::Cell::new([
             0.9999500_f32, 2.0000000_f32, 2.9999500_f32, 4.0000000_f32,
             4.9999500_f32, 6.0000000_f32, 6.9999500_f32, 8.0000000_f32,
@@ -2163,16 +2185,15 @@ mod relative_eq_cell_tests {
             1.0000000_f32, 1.9999500_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000000_f32, 7.0000000_f32, 8.0000000_f32,
         ]);
-        let abs_diff_self = [0.00000000000000_f32; 8];
         let abs_diff = [
             0.00005000829700_f32, 0.00004994869200_f32, 0.00005006790000_f32, 0.00000047683716_f32,
             0.00005006790000_f32, 0.00000000000000_f32, 0.00005006790000_f32, 0.00000000000000_f32,
         ];
 
-        assert_eq!(lhs.debug_abs_diff(&lhs), abs_diff_self);
         assert_eq!(lhs.debug_abs_diff(&rhs), abs_diff);
         assert_eq!(rhs.debug_abs_diff(&lhs), abs_diff);
     }
+
 
     #[test]
     fn test_debug_abs_diff_tolerance() {
@@ -2335,24 +2356,46 @@ mod relative_eq_refcell_tests {
             1.00_f32, 1.25_f32, 1.50_f32, 2.00_f32,
             2.50_f32, 3.00_f32, 4.00_f32, 5.00_f32,
         ]);
+        let abs_diff = [0.0000000_f32; 8];
+
+        assert_eq!(lhs.debug_abs_diff(&lhs), abs_diff);
+    }
+
+    #[rustfmt::skip]
+    #[test]
+    fn test_debug_abs_diff2() {
+        let lhs = cell::RefCell::new([
+            1.00_f32, 1.25_f32, 1.50_f32, 2.00_f32,
+            2.50_f32, 3.00_f32, 4.00_f32, 5.00_f32,
+        ]);
         let rhs = cell::RefCell::new([
             1.10_f32, 1.15_f32, 1.70_f32, 1.80_f32,
             2.80_f32, 2.70_f32, 4.40_f32, 4.60_f32,
         ]);
-        let abs_diff_self = [0.0000000_f32; 8];
         let abs_diff = [
             0.100000024_f32, 0.100000024_f32, 0.20000005_f32, 0.20000005_f32,
             0.299999950_f32, 0.299999950_f32, 0.40000010_f32, 0.40000010_f32,
         ];
 
-        assert_eq!(lhs.debug_abs_diff(&lhs), abs_diff_self);
         assert_eq!(lhs.debug_abs_diff(&rhs), abs_diff);
         assert_eq!(rhs.debug_abs_diff(&lhs), abs_diff);
     }
 
     #[rustfmt::skip]
     #[test]
-    fn test_debug_abs_diff2() {
+    fn test_debug_abs_diff3() {
+        let lhs = cell::RefCell::new([
+            0.9999500_f32, 2.0000000_f32, 2.9999500_f32, 4.0000000_f32,
+            4.9999500_f32, 6.0000000_f32, 6.9999500_f32, 8.0000000_f32,
+        ]);
+        let abs_diff = [0.00000000000000_f32; 8];
+
+        assert_eq!(lhs.debug_abs_diff(&lhs), abs_diff);
+    }
+
+    #[rustfmt::skip]
+    #[test]
+    fn test_debug_abs_diff4() {
         let lhs = cell::RefCell::new([
             0.9999500_f32, 2.0000000_f32, 2.9999500_f32, 4.0000000_f32,
             4.9999500_f32, 6.0000000_f32, 6.9999500_f32, 8.0000000_f32,
@@ -2361,13 +2404,11 @@ mod relative_eq_refcell_tests {
             1.0000000_f32, 1.9999500_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000000_f32, 7.0000000_f32, 8.0000000_f32,
         ]);
-        let abs_diff_self = [0.00000000000000_f32; 8];
         let abs_diff = [
             0.00005000829700_f32, 0.00004994869200_f32, 0.00005006790000_f32, 0.00000047683716_f32,
             0.00005006790000_f32, 0.00000000000000_f32, 0.00005006790000_f32, 0.00000000000000_f32,
         ];
 
-        assert_eq!(lhs.debug_abs_diff(&lhs), abs_diff_self);
         assert_eq!(lhs.debug_abs_diff(&rhs), abs_diff);
         assert_eq!(rhs.debug_abs_diff(&lhs), abs_diff);
     }
@@ -2532,24 +2573,46 @@ mod relative_eq_option_tests {
             1.00_f32, 1.25_f32, 1.50_f32, 2.00_f32,
             2.50_f32, 3.00_f32, 4.00_f32, 5.00_f32,
         ]);
+        let abs_diff = Some([0.0000000_f32; 8]);
+
+        assert_eq!(lhs.debug_abs_diff(&lhs), abs_diff);
+    }
+
+    #[rustfmt::skip]
+    #[test]
+    fn test_debug_abs_diff2() {
+        let lhs = Some([
+            1.00_f32, 1.25_f32, 1.50_f32, 2.00_f32,
+            2.50_f32, 3.00_f32, 4.00_f32, 5.00_f32,
+        ]);
         let rhs = Some([
             1.10_f32, 1.15_f32, 1.70_f32, 1.80_f32,
             2.80_f32, 2.70_f32, 4.40_f32, 4.60_f32,
         ]);
-        let abs_diff_self = Some([0.0000000_f32; 8]);
         let abs_diff = Some([
             0.100000024_f32, 0.100000024_f32, 0.20000005_f32, 0.20000005_f32,
             0.299999950_f32, 0.299999950_f32, 0.40000010_f32, 0.40000010_f32,
         ]);
 
-        assert_eq!(lhs.debug_abs_diff(&lhs), abs_diff_self);
         assert_eq!(lhs.debug_abs_diff(&rhs), abs_diff);
         assert_eq!(rhs.debug_abs_diff(&lhs), abs_diff);
     }
 
     #[rustfmt::skip]
     #[test]
-    fn test_debug_abs_diff2() {
+    fn test_debug_abs_diff3() {
+        let lhs = Some([
+            0.9999500_f32, 2.0000000_f32, 2.9999500_f32, 4.0000000_f32,
+            4.9999500_f32, 6.0000000_f32, 6.9999500_f32, 8.0000000_f32,
+        ]);
+        let abs_diff = Some([0.00000000000000_f32; 8]);
+
+        assert_eq!(lhs.debug_abs_diff(&lhs), abs_diff);
+    }
+
+    #[rustfmt::skip]
+    #[test]
+    fn test_debug_abs_diff4() {
         let lhs = Some([
             0.9999500_f32, 2.0000000_f32, 2.9999500_f32, 4.0000000_f32,
             4.9999500_f32, 6.0000000_f32, 6.9999500_f32, 8.0000000_f32,
@@ -2558,13 +2621,11 @@ mod relative_eq_option_tests {
             1.0000000_f32, 1.9999500_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000000_f32, 7.0000000_f32, 8.0000000_f32,
         ]);
-        let abs_diff_self = Some([0.00000000000000_f32; 8]);
         let abs_diff = Some([
             0.00005000829700_f32, 0.00004994869200_f32, 0.00005006790000_f32, 0.00000047683716_f32,
             0.00005006790000_f32, 0.00000000000000_f32, 0.00005006790000_f32, 0.00000000000000_f32,
         ]);
 
-        assert_eq!(lhs.debug_abs_diff(&lhs), abs_diff_self);
         assert_eq!(lhs.debug_abs_diff(&rhs), abs_diff);
         assert_eq!(rhs.debug_abs_diff(&lhs), abs_diff);
     }
@@ -2935,24 +2996,46 @@ mod relative_eq_oncecell_tests {
             1.00_f32, 1.25_f32, 1.50_f32, 2.00_f32,
             2.50_f32, 3.00_f32, 4.00_f32, 5.00_f32,
         ]);
+        let abs_diff = [0.0000000_f32; 8];
+
+        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff));
+    }
+
+    #[rustfmt::skip]
+    #[test]
+    fn test_debug_abs_diff2() {
+        let lhs = cell::OnceCell::from([
+            1.00_f32, 1.25_f32, 1.50_f32, 2.00_f32,
+            2.50_f32, 3.00_f32, 4.00_f32, 5.00_f32,
+        ]);
         let rhs = cell::OnceCell::from([
             1.10_f32, 1.15_f32, 1.70_f32, 1.80_f32,
             2.80_f32, 2.70_f32, 4.40_f32, 4.60_f32,
         ]);
-        let abs_diff_self = [0.0000000_f32; 8];
         let abs_diff = [
             0.100000024_f32, 0.100000024_f32, 0.20000005_f32, 0.20000005_f32,
             0.299999950_f32, 0.299999950_f32, 0.40000010_f32, 0.40000010_f32,
         ];
 
-        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff_self));
         assert_eq!(lhs.debug_abs_diff(&rhs), Some(abs_diff));
         assert_eq!(rhs.debug_abs_diff(&lhs), Some(abs_diff));
     }
 
     #[rustfmt::skip]
     #[test]
-    fn test_debug_abs_diff2() {
+    fn test_debug_abs_diff3() {
+        let lhs = cell::OnceCell::from([
+            0.9999500_f32, 2.0000000_f32, 2.9999500_f32, 4.0000000_f32,
+            4.9999500_f32, 6.0000000_f32, 6.9999500_f32, 8.0000000_f32,
+        ]);
+        let abs_diff = [0.00000000000000_f32; 8];
+
+        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff));
+    }
+
+    #[rustfmt::skip]
+    #[test]
+    fn test_debug_abs_diff4() {
         let lhs = cell::OnceCell::from([
             0.9999500_f32, 2.0000000_f32, 2.9999500_f32, 4.0000000_f32,
             4.9999500_f32, 6.0000000_f32, 6.9999500_f32, 8.0000000_f32,
@@ -2961,13 +3044,11 @@ mod relative_eq_oncecell_tests {
             1.0000000_f32, 1.9999500_f32, 3.0000000_f32, 4.0000005_f32,
             5.0000000_f32, 6.0000000_f32, 7.0000000_f32, 8.0000000_f32,
         ]);
-        let abs_diff_self = [0.00000000000000_f32; 8];
         let abs_diff = [
             0.00005000829700_f32, 0.00004994869200_f32, 0.00005006790000_f32, 0.00000047683716_f32,
             0.00005006790000_f32, 0.00000000000000_f32, 0.00005006790000_f32, 0.00000000000000_f32,
         ];
 
-        assert_eq!(lhs.debug_abs_diff(&lhs), Some(abs_diff_self));
         assert_eq!(lhs.debug_abs_diff(&rhs), Some(abs_diff));
         assert_eq!(rhs.debug_abs_diff(&lhs), Some(abs_diff));
     }

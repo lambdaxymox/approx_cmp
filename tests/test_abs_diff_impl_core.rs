@@ -315,10 +315,10 @@ mod abs_diff_eq_f32_tests {
         check_ne( f32::NAN, -0.0_f32,  f32::EPSILON);
         check_ne( 0.0_f32,   f32::NAN, f32::EPSILON);
 
-        check_ne( f32::NAN, f32::INFINITY,  f32::EPSILON);
-        check_ne( f32::INFINITY, f32::NAN,  f32::EPSILON);
-        check_ne( f32::NAN, -f32::INFINITY, f32::EPSILON);
-        check_ne(-f32::INFINITY, f32::NAN,  f32::EPSILON);
+        check_ne( f32::NAN,       f32::INFINITY, f32::EPSILON);
+        check_ne( f32::INFINITY,  f32::NAN,      f32::EPSILON);
+        check_ne( f32::NAN,      -f32::INFINITY, f32::EPSILON);
+        check_ne(-f32::INFINITY,  f32::NAN,      f32::EPSILON);
 
         check_ne( f32::NAN, f32::MAX,  f32::EPSILON);
         check_ne( f32::MAX, f32::NAN,  f32::EPSILON);
@@ -872,20 +872,20 @@ mod abs_diff_eq_f64_tests {
         check_ne( f64::NAN, -0.0_f64,  f64::EPSILON);
         check_ne( 0.0_f64,   f64::NAN, f64::EPSILON);
 
-        check_ne( f64::NAN, f64::INFINITY,  f64::EPSILON);
-        check_ne( f64::INFINITY, f64::NAN,  f64::EPSILON);
-        check_ne( f64::NAN, -f64::INFINITY, f64::EPSILON);
-        check_ne(-f64::INFINITY, f64::NAN,  f64::EPSILON);
+        check_ne( f64::NAN,       f64::INFINITY, f64::EPSILON);
+        check_ne( f64::INFINITY,  f64::NAN,      f64::EPSILON);
+        check_ne( f64::NAN,      -f64::INFINITY, f64::EPSILON);
+        check_ne(-f64::INFINITY,  f64::NAN,      f64::EPSILON);
 
-        check_ne( f64::NAN, f64::MAX,  f64::EPSILON);
-        check_ne( f64::MAX, f64::NAN,  f64::EPSILON);
+        check_ne( f64::NAN,  f64::MAX, f64::EPSILON);
+        check_ne( f64::MAX,  f64::NAN, f64::EPSILON);
         check_ne( f64::NAN, -f64::MAX, f64::EPSILON);
-        check_ne(-f64::MAX, f64::NAN,  f64::EPSILON);
+        check_ne(-f64::MAX,  f64::NAN, f64::EPSILON);
 
-        check_ne( f64::NAN,          f64::MIN_POSITIVE,  f64::EPSILON);
-        check_ne( f64::MIN_POSITIVE, f64::NAN,           f64::EPSILON);
+        check_ne( f64::NAN,           f64::MIN_POSITIVE, f64::EPSILON);
+        check_ne( f64::MIN_POSITIVE,  f64::NAN,          f64::EPSILON);
         check_ne( f64::NAN,          -f64::MIN_POSITIVE, f64::EPSILON);
-        check_ne(-f64::MIN_POSITIVE, f64::NAN,           f64::EPSILON);
+        check_ne(-f64::MIN_POSITIVE,  f64::NAN,          f64::EPSILON);
 
         check_ne( f64::NAN,  1.0_f64,  f64::EPSILON);
         check_ne( f64::NAN, -1.0_f64,  f64::EPSILON);
@@ -903,20 +903,20 @@ mod abs_diff_eq_f64_tests {
         check_ne( f64::NAN, -0.0_f64,  1.0_f64);
         check_ne( 0.0_f64,   f64::NAN, 1.0_f64);
 
-        check_ne( f64::NAN, f64::INFINITY,  1.0_f64);
-        check_ne( f64::INFINITY, f64::NAN,  1.0_f64);
-        check_ne( f64::NAN, -f64::INFINITY, 1.0_f64);
-        check_ne(-f64::INFINITY, f64::NAN,  1.0_f64);
+        check_ne( f64::NAN,       f64::INFINITY, 1.0_f64);
+        check_ne( f64::INFINITY,  f64::NAN,      1.0_f64);
+        check_ne( f64::NAN,      -f64::INFINITY, 1.0_f64);
+        check_ne(-f64::INFINITY,  f64::NAN,      1.0_f64);
 
-        check_ne( f64::NAN, f64::MAX,  1.0_f64);
-        check_ne( f64::MAX, f64::NAN,  1.0_f64);
+        check_ne( f64::NAN,  f64::MAX, 1.0_f64);
+        check_ne( f64::MAX,  f64::NAN, 1.0_f64);
         check_ne( f64::NAN, -f64::MAX, 1.0_f64);
-        check_ne(-f64::MAX, f64::NAN,  1.0_f64);
+        check_ne(-f64::MAX,  f64::NAN, 1.0_f64);
 
-        check_ne( f64::NAN,          f64::MIN_POSITIVE,  1.0_f64);
-        check_ne( f64::MIN_POSITIVE, f64::NAN,           1.0_f64);
+        check_ne( f64::NAN,           f64::MIN_POSITIVE, 1.0_f64);
+        check_ne( f64::MIN_POSITIVE,  f64::NAN,          1.0_f64);
         check_ne( f64::NAN,          -f64::MIN_POSITIVE, 1.0_f64);
-        check_ne(-f64::MIN_POSITIVE, f64::NAN,           1.0_f64);
+        check_ne(-f64::MIN_POSITIVE,  f64::NAN,          1.0_f64);
 
         check_ne( f64::NAN,  1.0_f64,  1.0_f64);
         check_ne( f64::NAN, -1.0_f64,  1.0_f64);
