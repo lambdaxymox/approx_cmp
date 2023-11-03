@@ -27,7 +27,7 @@ mod relative_eq_unit_tests {
 
 
 #[cfg(test)]
-mod relative_all_tuple1_tests {
+mod relative_eq_tuple1_tests {
     use approx_cmp::{
         assert_relative_eq,
         assert_relative_ne,
@@ -75,7 +75,7 @@ mod relative_all_tuple1_tests {
 }
 
 #[cfg(test)]
-mod relative_all_tuple2_tests {
+mod relative_eq_tuple2_tests {
     use approx_cmp::{
         assert_relative_eq,
         assert_relative_ne,
@@ -123,7 +123,37 @@ mod relative_all_tuple2_tests {
 }
 
 #[cfg(test)]
-mod relative_all_tuple3_tests {
+mod relative_eq_tuple2_heterogenous_tests {
+    use approx_cmp::{
+        assert_relative_eq,
+        assert_relative_ne,
+    };
+
+    #[test]
+    fn test_eq() {
+        let lhs = (2.9999999_f32, 3.0000004_f64);
+        let rhs = (3.0_f32, 3.0_f64);
+        let epsilon = f32::EPSILON as f64;
+        let max_abs_diff = (1.0_f32 * f32::EPSILON, 5.0_f64 * epsilon);
+        let max_relative = (1.0_f32 * f32::EPSILON, 5.0_f64 * epsilon);
+
+        assert_relative_eq!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
+    }
+
+    #[test]
+    fn test_ne() {
+        let lhs = (2.9999995_f32, 3.0000004_f64);
+        let rhs = (3.0_f32, 3.0_f64);
+        let epsilon = f32::EPSILON as f64;
+        let max_abs_diff = (1.0_f32 * f32::EPSILON, 3.0_f64 * epsilon);
+        let max_relative = (1.0_f32 * f32::EPSILON, 3.0_f64 * epsilon);
+
+        assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
+    }
+}
+
+#[cfg(test)]
+mod relative_eq_tuple3_tests {
     use approx_cmp::{
         assert_relative_eq,
         assert_relative_ne,
@@ -171,7 +201,37 @@ mod relative_all_tuple3_tests {
 }
 
 #[cfg(test)]
-mod relative_all_tuple4_tests {
+mod relative_eq_tuple3_heterogenous_tests {
+    use approx_cmp::{
+        assert_relative_eq,
+        assert_relative_ne,
+    };
+
+    #[test]
+    fn test_eq() {
+        let lhs = (-1.0000001_f32, 2.0000002_f64, 3.0000003_f32);
+        let rhs = (-1.0_f32, 2.0_f64, 3.0_f32);
+        let epsilon = f32::EPSILON as f64;
+        let max_abs_diff = (2.0_f32 * f32::EPSILON, 3.0_f64 * epsilon, 4.0_f32 * f32::EPSILON);
+        let max_relative = (2.0_f32 * f32::EPSILON, 3.0_f64 * epsilon, 4.0_f32 * f32::EPSILON);
+
+        assert_relative_eq!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
+    }
+
+    #[test]
+    fn test_ne() {
+        let lhs = (-1.0000001_f32, 2.0000002_f64, 3.0000003_f32);
+        let rhs = (-1.0_f32, 2.0_f64, 3.0_f32);
+        let epsilon = f32::EPSILON as f64;
+        let max_abs_diff = (0.5_f32 * f32::EPSILON, 1.5_f64 * epsilon, 2.5_f32 * f32::EPSILON);
+        let max_relative = (0.5_f32 * f32::EPSILON, 1.5_f64 * epsilon, 2.5_f32 * f32::EPSILON);
+
+        assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
+    }
+}
+
+#[cfg(test)]
+mod relative_eq_tuple4_tests {
     use approx_cmp::{
         assert_relative_eq,
         assert_relative_ne,
@@ -227,7 +287,45 @@ mod relative_all_tuple4_tests {
 }
 
 #[cfg(test)]
-mod relative_all_tuple5_tests {
+mod relative_eq_tuple4_heterogenous_tests {
+    use approx_cmp::{
+        assert_relative_eq,
+        assert_relative_ne,
+    };
+
+    #[test]
+    fn test_eq() {
+        let lhs = (-1.0000001_f32, 2.0000002_f64, 3.0000003_f32, -4.0000004_f64);
+        let rhs = (-1.0_f32, 2.0_f64, 3.0_f32, -4.0_f64);
+        let epsilon = f32::EPSILON as f64;
+        let max_abs_diff = (
+            2.0_f32 * f32::EPSILON, 3.0_f64 * epsilon, 4.0_f32 * f32::EPSILON, 5.0_f64 * epsilon,
+        );
+        let max_relative = (
+            2.0_f32 * f32::EPSILON, 3.0_f64 * epsilon, 4.0_f32 * f32::EPSILON, 5.0_f64 * epsilon,
+        );
+
+        assert_relative_eq!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
+    }
+
+    #[test]
+    fn test_ne() {
+        let lhs = (-1.0000001_f32, 2.0000002_f64, 3.0000003_f32, -4.0000004_f64);
+        let rhs = (-1.0_f32, 2.0_f64, 3.0_f32, -4.0_f64);
+        let epsilon = f32::EPSILON as f64;
+        let max_abs_diff = (
+            0.5_f32 * f32::EPSILON, 1.5_f64 * epsilon, 2.5_f32 * f32::EPSILON, 3.5_f64 * epsilon,
+        );
+        let max_relative = (
+            0.5_f32 * f32::EPSILON, 1.5_f64 * epsilon, 2.5_f32 * f32::EPSILON, 3.5_f64 * epsilon,
+        );
+
+        assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
+    }
+}
+
+#[cfg(test)]
+mod relative_eq_tuple5_tests {
     use approx_cmp::{
         assert_relative_eq,
         assert_relative_ne,
@@ -240,7 +338,7 @@ mod relative_all_tuple5_tests {
             -5.0000005_f32,
         );
         let rhs = (
-            -1.0_f32, 2.0_f32, 3.0_f32, -4.0_f32, 
+            -1.0_f32, 2.0_f32, 3.0_f32, -4.0_f32,
             -5.0_f32,
         );
         let max_abs_diff = (
@@ -262,7 +360,7 @@ mod relative_all_tuple5_tests {
             -5.0000005_f32,
         );
         let rhs = (
-            -1.0_f32, 2.0_f32, 3.0_f32, -4.0_f32, 
+            -1.0_f32, 2.0_f32, 3.0_f32, -4.0_f32,
             -5.0_f32,
         );
         let max_abs_diff = (
@@ -284,7 +382,7 @@ mod relative_all_tuple5_tests {
             -5.0000005_f32,
         );
         let rhs = (
-            -1.0_f32, 2.0_f32, 3.0_f32, -4.0_f32, 
+            -1.0_f32, 2.0_f32, 3.0_f32, -4.0_f32,
             -5.0_f32,
         );
         let max_abs_diff = 1.0_f32 * f32::EPSILON;
@@ -311,7 +409,61 @@ mod relative_all_tuple5_tests {
 }
 
 #[cfg(test)]
-mod relative_all_tuple6_tests {
+mod relative_eq_tuple5_heterogenous_tests {
+    use approx_cmp::{
+        assert_relative_eq,
+        assert_relative_ne,
+    };
+
+    #[test]
+    fn test_eq() {
+        let lhs = (
+            -1.0000001_f32, 2.0000002_f64, 3.0000003_f32, -4.0000004_f64,
+            -5.0000005_f32,
+        );
+        let rhs = (
+            -1.0_f32, 2.0_f64, 3.0_f32, -4.0_f64,
+            -5.0_f32,
+        );
+        let epsilon = f32::EPSILON as f64;
+        let max_abs_diff = (
+            2.0_f32 * f32::EPSILON, 3.0_f64 * epsilon, 4.0_f32 * f32::EPSILON, 5.0_f64 * epsilon,
+            6.0_f32 * f32::EPSILON,
+        );
+        let max_relative = (
+            2.0_f32 * f32::EPSILON, 3.0_f64 * epsilon, 4.0_f32 * f32::EPSILON, 5.0_f64 * epsilon,
+            6.0_f32 * f32::EPSILON,
+        );
+
+        assert_relative_eq!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
+    }
+
+    #[test]
+    fn test_ne() {
+        let lhs = (
+            -1.0000001_f32, 2.0000002_f64, 3.0000003_f32, -4.0000004_f64,
+            -5.0000005_f32,
+        );
+        let rhs = (
+            -1.0_f32, 2.0_f64, 3.0_f32, -4.0_f64,
+            -5.0_f32,
+        );
+        let epsilon = f32::EPSILON as f64;
+        let max_abs_diff = (
+            0.5_f32 * f32::EPSILON, 1.5_f64 * epsilon, 2.5_f32 * f32::EPSILON, 3.5_f64 * epsilon,
+            4.5_f32 * f32::EPSILON,
+        );
+        let max_relative = (
+            0.5_f32 * f32::EPSILON, 1.5_f64 * epsilon, 2.5_f32 * f32::EPSILON, 3.5_f64 * epsilon,
+            4.5_f32 * f32::EPSILON,
+        );
+
+        assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
+    }
+}
+
+#[cfg(test)]
+mod relative_eq_tuple6_tests {
     use approx_cmp::{
         assert_relative_eq,
         assert_relative_ne,
@@ -346,7 +498,7 @@ mod relative_all_tuple6_tests {
             -5.0000005_f32, 6.0000006_f32,
         );
         let rhs = (
-            -1.0_f32, 2.0_f32, 3.0_f32, -4.0_f32, 
+            -1.0_f32, 2.0_f32, 3.0_f32, -4.0_f32,
             -5.0_f32, 6.0_f32,
         );
         let max_abs_diff = (
@@ -395,7 +547,61 @@ mod relative_all_tuple6_tests {
 }
 
 #[cfg(test)]
-mod relative_all_tuple7_tests {
+mod relative_eq_tuple6_heterogenous_tests {
+    use approx_cmp::{
+        assert_relative_eq,
+        assert_relative_ne,
+    };
+
+    #[test]
+    fn test_eq() {
+        let lhs = (
+            -1.0000001_f32, 2.0000002_f64, 3.0000003_f32, -4.0000004_f64,
+            -5.0000005_f32, 6.0000006_f64,
+        );
+        let rhs = (
+            -1.0_f32, 2.0_f64, 3.0_f32, -4.0_f64,
+            -5.0_f32, 6.0_f64,
+        );
+        let epsilon = f32::EPSILON as f64;
+        let max_abs_diff = (
+            2.0_f32 * f32::EPSILON, 3.0_f64 * epsilon, 4.0_f32 * f32::EPSILON, 5.0_f64 * epsilon,
+            6.0_f32 * f32::EPSILON, 7.0_f64 * epsilon,
+        );
+        let max_relative = (
+            2.0_f32 * f32::EPSILON, 3.0_f64 * epsilon, 4.0_f32 * f32::EPSILON, 5.0_f64 * epsilon,
+            6.0_f32 * f32::EPSILON, 7.0_f64 * epsilon,
+        );
+
+        assert_relative_eq!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
+    }
+
+    #[test]
+    fn test_ne() {
+        let lhs = (
+            -1.0000001_f32, 2.0000002_f64, 3.0000003_f32, -4.0000004_f64,
+            -5.0000005_f32, 6.0000006_f64,
+        );
+        let rhs = (
+            -1.0_f32, 2.0_f64, 3.0_f32, -4.0_f64,
+            -5.0_f32, 6.0_f64,
+        );
+        let epsilon = f32::EPSILON as f64;
+        let max_abs_diff = (
+            0.5_f32 * f32::EPSILON, 1.5_f64 * epsilon, 2.5_f32 * f32::EPSILON, 3.5_f64 * epsilon,
+            4.5_f32 * f32::EPSILON, 5.5_f64 * epsilon,
+        );
+        let max_relative = (
+            0.5_f32 * f32::EPSILON, 1.5_f64 * epsilon, 2.5_f32 * f32::EPSILON, 3.5_f64 * epsilon,
+            4.5_f32 * f32::EPSILON, 5.5_f64 * epsilon,
+        );
+
+        assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
+    }
+}
+
+#[cfg(test)]
+mod relative_eq_tuple7_tests {
     use approx_cmp::{
         assert_relative_eq,
         assert_relative_ne,
@@ -430,7 +636,7 @@ mod relative_all_tuple7_tests {
             -5.0000005_f32, 6.0000006_f32, 7.0000007_f32,
         );
         let rhs = (
-            -1.0_f32, 2.0_f32, 3.0_f32, -4.0_f32, 
+            -1.0_f32, 2.0_f32, 3.0_f32, -4.0_f32,
             -5.0_f32, 6.0_f32, 7.0_f32,
         );
         let max_abs_diff = (
@@ -479,7 +685,61 @@ mod relative_all_tuple7_tests {
 }
 
 #[cfg(test)]
-mod relative_all_tuple8_tests {
+mod relative_eq_tuple7_heterogenous_tests {
+    use approx_cmp::{
+        assert_relative_eq,
+        assert_relative_ne,
+    };
+
+    #[test]
+    fn test_eq() {
+        let lhs = (
+            -1.0000001_f32, 2.0000002_f64, 3.0000003_f32, -4.0000004_f64,
+            -5.0000005_f32, 6.0000006_f64, 7.0000007_f32,
+        );
+        let rhs = (
+            -1.0_f32, 2.0_f64, 3.0_f32, -4.0_f64,
+            -5.0_f32, 6.0_f64, 7.0_f32,
+        );
+        let epsilon = f32::EPSILON as f64;
+        let max_abs_diff = (
+            2.0_f32 * f32::EPSILON, 3.0_f64 * epsilon, 4.0_f32 * f32::EPSILON, 5.0_f64 * epsilon,
+            6.0_f32 * f32::EPSILON, 7.0_f64 * epsilon, 8.0_f32 * f32::EPSILON,
+        );
+        let max_relative = (
+            2.0_f32 * f32::EPSILON, 3.0_f64 * epsilon, 4.0_f32 * f32::EPSILON, 5.0_f64 * epsilon,
+            6.0_f32 * f32::EPSILON, 7.0_f64 * epsilon, 8.0_f32 * f32::EPSILON,
+        );
+
+        assert_relative_eq!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
+    }
+
+    #[test]
+    fn test_ne() {
+        let lhs = (
+            -1.0000001_f32, 2.0000002_f64, 3.0000003_f32, -4.0000004_f64,
+            -5.0000005_f32, 6.0000006_f64, 7.0000007_f32,
+        );
+        let rhs = (
+            -1.0_f32, 2.0_f64, 3.0_f32, -4.0_f64,
+            -5.0_f32, 6.0_f64, 7.0_f32,
+        );
+        let epsilon = f32::EPSILON as f64;
+        let max_abs_diff = (
+            0.5_f32 * f32::EPSILON, 1.5_f64 * epsilon, 2.5_f32 * f32::EPSILON, 3.5_f64 * epsilon,
+            4.5_f32 * f32::EPSILON, 5.5_f64 * epsilon, 6.5_f32 * f32::EPSILON,
+        );
+        let max_relative = (
+            0.5_f32 * f32::EPSILON, 1.5_f64 * epsilon, 2.5_f32 * f32::EPSILON, 3.5_f64 * epsilon,
+            4.5_f32 * f32::EPSILON, 5.5_f64 * epsilon, 6.5_f32 * f32::EPSILON,
+        );
+
+        assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
+    }
+}
+
+#[cfg(test)]
+mod relative_eq_tuple8_tests {
     use approx_cmp::{
         assert_relative_eq,
         assert_relative_ne,
@@ -492,7 +752,7 @@ mod relative_all_tuple8_tests {
             -5.0000005_f32, 6.0000006_f32, 7.0000007_f32, -8.0000008_f32,
         );
         let rhs = (
-            -1.0_f32, 2.0_f32, 3.0_f32, -4.0_f32, 
+            -1.0_f32, 2.0_f32, 3.0_f32, -4.0_f32,
             -5.0_f32, 6.0_f32, 7.0_f32, -8.0_f32,
         );
         let max_abs_diff = (
@@ -563,7 +823,61 @@ mod relative_all_tuple8_tests {
 }
 
 #[cfg(test)]
-mod relative_all_tuple9_tests {
+mod relative_eq_tuple8_heterogenous_tests {
+    use approx_cmp::{
+        assert_relative_eq,
+        assert_relative_ne,
+    };
+
+    #[test]
+    fn test_eq() {
+        let lhs = (
+            -1.0000001_f32, 2.0000002_f64, 3.0000003_f32, -4.0000004_f64,
+            -5.0000005_f32, 6.0000006_f64, 7.0000007_f32, -8.0000008_f64,
+        );
+        let rhs = (
+            -1.0_f32, 2.0_f64, 3.0_f32, -4.0_f64,
+            -5.0_f32, 6.0_f64, 7.0_f32, -8.0_f64,
+        );
+        let epsilon = f32::EPSILON as f64;
+        let max_abs_diff = (
+            2.0_f32 * f32::EPSILON, 3.0_f64 * epsilon, 4.0_f32 * f32::EPSILON, 5.0_f64 * epsilon,
+            6.0_f32 * f32::EPSILON, 7.0_f64 * epsilon, 8.0_f32 * f32::EPSILON, 9.0_f64 * epsilon,
+        );
+        let max_relative = (
+            2.0_f32 * f32::EPSILON, 3.0_f64 * epsilon, 4.0_f32 * f32::EPSILON, 5.0_f64 * epsilon,
+            6.0_f32 * f32::EPSILON, 7.0_f64 * epsilon, 8.0_f32 * f32::EPSILON, 9.0_f64 * epsilon,
+        );
+
+        assert_relative_eq!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
+    }
+
+    #[test]
+    fn test_ne() {
+        let lhs = (
+            -1.0000001_f32, 2.0000002_f64, 3.0000003_f32, -4.0000004_f64,
+            -5.0000005_f32, 6.0000006_f64, 7.0000007_f32, -8.0000008_f64,
+        );
+        let rhs = (
+            -1.0_f32, 2.0_f64, 3.0_f32, -4.0_f64,
+            -5.0_f32, 6.0_f64, 7.0_f32, -8.0_f64,
+        );
+        let epsilon = f32::EPSILON as f64;
+        let max_abs_diff = (
+            0.5_f32 * f32::EPSILON, 1.5_f64 * epsilon, 2.5_f32 * f32::EPSILON, 3.5_f64 * epsilon,
+            4.5_f32 * f32::EPSILON, 5.5_f64 * epsilon, 6.5_f32 * f32::EPSILON, 7.5_f64 * epsilon,
+        );
+        let max_relative = (
+            0.5_f32 * f32::EPSILON, 1.5_f64 * epsilon, 2.5_f32 * f32::EPSILON, 3.5_f64 * epsilon,
+            4.5_f32 * f32::EPSILON, 5.5_f64 * epsilon, 6.5_f32 * f32::EPSILON, 7.5_f64 * epsilon,
+        );
+
+        assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
+    }
+}
+
+#[cfg(test)]
+mod relative_eq_tuple9_tests {
     use approx_cmp::{
         assert_relative_eq,
         assert_relative_ne,
@@ -629,7 +943,7 @@ mod relative_all_tuple9_tests {
              9.0000009_f32,
         );
         let rhs = (
-            -1.0_f32, 2.0_f32, 3.0_f32, -4.0_f32, 
+            -1.0_f32, 2.0_f32, 3.0_f32, -4.0_f32,
             -5.0_f32, 6.0_f32, 7.0_f32, -8.0_f32,
              9.0_f32,
         );
@@ -659,7 +973,69 @@ mod relative_all_tuple9_tests {
 }
 
 #[cfg(test)]
-mod relative_all_tuple10_tests {
+mod relative_eq_tuple9_heterogenous_tests {
+    use approx_cmp::{
+        assert_relative_eq,
+        assert_relative_ne,
+    };
+
+    #[test]
+    fn test_eq() {
+        let lhs = (
+            -1.0000001_f32, 2.0000002_f64, 3.0000003_f32, -4.0000004_f64,
+            -5.0000005_f32, 6.0000006_f64, 7.0000007_f32, -8.0000008_f64,
+             9.0000009_f32,
+        );
+        let rhs = (
+            -1.0_f32, 2.0_f64, 3.0_f32, -4.0_f64,
+            -5.0_f32, 6.0_f64, 7.0_f32, -8.0_f64,
+             9.0_f32,
+        );
+        let epsilon = f32::EPSILON as f64;
+        let max_abs_diff = (
+            2.0_f32 * f32::EPSILON,  3.0_f64 * epsilon, 4.0_f32 * f32::EPSILON, 5.0_f64 * epsilon,
+            6.0_f32 * f32::EPSILON,  7.0_f64 * epsilon, 8.0_f32 * f32::EPSILON, 9.0_f64 * epsilon,
+            10.0_f32 * f32::EPSILON,
+        );
+        let max_relative = (
+            2.0_f32 * f32::EPSILON,  3.0_f64 * epsilon, 4.0_f32 * f32::EPSILON, 5.0_f64 * epsilon,
+            6.0_f32 * f32::EPSILON,  7.0_f64 * epsilon, 8.0_f32 * f32::EPSILON, 9.0_f64 * epsilon,
+            10.0_f32 * f32::EPSILON,
+        );
+
+        assert_relative_eq!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
+    }
+
+    #[test]
+    fn test_ne() {
+        let lhs = (
+            -1.0000001_f32, 2.0000002_f64, 3.0000003_f32, -4.0000004_f64,
+            -5.0000005_f32, 6.0000006_f64, 7.0000007_f32, -8.0000008_f64,
+             9.0000009_f32,
+        );
+        let rhs = (
+            -1.0_f32, 2.0_f64, 3.0_f32, -4.0_f64,
+            -5.0_f32, 6.0_f64, 7.0_f32, -8.0_f64,
+             9.0_f32,
+        );
+        let epsilon = f32::EPSILON as f64;
+        let max_abs_diff = (
+            0.5_f32 * f32::EPSILON, 1.5_f64 * epsilon, 2.5_f32 * f32::EPSILON, 3.5_f64 * epsilon,
+            4.5_f32 * f32::EPSILON, 5.5_f64 * epsilon, 6.5_f32 * f32::EPSILON, 7.5_f64 * epsilon,
+            8.5_f32 * f32::EPSILON,
+        );
+        let max_relative = (
+            0.5_f32 * f32::EPSILON, 1.5_f64 * epsilon, 2.5_f32 * f32::EPSILON, 3.5_f64 * epsilon,
+            4.5_f32 * f32::EPSILON, 5.5_f64 * epsilon, 6.5_f32 * f32::EPSILON, 7.5_f64 * epsilon,
+            8.5_f32 * f32::EPSILON,
+        );
+
+        assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
+    }
+}
+
+#[cfg(test)]
+mod relative_eq_tuple10_tests {
     use approx_cmp::{
         assert_relative_eq,
         assert_relative_ne,
@@ -755,7 +1131,69 @@ mod relative_all_tuple10_tests {
 }
 
 #[cfg(test)]
-mod relative_all_tuple11_tests {
+mod relative_eq_tuple10_heterogenous_tests {
+    use approx_cmp::{
+        assert_relative_eq,
+        assert_relative_ne,
+    };
+
+    #[test]
+    fn test_eq() {
+        let lhs = (
+            -1.0000001_f32,  2.0000002_f64,   3.0000003_f32, -4.0000004_f64,
+            -5.0000005_f32,  6.0000006_f64,   7.0000007_f32, -8.0000008_f64,
+             9.0000009_f32, -10.00000001_f64,
+        );
+        let rhs = (
+            -1.0_f32,  2.0_f64,  3.0_f32, -4.0_f64,
+            -5.0_f32,  6.0_f64,  7.0_f32, -8.0_f64,
+             9.0_f32, -10.0_f64,
+        );
+        let epsilon = f32::EPSILON as f64;
+        let max_abs_diff = (
+            2.0_f32 * f32::EPSILON,  3.0_f64 * epsilon, 4.0_f32 * f32::EPSILON, 5.0_f64 * epsilon,
+            6.0_f32 * f32::EPSILON,  7.0_f64 * epsilon, 8.0_f32 * f32::EPSILON, 9.0_f64 * epsilon,
+            10.0_f32 * f32::EPSILON, 1.0_f64 * epsilon,
+        );
+        let max_relative = (
+            2.0_f32 * f32::EPSILON,  3.0_f64 * epsilon, 4.0_f32 * f32::EPSILON, 5.0_f64 * epsilon,
+            6.0_f32 * f32::EPSILON,  7.0_f64 * epsilon, 8.0_f32 * f32::EPSILON, 9.0_f64 * epsilon,
+            10.0_f32 * f32::EPSILON, 1.0_f64 * epsilon,
+        );
+
+        assert_relative_eq!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
+    }
+
+    #[test]
+    fn test_ne() {
+        let lhs = (
+            -1.0000001_f32,  2.0000002_f64,   3.0000003_f32, -4.0000004_f64,
+            -5.0000005_f32,  6.0000006_f64,   7.0000007_f32, -8.0000008_f64,
+             9.0000009_f32, -10.00000001_f64,
+        );
+        let rhs = (
+            -1.0_f32,  2.0_f64,  3.0_f32, -4.0_f64,
+            -5.0_f32,  6.0_f64,  7.0_f32, -8.0_f64,
+             9.0_f32, -10.0_f64,
+        );
+        let epsilon = f32::EPSILON as f64;
+        let max_abs_diff = (
+            0.5_f32 * f32::EPSILON, 1.5_f64 * epsilon, 2.5_f32 * f32::EPSILON, 3.5_f64 * epsilon,
+            4.5_f32 * f32::EPSILON, 5.5_f64 * epsilon, 6.5_f32 * f32::EPSILON, 7.5_f64 * epsilon,
+            8.5_f32 * f32::EPSILON, 0.5_f64 * epsilon,
+        );
+        let max_relative = (
+            0.5_f32 * f32::EPSILON, 1.5_f64 * epsilon, 2.5_f32 * f32::EPSILON, 3.5_f64 * epsilon,
+            4.5_f32 * f32::EPSILON, 5.5_f64 * epsilon, 6.5_f32 * f32::EPSILON, 7.5_f64 * epsilon,
+            8.5_f32 * f32::EPSILON, 0.5_f64 * epsilon,
+        );
+
+        assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
+    }
+}
+
+#[cfg(test)]
+mod relative_eq_tuple11_tests {
     use approx_cmp::{
         assert_relative_eq,
         assert_relative_ne,
@@ -851,7 +1289,69 @@ mod relative_all_tuple11_tests {
 }
 
 #[cfg(test)]
-mod relative_all_tuple12_tests {
+mod relative_eq_tuple11_heterogenous_tests {
+    use approx_cmp::{
+        assert_relative_eq,
+        assert_relative_ne,
+    };
+
+    #[test]
+    fn test_eq() {
+        let lhs = (
+            -1.0000001_f32,  2.0000002_f64,  3.0000003_f32,  -4.0000004_f64,
+            -5.0000005_f32,  6.0000006_f64,  7.0000007_f32,  -8.0000008_f64,
+             9.0000009_f32, -10.0000001_f64, 11.0000002_f32,
+        );
+        let rhs = (
+            -1.0_f32,  2.0_f64,  3.0_f32,  -4.0_f64,
+            -5.0_f32,  6.0_f64,  7.0_f32,  -8.0_f64,
+             9.0_f32, -10.0_f64, 11.0_f32,
+        );
+        let epsilon = f32::EPSILON as f64;
+        let max_abs_diff = (
+            2.0_f32 * f32::EPSILON,  3.0_f64 * epsilon, 4.0_f32 * f32::EPSILON, 5.0_f64 * epsilon,
+            6.0_f32 * f32::EPSILON,  7.0_f64 * epsilon, 8.0_f32 * f32::EPSILON, 9.0_f64 * epsilon,
+            10.0_f32 * f32::EPSILON, 1.0_f64 * epsilon, 2.0_f32 * f32::EPSILON,
+        );
+        let max_relative = (
+            2.0_f32 * f32::EPSILON,  3.0_f64 * epsilon, 4.0_f32 * f32::EPSILON, 5.0_f64 * epsilon,
+            6.0_f32 * f32::EPSILON,  7.0_f64 * epsilon, 8.0_f32 * f32::EPSILON, 9.0_f64 * epsilon,
+            10.0_f32 * f32::EPSILON, 1.0_f64 * epsilon, 2.0_f32 * f32::EPSILON,
+        );
+
+        assert_relative_eq!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
+    }
+
+    #[test]
+    fn test_ne() {
+        let lhs = (
+            -1.0000001_f32,  2.0000002_f64,  3.0000003_f32,  -4.0000004_f64,
+            -5.0000005_f32,  6.0000006_f64,  7.0000007_f32,  -8.0000008_f64,
+             9.0000009_f32, -10.0000001_f64, 11.0000002_f32,
+        );
+        let rhs = (
+            -1.0_f32,  2.0_f64,  3.0_f32,  -4.0_f64,
+            -5.0_f32,  6.0_f64,  7.0_f32,  -8.0_f64,
+             9.0_f32, -10.0_f64, 11.0_f32,
+        );
+        let epsilon = f32::EPSILON as f64;
+        let max_abs_diff = (
+            0.5_f32 * f32::EPSILON, 1.5_f64 * epsilon, 2.5_f32 * f32::EPSILON, 3.5_f64 * epsilon,
+            4.5_f32 * f32::EPSILON, 5.5_f64 * epsilon, 6.5_f32 * f32::EPSILON, 7.5_f64 * epsilon,
+            8.5_f32 * f32::EPSILON, 0.5_f64 * epsilon, 1.5_f32 * f32::EPSILON,
+        );
+        let max_relative = (
+            0.5_f32 * f32::EPSILON, 1.5_f64 * epsilon, 2.5_f32 * f32::EPSILON, 3.5_f64 * epsilon,
+            4.5_f32 * f32::EPSILON, 5.5_f64 * epsilon, 6.5_f32 * f32::EPSILON, 7.5_f64 * epsilon,
+            8.5_f32 * f32::EPSILON, 0.5_f64 * epsilon, 1.5_f32 * f32::EPSILON,
+        );
+
+        assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
+    }
+}
+
+#[cfg(test)]
+mod relative_eq_tuple12_tests {
     use approx_cmp::{
         assert_relative_eq,
         assert_relative_ne,
@@ -865,7 +1365,7 @@ mod relative_all_tuple12_tests {
              9.0000009_f32, -10.0000001_f32, 11.0000002_f32,  12.0000003_f32,
         );
         let rhs = (
-            -1.0_f32,  2.0_f32,  3.0_f32,  -4.0_f32, 
+            -1.0_f32,  2.0_f32,  3.0_f32,  -4.0_f32,
             -5.0_f32,  6.0_f32,  7.0_f32,  -8.0_f32,
              9.0_f32, -10.0_f32, 11.0_f32,  12.0_f32,
         );
@@ -891,7 +1391,7 @@ mod relative_all_tuple12_tests {
              9.0000009_f32, -10.0000001_f32, 11.0000002_f32,  12.0000003_f32,
         );
         let rhs = (
-            -1.0_f32,  2.0_f32,  3.0_f32,  -4.0_f32, 
+            -1.0_f32,  2.0_f32,  3.0_f32,  -4.0_f32,
             -5.0_f32,  6.0_f32,  7.0_f32,  -8.0_f32,
              9.0_f32, -10.0_f32, 11.0_f32,  12.0_f32,
         );
@@ -943,6 +1443,68 @@ mod relative_all_tuple12_tests {
         let max_relative = 0.5_f32 * f32::EPSILON;
 
         assert_relative_ne!(lhs, rhs, abs_diff_all <= max_abs_diff, relative_all <= max_relative);
+    }
+}
+
+#[cfg(test)]
+mod relative_eq_tuple12_heterogenous_tests {
+    use approx_cmp::{
+        assert_relative_eq,
+        assert_relative_ne,
+    };
+
+    #[test]
+    fn test_eq() {
+        let lhs = (
+            -1.0000001_f32,  2.0000002_f64,  3.0000003_f32,  -4.0000004_f64,
+            -5.0000005_f32,  6.0000006_f64,  7.0000007_f32,  -8.0000008_f64,
+             9.0000009_f32, -10.0000001_f64, 11.0000002_f32,  12.0000003_f64,
+        );
+        let rhs = (
+            -1.0_f32,  2.0_f64,  3.0_f32,  -4.0_f64,
+            -5.0_f32,  6.0_f64,  7.0_f32,  -8.0_f64,
+             9.0_f32, -10.0_f64, 11.0_f32,  12.0_f64,
+        );
+        let epsilon = f32::EPSILON as f64;
+        let max_abs_diff = (
+            2.0_f32 * f32::EPSILON,  3.0_f64 * epsilon, 4.0_f32 * f32::EPSILON, 5.0_f64 * epsilon,
+            6.0_f32 * f32::EPSILON,  7.0_f64 * epsilon, 8.0_f32 * f32::EPSILON, 9.0_f64 * epsilon,
+            10.0_f32 * f32::EPSILON, 1.0_f64 * epsilon, 2.0_f32 * f32::EPSILON, 3.0_f64 * epsilon,
+        );
+        let max_relative = (
+            2.0_f32 * f32::EPSILON,  3.0_f64 * epsilon, 4.0_f32 * f32::EPSILON, 5.0_f64 * epsilon,
+            6.0_f32 * f32::EPSILON,  7.0_f64 * epsilon, 8.0_f32 * f32::EPSILON, 9.0_f64 * epsilon,
+            10.0_f32 * f32::EPSILON, 1.0_f64 * epsilon, 2.0_f32 * f32::EPSILON, 3.0_f64 * epsilon,
+        );
+
+        assert_relative_eq!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
+    }
+
+    #[test]
+    fn test_ne() {
+        let lhs = (
+            -1.0000001_f32,  2.0000002_f64,  3.0000003_f32,  -4.0000004_f64,
+            -5.0000005_f32,  6.0000006_f64,  7.0000007_f32,  -8.0000008_f64,
+             9.0000009_f32, -10.0000001_f64, 11.0000002_f32,  12.0000003_f64,
+        );
+        let rhs = (
+            -1.0_f32,  2.0_f64,  3.0_f32,  -4.0_f64,
+            -5.0_f32,  6.0_f64,  7.0_f32,  -8.0_f64,
+             9.0_f32, -10.0_f64, 11.0_f32,  12.0_f64,
+        );
+        let epsilon = f32::EPSILON as f64;
+        let max_abs_diff = (
+            0.5_f32 * f32::EPSILON, 1.5_f64 * epsilon, 2.5_f32 * f32::EPSILON, 3.5_f64 * epsilon,
+            4.5_f32 * f32::EPSILON, 5.5_f64 * epsilon, 6.5_f32 * f32::EPSILON, 7.5_f64 * epsilon,
+            8.5_f32 * f32::EPSILON, 0.5_f64 * epsilon, 1.5_f32 * f32::EPSILON, 2.5_f64 * epsilon,
+        );
+        let max_relative = (
+            0.5_f32 * f32::EPSILON, 1.5_f64 * epsilon, 2.5_f32 * f32::EPSILON, 3.5_f64 * epsilon,
+            4.5_f32 * f32::EPSILON, 5.5_f64 * epsilon, 6.5_f32 * f32::EPSILON, 7.5_f64 * epsilon,
+            8.5_f32 * f32::EPSILON, 0.5_f64 * epsilon, 1.5_f32 * f32::EPSILON, 2.5_f64 * epsilon,
+        );
+
+        assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
     }
 }
 
