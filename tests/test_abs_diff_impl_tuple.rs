@@ -4,12 +4,12 @@ extern crate approx_cmp;
 #[cfg(test)]
 mod abs_diff_eq_unit_tests {
     use approx_cmp::{
-        AbsDiffEq,
-        AbsDiffAllEq,
-        AssertAbsDiffEq,
-        AssertAbsDiffAllEq,
         abs_diff_eq,
         assert_abs_diff_eq,
+        AbsDiffAllEq,
+        AbsDiffEq,
+        AssertAbsDiffAllEq,
+        AssertAbsDiffEq,
     };
 
     #[test]
@@ -45,10 +45,10 @@ mod abs_diff_eq_unit_tests {
 #[cfg(test)]
 mod abs_diff_eq_tuple1_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
-        AssertAbsDiffAllEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffAllEq,
+        AssertAbsDiffEq,
     };
 
     #[test]
@@ -122,9 +122,9 @@ mod abs_diff_eq_tuple1_tests {
 #[cfg(test)]
 mod abs_diff_eq_tuple2_tests {
     use approx_cmp::{
-        AssertAbsDiffAllEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffAllEq,
     };
 
     #[test]
@@ -178,9 +178,9 @@ mod abs_diff_eq_tuple2_tests {
 #[cfg(test)]
 mod abs_diff_eq_tuple2_heterogenous_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffEq,
     };
 
     #[test]
@@ -227,9 +227,9 @@ mod abs_diff_eq_tuple2_heterogenous_tests {
 #[cfg(test)]
 mod abs_diff_eq_tuple3_tests {
     use approx_cmp::{
-        AssertAbsDiffAllEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffAllEq,
     };
 
     #[test]
@@ -265,9 +265,9 @@ mod abs_diff_eq_tuple3_tests {
 #[cfg(test)]
 mod abs_diff_eq_tuple3_heterogenous_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffEq,
     };
 
     #[test]
@@ -314,9 +314,9 @@ mod abs_diff_eq_tuple3_heterogenous_tests {
 #[cfg(test)]
 mod abs_diff_eq_tuple4_tests {
     use approx_cmp::{
-        AssertAbsDiffAllEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffAllEq,
     };
 
     #[test]
@@ -380,9 +380,9 @@ mod abs_diff_eq_tuple4_tests {
 #[cfg(test)]
 mod abs_diff_eq_tuple4_heterogenous_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffEq,
     };
 
     #[test]
@@ -390,12 +390,7 @@ mod abs_diff_eq_tuple4_heterogenous_tests {
         let lhs = (-1.0000001_f32, 2.0000002_f64, 3.0000003_f32, -4.0000004_f64);
         let rhs = (-1.0_f32, 2.0_f64, 3.0_f32, -4.0_f64);
         let epsilon = f32::EPSILON as f64;
-        let max_abs_diff = (
-            2.0_f32 * f32::EPSILON,
-            3.0_f64 * epsilon,
-            4.0_f32 * f32::EPSILON,
-            5.0_f64 * epsilon,
-        );
+        let max_abs_diff = (2.0_f32 * f32::EPSILON, 3.0_f64 * epsilon, 4.0_f32 * f32::EPSILON, 5.0_f64 * epsilon);
 
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
     }
@@ -405,12 +400,7 @@ mod abs_diff_eq_tuple4_heterogenous_tests {
         let lhs = (-1.0000001_f32, 2.0000002_f64, 3.0000003_f32, -4.0000004_f64);
         let rhs = (-1.0_f32, 2.0_f64, 3.0_f32, -4.0_f64);
         let epsilon = f32::EPSILON as f64;
-        let max_abs_diff = (
-            0.5_f32 * f32::EPSILON,
-            1.5_f64 * epsilon,
-            2.5_f32 * f32::EPSILON,
-            3.5_f64 * epsilon,
-        );
+        let max_abs_diff = (0.5_f32 * f32::EPSILON, 1.5_f64 * epsilon, 2.5_f32 * f32::EPSILON, 3.5_f64 * epsilon);
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
@@ -420,7 +410,10 @@ mod abs_diff_eq_tuple4_heterogenous_tests {
         let lhs = (1.0_f32, 2.0_f64, 4.0_f32, 8.0_f64);
         let rhs = (1.0000011_f32, 2.0000022_f64, 4.0000044_f32, 8.0000088_f64);
         let abs_diff = (
-            0.0000010728836_f32, 0.00000219999999995224_f64, 0.0000042915344_f32, 0.00000879999999980896_f64,
+            0.0000010728836_f32,
+            0.00000219999999995224_f64,
+            0.0000042915344_f32,
+            0.00000879999999980896_f64,
         );
 
         assert_eq!(lhs.debug_abs_diff(&rhs), abs_diff);
@@ -441,11 +434,12 @@ mod abs_diff_eq_tuple4_heterogenous_tests {
 #[cfg(test)]
 mod abs_diff_eq_tuple5_tests {
     use approx_cmp::{
-        AssertAbsDiffAllEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffAllEq,
     };
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq() {
         let lhs = (
@@ -464,6 +458,7 @@ mod abs_diff_eq_tuple5_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne() {
         let lhs = (
@@ -482,6 +477,7 @@ mod abs_diff_eq_tuple5_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_eq() {
         let lhs = (
@@ -497,6 +493,7 @@ mod abs_diff_eq_tuple5_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_ne() {
         let lhs = (
@@ -512,6 +509,7 @@ mod abs_diff_eq_tuple5_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_all_tolerance() {
         let lhs = (
@@ -536,11 +534,12 @@ mod abs_diff_eq_tuple5_tests {
 #[cfg(test)]
 mod abs_diff_eq_tuple5_heterogenous_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffEq,
     };
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq() {
         let lhs = (
@@ -560,6 +559,7 @@ mod abs_diff_eq_tuple5_heterogenous_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne() {
         let lhs = (
@@ -579,6 +579,7 @@ mod abs_diff_eq_tuple5_heterogenous_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff() {
         let lhs = (
@@ -598,6 +599,7 @@ mod abs_diff_eq_tuple5_heterogenous_tests {
         assert_eq!(rhs.debug_abs_diff(&lhs), abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_tolerance() {
         let lhs = (
@@ -621,11 +623,12 @@ mod abs_diff_eq_tuple5_heterogenous_tests {
 #[cfg(test)]
 mod abs_diff_eq_tuple6_tests {
     use approx_cmp::{
-        AssertAbsDiffAllEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffAllEq,
     };
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq() {
         let lhs = (
@@ -644,6 +647,7 @@ mod abs_diff_eq_tuple6_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne() {
         let lhs = (
@@ -662,6 +666,7 @@ mod abs_diff_eq_tuple6_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_eq() {
         let lhs = (
@@ -677,6 +682,7 @@ mod abs_diff_eq_tuple6_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_ne() {
         let lhs = (
@@ -692,6 +698,7 @@ mod abs_diff_eq_tuple6_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_all_tolerance() {
         let lhs = (
@@ -716,11 +723,12 @@ mod abs_diff_eq_tuple6_tests {
 #[cfg(test)]
 mod abs_diff_eq_tuple6_heterogenous_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffEq,
     };
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq() {
         let lhs = (
@@ -740,6 +748,7 @@ mod abs_diff_eq_tuple6_heterogenous_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne() {
         let lhs = (
@@ -759,6 +768,7 @@ mod abs_diff_eq_tuple6_heterogenous_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff() {
         let lhs = (
@@ -778,6 +788,7 @@ mod abs_diff_eq_tuple6_heterogenous_tests {
         assert_eq!(rhs.debug_abs_diff(&lhs), abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_tolerance() {
         let lhs = (
@@ -801,11 +812,12 @@ mod abs_diff_eq_tuple6_heterogenous_tests {
 #[cfg(test)]
 mod abs_diff_eq_tuple7_tests {
     use approx_cmp::{
-        AssertAbsDiffAllEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffAllEq,
     };
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq() {
         let lhs = (
@@ -824,6 +836,7 @@ mod abs_diff_eq_tuple7_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne() {
         let lhs = (
@@ -842,6 +855,7 @@ mod abs_diff_eq_tuple7_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_eq() {
         let lhs = (
@@ -857,6 +871,7 @@ mod abs_diff_eq_tuple7_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_ne() {
         let lhs = (
@@ -872,6 +887,7 @@ mod abs_diff_eq_tuple7_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_all_tolerance() {
         let lhs = (
@@ -896,11 +912,12 @@ mod abs_diff_eq_tuple7_tests {
 #[cfg(test)]
 mod abs_diff_eq_tuple7_heterogenous_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffEq,
     };
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq() {
         let lhs = (
@@ -920,6 +937,7 @@ mod abs_diff_eq_tuple7_heterogenous_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne() {
         let lhs = (
@@ -939,6 +957,7 @@ mod abs_diff_eq_tuple7_heterogenous_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff() {
         let lhs = (
@@ -958,6 +977,7 @@ mod abs_diff_eq_tuple7_heterogenous_tests {
         assert_eq!(rhs.debug_abs_diff(&lhs), abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_tolerance() {
         let lhs = (
@@ -981,11 +1001,12 @@ mod abs_diff_eq_tuple7_heterogenous_tests {
 #[cfg(test)]
 mod abs_diff_eq_tuple8_tests {
     use approx_cmp::{
-        AssertAbsDiffAllEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffAllEq,
     };
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq() {
         let lhs = (
@@ -1004,6 +1025,7 @@ mod abs_diff_eq_tuple8_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne() {
         let lhs = (
@@ -1022,6 +1044,7 @@ mod abs_diff_eq_tuple8_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_eq() {
         let lhs = (
@@ -1037,6 +1060,7 @@ mod abs_diff_eq_tuple8_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_ne() {
         let lhs = (
@@ -1052,6 +1076,7 @@ mod abs_diff_eq_tuple8_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_all_tolerance() {
         let lhs = (
@@ -1076,11 +1101,12 @@ mod abs_diff_eq_tuple8_tests {
 #[cfg(test)]
 mod abs_diff_eq_tuple8_heterogenous_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffEq,
     };
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq() {
         let lhs = (
@@ -1100,6 +1126,7 @@ mod abs_diff_eq_tuple8_heterogenous_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne() {
         let lhs = (
@@ -1119,6 +1146,7 @@ mod abs_diff_eq_tuple8_heterogenous_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff() {
         let lhs = (
@@ -1138,6 +1166,7 @@ mod abs_diff_eq_tuple8_heterogenous_tests {
         assert_eq!(rhs.debug_abs_diff(&lhs), abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_tolerance() {
         let lhs = (
@@ -1161,11 +1190,12 @@ mod abs_diff_eq_tuple8_heterogenous_tests {
 #[cfg(test)]
 mod abs_diff_eq_tuple9_tests {
     use approx_cmp::{
-        AssertAbsDiffAllEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffAllEq,
     };
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq() {
         let lhs = (
@@ -1187,6 +1217,7 @@ mod abs_diff_eq_tuple9_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne() {
         let lhs = (
@@ -1208,6 +1239,7 @@ mod abs_diff_eq_tuple9_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_eq() {
         let lhs = (
@@ -1225,6 +1257,7 @@ mod abs_diff_eq_tuple9_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_ne() {
         let lhs = (
@@ -1242,6 +1275,7 @@ mod abs_diff_eq_tuple9_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_all_tolerance() {
         let lhs = (
@@ -1269,11 +1303,12 @@ mod abs_diff_eq_tuple9_tests {
 #[cfg(test)]
 mod abs_diff_eq_tuple9_heterogenous_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffEq,
     };
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq() {
         let lhs = (
@@ -1294,8 +1329,10 @@ mod abs_diff_eq_tuple9_heterogenous_tests {
         );
 
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
+
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne() {
         let lhs = (
@@ -1318,6 +1355,7 @@ mod abs_diff_eq_tuple9_heterogenous_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff() {
         let lhs = (
@@ -1340,6 +1378,7 @@ mod abs_diff_eq_tuple9_heterogenous_tests {
         assert_eq!(rhs.debug_abs_diff(&lhs), abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_tolerance() {
         let lhs = (
@@ -1366,11 +1405,12 @@ mod abs_diff_eq_tuple9_heterogenous_tests {
 #[cfg(test)]
 mod abs_diff_eq_tuple10_tests {
     use approx_cmp::{
-        AssertAbsDiffAllEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffAllEq,
     };
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq() {
         let lhs = (
@@ -1392,6 +1432,7 @@ mod abs_diff_eq_tuple10_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne() {
         let lhs = (
@@ -1413,6 +1454,7 @@ mod abs_diff_eq_tuple10_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_eq() {
         let lhs = (
@@ -1430,6 +1472,7 @@ mod abs_diff_eq_tuple10_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_ne() {
         let lhs = (
@@ -1447,6 +1490,7 @@ mod abs_diff_eq_tuple10_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_all_tolerance() {
         let lhs = (
@@ -1474,11 +1518,12 @@ mod abs_diff_eq_tuple10_tests {
 #[cfg(test)]
 mod abs_diff_eq_tuple10_hetergenous_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffEq,
     };
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq() {
         let lhs = (
@@ -1501,6 +1546,7 @@ mod abs_diff_eq_tuple10_hetergenous_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne() {
         let lhs = (
@@ -1523,6 +1569,7 @@ mod abs_diff_eq_tuple10_hetergenous_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff() {
         let lhs = (
@@ -1545,6 +1592,7 @@ mod abs_diff_eq_tuple10_hetergenous_tests {
         assert_eq!(rhs.debug_abs_diff(&lhs), abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_tolerance() {
         let lhs = (
@@ -1571,11 +1619,12 @@ mod abs_diff_eq_tuple10_hetergenous_tests {
 #[cfg(test)]
 mod abs_diff_eq_tuple11_tests {
     use approx_cmp::{
-        AssertAbsDiffAllEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffAllEq,
     };
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq() {
         let lhs = (
@@ -1597,6 +1646,7 @@ mod abs_diff_eq_tuple11_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne() {
         let lhs = (
@@ -1618,6 +1668,7 @@ mod abs_diff_eq_tuple11_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_eq() {
         let lhs = (
@@ -1635,6 +1686,7 @@ mod abs_diff_eq_tuple11_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_ne() {
         let lhs = (
@@ -1652,6 +1704,7 @@ mod abs_diff_eq_tuple11_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_all_tolerance() {
         let lhs = (
@@ -1679,11 +1732,12 @@ mod abs_diff_eq_tuple11_tests {
 #[cfg(test)]
 mod abs_diff_eq_tuple11_hetergenous_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffEq,
     };
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq() {
         let lhs = (
@@ -1706,6 +1760,7 @@ mod abs_diff_eq_tuple11_hetergenous_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne() {
         let lhs = (
@@ -1728,6 +1783,7 @@ mod abs_diff_eq_tuple11_hetergenous_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff() {
         let lhs = (
@@ -1750,6 +1806,7 @@ mod abs_diff_eq_tuple11_hetergenous_tests {
         assert_eq!(rhs.debug_abs_diff(&lhs), abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_tolerance() {
         let lhs = (
@@ -1776,11 +1833,12 @@ mod abs_diff_eq_tuple11_hetergenous_tests {
 #[cfg(test)]
 mod abs_diff_eq_tuple12_tests {
     use approx_cmp::{
-        AssertAbsDiffAllEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffAllEq,
     };
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq() {
         let lhs = (
@@ -1802,6 +1860,7 @@ mod abs_diff_eq_tuple12_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne() {
         let lhs = (
@@ -1823,6 +1882,7 @@ mod abs_diff_eq_tuple12_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_eq() {
         let lhs = (
@@ -1840,6 +1900,7 @@ mod abs_diff_eq_tuple12_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_all_ne() {
         let lhs = (
@@ -1857,6 +1918,7 @@ mod abs_diff_eq_tuple12_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_all_tolerance() {
         let lhs = (
@@ -1884,11 +1946,12 @@ mod abs_diff_eq_tuple12_tests {
 #[cfg(test)]
 mod abs_diff_eq_tuple12_heterogenous_tests {
     use approx_cmp::{
-        AssertAbsDiffEq,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
+        AssertAbsDiffEq,
     };
 
+    #[rustfmt::skip]
     #[test]
     fn test_eq() {
         let lhs = (
@@ -1911,6 +1974,7 @@ mod abs_diff_eq_tuple12_heterogenous_tests {
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_ne() {
         let lhs = (
@@ -1933,6 +1997,7 @@ mod abs_diff_eq_tuple12_heterogenous_tests {
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff() {
         let lhs = (
@@ -1955,6 +2020,7 @@ mod abs_diff_eq_tuple12_heterogenous_tests {
         assert_eq!(rhs.debug_abs_diff(&lhs), abs_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_abs_diff_tolerance() {
         let lhs = (
@@ -1977,4 +2043,3 @@ mod abs_diff_eq_tuple12_heterogenous_tests {
         assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), max_abs_diff);
     }
 }
-

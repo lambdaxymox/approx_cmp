@@ -1,8 +1,8 @@
 use crate::{
-    RelativeEq,
-    RelativeAllEq,
-    AssertRelativeEq,
     AssertRelativeAllEq,
+    AssertRelativeEq,
+    RelativeAllEq,
+    RelativeEq,
 };
 use core::fmt;
 
@@ -243,8 +243,7 @@ where
 
     #[inline]
     fn relative_all_eq(&self, other: &(B, B), max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
-        self.0.relative_all_eq(&other.0, max_abs_diff, max_relative) &&
-        self.1.relative_all_eq(&other.1, max_abs_diff, max_relative)
+        self.0.relative_all_eq(&other.0, max_abs_diff, max_relative) && self.1.relative_all_eq(&other.1, max_abs_diff, max_relative)
     }
 }
 
@@ -279,9 +278,9 @@ where
 
     #[inline]
     fn relative_all_eq(&self, other: &(B, B, B), max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
-        self.0.relative_all_eq(&other.0, max_abs_diff, max_relative) &&
-        self.1.relative_all_eq(&other.1, max_abs_diff, max_relative) &&
-        self.2.relative_all_eq(&other.2, max_abs_diff, max_relative)
+        self.0.relative_all_eq(&other.0, max_abs_diff, max_relative)
+            && self.1.relative_all_eq(&other.1, max_abs_diff, max_relative)
+            && self.2.relative_all_eq(&other.2, max_abs_diff, max_relative)
     }
 }
 
@@ -318,10 +317,10 @@ where
 
     #[inline]
     fn relative_all_eq(&self, other: &(B, B, B, B), max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
-        self.0.relative_all_eq(&other.0, max_abs_diff, max_relative) &&
-        self.1.relative_all_eq(&other.1, max_abs_diff, max_relative) &&
-        self.2.relative_all_eq(&other.2, max_abs_diff, max_relative) &&
-        self.3.relative_all_eq(&other.3, max_abs_diff, max_relative)
+        self.0.relative_all_eq(&other.0, max_abs_diff, max_relative)
+            && self.1.relative_all_eq(&other.1, max_abs_diff, max_relative)
+            && self.2.relative_all_eq(&other.2, max_abs_diff, max_relative)
+            && self.3.relative_all_eq(&other.3, max_abs_diff, max_relative)
     }
 }
 
@@ -365,11 +364,11 @@ where
 
     #[inline]
     fn relative_all_eq(&self, other: &(B, B, B, B, B), max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
-        self.0.relative_all_eq(&other.0, max_abs_diff, max_relative) &&
-        self.1.relative_all_eq(&other.1, max_abs_diff, max_relative) &&
-        self.2.relative_all_eq(&other.2, max_abs_diff, max_relative) &&
-        self.3.relative_all_eq(&other.3, max_abs_diff, max_relative) &&
-        self.4.relative_all_eq(&other.4, max_abs_diff, max_relative)
+        self.0.relative_all_eq(&other.0, max_abs_diff, max_relative)
+            && self.1.relative_all_eq(&other.1, max_abs_diff, max_relative)
+            && self.2.relative_all_eq(&other.2, max_abs_diff, max_relative)
+            && self.3.relative_all_eq(&other.3, max_abs_diff, max_relative)
+            && self.4.relative_all_eq(&other.4, max_abs_diff, max_relative)
     }
 }
 
@@ -416,12 +415,12 @@ where
 
     #[inline]
     fn relative_all_eq(&self, other: &(B, B, B, B, B, B), max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
-        self.0.relative_all_eq(&other.0, max_abs_diff, max_relative) &&
-        self.1.relative_all_eq(&other.1, max_abs_diff, max_relative) &&
-        self.2.relative_all_eq(&other.2, max_abs_diff, max_relative) &&
-        self.3.relative_all_eq(&other.3, max_abs_diff, max_relative) &&
-        self.4.relative_all_eq(&other.4, max_abs_diff, max_relative) &&
-        self.5.relative_all_eq(&other.5, max_abs_diff, max_relative)
+        self.0.relative_all_eq(&other.0, max_abs_diff, max_relative)
+            && self.1.relative_all_eq(&other.1, max_abs_diff, max_relative)
+            && self.2.relative_all_eq(&other.2, max_abs_diff, max_relative)
+            && self.3.relative_all_eq(&other.3, max_abs_diff, max_relative)
+            && self.4.relative_all_eq(&other.4, max_abs_diff, max_relative)
+            && self.5.relative_all_eq(&other.5, max_abs_diff, max_relative)
     }
 }
 
@@ -471,13 +470,13 @@ where
 
     #[inline]
     fn relative_all_eq(&self, other: &(B, B, B, B, B, B, B), max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
-        self.0.relative_all_eq(&other.0, max_abs_diff, max_relative) &&
-        self.1.relative_all_eq(&other.1, max_abs_diff, max_relative) &&
-        self.2.relative_all_eq(&other.2, max_abs_diff, max_relative) &&
-        self.3.relative_all_eq(&other.3, max_abs_diff, max_relative) &&
-        self.4.relative_all_eq(&other.4, max_abs_diff, max_relative) &&
-        self.5.relative_all_eq(&other.5, max_abs_diff, max_relative) &&
-        self.6.relative_all_eq(&other.6, max_abs_diff, max_relative)
+        self.0.relative_all_eq(&other.0, max_abs_diff, max_relative)
+            && self.1.relative_all_eq(&other.1, max_abs_diff, max_relative)
+            && self.2.relative_all_eq(&other.2, max_abs_diff, max_relative)
+            && self.3.relative_all_eq(&other.3, max_abs_diff, max_relative)
+            && self.4.relative_all_eq(&other.4, max_abs_diff, max_relative)
+            && self.5.relative_all_eq(&other.5, max_abs_diff, max_relative)
+            && self.6.relative_all_eq(&other.6, max_abs_diff, max_relative)
     }
 }
 
@@ -529,15 +528,20 @@ where
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn relative_all_eq(&self, other: &(B, B, B, B, B, B, B, B), max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
-        self.0.relative_all_eq(&other.0, max_abs_diff, max_relative) &&
-        self.1.relative_all_eq(&other.1, max_abs_diff, max_relative) &&
-        self.2.relative_all_eq(&other.2, max_abs_diff, max_relative) &&
-        self.3.relative_all_eq(&other.3, max_abs_diff, max_relative) &&
-        self.4.relative_all_eq(&other.4, max_abs_diff, max_relative) &&
-        self.5.relative_all_eq(&other.5, max_abs_diff, max_relative) &&
-        self.6.relative_all_eq(&other.6, max_abs_diff, max_relative) &&
-        self.7.relative_all_eq(&other.7, max_abs_diff, max_relative)
+    fn relative_all_eq(
+        &self,
+        other: &(B, B, B, B, B, B, B, B),
+        max_abs_diff: &Self::AllTolerance,
+        max_relative: &Self::AllTolerance,
+    ) -> bool {
+        self.0.relative_all_eq(&other.0, max_abs_diff, max_relative)
+            && self.1.relative_all_eq(&other.1, max_abs_diff, max_relative)
+            && self.2.relative_all_eq(&other.2, max_abs_diff, max_relative)
+            && self.3.relative_all_eq(&other.3, max_abs_diff, max_relative)
+            && self.4.relative_all_eq(&other.4, max_abs_diff, max_relative)
+            && self.5.relative_all_eq(&other.5, max_abs_diff, max_relative)
+            && self.6.relative_all_eq(&other.6, max_abs_diff, max_relative)
+            && self.7.relative_all_eq(&other.7, max_abs_diff, max_relative)
     }
 }
 
@@ -592,16 +596,21 @@ where
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn relative_all_eq(&self, other: &(B, B, B, B, B, B, B, B, B), max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
-        self.0.relative_all_eq(&other.0, max_abs_diff, max_relative) &&
-        self.1.relative_all_eq(&other.1, max_abs_diff, max_relative) &&
-        self.2.relative_all_eq(&other.2, max_abs_diff, max_relative) &&
-        self.3.relative_all_eq(&other.3, max_abs_diff, max_relative) &&
-        self.4.relative_all_eq(&other.4, max_abs_diff, max_relative) &&
-        self.5.relative_all_eq(&other.5, max_abs_diff, max_relative) &&
-        self.6.relative_all_eq(&other.6, max_abs_diff, max_relative) &&
-        self.7.relative_all_eq(&other.7, max_abs_diff, max_relative) &&
-        self.8.relative_all_eq(&other.8, max_abs_diff, max_relative)
+    fn relative_all_eq(
+        &self,
+        other: &(B, B, B, B, B, B, B, B, B),
+        max_abs_diff: &Self::AllTolerance,
+        max_relative: &Self::AllTolerance,
+    ) -> bool {
+        self.0.relative_all_eq(&other.0, max_abs_diff, max_relative)
+            && self.1.relative_all_eq(&other.1, max_abs_diff, max_relative)
+            && self.2.relative_all_eq(&other.2, max_abs_diff, max_relative)
+            && self.3.relative_all_eq(&other.3, max_abs_diff, max_relative)
+            && self.4.relative_all_eq(&other.4, max_abs_diff, max_relative)
+            && self.5.relative_all_eq(&other.5, max_abs_diff, max_relative)
+            && self.6.relative_all_eq(&other.6, max_abs_diff, max_relative)
+            && self.7.relative_all_eq(&other.7, max_abs_diff, max_relative)
+            && self.8.relative_all_eq(&other.8, max_abs_diff, max_relative)
     }
 }
 
@@ -622,7 +631,11 @@ where
     );
 
     #[inline]
-    fn debug_abs_diff_all_tolerance(&self, other: &(B, B, B, B, B, B, B, B, B), max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_abs_diff_all_tolerance(
+        &self,
+        other: &(B, B, B, B, B, B, B, B, B),
+        max_abs_diff: &Self::AllTolerance,
+    ) -> Self::AllDebugTolerance {
         (
             self.0.debug_abs_diff_all_tolerance(&other.0, max_abs_diff),
             self.1.debug_abs_diff_all_tolerance(&other.1, max_abs_diff),
@@ -637,7 +650,11 @@ where
     }
 
     #[inline]
-    fn debug_relative_all_tolerance(&self, other: &(B, B, B, B, B, B, B, B, B), max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_relative_all_tolerance(
+        &self,
+        other: &(B, B, B, B, B, B, B, B, B),
+        max_relative: &Self::AllTolerance,
+    ) -> Self::AllDebugTolerance {
         (
             self.0.debug_relative_all_tolerance(&other.0, max_relative),
             self.1.debug_relative_all_tolerance(&other.1, max_relative),
@@ -659,17 +676,22 @@ where
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn relative_all_eq(&self, other: &(B, B, B, B, B, B, B, B, B, B), max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
-        self.0.relative_all_eq(&other.0, max_abs_diff, max_relative) &&
-        self.1.relative_all_eq(&other.1, max_abs_diff, max_relative) &&
-        self.2.relative_all_eq(&other.2, max_abs_diff, max_relative) &&
-        self.3.relative_all_eq(&other.3, max_abs_diff, max_relative) &&
-        self.4.relative_all_eq(&other.4, max_abs_diff, max_relative) &&
-        self.5.relative_all_eq(&other.5, max_abs_diff, max_relative) &&
-        self.6.relative_all_eq(&other.6, max_abs_diff, max_relative) &&
-        self.7.relative_all_eq(&other.7, max_abs_diff, max_relative) &&
-        self.8.relative_all_eq(&other.8, max_abs_diff, max_relative) &&
-        self.9.relative_all_eq(&other.9, max_abs_diff, max_relative)
+    fn relative_all_eq(
+        &self,
+        other: &(B, B, B, B, B, B, B, B, B, B),
+        max_abs_diff: &Self::AllTolerance,
+        max_relative: &Self::AllTolerance,
+    ) -> bool {
+        self.0.relative_all_eq(&other.0, max_abs_diff, max_relative)
+            && self.1.relative_all_eq(&other.1, max_abs_diff, max_relative)
+            && self.2.relative_all_eq(&other.2, max_abs_diff, max_relative)
+            && self.3.relative_all_eq(&other.3, max_abs_diff, max_relative)
+            && self.4.relative_all_eq(&other.4, max_abs_diff, max_relative)
+            && self.5.relative_all_eq(&other.5, max_abs_diff, max_relative)
+            && self.6.relative_all_eq(&other.6, max_abs_diff, max_relative)
+            && self.7.relative_all_eq(&other.7, max_abs_diff, max_relative)
+            && self.8.relative_all_eq(&other.8, max_abs_diff, max_relative)
+            && self.9.relative_all_eq(&other.9, max_abs_diff, max_relative)
     }
 }
 
@@ -691,7 +713,11 @@ where
     );
 
     #[inline]
-    fn debug_abs_diff_all_tolerance(&self, other: &(B, B, B, B, B, B, B, B, B, B), max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_abs_diff_all_tolerance(
+        &self,
+        other: &(B, B, B, B, B, B, B, B, B, B),
+        max_abs_diff: &Self::AllTolerance,
+    ) -> Self::AllDebugTolerance {
         (
             self.0.debug_abs_diff_all_tolerance(&other.0, max_abs_diff),
             self.1.debug_abs_diff_all_tolerance(&other.1, max_abs_diff),
@@ -707,7 +733,11 @@ where
     }
 
     #[inline]
-    fn debug_relative_all_tolerance(&self, other: &(B, B, B, B, B, B, B, B, B, B), max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_relative_all_tolerance(
+        &self,
+        other: &(B, B, B, B, B, B, B, B, B, B),
+        max_relative: &Self::AllTolerance,
+    ) -> Self::AllDebugTolerance {
         (
             self.0.debug_relative_all_tolerance(&other.0, max_relative),
             self.1.debug_relative_all_tolerance(&other.1, max_relative),
@@ -730,18 +760,23 @@ where
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn relative_all_eq(&self, other: &(B, B, B, B, B, B, B, B, B, B, B), max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
-        self.0.relative_all_eq(&other.0, max_abs_diff, max_relative) &&
-        self.1.relative_all_eq(&other.1, max_abs_diff, max_relative) &&
-        self.2.relative_all_eq(&other.2, max_abs_diff, max_relative) &&
-        self.3.relative_all_eq(&other.3, max_abs_diff, max_relative) &&
-        self.4.relative_all_eq(&other.4, max_abs_diff, max_relative) &&
-        self.5.relative_all_eq(&other.5, max_abs_diff, max_relative) &&
-        self.6.relative_all_eq(&other.6, max_abs_diff, max_relative) &&
-        self.7.relative_all_eq(&other.7, max_abs_diff, max_relative) &&
-        self.8.relative_all_eq(&other.8, max_abs_diff, max_relative) &&
-        self.9.relative_all_eq(&other.9, max_abs_diff, max_relative) &&
-        self.10.relative_all_eq(&other.10, max_abs_diff, max_relative)
+    fn relative_all_eq(
+        &self,
+        other: &(B, B, B, B, B, B, B, B, B, B, B),
+        max_abs_diff: &Self::AllTolerance,
+        max_relative: &Self::AllTolerance,
+    ) -> bool {
+        self.0.relative_all_eq(&other.0, max_abs_diff, max_relative)
+            && self.1.relative_all_eq(&other.1, max_abs_diff, max_relative)
+            && self.2.relative_all_eq(&other.2, max_abs_diff, max_relative)
+            && self.3.relative_all_eq(&other.3, max_abs_diff, max_relative)
+            && self.4.relative_all_eq(&other.4, max_abs_diff, max_relative)
+            && self.5.relative_all_eq(&other.5, max_abs_diff, max_relative)
+            && self.6.relative_all_eq(&other.6, max_abs_diff, max_relative)
+            && self.7.relative_all_eq(&other.7, max_abs_diff, max_relative)
+            && self.8.relative_all_eq(&other.8, max_abs_diff, max_relative)
+            && self.9.relative_all_eq(&other.9, max_abs_diff, max_relative)
+            && self.10.relative_all_eq(&other.10, max_abs_diff, max_relative)
     }
 }
 
@@ -764,7 +799,11 @@ where
     );
 
     #[inline]
-    fn debug_abs_diff_all_tolerance(&self, other: &(B, B, B, B, B, B, B, B, B, B, B), max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_abs_diff_all_tolerance(
+        &self,
+        other: &(B, B, B, B, B, B, B, B, B, B, B),
+        max_abs_diff: &Self::AllTolerance,
+    ) -> Self::AllDebugTolerance {
         (
             self.0.debug_abs_diff_all_tolerance(&other.0, max_abs_diff),
             self.1.debug_abs_diff_all_tolerance(&other.1, max_abs_diff),
@@ -781,7 +820,11 @@ where
     }
 
     #[inline]
-    fn debug_relative_all_tolerance(&self, other: &(B, B, B, B, B, B, B, B, B, B, B), max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_relative_all_tolerance(
+        &self,
+        other: &(B, B, B, B, B, B, B, B, B, B, B),
+        max_relative: &Self::AllTolerance,
+    ) -> Self::AllDebugTolerance {
         (
             self.0.debug_relative_all_tolerance(&other.0, max_relative),
             self.1.debug_relative_all_tolerance(&other.1, max_relative),
@@ -805,18 +848,23 @@ where
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn relative_all_eq(&self, other: &(B, B, B, B, B, B, B, B, B, B, B, B), max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
-        self.0.relative_all_eq(&other.0, max_abs_diff, max_relative) &&
-        self.1.relative_all_eq(&other.1, max_abs_diff, max_relative) &&
-        self.2.relative_all_eq(&other.2, max_abs_diff, max_relative) &&
-        self.3.relative_all_eq(&other.3, max_abs_diff, max_relative) &&
-        self.4.relative_all_eq(&other.4, max_abs_diff, max_relative) &&
-        self.5.relative_all_eq(&other.5, max_abs_diff, max_relative) &&
-        self.6.relative_all_eq(&other.6, max_abs_diff, max_relative) &&
-        self.7.relative_all_eq(&other.7, max_abs_diff, max_relative) &&
-        self.8.relative_all_eq(&other.8, max_abs_diff, max_relative) &&
-        self.9.relative_all_eq(&other.9, max_abs_diff, max_relative) &&
-        self.10.relative_all_eq(&other.10, max_abs_diff, max_relative)
+    fn relative_all_eq(
+        &self,
+        other: &(B, B, B, B, B, B, B, B, B, B, B, B),
+        max_abs_diff: &Self::AllTolerance,
+        max_relative: &Self::AllTolerance,
+    ) -> bool {
+        self.0.relative_all_eq(&other.0, max_abs_diff, max_relative)
+            && self.1.relative_all_eq(&other.1, max_abs_diff, max_relative)
+            && self.2.relative_all_eq(&other.2, max_abs_diff, max_relative)
+            && self.3.relative_all_eq(&other.3, max_abs_diff, max_relative)
+            && self.4.relative_all_eq(&other.4, max_abs_diff, max_relative)
+            && self.5.relative_all_eq(&other.5, max_abs_diff, max_relative)
+            && self.6.relative_all_eq(&other.6, max_abs_diff, max_relative)
+            && self.7.relative_all_eq(&other.7, max_abs_diff, max_relative)
+            && self.8.relative_all_eq(&other.8, max_abs_diff, max_relative)
+            && self.9.relative_all_eq(&other.9, max_abs_diff, max_relative)
+            && self.10.relative_all_eq(&other.10, max_abs_diff, max_relative)
     }
 }
 
@@ -840,7 +888,11 @@ where
     );
 
     #[inline]
-    fn debug_abs_diff_all_tolerance(&self, other: &(B, B, B, B, B, B, B, B, B, B, B, B), max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_abs_diff_all_tolerance(
+        &self,
+        other: &(B, B, B, B, B, B, B, B, B, B, B, B),
+        max_abs_diff: &Self::AllTolerance,
+    ) -> Self::AllDebugTolerance {
         (
             self.0.debug_abs_diff_all_tolerance(&other.0, max_abs_diff),
             self.1.debug_abs_diff_all_tolerance(&other.1, max_abs_diff),
@@ -858,7 +910,11 @@ where
     }
 
     #[inline]
-    fn debug_relative_all_tolerance(&self, other: &(B, B, B, B, B, B, B, B, B, B, B, B), max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_relative_all_tolerance(
+        &self,
+        other: &(B, B, B, B, B, B, B, B, B, B, B, B),
+        max_relative: &Self::AllTolerance,
+    ) -> Self::AllDebugTolerance {
         (
             self.0.debug_relative_all_tolerance(&other.0, max_relative),
             self.1.debug_relative_all_tolerance(&other.1, max_relative),
@@ -875,4 +931,3 @@ where
         )
     }
 }
-
