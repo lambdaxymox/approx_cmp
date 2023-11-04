@@ -7,6 +7,7 @@ use approx_cmp_relative::{
     AssertRelativeAllEq,
     AssertRelativeEq,
 };
+use std::vec::Vec;
 
 
 #[rustfmt::skip]

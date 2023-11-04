@@ -7,6 +7,7 @@ use approx_cmp_abs_diff::{
     AssertAbsDiffAllEq,
     AssertAbsDiffEq,
 };
+use std::vec::Vec;
 
 
 #[rustfmt::skip]
