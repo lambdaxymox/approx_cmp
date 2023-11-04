@@ -1,13 +1,13 @@
 extern crate relative_cmp;
 
 
+use core::cell;
 use relative_cmp::{
     assert_relative_eq,
     assert_relative_ne,
     AssertRelativeAllEq,
     AssertRelativeEq,
 };
-use core::cell;
 
 
 #[rustfmt::skip]

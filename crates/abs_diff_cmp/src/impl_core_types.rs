@@ -686,7 +686,7 @@ where
     fn debug_abs_diff_all_tolerance(&self, other: &[B; N], max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
         let mut result: [mem::MaybeUninit<A::AllDebugTolerance>; N] = uninit_array();
         for i in 0..N {
-            result[i] = mem::MaybeUninit::new(self[i].debug_abs_diff_all_tolerance(&other[i], &max_abs_diff));
+            result[i] = mem::MaybeUninit::new(self[i].debug_abs_diff_all_tolerance(&other[i], max_abs_diff));
         }
 
         unsafe { array_assume_init(result) }
