@@ -30,4 +30,3 @@ pub use abs_diff_impl_std_slice::*;
 
 #[cfg(feature = "std")]
 pub use abs_diff_impl_std::*;
-
