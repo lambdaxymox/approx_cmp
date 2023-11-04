@@ -29,6 +29,7 @@ mod abs_diff_eq_box_tests {
         ];
 
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_eq!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -49,6 +50,7 @@ mod abs_diff_eq_box_tests {
         ];
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -69,6 +71,7 @@ mod abs_diff_eq_box_tests {
         ];
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -85,6 +88,7 @@ mod abs_diff_eq_box_tests {
         let max_abs_diff = 4.0_f32 * f32::EPSILON;
 
         assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_abs_diff_eq!(rhs, lhs, abs_diff_all <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -101,6 +105,7 @@ mod abs_diff_eq_box_tests {
         let max_abs_diff = 2.0_f32 * f32::EPSILON;
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff_all <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -174,6 +179,7 @@ mod abs_diff_eq_box_tests {
         let max_abs_diff = [0.10_f32, 0.20_f32, 0.30_f32, 0.40_f32];
 
         assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), max_abs_diff);
     }
 
     #[test]
@@ -184,6 +190,7 @@ mod abs_diff_eq_box_tests {
         let max_abs_diff = [max_abs_diff_all; 4];
 
         assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), max_abs_diff);
+        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), max_abs_diff);
     }
 }
 
@@ -217,6 +224,7 @@ mod abs_diff_eq_rc_tests {
         ];
 
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_eq!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -237,6 +245,7 @@ mod abs_diff_eq_rc_tests {
         ];
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -257,6 +266,7 @@ mod abs_diff_eq_rc_tests {
         ];
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -273,6 +283,7 @@ mod abs_diff_eq_rc_tests {
         let max_abs_diff = 4.0_f32 * f32::EPSILON;
 
         assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_abs_diff_eq!(rhs, lhs, abs_diff_all <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -289,6 +300,7 @@ mod abs_diff_eq_rc_tests {
         let max_abs_diff = 2.0_f32 * f32::EPSILON;
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff_all <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -362,6 +374,7 @@ mod abs_diff_eq_rc_tests {
         let max_abs_diff = [0.10_f32, 0.20_f32, 0.30_f32, 0.40_f32];
 
         assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), max_abs_diff);
     }
 
     #[test]
@@ -372,6 +385,7 @@ mod abs_diff_eq_rc_tests {
         let max_abs_diff = [max_abs_diff_all; 4];
 
         assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), max_abs_diff);
+        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), max_abs_diff);
     }
 }
 
@@ -405,6 +419,7 @@ mod abs_diff_eq_arc_tests {
         ];
 
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_eq!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -425,6 +440,7 @@ mod abs_diff_eq_arc_tests {
         ];
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -445,6 +461,7 @@ mod abs_diff_eq_arc_tests {
         ];
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -461,6 +478,7 @@ mod abs_diff_eq_arc_tests {
         let max_abs_diff = 4.0_f32 * f32::EPSILON;
 
         assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_abs_diff_eq!(rhs, lhs, abs_diff_all <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -477,6 +495,7 @@ mod abs_diff_eq_arc_tests {
         let max_abs_diff = 2.0_f32 * f32::EPSILON;
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff_all <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -550,6 +569,7 @@ mod abs_diff_eq_arc_tests {
         let max_abs_diff = [0.10_f32, 0.20_f32, 0.30_f32, 0.40_f32];
 
         assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), max_abs_diff);
     }
 
     #[test]
@@ -560,6 +580,7 @@ mod abs_diff_eq_arc_tests {
         let max_abs_diff = [max_abs_diff_all; 4];
 
         assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), max_abs_diff);
+        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), max_abs_diff);
     }
 }
 
@@ -592,6 +613,7 @@ mod abs_diff_eq_vec_tests {
         ]);
 
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_eq!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -612,6 +634,7 @@ mod abs_diff_eq_vec_tests {
         ]);
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -632,6 +655,7 @@ mod abs_diff_eq_vec_tests {
         ]);
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -648,6 +672,7 @@ mod abs_diff_eq_vec_tests {
         let max_abs_diff = 4.0_f32 * f32::EPSILON;
 
         assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_abs_diff_eq!(rhs, lhs, abs_diff_all <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -664,6 +689,7 @@ mod abs_diff_eq_vec_tests {
         let max_abs_diff = 2.0_f32 * f32::EPSILON;
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff_all <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -736,7 +762,8 @@ mod abs_diff_eq_vec_tests {
         let rhs = Vec::from([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
         let max_abs_diff = Vec::from([0.10_f32, 0.20_f32, 0.30_f32, 0.40_f32]);
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), Some(max_abs_diff));
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), Some(max_abs_diff.clone()));
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), Some(max_abs_diff.clone()));
     }
 
     #[test]
@@ -746,7 +773,8 @@ mod abs_diff_eq_vec_tests {
         let max_abs_diff_all = 0.20_f32;
         let max_abs_diff = Vec::from([max_abs_diff_all; 4]);
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), Some(max_abs_diff));
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), Some(max_abs_diff.clone()));
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), Some(max_abs_diff.clone()));
     }
 
     #[test]
@@ -909,6 +937,7 @@ mod abs_diff_eq_vecdeque_tests {
         ]);
 
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_eq!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -929,6 +958,7 @@ mod abs_diff_eq_vecdeque_tests {
         ]);
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -949,6 +979,7 @@ mod abs_diff_eq_vecdeque_tests {
         ]);
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -965,6 +996,7 @@ mod abs_diff_eq_vecdeque_tests {
         let max_abs_diff = 4.0_f32 * f32::EPSILON;
 
         assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_abs_diff_eq!(rhs, lhs, abs_diff_all <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -981,6 +1013,7 @@ mod abs_diff_eq_vecdeque_tests {
         let max_abs_diff = 2.0_f32 * f32::EPSILON;
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff_all <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -1233,6 +1266,7 @@ mod abs_diff_eq_linked_list_tests {
         ]);
 
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_eq!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -1253,6 +1287,7 @@ mod abs_diff_eq_linked_list_tests {
         ]);
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -1273,6 +1308,7 @@ mod abs_diff_eq_linked_list_tests {
         ]);
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -1289,6 +1325,7 @@ mod abs_diff_eq_linked_list_tests {
         let max_abs_diff = 4.0_f32 * f32::EPSILON;
 
         assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_abs_diff_eq!(rhs, lhs, abs_diff_all <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -1305,6 +1342,7 @@ mod abs_diff_eq_linked_list_tests {
         let max_abs_diff = 2.0_f32 * f32::EPSILON;
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff_all <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -1377,7 +1415,8 @@ mod abs_diff_eq_linked_list_tests {
         let rhs = LinkedList::from([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
         let max_abs_diff = LinkedList::from([0.10_f32, 0.20_f32, 0.30_f32, 0.40_f32]);
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), Some(max_abs_diff));
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), Some(max_abs_diff.clone()));
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), Some(max_abs_diff.clone()));
     }
 
     #[test]
@@ -1387,7 +1426,8 @@ mod abs_diff_eq_linked_list_tests {
         let max_abs_diff_all = 0.20_f32;
         let max_abs_diff = LinkedList::from([max_abs_diff_all; 4]);
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), Some(max_abs_diff));
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), Some(max_abs_diff.clone()));
+        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), Some(max_abs_diff.clone()));
     }
 
     #[test]
@@ -1570,6 +1610,7 @@ mod abs_diff_eq_hash_map_tests {
         ]);
 
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_eq!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -1610,6 +1651,7 @@ mod abs_diff_eq_hash_map_tests {
         ]);
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -1650,6 +1692,7 @@ mod abs_diff_eq_hash_map_tests {
         ]);
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -1680,6 +1723,7 @@ mod abs_diff_eq_hash_map_tests {
         let max_abs_diff = 4.0_f32 * f32::EPSILON;
 
         assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_abs_diff_eq!(rhs, lhs, abs_diff_all <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -1710,6 +1754,7 @@ mod abs_diff_eq_hash_map_tests {
         let max_abs_diff = 2.0_f32 * f32::EPSILON;
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff_all <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -1874,7 +1919,8 @@ mod abs_diff_eq_hash_map_tests {
             ("3", 0.40_f32),
         ]);
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), Some(max_abs_diff));
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), Some(max_abs_diff.clone()));
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), Some(max_abs_diff.clone()));
     }
 
     #[rustfmt::skip]
@@ -1900,7 +1946,8 @@ mod abs_diff_eq_hash_map_tests {
             ("3", max_abs_diff_all),
         ]);
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), Some(max_abs_diff));
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), Some(max_abs_diff.clone()));
+        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), Some(max_abs_diff.clone()));
     }
 
     #[test]
@@ -2153,6 +2200,7 @@ mod abs_diff_eq_btree_map_tests {
         ]);
 
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_eq!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -2193,6 +2241,7 @@ mod abs_diff_eq_btree_map_tests {
         ]);
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -2233,6 +2282,7 @@ mod abs_diff_eq_btree_map_tests {
         ]);
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -2263,6 +2313,7 @@ mod abs_diff_eq_btree_map_tests {
         let max_abs_diff = 4.0_f32 * f32::EPSILON;
 
         assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_abs_diff_eq!(rhs, lhs, abs_diff_all <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -2293,6 +2344,7 @@ mod abs_diff_eq_btree_map_tests {
         let max_abs_diff = 2.0_f32 * f32::EPSILON;
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff_all <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -2457,7 +2509,8 @@ mod abs_diff_eq_btree_map_tests {
             ("3", 0.40_f32),
         ]);
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), Some(max_abs_diff));
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), Some(max_abs_diff.clone()));
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), Some(max_abs_diff.clone()));
     }
 
     #[rustfmt::skip]
@@ -2483,7 +2536,8 @@ mod abs_diff_eq_btree_map_tests {
             ("3", max_abs_diff_all),
         ]);
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), Some(max_abs_diff));
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), Some(max_abs_diff.clone()));
+        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), Some(max_abs_diff.clone()));
     }
 
     #[test]
@@ -2716,6 +2770,7 @@ mod abs_diff_eq_oncelock_tests {
         ];
 
         assert_abs_diff_eq!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_eq!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -2736,6 +2791,7 @@ mod abs_diff_eq_oncelock_tests {
         ];
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -2756,6 +2812,7 @@ mod abs_diff_eq_oncelock_tests {
         ];
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -2772,6 +2829,7 @@ mod abs_diff_eq_oncelock_tests {
         let max_abs_diff = 4.0_f32 * f32::EPSILON;
 
         assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_abs_diff_eq!(rhs, lhs, abs_diff_all <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -2788,6 +2846,7 @@ mod abs_diff_eq_oncelock_tests {
         let max_abs_diff = 2.0_f32 * f32::EPSILON;
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff_all <= max_abs_diff);
     }
 
     #[rustfmt::skip]
@@ -2861,6 +2920,7 @@ mod abs_diff_eq_oncelock_tests {
         let max_abs_diff = [0.10_f32, 0.20_f32, 0.30_f32, 0.40_f32];
 
         assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), Some(max_abs_diff));
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), Some(max_abs_diff));
     }
 
     #[test]
@@ -2871,6 +2931,7 @@ mod abs_diff_eq_oncelock_tests {
         let max_abs_diff = [max_abs_diff_all; 4];
 
         assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), Some(max_abs_diff));
+        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), Some(max_abs_diff));
     }
 
     #[test]
@@ -2898,6 +2959,7 @@ mod abs_diff_eq_oncelock_tests {
         let max_abs_diff = f32::EPSILON;
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[test]
@@ -2907,6 +2969,7 @@ mod abs_diff_eq_oncelock_tests {
         let max_abs_diff = f32::EPSILON;
 
         assert_abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff);
+        assert_abs_diff_ne!(rhs, lhs, abs_diff <= max_abs_diff);
     }
 
     #[test]

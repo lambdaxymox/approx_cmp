@@ -31,7 +31,9 @@ fn test_eq() {
     ];
 
     assert!(relative_eq!(lhs[..], rhs[..], abs_diff <= max_abs_diff, relative <= max_relative));
+    assert!(relative_eq!(rhs[..], lhs[..], abs_diff <= max_abs_diff, relative <= max_relative));
     assert_relative_eq!(&lhs[..], &rhs[..], abs_diff <= max_abs_diff, relative <= max_relative);
+    assert_relative_eq!(&rhs[..], &lhs[..], abs_diff <= max_abs_diff, relative <= max_relative);
 }
 
 #[rustfmt::skip]
@@ -50,7 +52,9 @@ fn test_ne1() {
     let max_relative = [eps; 8];
 
     assert!(relative_ne!(lhs[..], rhs[..], abs_diff <= max_abs_diff, relative <= max_relative));
+    assert!(relative_ne!(rhs[..], lhs[..], abs_diff <= max_abs_diff, relative <= max_relative));
     assert_relative_ne!(&lhs[..], &rhs[..], abs_diff <= max_abs_diff, relative <= max_relative);
+    assert_relative_ne!(&rhs[..], &lhs[..], abs_diff <= max_abs_diff, relative <= max_relative);
 }
 
 #[rustfmt::skip]
@@ -75,7 +79,9 @@ fn test_ne2() {
     ];
 
     assert!(relative_ne!(lhs[..], rhs[..], abs_diff <= max_abs_diff, relative <= max_relative));
+    assert!(relative_ne!(rhs[..], lhs[..], abs_diff <= max_abs_diff, relative <= max_relative));
     assert_relative_ne!(&lhs[..], &rhs[..], abs_diff <= max_abs_diff, relative <= max_relative);
+    assert_relative_ne!(&rhs[..], &lhs[..], abs_diff <= max_abs_diff, relative <= max_relative);
 }
 
 #[rustfmt::skip]
@@ -93,7 +99,9 @@ fn test_all_eq() {
     let max_relative = 6.0_f32 * f32::EPSILON;
 
     assert!(relative_eq!(lhs[..], rhs[..], abs_diff_all <= max_abs_diff, relative_all <= max_relative));
+    assert!(relative_eq!(rhs[..], lhs[..], abs_diff_all <= max_abs_diff, relative_all <= max_relative));
     assert_relative_eq!(&lhs[..], &rhs[..], abs_diff_all <= &max_abs_diff, relative_all <= max_relative);
+    assert_relative_eq!(&rhs[..], &lhs[..], abs_diff_all <= &max_abs_diff, relative_all <= max_relative);
 }
 
 #[rustfmt::skip]
@@ -111,5 +119,7 @@ fn test_all_ne() {
     let max_relative = 1.0_f32 * f32::EPSILON;
 
     assert!(relative_ne!(lhs[..], rhs[..], abs_diff_all <= max_abs_diff, relative_all <= max_relative));
+    assert!(relative_ne!(rhs[..], lhs[..], abs_diff_all <= max_abs_diff, relative_all <= max_relative));
     assert_relative_ne!(&lhs[..], &rhs[..], abs_diff_all <= max_abs_diff, relative_all <= max_relative);
+    assert_relative_ne!(&rhs[..], &lhs[..], abs_diff_all <= max_abs_diff, relative_all <= max_relative);
 }

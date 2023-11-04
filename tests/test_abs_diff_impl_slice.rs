@@ -27,7 +27,9 @@ fn test_eq() {
     ];
 
     assert!(abs_diff_eq!(lhs[..], rhs[..], abs_diff <= max_abs_diff));
+    assert!(abs_diff_eq!(rhs[..], lhs[..], abs_diff <= max_abs_diff));
     assert_abs_diff_eq!(&lhs[..], &rhs[..], abs_diff <= max_abs_diff);
+    assert_abs_diff_eq!(&rhs[..], &lhs[..], abs_diff <= max_abs_diff);
 }
 
 #[rustfmt::skip]
@@ -45,7 +47,9 @@ fn test_ne1() {
     let max_abs_diff = [eps; 8];
 
     assert!(abs_diff_ne!(lhs[..], rhs[..], abs_diff <= max_abs_diff));
+    assert!(abs_diff_ne!(rhs[..], lhs[..], abs_diff <= max_abs_diff));
     assert_abs_diff_ne!(&lhs[..], &rhs[..], abs_diff <= max_abs_diff);
+    assert_abs_diff_ne!(&rhs[..], &lhs[..], abs_diff <= max_abs_diff);
 }
 
 #[rustfmt::skip]
@@ -66,7 +70,9 @@ fn test_ne2() {
     ];
 
     assert!(abs_diff_ne!(lhs[..], rhs[..], abs_diff <= max_abs_diff));
+    assert!(abs_diff_ne!(rhs[..], lhs[..], abs_diff <= max_abs_diff));
     assert_abs_diff_ne!(&lhs[..], &rhs[..], abs_diff <= max_abs_diff);
+    assert_abs_diff_ne!(&rhs[..], &lhs[..], abs_diff <= max_abs_diff);
 }
 
 #[rustfmt::skip]
@@ -83,7 +89,9 @@ fn test_all_eq() {
     let max_abs_diff = 6.0_f32 * f32::EPSILON;
 
     assert!(abs_diff_eq!(lhs[..], rhs[..], abs_diff_all <= max_abs_diff));
+    assert!(abs_diff_eq!(rhs[..], lhs[..], abs_diff_all <= max_abs_diff));
     assert_abs_diff_eq!(&lhs[..], &rhs[..], abs_diff_all <= &max_abs_diff);
+    assert_abs_diff_eq!(&rhs[..], &lhs[..], abs_diff_all <= &max_abs_diff);
 }
 
 #[rustfmt::skip]
@@ -100,5 +108,7 @@ fn test_all_ne() {
     let max_abs_diff = 2.0_f32 * f32::EPSILON;
 
     assert!(abs_diff_ne!(lhs[..], rhs[..], abs_diff_all <= max_abs_diff));
+    assert!(abs_diff_ne!(rhs[..], lhs[..], abs_diff_all <= max_abs_diff));
     assert_abs_diff_ne!(&lhs[..], &rhs[..], abs_diff_all <= max_abs_diff);
+    assert_abs_diff_ne!(&rhs[..], &lhs[..], abs_diff_all <= max_abs_diff);
 }
