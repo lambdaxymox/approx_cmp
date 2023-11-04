@@ -9,24 +9,31 @@ extern crate alloc as std;
 extern crate std;
 
 
-mod abs_diff;
-mod abs_diff_impl_core;
-mod abs_diff_impl_core_slice;
-mod abs_diff_impl_core_tuple;
+mod traits;
+mod impl_core_types;
+mod impl_core_slice;
+mod impl_core_tuple;
+
+#[cfg(any(feature = "alloc", feature = "std"))]
+mod impl_alloc_types;
+
+#[cfg(any(feature = "alloc", feature = "std"))]
+mod impl_alloc_slice;
 
 #[cfg(feature = "std")]
-mod abs_diff_impl_std_slice;
+mod impl_std_types;
+
+
+pub use traits::*;
+pub use impl_core_types::*;
+pub use impl_core_slice::*;
+pub use impl_core_tuple::*;
+
+#[cfg(any(feature = "alloc", feature = "std"))]
+pub use impl_alloc_types::*;
+
+#[cfg(any(feature = "alloc", feature = "std"))]
+pub use impl_alloc_slice::*;
 
 #[cfg(feature = "std")]
-mod abs_diff_impl_std;
-
-pub use abs_diff::*;
-pub use abs_diff_impl_core::*;
-pub use abs_diff_impl_core_slice::*;
-pub use abs_diff_impl_core_tuple::*;
-
-#[cfg(feature = "std")]
-pub use abs_diff_impl_std_slice::*;
-
-#[cfg(feature = "std")]
-pub use abs_diff_impl_std::*;
+pub use impl_std_types::*;

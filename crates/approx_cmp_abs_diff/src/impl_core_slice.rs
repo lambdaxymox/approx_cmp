@@ -1,4 +1,4 @@
-use crate::abs_diff::{
+use crate::traits::{
     AbsDiffAllEq,
     AbsDiffEq,
 };

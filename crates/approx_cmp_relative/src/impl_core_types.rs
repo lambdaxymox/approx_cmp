@@ -1,4 +1,4 @@
-use crate::relative::{
+use crate::traits::{
     AssertRelativeAllEq,
     AssertRelativeEq,
     RelativeAllEq,
