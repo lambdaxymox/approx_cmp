@@ -1,9 +1,9 @@
-extern crate approx_cmp;
+extern crate approx_cmp_relative;
 
 
 #[cfg(test)]
 mod relative_eq_f32_tests {
-    use approx_cmp::{
+    use approx_cmp_relative::{
         assert_relative_eq,
         assert_relative_ne,
         relative_eq,
@@ -593,7 +593,7 @@ mod relative_eq_f32_tests {
 
 #[cfg(test)]
 mod relative_eq_f64_tests {
-    use approx_cmp::{
+    use approx_cmp_relative::{
         assert_relative_eq,
         assert_relative_ne,
         relative_eq,
@@ -1541,7 +1541,7 @@ macro_rules! impl_relative_eq_float_exact_exhaustive_tests {
     ($(($module_name:ident, $FloatType:ty, $IntegerType:ty)),*) => {$(
         #[cfg(test)]
         mod $module_name {
-            use approx_cmp::{
+            use approx_cmp_relative::{
                 RelativeEq,
                 assert_relative_eq,
                 assert_relative_ne,
@@ -1588,7 +1588,7 @@ impl_relative_eq_float_exact_exhaustive_tests!(
 
 #[cfg(test)]
 mod relative_eq_array_f32_tests {
-    use approx_cmp::{
+    use approx_cmp_relative::{
         assert_relative_eq,
         assert_relative_ne,
         relative_eq,
@@ -1708,7 +1708,7 @@ mod relative_eq_array_f32_tests {
 
 #[cfg(test)]
 mod relative_eq_array_f64_tests {
-    use approx_cmp::{
+    use approx_cmp_relative::{
         assert_relative_eq,
         assert_relative_ne,
         relative_eq,
@@ -1829,7 +1829,7 @@ mod relative_eq_array_f64_tests {
 
 #[cfg(test)]
 mod relative_eq_array_f32_debug_tests {
-    use approx_cmp::{
+    use approx_cmp_relative::{
         AssertRelativeAllEq,
         AssertRelativeEq,
     };
@@ -1955,7 +1955,7 @@ mod relative_eq_array_f32_debug_tests {
 
 #[cfg(test)]
 mod relative_eq_array_f64_debug_tests {
-    use approx_cmp::{
+    use approx_cmp_relative::{
         AssertRelativeAllEq,
         AssertRelativeEq,
     };
@@ -2081,7 +2081,7 @@ mod relative_eq_array_f64_debug_tests {
 
 #[cfg(test)]
 mod relative_eq_ref_tests {
-    use approx_cmp::{
+    use approx_cmp_relative::{
         assert_relative_eq,
         assert_relative_ne,
         AssertRelativeAllEq,
@@ -2350,7 +2350,7 @@ mod relative_eq_ref_tests {
 
 #[cfg(test)]
 mod relative_eq_cell_tests {
-    use approx_cmp::{
+    use approx_cmp_relative::{
         assert_relative_eq,
         assert_relative_ne,
         AssertRelativeAllEq,
@@ -2578,7 +2578,7 @@ mod relative_eq_cell_tests {
 
 #[cfg(test)]
 mod relative_eq_refcell_tests {
-    use approx_cmp::{
+    use approx_cmp_relative::{
         assert_relative_eq,
         assert_relative_ne,
         AssertRelativeAllEq,
@@ -2805,7 +2805,7 @@ mod relative_eq_refcell_tests {
 
 #[cfg(test)]
 mod relative_eq_option_tests {
-    use approx_cmp::{
+    use approx_cmp_relative::{
         assert_relative_eq,
         assert_relative_ne,
         AssertRelativeAllEq,
@@ -3237,7 +3237,7 @@ mod relative_eq_option_tests {
 
 #[cfg(test)]
 mod relative_eq_oncecell_tests {
-    use approx_cmp::{
+    use approx_cmp_relative::{
         assert_relative_eq,
         assert_relative_ne,
         AssertRelativeAllEq,

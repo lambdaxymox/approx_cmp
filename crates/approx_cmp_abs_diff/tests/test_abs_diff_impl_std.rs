@@ -1,9 +1,9 @@
-extern crate approx_cmp;
+extern crate approx_cmp_abs_diff;
 
 
 #[cfg(test)]
 mod abs_diff_eq_box_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -197,7 +197,7 @@ mod abs_diff_eq_box_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_rc_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -392,7 +392,7 @@ mod abs_diff_eq_rc_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_arc_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -587,7 +587,7 @@ mod abs_diff_eq_arc_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_vec_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -910,7 +910,7 @@ mod abs_diff_eq_vec_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_vecdeque_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -1239,7 +1239,7 @@ mod abs_diff_eq_vecdeque_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_linked_list_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -1563,7 +1563,7 @@ mod abs_diff_eq_linked_list_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_hash_map_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -2153,7 +2153,7 @@ mod abs_diff_eq_hash_map_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_btree_map_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -2743,7 +2743,7 @@ mod abs_diff_eq_btree_map_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_oncelock_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,

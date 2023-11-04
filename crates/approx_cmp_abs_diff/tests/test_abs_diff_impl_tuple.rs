@@ -1,9 +1,9 @@
-extern crate approx_cmp;
+extern crate approx_cmp_abs_diff;
 
 
 #[cfg(test)]
 mod abs_diff_eq_unit_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         abs_diff_eq,
         assert_abs_diff_eq,
         AbsDiffAllEq,
@@ -44,7 +44,7 @@ mod abs_diff_eq_unit_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_tuple1_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -125,7 +125,7 @@ mod abs_diff_eq_tuple1_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_tuple2_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -185,7 +185,7 @@ mod abs_diff_eq_tuple2_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_tuple2_heterogenous_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffEq,
@@ -236,7 +236,7 @@ mod abs_diff_eq_tuple2_heterogenous_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_tuple3_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -276,7 +276,7 @@ mod abs_diff_eq_tuple3_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_tuple3_heterogenous_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffEq,
@@ -327,7 +327,7 @@ mod abs_diff_eq_tuple3_heterogenous_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_tuple4_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -397,7 +397,7 @@ mod abs_diff_eq_tuple4_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_tuple4_heterogenous_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffEq,
@@ -453,7 +453,7 @@ mod abs_diff_eq_tuple4_heterogenous_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_tuple5_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -557,7 +557,7 @@ mod abs_diff_eq_tuple5_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_tuple5_heterogenous_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffEq,
@@ -648,7 +648,7 @@ mod abs_diff_eq_tuple5_heterogenous_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_tuple6_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -752,7 +752,7 @@ mod abs_diff_eq_tuple6_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_tuple6_heterogenous_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffEq,
@@ -843,7 +843,7 @@ mod abs_diff_eq_tuple6_heterogenous_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_tuple7_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -947,7 +947,7 @@ mod abs_diff_eq_tuple7_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_tuple7_heterogenous_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffEq,
@@ -1038,7 +1038,7 @@ mod abs_diff_eq_tuple7_heterogenous_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_tuple8_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -1142,7 +1142,7 @@ mod abs_diff_eq_tuple8_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_tuple8_heterogenous_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffEq,
@@ -1233,7 +1233,7 @@ mod abs_diff_eq_tuple8_heterogenous_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_tuple9_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -1350,7 +1350,7 @@ mod abs_diff_eq_tuple9_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_tuple9_heterogenous_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffEq,
@@ -1453,7 +1453,7 @@ mod abs_diff_eq_tuple9_heterogenous_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_tuple10_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -1570,7 +1570,7 @@ mod abs_diff_eq_tuple10_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_tuple10_hetergenous_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffEq,
@@ -1673,7 +1673,7 @@ mod abs_diff_eq_tuple10_hetergenous_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_tuple11_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -1790,7 +1790,7 @@ mod abs_diff_eq_tuple11_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_tuple11_hetergenous_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffEq,
@@ -1893,7 +1893,7 @@ mod abs_diff_eq_tuple11_hetergenous_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_tuple12_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -2010,7 +2010,7 @@ mod abs_diff_eq_tuple12_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_tuple12_heterogenous_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffEq,

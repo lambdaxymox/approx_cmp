@@ -1,9 +1,9 @@
-extern crate approx_cmp;
+extern crate approx_cmp_relative;
 
 
 #[cfg(test)]
 mod relative_eq_box_tests {
-    use approx_cmp::{
+    use approx_cmp_relative::{
         assert_relative_eq,
         assert_relative_ne,
         AssertRelativeAllEq,
@@ -230,7 +230,7 @@ mod relative_eq_box_tests {
 
 #[cfg(test)]
 mod relative_eq_rc_tests {
-    use approx_cmp::{
+    use approx_cmp_relative::{
         assert_relative_eq,
         assert_relative_ne,
         AssertRelativeAllEq,
@@ -457,7 +457,7 @@ mod relative_eq_rc_tests {
 
 #[cfg(test)]
 mod relative_eq_arc_tests {
-    use approx_cmp::{
+    use approx_cmp_relative::{
         assert_relative_eq,
         assert_relative_ne,
         AssertRelativeAllEq,
@@ -684,7 +684,7 @@ mod relative_eq_arc_tests {
 
 #[cfg(test)]
 mod relative_eq_vec_tests {
-    use approx_cmp::{
+    use approx_cmp_relative::{
         assert_relative_eq,
         assert_relative_ne,
         AssertRelativeAllEq,
@@ -1280,7 +1280,7 @@ mod relative_eq_vec_tests {
 
 #[cfg(test)]
 mod relative_eq_vecdeque_tests {
-    use approx_cmp::{
+    use approx_cmp_relative::{
         assert_relative_eq,
         assert_relative_ne,
         AssertRelativeAllEq,
@@ -1889,7 +1889,7 @@ mod relative_eq_vecdeque_tests {
 
 #[cfg(test)]
 mod relative_eq_linked_list_tests {
-    use approx_cmp::{
+    use approx_cmp_relative::{
         assert_relative_eq,
         assert_relative_ne,
         AssertRelativeAllEq,
@@ -2488,7 +2488,7 @@ mod relative_eq_linked_list_tests {
 
 #[cfg(test)]
 mod relative_eq_hash_map_tests {
-    use approx_cmp::{
+    use approx_cmp_relative::{
         assert_relative_eq,
         assert_relative_ne,
         AssertRelativeAllEq,
@@ -3590,7 +3590,7 @@ mod relative_eq_hash_map_tests {
 
 #[cfg(test)]
 mod relative_eq_btree_map_tests {
-    use approx_cmp::{
+    use approx_cmp_relative::{
         assert_relative_eq,
         assert_relative_ne,
         AssertRelativeAllEq,
@@ -4693,7 +4693,7 @@ mod relative_eq_btree_map_tests {
 
 #[cfg(test)]
 mod relative_eq_oncelock_tests {
-    use approx_cmp::{
+    use approx_cmp_relative::{
         assert_relative_eq,
         assert_relative_ne,
         AssertRelativeAllEq,

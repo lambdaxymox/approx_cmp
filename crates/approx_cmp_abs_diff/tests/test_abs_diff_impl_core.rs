@@ -1,9 +1,9 @@
-extern crate approx_cmp;
+extern crate approx_cmp_abs_diff;
 
 
 #[cfg(test)]
 mod abs_diff_eq_f32_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         abs_diff_eq,
         abs_diff_ne,
         assert_abs_diff_eq,
@@ -591,7 +591,7 @@ mod abs_diff_eq_f32_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_f64_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         abs_diff_eq,
         abs_diff_ne,
         assert_abs_diff_eq,
@@ -1537,7 +1537,7 @@ macro_rules! impl_abs_diff_eq_integer_exhaustive_tests {
     ($(($module_name:ident, $T:ty)),*) => {$(
         #[cfg(test)]
         mod $module_name {
-            use approx_cmp::{
+            use approx_cmp_abs_diff::{
                 AbsDiffEq,
                 assert_abs_diff_eq,
                 assert_abs_diff_ne,
@@ -1583,7 +1583,7 @@ macro_rules! impl_abs_diff_eq_float_exact_exhaustive_tests {
     ($(($module_name:ident, $FloatType:ty, $IntegerType:ty)),*) => {$(
         #[cfg(test)]
         mod $module_name {
-            use approx_cmp::{
+            use approx_cmp_abs_diff::{
                 AbsDiffEq,
                 assert_abs_diff_eq,
                 assert_abs_diff_ne,
@@ -1630,7 +1630,7 @@ impl_abs_diff_eq_float_exact_exhaustive_tests!(
 
 #[cfg(test)]
 mod abs_diff_eq_array_f32_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         abs_diff_eq,
         abs_diff_ne,
         assert_abs_diff_eq,
@@ -1748,7 +1748,7 @@ mod abs_diff_eq_array_f32_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_array_f64_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         abs_diff_eq,
         abs_diff_ne,
         assert_abs_diff_eq,
@@ -1866,7 +1866,7 @@ mod abs_diff_eq_array_f64_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_array_f32_debug_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         AssertAbsDiffAllEq,
         AssertAbsDiffEq,
     };
@@ -1950,7 +1950,7 @@ mod abs_diff_eq_array_f32_debug_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_array_f64_debug_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         AssertAbsDiffAllEq,
         AssertAbsDiffEq,
     };
@@ -2034,7 +2034,7 @@ mod abs_diff_eq_array_f64_debug_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_ref_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -2265,7 +2265,7 @@ mod abs_diff_eq_ref_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_cell_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -2460,7 +2460,7 @@ mod abs_diff_eq_cell_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_refcell_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -2655,7 +2655,7 @@ mod abs_diff_eq_refcell_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_option_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,
@@ -2947,7 +2947,7 @@ mod abs_diff_eq_option_tests {
 
 #[cfg(test)]
 mod abs_diff_eq_oncecell_tests {
-    use approx_cmp::{
+    use approx_cmp_abs_diff::{
         assert_abs_diff_eq,
         assert_abs_diff_ne,
         AssertAbsDiffAllEq,

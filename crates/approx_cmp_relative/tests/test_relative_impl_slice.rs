@@ -1,7 +1,7 @@
-extern crate approx_cmp;
+extern crate approx_cmp_relative;
 
 
-use approx_cmp::{
+use approx_cmp_relative::{
     assert_relative_eq,
     assert_relative_ne,
     relative_eq,

@@ -1,5 +1,5 @@
 [package]
-name = "approx_cmp"
+name = "approx_cmp_relative"
 version = "0.1.0"
 edition = "2021"
 
@@ -15,18 +15,5 @@ alloc = []
 # Option: `std` enables support for environments that use the full standard library.
 std = []
 
-[workspace]
-members = [
-    "crates/*"
-]
-
 [dependencies]
-
-[dependencies.approx_cmp_abs_diff]
-path = "crates/approx_cmp_abs_diff/"
-version = "0.1.0"
-
-[dependencies.approx_cmp_relative]
-path = "crates/approx_cmp_relative/"
-version = "0.1.0"
 

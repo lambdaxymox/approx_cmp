@@ -1,7 +1,7 @@
-extern crate approx_cmp;
+extern crate approx_cmp_abs_diff;
 
 
-use approx_cmp::{
+use approx_cmp_abs_diff::{
     abs_diff_eq,
     abs_diff_ne,
     assert_abs_diff_eq,
