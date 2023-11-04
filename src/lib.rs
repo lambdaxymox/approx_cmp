@@ -8,8 +8,8 @@ extern crate alloc as std;
 #[cfg(feature = "std")]
 extern crate std;
 
-extern crate approx_cmp_abs_diff;
-extern crate approx_cmp_relative;
+extern crate abs_diff_cmp;
+extern crate relative_cmp;
 
-pub use approx_cmp_abs_diff::*;
-pub use approx_cmp_relative::*;
+pub use abs_diff_cmp::*;
+pub use relative_cmp::*;
