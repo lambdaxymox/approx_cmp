@@ -9,10 +9,10 @@ extern crate alloc as std;
 extern crate std;
 
 
-mod traits;
-mod impl_core_types;
 mod impl_core_slice;
 mod impl_core_tuple;
+mod impl_core_types;
+mod traits;
 
 #[cfg(any(feature = "alloc", feature = "std"))]
 mod impl_alloc_types;
@@ -24,10 +24,10 @@ mod impl_alloc_slice;
 mod impl_std_types;
 
 
-pub use traits::*;
-pub use impl_core_types::*;
 pub use impl_core_slice::*;
 pub use impl_core_tuple::*;
+pub use impl_core_types::*;
+pub use traits::*;
 
 #[cfg(any(feature = "alloc", feature = "std"))]
 pub use impl_alloc_types::*;

@@ -13,4 +13,3 @@ extern crate approx_cmp_relative;
 
 pub use approx_cmp_abs_diff::*;
 pub use approx_cmp_relative::*;
-
