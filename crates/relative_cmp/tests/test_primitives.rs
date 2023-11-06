@@ -57,7 +57,7 @@ mod relative_eq_f32_tests {
     #[rustfmt::skip]
     #[test]
     fn test_eq_zero() {
-        check_eq_self(0.0);
+        check_eq_self(0.0_f32);
 
         check_eq( 0.0_f32,  0.0_f32, f32::EPSILON, f32::EPSILON);
         check_eq(-0.0_f32,  0.0_f32, f32::EPSILON, f32::EPSILON);
