@@ -128,11 +128,11 @@ macro_rules! impl_assert_ulps_all_eq_float {
             type AllDebugTolerance = $T;
             type AllDebugUlpsTolerance = $U;
 
-            fn debug_abs_diff_all_tolerance(&self, other: &Self, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+            fn debug_abs_diff_all_tolerance(&self, _other: &Self, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
                 *max_abs_diff
             }
 
-            fn debug_ulps_all_tolerance(&self, other: &Self, max_ulps: &Self::AllUlpsTolerance) -> Self::AllDebugUlpsTolerance {
+            fn debug_ulps_all_tolerance(&self, _other: &Self, max_ulps: &Self::AllUlpsTolerance) -> Self::AllDebugUlpsTolerance {
                 *max_ulps
             }
         }
