@@ -30,3 +30,6 @@ version = "0.1.0"
 path = "crates/relative_cmp/"
 version = "0.1.0"
 
+[dependencies.ulps_cmp]
+path = "crates/ulps_cmp/"
+version = "0.1.0"

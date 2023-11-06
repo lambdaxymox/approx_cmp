@@ -171,7 +171,7 @@ macro_rules! assert_abs_diff_eq {
                 if !$crate::abs_diff_eq!(*left_val, *right_val, $eq1 <= *tol_1_val) {
                     // The reborrows below are intentional. Without them, the stack slot for the
                     // borrow is initialized even before the values are compared, leading to a
-                    // noticeable slow down. See the documentation for `core::approx_eq`.
+                    // noticeable slow down. See the documentation for `core::assert_eq`.
                     panic!(concat!(
 "assertion failed: `assert_abs_diff_eq!(left, right, ", stringify!($eq1), " <= t)`", r#"
         left: `{:?}`,
@@ -194,7 +194,7 @@ macro_rules! assert_abs_diff_eq {
                 if !$crate::abs_diff_eq!(*left_val, *right_val, $eq1 <= *tol_1_val) {
                     // The reborrows below are intentional. Without them, the stack slot for the
                     // borrow is initialized even before the values are compared, leading to a
-                    // noticeable slow down. See the documentation for `core::approx_eq`.
+                    // noticeable slow down. See the documentation for `core::assert_eq`.
                     panic!(concat!(
 "assertion failed: `assert_abs_diff_eq!(left, right, ", stringify!($eq1), " <= t)`", r#"
         left: `{:?}`,
@@ -222,7 +222,7 @@ macro_rules! assert_abs_diff_ne {
                 if !$crate::abs_diff_ne!(*left_val, *right_val, $eq1 <= *tol_1_val) {
                     // The reborrows below are intentional. Without them, the stack slot for the
                     // borrow is initialized even before the values are compared, leading to a
-                    // noticeable slow down. See the documentation for `core::approx_eq`.
+                    // noticeable slow down. See the documentation for `core::assert_eq`.
                     panic!(concat!(
 "assertion failed: `assert_abs_diff_ne!(left, right, ", stringify!($eq1), " <= t)`", r#"
         left: `{:?}`,
@@ -245,7 +245,7 @@ macro_rules! assert_abs_diff_ne {
                 if !$crate::abs_diff_ne!(*left_val, *right_val, $eq1 <= *tol_1_val) {
                     // The reborrows below are intentional. Without them, the stack slot for the
                     // borrow is initialized even before the values are compared, leading to a
-                    // noticeable slow down. See the documentation for `core::approx_eq`.
+                    // noticeable slow down. See the documentation for `core::assert_eq`.
                     panic!(concat!(
 "assertion failed: `assert_abs_diff_ne!(left, right, ", stringify!($eq1), " <= t)`", r#"
         left: `{:?}`,

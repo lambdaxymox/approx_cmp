@@ -189,7 +189,7 @@ where
 }
 
 
-macro_rules! impl_abs_diff_eq_all_unsigned {
+macro_rules! impl_abs_diff_all_eq_unsigned {
     ($($T:ident),* $(,)?) => {$(
         impl AbsDiffAllEq for $T {
             type AllTolerance = $T;
@@ -202,10 +202,10 @@ macro_rules! impl_abs_diff_eq_all_unsigned {
     )*}
 }
 
-impl_abs_diff_eq_all_unsigned!(u8, u16, u32, u64, u128, usize);
+impl_abs_diff_all_eq_unsigned!(u8, u16, u32, u64, u128, usize);
 
 
-macro_rules! impl_abs_diff_eq_all_signed {
+macro_rules! impl_abs_diff_all_eq_signed {
     ($($T:ident),* $(,)?) => {$(
         impl AbsDiffAllEq for $T {
             type AllTolerance = $T;
@@ -218,7 +218,7 @@ macro_rules! impl_abs_diff_eq_all_signed {
     )*};
 }
 
-impl_abs_diff_eq_all_signed!(i8, i16, i32, i64, i128, isize, f32, f64);
+impl_abs_diff_all_eq_signed!(i8, i16, i32, i64, i128, isize, f32, f64);
 
 
 impl<A, B> AbsDiffAllEq<&B> for &A
@@ -592,7 +592,7 @@ where
 }
 
 
-macro_rules! impl_assert_all_abs_diff_eq_unsigned {
+macro_rules! impl_assert_abs_diff_all_eq_unsigned {
     ($($T:ident),* $(,)?) => {$(
         impl AssertAbsDiffAllEq for $T {
             type AllDebugTolerance = Self::AllTolerance;
@@ -605,10 +605,10 @@ macro_rules! impl_assert_all_abs_diff_eq_unsigned {
     )*}
 }
 
-impl_assert_all_abs_diff_eq_unsigned!(u8, u16, u32, u64, u128, usize);
+impl_assert_abs_diff_all_eq_unsigned!(u8, u16, u32, u64, u128, usize);
 
 
-macro_rules! impl_assert_all_abs_diff_eq_signed {
+macro_rules! impl_assert_abs_diff_all_eq_signed {
     ($($T:ident),* $(,)?) => {$(
         impl AssertAbsDiffAllEq for $T {
             type AllDebugTolerance = Self::AllTolerance;
@@ -621,7 +621,7 @@ macro_rules! impl_assert_all_abs_diff_eq_signed {
     )*};
 }
 
-impl_assert_all_abs_diff_eq_signed!(i8, i16, i32, i64, i128, isize, f32, f64);
+impl_assert_abs_diff_all_eq_signed!(i8, i16, i32, i64, i128, isize, f32, f64);
 
 
 impl<A, B> AssertAbsDiffAllEq<&B> for &A

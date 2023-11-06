@@ -10,6 +10,8 @@ extern crate std;
 
 extern crate abs_diff_cmp;
 extern crate relative_cmp;
+extern crate ulps_cmp;
 
 pub use abs_diff_cmp::*;
 pub use relative_cmp::*;
+pub use ulps_cmp::*;

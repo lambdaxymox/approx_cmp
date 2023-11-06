@@ -195,7 +195,7 @@ where
 }
 
 
-macro_rules! impl_relative_eq_all_float {
+macro_rules! impl_relative_all_eq_float {
     ($($T:ident),* $(,)?) => {$(
         impl RelativeAllEq for $T {
             type AllTolerance = $T;
@@ -208,7 +208,7 @@ macro_rules! impl_relative_eq_all_float {
     )*}
 }
 
-impl_relative_eq_all_float!(f32, f64);
+impl_relative_all_eq_float!(f32, f64);
 
 
 impl<A, B> RelativeAllEq<&B> for &A
@@ -612,7 +612,7 @@ where
 }
 
 
-macro_rules! impl_assert_relative_eq_all_float {
+macro_rules! impl_assert_relative_all_eq_float {
     ($($T:ident),* $(,)?) => {$(
         impl AssertRelativeAllEq for $T {
             type AllDebugTolerance = Self::AllTolerance;
@@ -630,7 +630,7 @@ macro_rules! impl_assert_relative_eq_all_float {
     )*};
 }
 
-impl_assert_relative_eq_all_float!(f32, f64);
+impl_assert_relative_all_eq_float!(f32, f64);
 
 
 impl<A, B> AssertRelativeAllEq<&B> for &A

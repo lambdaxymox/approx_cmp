@@ -1,5 +1,5 @@
 [package]
-name = "abs_diff_cmp"
+name = "ulps_cmp"
 version = "0.1.0"
 edition = "2021"
 

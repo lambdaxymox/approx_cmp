@@ -206,7 +206,7 @@ macro_rules! assert_relative_eq {
                 if !$crate::relative_eq!(*left_val, *right_val, $eq1 <= *tol_1_val, $eq2 <= *tol_2_val) {
                     // The reborrows below are intentional. Without them, the stack slot for the
                     // borrow is initialized even before the values are compared, leading to a
-                    // noticeable slow down. See the documentation for `core::approx_eq`.
+                    // noticeable slow down. See the documentation for `core::assert_eq`.
                     panic!(concat!(
 "assertion failed: `assert_relative_eq!(left, right, ", stringify!($eq1), " <= t, ", stringify!($eq2),  " <= t)`", r#"
         left: `{:?}`,
@@ -232,7 +232,7 @@ macro_rules! assert_relative_eq {
                 if !$crate::relative_eq!(*left_val, *right_val, $eq1 <= *tol_1_val, $eq2 <= *tol_2_val) {
                     // The reborrows below are intentional. Without them, the stack slot for the
                     // borrow is initialized even before the values are compared, leading to a
-                    // noticeable slow down. See the documentation for `core::approx_eq`.
+                    // noticeable slow down. See the documentation for `core::assert_eq`.
                     panic!(concat!(
 "assertion failed: `assert_relative_eq!(left, right, ", stringify!($eq1), " <= t, ", stringify!($eq2),  " <= t)`", r#"
         left: `{:?}`,
@@ -263,7 +263,7 @@ macro_rules! assert_relative_ne {
                 if !$crate::relative_ne!(*left_val, *right_val, $eq1 <= *tol_1_val, $eq2 <= *tol_2_val) {
                     // The reborrows below are intentional. Without them, the stack slot for the
                     // borrow is initialized even before the values are compared, leading to a
-                    // noticeable slow down. See the documentation for `core::approx_eq`.
+                    // noticeable slow down. See the documentation for `core::assert_eq`.
                     panic!(concat!(
 "assertion failed: `assert_relative_ne!(left, right, ", stringify!($eq1), " <= t, ", stringify!($eq2),  " <= t)`", r#"
         left: `{:?}`,
@@ -289,7 +289,7 @@ macro_rules! assert_relative_ne {
                 if !$crate::relative_ne!(*left_val, *right_val, $eq1 <= *tol_1_val, $eq2 <= *tol_2_val) {
                     // The reborrows below are intentional. Without them, the stack slot for the
                     // borrow is initialized even before the values are compared, leading to a
-                    // noticeable slow down. See the documentation for `core::approx_eq`.
+                    // noticeable slow down. See the documentation for `core::assert_eq`.
                     panic!(concat!(
 "assertion failed: `assert_relative_ne!(left, right, ", stringify!($eq1), " <= t, ", stringify!($eq2),  " <= t)`", r#"
         left: `{:?}`,
