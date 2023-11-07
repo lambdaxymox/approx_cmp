@@ -19,6 +19,7 @@ unsafe fn array_assume_init<T, const N: usize>(array: [mem::MaybeUninit<T>; N]) 
     (&array as *const _ as *const [T; N]).read()
 }
 
+
 macro_rules! impl_relative_eq_float {
     ($($T:ident),* $(,)?) => {$(
         impl RelativeEq for $T {

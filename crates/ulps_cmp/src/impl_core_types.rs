@@ -9,6 +9,17 @@ use core::cell;
 use core::mem;
 
 
+#[inline(always)]
+fn uninit_array<T, const N: usize>() -> [mem::MaybeUninit<T>; N] {
+    unsafe { mem::MaybeUninit::<[mem::MaybeUninit<T>; N]>::uninit().assume_init() }
+}
+
+#[inline(always)]
+unsafe fn array_assume_init<T, const N: usize>(array: [mem::MaybeUninit<T>; N]) -> [T; N] {
+    (&array as *const _ as *const [T; N]).read()
+}
+
+
 macro_rules! impl_ulps_eq_float {
     ($T:ident, $U:ident) => {
         impl UlpsEq for $T {
@@ -108,6 +119,27 @@ where
     }
 }
 
+impl<A, B, const N: usize> UlpsEq<[B; N]> for [A; N]
+where
+    A: UlpsEq<B>,
+    A::Tolerance: Sized,
+    A::UlpsTolerance: Sized,
+{
+    type Tolerance = [A::Tolerance; N];
+    type UlpsTolerance = [A::UlpsTolerance; N];
+
+    #[inline]
+    fn ulps_eq(&self, other: &[B; N], max_abs_diff: &Self::Tolerance, max_ulps: &Self::UlpsTolerance) -> bool {
+        for i in 0..N {
+            if !self[i].ulps_eq(&other[i], &max_abs_diff[i], &max_ulps[i]) {
+                return false;
+            }
+        }
+
+        true
+    }
+}
+
 
 macro_rules! impl_ulps_all_eq_float {
     ($T:ident, $U:ident) => {
@@ -176,6 +208,21 @@ where
     #[inline]
     fn ulps_all_eq(&self, other: &&mut B, max_abs_diff: &Self::AllTolerance, max_ulps: &Self::AllUlpsTolerance) -> bool {
         UlpsAllEq::ulps_all_eq(*self, *other, max_abs_diff, max_ulps)
+    }
+}
+
+impl<A, B, const N: usize> UlpsAllEq<[B; N]> for [A; N]
+where
+    A: UlpsAllEq<B>,
+{
+    type AllTolerance = A::AllTolerance;
+    type AllUlpsTolerance = A::AllUlpsTolerance;
+
+    #[inline]
+    fn ulps_all_eq(&self, other: &[B; N], max_abs_diff: &Self::AllTolerance, max_ulps: &Self::AllUlpsTolerance) -> bool {
+        self.iter()
+            .zip(other.iter())
+            .all(|(a, b)| a.ulps_all_eq(b, max_abs_diff, max_ulps))
     }
 }
 
@@ -332,6 +379,60 @@ where
     }
 }
 
+impl<A, B, const N: usize> AssertUlpsEq<[B; N]> for [A; N]
+where
+    A: AssertUlpsEq<B>,
+    A::Tolerance: Sized,
+    A::UlpsTolerance: Sized,
+    A::DebugTolerance: Sized,
+    A::DebugUlpsTolerance: Sized,
+{
+    type DebugAbsDiff = [A::DebugAbsDiff; N];
+    type DebugUlpsDiff = [A::DebugUlpsDiff; N];
+    type DebugTolerance = [A::DebugTolerance; N];
+    type DebugUlpsTolerance = [A::DebugUlpsTolerance; N];
+
+    #[inline]
+    fn debug_abs_diff(&self, other: &[B; N]) -> Self::DebugAbsDiff {
+        let mut result: [mem::MaybeUninit<A::DebugAbsDiff>; N] = uninit_array();
+        for i in 0..N {
+            result[i] = mem::MaybeUninit::new(self[i].debug_abs_diff(&other[i]));
+        }
+
+        unsafe { array_assume_init(result) }
+    }
+
+    #[inline]
+    fn debug_ulps_diff(&self, other: &[B; N]) -> Self::DebugUlpsDiff {
+        let mut result: [mem::MaybeUninit<A::DebugUlpsDiff>; N] = uninit_array();
+        for i in 0..N {
+            result[i] = mem::MaybeUninit::new(self[i].debug_ulps_diff(&other[i]));
+        }
+
+        unsafe { array_assume_init(result) }
+    }
+
+    #[inline]
+    fn debug_abs_diff_tolerance(&self, other: &[B; N], max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        let mut result: [mem::MaybeUninit<A::DebugTolerance>; N] = uninit_array();
+        for i in 0..N {
+            result[i] = mem::MaybeUninit::new(self[i].debug_abs_diff_tolerance(&other[i], &max_abs_diff[i]));
+        }
+
+        unsafe { array_assume_init(result) }
+    }
+
+    #[inline]
+    fn debug_ulps_tolerance(&self, other: &[B; N], max_ulps: &Self::UlpsTolerance) -> Self::DebugUlpsTolerance {
+        let mut result: [mem::MaybeUninit<A::DebugUlpsTolerance>; N] = uninit_array();
+        for i in 0..N {
+            result[i] = mem::MaybeUninit::new(self[i].debug_ulps_tolerance(&other[i], &max_ulps[i]));
+        }
+
+        unsafe { array_assume_init(result) }
+    }
+}
+
 
 macro_rules! impl_assert_ulps_all_eq_float {
     ($T:ident, $U:ident) => {
@@ -415,5 +516,33 @@ where
 
     fn debug_ulps_all_tolerance(&self, other: &&mut B, max_ulps: &Self::AllUlpsTolerance) -> Self::AllDebugUlpsTolerance {
         AssertUlpsAllEq::debug_ulps_all_tolerance(*self, *other, max_ulps)
+    }
+}
+
+impl<A, B, const N: usize> AssertUlpsAllEq<[B; N]> for [A; N]
+where
+    A: AssertUlpsAllEq<B>,
+{
+    type AllDebugTolerance = [A::AllDebugTolerance; N];
+    type AllDebugUlpsTolerance = [A::AllDebugUlpsTolerance; N];
+
+    #[inline]
+    fn debug_abs_diff_all_tolerance(&self, other: &[B; N], max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        let mut result: [mem::MaybeUninit<A::AllDebugTolerance>; N] = uninit_array();
+        for i in 0..N {
+            result[i] = mem::MaybeUninit::new(self[i].debug_abs_diff_all_tolerance(&other[i], max_abs_diff));
+        }
+
+        unsafe { array_assume_init(result) }
+    }
+
+    #[inline]
+    fn debug_ulps_all_tolerance(&self, other: &[B; N], max_ulps: &Self::AllUlpsTolerance) -> Self::AllDebugUlpsTolerance {
+        let mut result: [mem::MaybeUninit<A::AllDebugUlpsTolerance>; N] = uninit_array();
+        for i in 0..N {
+            result[i] = mem::MaybeUninit::new(self[i].debug_ulps_all_tolerance(&other[i], max_ulps));
+        }
+
+        unsafe { array_assume_init(result) }
     }
 }
