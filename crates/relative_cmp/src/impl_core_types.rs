@@ -70,7 +70,8 @@ impl_relative_eq_float!(f32, f64);
 
 impl<A, B> RelativeEq<&B> for &A
 where
-    A: RelativeEq<B>,
+    A: RelativeEq<B> + ?Sized,
+    B: ?Sized,
 {
     type Tolerance = A::Tolerance;
 
@@ -82,7 +83,8 @@ where
 
 impl<A, B> RelativeEq<&mut B> for &A
 where
-    A: RelativeEq<B>,
+    A: RelativeEq<B> + ?Sized,
+    B: ?Sized,
 {
     type Tolerance = A::Tolerance;
 
@@ -94,7 +96,8 @@ where
 
 impl<A, B> RelativeEq<&B> for &mut A
 where
-    A: RelativeEq<B>,
+    A: RelativeEq<B> + ?Sized,
+    B: ?Sized,
 {
     type Tolerance = A::Tolerance;
 
@@ -106,7 +109,8 @@ where
 
 impl<A, B> RelativeEq<&mut B> for &mut A
 where
-    A: RelativeEq<B>,
+    A: RelativeEq<B> + ?Sized,
+    B: ?Sized,
 {
     type Tolerance = A::Tolerance;
 
@@ -214,7 +218,8 @@ impl_relative_all_eq_float!(f32, f64);
 
 impl<A, B> RelativeAllEq<&B> for &A
 where
-    A: RelativeAllEq<B>,
+    A: RelativeAllEq<B> + ?Sized,
+    B: ?Sized,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -226,7 +231,8 @@ where
 
 impl<A, B> RelativeAllEq<&mut B> for &A
 where
-    A: RelativeAllEq<B>,
+    A: RelativeAllEq<B> + ?Sized,
+    B: ?Sized,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -238,7 +244,8 @@ where
 
 impl<A, B> RelativeAllEq<&B> for &mut A
 where
-    A: RelativeAllEq<B>,
+    A: RelativeAllEq<B> + ?Sized,
+    B: ?Sized,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -250,7 +257,8 @@ where
 
 impl<A, B> RelativeAllEq<&mut B> for &mut A
 where
-    A: RelativeAllEq<B>,
+    A: RelativeAllEq<B> + ?Sized,
+    B: ?Sized,
 {
     type AllTolerance = A::AllTolerance;
 
@@ -363,7 +371,8 @@ impl_assert_relative_eq_float!(f32, f64);
 
 impl<A, B> AssertRelativeEq<&B> for &A
 where
-    A: AssertRelativeEq<B>,
+    A: AssertRelativeEq<B> + ?Sized,
+    B: ?Sized,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -386,7 +395,8 @@ where
 
 impl<A, B> AssertRelativeEq<&mut B> for &A
 where
-    A: AssertRelativeEq<B>,
+    A: AssertRelativeEq<B> + ?Sized,
+    B: ?Sized,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -409,7 +419,8 @@ where
 
 impl<A, B> AssertRelativeEq<&B> for &mut A
 where
-    A: AssertRelativeEq<B>,
+    A: AssertRelativeEq<B> + ?Sized,
+    B: ?Sized,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -432,7 +443,8 @@ where
 
 impl<A, B> AssertRelativeEq<&mut B> for &mut A
 where
-    A: AssertRelativeEq<B>,
+    A: AssertRelativeEq<B> + ?Sized,
+    B: ?Sized,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -636,7 +648,8 @@ impl_assert_relative_all_eq_float!(f32, f64);
 
 impl<A, B> AssertRelativeAllEq<&B> for &A
 where
-    A: AssertRelativeAllEq<B>,
+    A: AssertRelativeAllEq<B> + ?Sized,
+    B: ?Sized,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -653,7 +666,8 @@ where
 
 impl<A, B> AssertRelativeAllEq<&mut B> for &A
 where
-    A: AssertRelativeAllEq<B>,
+    A: AssertRelativeAllEq<B> + ?Sized,
+    B: ?Sized,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -670,7 +684,8 @@ where
 
 impl<A, B> AssertRelativeAllEq<&B> for &mut A
 where
-    A: AssertRelativeAllEq<B>,
+    A: AssertRelativeAllEq<B> + ?Sized,
+    B: ?Sized,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
@@ -687,7 +702,8 @@ where
 
 impl<A, B> AssertRelativeAllEq<&mut B> for &mut A
 where
-    A: AssertRelativeAllEq<B>,
+    A: AssertRelativeAllEq<B> + ?Sized,
+    B: ?Sized,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 

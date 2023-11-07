@@ -53,7 +53,7 @@ where
         }
     }
 }
-
+/*
 impl<'a, 'b, A, B> AssertRelativeEq<&'b [B]> for &'a [A]
 where
     A: AssertRelativeEq<B>,
@@ -102,7 +102,7 @@ where
         }
     }
 }
-
+*/
 impl<A, B> AssertRelativeAllEq<[B]> for [A]
 where
     A: AssertRelativeAllEq<B>,
@@ -139,7 +139,7 @@ where
         }
     }
 }
-
+/*
 impl<'a, 'b, A, B> AssertRelativeAllEq<&'b [B]> for &'a [A]
 where
     A: AssertRelativeAllEq<B>,
@@ -176,3 +176,4 @@ where
         }
     }
 }
+*/

@@ -24,7 +24,7 @@ where
                 .all(|(((a, b), abs_tol), rel_tol)| a.relative_eq(b, abs_tol, rel_tol))
     }
 }
-
+/*
 impl<'a, 'b, A, B> RelativeEq<&'b [B]> for &'a [A]
 where
     A: RelativeEq<B>,
@@ -45,7 +45,7 @@ where
                 .all(|(((a, b), abs_tol), rel_tol)| a.relative_eq(b, abs_tol, rel_tol))
     }
 }
-
+*/
 impl<A, B> RelativeAllEq<[B]> for [A]
 where
     A: RelativeAllEq<B>,
@@ -61,7 +61,7 @@ where
                 .all(|(a, b)| a.relative_all_eq(b, max_abs_diff, max_relative))
     }
 }
-
+/*
 impl<'a, 'b, A, B> RelativeAllEq<&'b [B]> for &'a [A]
 where
     A: RelativeAllEq<B>,
@@ -77,3 +77,4 @@ where
                 .all(|(a, b)| a.relative_all_eq(b, max_abs_diff, max_relative))
     }
 }
+*/
