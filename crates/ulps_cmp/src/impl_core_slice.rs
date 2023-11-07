@@ -34,6 +34,7 @@ where
     type AllTolerance = A::AllTolerance;
     type AllUlpsTolerance = A::AllUlpsTolerance;
 
+    #[rustfmt::skip]
     #[inline]
     fn ulps_all_eq(&self, other: &[B], max_abs_diff: &Self::AllTolerance, max_ulps: &Self::AllUlpsTolerance) -> bool {
         self.len() == other.len()

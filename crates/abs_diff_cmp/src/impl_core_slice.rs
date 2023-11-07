@@ -29,8 +29,13 @@ where
 {
     type AllTolerance = A::AllTolerance;
 
+    #[rustfmt::skip]
     #[inline]
     fn abs_diff_all_eq(&self, other: &[B], max_abs_diff: &Self::AllTolerance) -> bool {
-        self.len() == other.len() && self.iter().zip(other.iter()).all(|(a, b)| a.abs_diff_all_eq(b, max_abs_diff))
+        self.len() == other.len() 
+            && self
+                .iter()
+                .zip(other.iter())
+                .all(|(a, b)| a.abs_diff_all_eq(b, max_abs_diff))
     }
 }

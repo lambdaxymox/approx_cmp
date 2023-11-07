@@ -31,6 +31,7 @@ where
 {
     type AllTolerance = A::AllTolerance;
 
+    #[rustfmt::skip]
     #[inline]
     fn relative_all_eq(&self, other: &[B], max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
         self.len() == other.len()

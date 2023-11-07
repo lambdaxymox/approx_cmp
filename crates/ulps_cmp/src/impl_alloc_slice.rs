@@ -18,19 +18,31 @@ where
     type DebugTolerance = Option<Vec<A::DebugTolerance>>;
     type DebugUlpsTolerance = Option<Vec<A::DebugUlpsTolerance>>;
 
+    #[rustfmt::skip]
     #[inline]
     fn debug_abs_diff(&self, other: &[B]) -> Self::DebugAbsDiff {
         if self.len() == other.len() {
-            Some(self.iter().zip(other.iter()).map(|(a, b)| a.debug_abs_diff(b)).collect())
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| a.debug_abs_diff(b))
+                    .collect(),
+                )
         } else {
             None
         }
     }
 
+    #[rustfmt::skip]
     #[inline]
     fn debug_ulps_diff(&self, other: &[B]) -> Self::DebugUlpsDiff {
         if self.len() == other.len() {
-            Some(self.iter().zip(other.iter()).map(|(a, b)| a.debug_ulps_diff(b)).collect())
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| a.debug_ulps_diff(b))
+                    .collect(),
+            )
         } else {
             None
         }

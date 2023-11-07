@@ -14,10 +14,16 @@ where
     type DebugAbsDiff = Option<Vec<A::DebugAbsDiff>>;
     type DebugTolerance = Option<Vec<A::DebugTolerance>>;
 
+    #[rustfmt::skip]
     #[inline]
     fn debug_abs_diff(&self, other: &[B]) -> Self::DebugAbsDiff {
         if self.len() == other.len() {
-            Some(self.iter().zip(other.iter()).map(|(a, b)| a.debug_abs_diff(b)).collect())
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| a.debug_abs_diff(b))
+                    .collect(),
+            )
         } else {
             None
         }
