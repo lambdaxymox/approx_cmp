@@ -187,6 +187,25 @@ where
     }
 }
 
+impl<A, B> UlpsEq<cell::OnceCell<B>> for cell::OnceCell<A>
+where
+    A: UlpsEq<B>,
+    A::Tolerance: Sized,
+    A::UlpsTolerance: Sized,
+{
+    type Tolerance = A::Tolerance;
+    type UlpsTolerance = A::UlpsTolerance;
+
+    #[inline]
+    fn ulps_eq(&self, other: &cell::OnceCell<B>, max_abs_diff: &Self::Tolerance, max_ulps: &Self::UlpsTolerance) -> bool {
+        if let (Some(a), Some(b)) = (self.get(), other.get()) {
+            UlpsEq::ulps_eq(a, b, max_abs_diff, max_ulps)
+        } else {
+            false
+        }
+    }
+}
+
 
 macro_rules! impl_ulps_all_eq_float {
     ($T:ident, $U:ident) => {
@@ -315,6 +334,25 @@ where
     fn ulps_all_eq(&self, other: &Option<B>, max_abs_diff: &Self::AllTolerance, max_ulps: &Self::AllUlpsTolerance) -> bool {
         if let (Some(a), Some(b), Some(abs_tol), Some(ulps_tol)) = (self, other, max_abs_diff, max_ulps) {
             a.ulps_all_eq(b, abs_tol, ulps_tol)
+        } else {
+            false
+        }
+    }
+}
+
+impl<A, B> UlpsAllEq<cell::OnceCell<B>> for cell::OnceCell<A>
+where
+    A: UlpsAllEq<B>,
+    A::AllTolerance: Sized,
+    A::AllUlpsTolerance: Sized,
+{
+    type AllTolerance = A::AllTolerance;
+    type AllUlpsTolerance = A::AllUlpsTolerance;
+
+    #[inline]
+    fn ulps_all_eq(&self, other: &cell::OnceCell<B>, max_abs_diff: &Self::AllTolerance, max_ulps: &Self::AllUlpsTolerance) -> bool {
+        if let (Some(a), Some(b)) = (self.get(), other.get()) {
+            UlpsAllEq::ulps_all_eq(a, b, max_abs_diff, max_ulps)
         } else {
             false
         }
@@ -636,6 +674,54 @@ where
     }
 }
 
+impl<A, B> AssertUlpsEq<cell::OnceCell<B>> for cell::OnceCell<A>
+where
+    A: AssertUlpsEq<B>,
+    A::Tolerance: Sized,
+    A::UlpsTolerance: Sized,
+{
+    type DebugAbsDiff = Option<A::DebugAbsDiff>;
+    type DebugUlpsDiff = Option<A::DebugUlpsDiff>;
+    type DebugTolerance = Option<A::DebugTolerance>;
+    type DebugUlpsTolerance = Option<A::DebugUlpsTolerance>;
+
+    #[inline]
+    fn debug_abs_diff(&self, other: &cell::OnceCell<B>) -> Self::DebugAbsDiff {
+        if let (Some(a), Some(b)) = (self.get(), other.get()) {
+            Some(AssertUlpsEq::debug_abs_diff(a, b))
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_ulps_diff(&self, other: &cell::OnceCell<B>) -> Self::DebugUlpsDiff {
+        if let (Some(a), Some(b)) = (self.get(), other.get()) {
+            Some(AssertUlpsEq::debug_ulps_diff(a, b))
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_abs_diff_tolerance(&self, other: &cell::OnceCell<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        if let (Some(a), Some(b)) = (self.get(), other.get()) {
+            Some(AssertUlpsEq::debug_abs_diff_tolerance(a, b, max_abs_diff))
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_ulps_tolerance(&self, other: &cell::OnceCell<B>, max_ulps: &Self::UlpsTolerance) -> Self::DebugUlpsTolerance {
+        if let (Some(a), Some(b)) = (self.get(), other.get()) {
+            Some(AssertUlpsEq::debug_ulps_tolerance(a, b, max_ulps))
+        } else {
+            None
+        }
+    }
+}
+
 
 macro_rules! impl_assert_ulps_all_eq_float {
     ($T:ident, $U:ident) => {
@@ -821,5 +907,33 @@ where
             ref_other,
             ref_max_ulps,
         ))
+    }
+}
+
+impl<A, B> AssertUlpsAllEq<cell::OnceCell<B>> for cell::OnceCell<A>
+where
+    A: AssertUlpsAllEq<B>,
+    A::AllTolerance: Sized,
+    A::AllUlpsTolerance: Sized,
+{
+    type AllDebugTolerance = Option<A::AllDebugTolerance>;
+    type AllDebugUlpsTolerance = Option<A::AllDebugUlpsTolerance>;
+
+    #[inline]
+    fn debug_abs_diff_all_tolerance(&self, other: &cell::OnceCell<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        if let (Some(a), Some(b)) = (self.get(), other.get()) {
+            Some(AssertUlpsAllEq::debug_abs_diff_all_tolerance(a, b, max_abs_diff))
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_ulps_all_tolerance(&self, other: &cell::OnceCell<B>, max_ulps: &Self::AllUlpsTolerance) -> Self::AllDebugUlpsTolerance {
+        if let (Some(a), Some(b)) = (self.get(), other.get()) {
+            Some(AssertUlpsAllEq::debug_ulps_all_tolerance(a, b, max_ulps))
+        } else {
+            None
+        }
     }
 }
