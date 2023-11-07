@@ -28,7 +28,7 @@ mod ulps_eq_array_f32_tests {
         array
     }
 
-    
+
     fn check_eq_array<const N: usize>(value: f32) {
         let lhs = array_uniform::<f32, N>(value);
         let rhs = array_uniform::<f32, N>(value);
@@ -322,6 +322,7 @@ mod ulps_eq_array_f32_debug_tests {
         assert_eq!(lhs.debug_ulps_diff(&rhs), ulps_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_ulps_diff2() {
         let lhs = array_uniform::<32>(1.0_f32);
@@ -413,9 +414,9 @@ mod ulps_eq_array_f64_debug_tests {
         AssertUlpsEq,
     };
 
-    fn array_uniform<T, const N: usize>(value: T) -> [T; N] 
+    fn array_uniform<T, const N: usize>(value: T) -> [T; N]
     where
-        T: Copy
+        T: Copy,
     {
         [value; N]
     }
@@ -479,6 +480,7 @@ mod ulps_eq_array_f64_debug_tests {
         assert_eq!(lhs.debug_ulps_diff(&rhs), ulps_diff);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_ulps_diff2() {
         let lhs = array_uniform(1.0_f64);

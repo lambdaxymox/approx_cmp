@@ -33,7 +33,7 @@ macro_rules! impl_ulps_eq_float {
                 if self.is_nan() || other.is_nan() {
                     return false;
                 }
-    
+
                 // First check whether the two numbers `self` and `other` are really close
                 // together.
                 let abs_diff = $T::abs(self - other);
@@ -152,7 +152,7 @@ macro_rules! impl_ulps_all_eq_float {
                 self.ulps_eq(other, max_abs_diff, max_ulps)
             }
         }
-    }
+    };
 }
 
 impl_ulps_all_eq_float!(f32, u32);
@@ -218,6 +218,7 @@ where
     type AllTolerance = A::AllTolerance;
     type AllUlpsTolerance = A::AllUlpsTolerance;
 
+    #[rustfmt::skip]
     #[inline]
     fn ulps_all_eq(&self, other: &[B; N], max_abs_diff: &Self::AllTolerance, max_ulps: &Self::AllUlpsTolerance) -> bool {
         self.iter()
@@ -268,7 +269,7 @@ macro_rules! impl_assert_ulps_eq_float {
                 *max_ulps
             }
         }
-    }
+    };
 }
 
 impl_assert_ulps_eq_float!(f32, u32);
@@ -448,7 +449,7 @@ macro_rules! impl_assert_ulps_all_eq_float {
                 *max_ulps
             }
         }
-    }
+    };
 }
 
 impl_assert_ulps_all_eq_float!(f32, u32);
