@@ -651,7 +651,7 @@ where
     fn debug_ulps_diff(&self, other: &Option<B>) -> Self::DebugUlpsDiff {
         let ref_self = self.as_ref()?;
         let ref_other = other.as_ref()?;
-        
+
         Some(AssertUlpsEq::debug_ulps_diff(ref_self, ref_other))
     }
 
@@ -660,7 +660,7 @@ where
         let ref_self = self.as_ref()?;
         let ref_other = other.as_ref()?;
         let ref_max_abs_diff = max_abs_diff.as_ref()?;
-        
+
         Some(AssertUlpsEq::debug_abs_diff_tolerance(ref_self, ref_other, ref_max_abs_diff))
     }
 
@@ -889,11 +889,7 @@ where
         let ref_other = other.as_ref()?;
         let ref_max_abs_diff = max_abs_diff.as_ref()?;
 
-        Some(AssertUlpsAllEq::debug_abs_diff_all_tolerance(
-            ref_self,
-            ref_other,
-            ref_max_abs_diff,
-        ))
+        Some(AssertUlpsAllEq::debug_abs_diff_all_tolerance(ref_self, ref_other, ref_max_abs_diff))
     }
 
     #[inline]
@@ -902,11 +898,7 @@ where
         let ref_other = other.as_ref()?;
         let ref_max_ulps = max_ulps.as_ref()?;
 
-        Some(AssertUlpsAllEq::debug_ulps_all_tolerance(
-            ref_self,
-            ref_other,
-            ref_max_ulps,
-        ))
+        Some(AssertUlpsAllEq::debug_ulps_all_tolerance(ref_self, ref_other, ref_max_ulps))
     }
 }
 
