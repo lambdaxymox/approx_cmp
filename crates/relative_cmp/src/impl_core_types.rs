@@ -519,8 +519,8 @@ where
 
 impl<A, B> AssertRelativeEq<cell::RefCell<B>> for cell::RefCell<A>
 where
-    A: AssertRelativeEq<B> + Copy,
-    B: Copy,
+    A: AssertRelativeEq<B> + ?Sized + Copy,
+    B: ?Sized + Copy,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
@@ -749,8 +749,8 @@ where
 
 impl<A, B> AssertRelativeAllEq<cell::RefCell<B>> for cell::RefCell<A>
 where
-    A: AssertRelativeAllEq<B> + Copy,
-    B: Copy,
+    A: AssertRelativeAllEq<B> + ?Sized + Copy,
+    B: ?Sized + Copy,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 

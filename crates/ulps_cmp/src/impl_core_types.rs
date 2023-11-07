@@ -140,6 +140,34 @@ where
     }
 }
 
+impl<A, B> UlpsEq<cell::Cell<B>> for cell::Cell<A>
+where
+    A: UlpsEq<B> + Copy,
+    B: Copy,
+{
+    type Tolerance = A::Tolerance;
+    type UlpsTolerance = A::UlpsTolerance;
+
+    #[inline]
+    fn ulps_eq(&self, other: &cell::Cell<B>, max_abs_diff: &Self::Tolerance, max_ulps: &Self::UlpsTolerance) -> bool {
+        UlpsEq::ulps_eq(&self.get(), &other.get(), max_abs_diff, max_ulps)
+    }
+}
+
+impl<A, B> UlpsEq<cell::RefCell<B>> for cell::RefCell<A>
+where
+    A: UlpsEq<B> + ?Sized,
+    B: ?Sized,
+{
+    type Tolerance = A::Tolerance;
+    type UlpsTolerance = A::UlpsTolerance;
+
+    #[inline]
+    fn ulps_eq(&self, other: &cell::RefCell<B>, max_abs_diff: &Self::Tolerance, max_ulps: &Self::UlpsTolerance) -> bool {
+        UlpsEq::ulps_eq(&*self.borrow(), &*other.borrow(), max_abs_diff, max_ulps)
+    }
+}
+
 
 macro_rules! impl_ulps_all_eq_float {
     ($T:ident, $U:ident) => {
@@ -224,6 +252,34 @@ where
         self.iter()
             .zip(other.iter())
             .all(|(a, b)| a.ulps_all_eq(b, max_abs_diff, max_ulps))
+    }
+}
+
+impl<A, B> UlpsAllEq<cell::Cell<B>> for cell::Cell<A>
+where
+    A: UlpsAllEq<B> + Copy,
+    B: Copy,
+{
+    type AllTolerance = A::AllTolerance;
+    type AllUlpsTolerance = A::AllUlpsTolerance;
+
+    #[inline]
+    fn ulps_all_eq(&self, other: &cell::Cell<B>, max_abs_diff: &Self::AllTolerance, max_ulps: &Self::AllUlpsTolerance) -> bool {
+        UlpsAllEq::ulps_all_eq(&self.get(), &other.get(), max_abs_diff, max_ulps)
+    }
+}
+
+impl<A, B> UlpsAllEq<cell::RefCell<B>> for cell::RefCell<A>
+where
+    A: UlpsAllEq<B> + Copy,
+    B: Copy,
+{
+    type AllTolerance = A::AllTolerance;
+    type AllUlpsTolerance = A::AllUlpsTolerance;
+
+    #[inline]
+    fn ulps_all_eq(&self, other: &cell::RefCell<B>, max_abs_diff: &Self::AllTolerance, max_ulps: &Self::AllUlpsTolerance) -> bool {
+        UlpsAllEq::ulps_all_eq(&*self.borrow(), &*other.borrow(), max_abs_diff, max_ulps)
     }
 }
 
@@ -434,6 +490,68 @@ where
     }
 }
 
+impl<A, B> AssertUlpsEq<cell::Cell<B>> for cell::Cell<A>
+where
+    A: AssertUlpsEq<B> + Copy,
+    B: Copy,
+{
+    type DebugAbsDiff = A::DebugAbsDiff;
+    type DebugUlpsDiff = A::DebugUlpsDiff;
+    type DebugTolerance = A::DebugTolerance;
+    type DebugUlpsTolerance = A::DebugUlpsTolerance;
+
+    #[inline]
+    fn debug_abs_diff(&self, other: &cell::Cell<B>) -> Self::DebugAbsDiff {
+        AssertUlpsEq::debug_abs_diff(&self.get(), &other.get())
+    }
+
+    #[inline]
+    fn debug_ulps_diff(&self, other: &cell::Cell<B>) -> Self::DebugUlpsDiff {
+        AssertUlpsEq::debug_ulps_diff(&self.get(), &other.get())
+    }
+
+    #[inline]
+    fn debug_abs_diff_tolerance(&self, other: &cell::Cell<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        AssertUlpsEq::debug_abs_diff_tolerance(&self.get(), &other.get(), max_abs_diff)
+    }
+
+    #[inline]
+    fn debug_ulps_tolerance(&self, other: &cell::Cell<B>, max_ulps: &Self::UlpsTolerance) -> Self::DebugUlpsTolerance {
+        AssertUlpsEq::debug_ulps_tolerance(&self.get(), &other.get(), max_ulps)
+    }
+}
+
+impl<A, B> AssertUlpsEq<cell::RefCell<B>> for cell::RefCell<A>
+where
+    A: AssertUlpsEq<B> + ?Sized + Copy,
+    B: ?Sized + Copy,
+{
+    type DebugAbsDiff = A::DebugAbsDiff;
+    type DebugUlpsDiff = A::DebugUlpsDiff;
+    type DebugTolerance = A::DebugTolerance;
+    type DebugUlpsTolerance = A::DebugUlpsTolerance;
+
+    #[inline]
+    fn debug_abs_diff(&self, other: &cell::RefCell<B>) -> Self::DebugAbsDiff {
+        AssertUlpsEq::debug_abs_diff(&*self.borrow(), &*other.borrow())
+    }
+
+    #[inline]
+    fn debug_ulps_diff(&self, other: &cell::RefCell<B>) -> Self::DebugUlpsDiff {
+        AssertUlpsEq::debug_ulps_diff(&*self.borrow(), &*other.borrow())
+    }
+
+    #[inline]
+    fn debug_abs_diff_tolerance(&self, other: &cell::RefCell<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        AssertUlpsEq::debug_abs_diff_tolerance(&*self.borrow(), &*other.borrow(), max_abs_diff)
+    }
+
+    #[inline]
+    fn debug_ulps_tolerance(&self, other: &cell::RefCell<B>, max_ulps: &Self::UlpsTolerance) -> Self::DebugUlpsTolerance {
+        AssertUlpsEq::debug_ulps_tolerance(&*self.borrow(), &*other.borrow(), max_ulps)
+    }
+}
+
 
 macro_rules! impl_assert_ulps_all_eq_float {
     ($T:ident, $U:ident) => {
@@ -545,5 +663,43 @@ where
         }
 
         unsafe { array_assume_init(result) }
+    }
+}
+
+impl<A, B> AssertUlpsAllEq<cell::Cell<B>> for cell::Cell<A>
+where
+    A: AssertUlpsAllEq<B> + Copy,
+    B: Copy,
+{
+    type AllDebugTolerance = A::AllDebugTolerance;
+    type AllDebugUlpsTolerance = A::AllDebugUlpsTolerance;
+
+    #[inline]
+    fn debug_abs_diff_all_tolerance(&self, other: &cell::Cell<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        AssertUlpsAllEq::debug_abs_diff_all_tolerance(&self.get(), &other.get(), max_abs_diff)
+    }
+
+    #[inline]
+    fn debug_ulps_all_tolerance(&self, other: &cell::Cell<B>, max_ulps: &Self::AllUlpsTolerance) -> Self::AllDebugUlpsTolerance {
+        AssertUlpsAllEq::debug_ulps_all_tolerance(&self.get(), &other.get(), max_ulps)
+    }
+}
+
+impl<A, B> AssertUlpsAllEq<cell::RefCell<B>> for cell::RefCell<A>
+where
+    A: AssertUlpsAllEq<B> + ?Sized + Copy,
+    B: ?Sized + Copy,
+{
+    type AllDebugTolerance = A::AllDebugTolerance;
+    type AllDebugUlpsTolerance = A::AllDebugUlpsTolerance;
+
+    #[inline]
+    fn debug_abs_diff_all_tolerance(&self, other: &cell::RefCell<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        AssertUlpsAllEq::debug_abs_diff_all_tolerance(&*self.borrow(), &*other.borrow(), max_abs_diff)
+    }
+
+    #[inline]
+    fn debug_ulps_all_tolerance(&self, other: &cell::RefCell<B>, max_ulps: &Self::AllUlpsTolerance) -> Self::AllDebugUlpsTolerance {
+        AssertUlpsAllEq::debug_ulps_all_tolerance(&*self.borrow(), &*other.borrow(), max_ulps)
     }
 }
