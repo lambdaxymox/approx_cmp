@@ -168,6 +168,25 @@ where
     }
 }
 
+impl<A, B> UlpsEq<Option<B>> for Option<A>
+where
+    A: UlpsEq<B>,
+    A::Tolerance: Sized,
+    A::UlpsTolerance: Sized,
+{
+    type Tolerance = Option<A::Tolerance>;
+    type UlpsTolerance = Option<A::UlpsTolerance>;
+
+    #[inline]
+    fn ulps_eq(&self, other: &Option<B>, max_abs_diff: &Self::Tolerance, max_ulps: &Self::UlpsTolerance) -> bool {
+        if let (Some(a), Some(b), Some(abs_tol), Some(ulps_tol)) = (self, other, max_abs_diff, max_ulps) {
+            UlpsEq::ulps_eq(a, b, abs_tol, ulps_tol)
+        } else {
+            false
+        }
+    }
+}
+
 
 macro_rules! impl_ulps_all_eq_float {
     ($T:ident, $U:ident) => {
@@ -280,6 +299,25 @@ where
     #[inline]
     fn ulps_all_eq(&self, other: &cell::RefCell<B>, max_abs_diff: &Self::AllTolerance, max_ulps: &Self::AllUlpsTolerance) -> bool {
         UlpsAllEq::ulps_all_eq(&*self.borrow(), &*other.borrow(), max_abs_diff, max_ulps)
+    }
+}
+
+impl<A, B> UlpsAllEq<Option<B>> for Option<A>
+where
+    A: UlpsAllEq<B>,
+    A::AllTolerance: Sized,
+    A::AllUlpsTolerance: Sized,
+{
+    type AllTolerance = Option<A::AllTolerance>;
+    type AllUlpsTolerance = Option<A::AllUlpsTolerance>;
+
+    #[inline]
+    fn ulps_all_eq(&self, other: &Option<B>, max_abs_diff: &Self::AllTolerance, max_ulps: &Self::AllUlpsTolerance) -> bool {
+        if let (Some(a), Some(b), Some(abs_tol), Some(ulps_tol)) = (self, other, max_abs_diff, max_ulps) {
+            a.ulps_all_eq(b, abs_tol, ulps_tol)
+        } else {
+            false
+        }
     }
 }
 
@@ -552,6 +590,52 @@ where
     }
 }
 
+impl<A, B> AssertUlpsEq<Option<B>> for Option<A>
+where
+    A: AssertUlpsEq<B>,
+    A::Tolerance: Sized,
+    A::UlpsTolerance: Sized,
+{
+    type DebugAbsDiff = Option<A::DebugAbsDiff>;
+    type DebugUlpsDiff = Option<A::DebugUlpsDiff>;
+    type DebugTolerance = Option<A::DebugTolerance>;
+    type DebugUlpsTolerance = Option<A::DebugUlpsTolerance>;
+
+    #[inline]
+    fn debug_abs_diff(&self, other: &Option<B>) -> Self::DebugAbsDiff {
+        let ref_self = self.as_ref()?;
+        let ref_other = other.as_ref()?;
+
+        Some(AssertUlpsEq::debug_abs_diff(ref_self, ref_other))
+    }
+
+    #[inline]
+    fn debug_ulps_diff(&self, other: &Option<B>) -> Self::DebugUlpsDiff {
+        let ref_self = self.as_ref()?;
+        let ref_other = other.as_ref()?;
+        
+        Some(AssertUlpsEq::debug_ulps_diff(ref_self, ref_other))
+    }
+
+    #[inline]
+    fn debug_abs_diff_tolerance(&self, other: &Option<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        let ref_self = self.as_ref()?;
+        let ref_other = other.as_ref()?;
+        let ref_max_abs_diff = max_abs_diff.as_ref()?;
+        
+        Some(AssertUlpsEq::debug_abs_diff_tolerance(ref_self, ref_other, ref_max_abs_diff))
+    }
+
+    #[inline]
+    fn debug_ulps_tolerance(&self, other: &Option<B>, max_ulps: &Self::UlpsTolerance) -> Self::DebugUlpsTolerance {
+        let ref_self = self.as_ref()?;
+        let ref_other = other.as_ref()?;
+        let ref_max_ulps = max_ulps.as_ref()?;
+
+        Some(AssertUlpsEq::debug_ulps_tolerance(ref_self, ref_other, ref_max_ulps))
+    }
+}
+
 
 macro_rules! impl_assert_ulps_all_eq_float {
     ($T:ident, $U:ident) => {
@@ -701,5 +785,41 @@ where
     #[inline]
     fn debug_ulps_all_tolerance(&self, other: &cell::RefCell<B>, max_ulps: &Self::AllUlpsTolerance) -> Self::AllDebugUlpsTolerance {
         AssertUlpsAllEq::debug_ulps_all_tolerance(&*self.borrow(), &*other.borrow(), max_ulps)
+    }
+}
+
+impl<A, B> AssertUlpsAllEq<Option<B>> for Option<A>
+where
+    A: AssertUlpsAllEq<B>,
+    A::AllTolerance: Sized,
+    A::AllUlpsTolerance: Sized,
+{
+    type AllDebugTolerance = Option<A::AllDebugTolerance>;
+    type AllDebugUlpsTolerance = Option<A::AllDebugUlpsTolerance>;
+
+    #[inline]
+    fn debug_abs_diff_all_tolerance(&self, other: &Option<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        let ref_self = self.as_ref()?;
+        let ref_other = other.as_ref()?;
+        let ref_max_abs_diff = max_abs_diff.as_ref()?;
+
+        Some(AssertUlpsAllEq::debug_abs_diff_all_tolerance(
+            ref_self,
+            ref_other,
+            ref_max_abs_diff,
+        ))
+    }
+
+    #[inline]
+    fn debug_ulps_all_tolerance(&self, other: &Option<B>, max_ulps: &Self::AllUlpsTolerance) -> Self::AllDebugUlpsTolerance {
+        let ref_self = self.as_ref()?;
+        let ref_other = other.as_ref()?;
+        let ref_max_ulps = max_ulps.as_ref()?;
+
+        Some(AssertUlpsAllEq::debug_ulps_all_tolerance(
+            ref_self,
+            ref_other,
+            ref_max_ulps,
+        ))
     }
 }
