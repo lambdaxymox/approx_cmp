@@ -5,9 +5,9 @@ use crate::traits::{
     UlpsEq,
 };
 use std::boxed::Box;
+use std::fmt;
 use std::rc::Rc;
 use std::sync::Arc;
-use std::fmt;
 
 
 impl<A, B> UlpsEq<Box<B>> for Box<A>

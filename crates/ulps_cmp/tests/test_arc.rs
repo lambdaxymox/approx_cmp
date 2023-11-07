@@ -1,13 +1,13 @@
 extern crate ulps_cmp;
 
 
+use std::sync::Arc;
 use ulps_cmp::{
     assert_ulps_eq,
     assert_ulps_ne,
     AssertUlpsAllEq,
     AssertUlpsEq,
 };
-use std::sync::Arc;
 
 
 #[rustfmt::skip]
