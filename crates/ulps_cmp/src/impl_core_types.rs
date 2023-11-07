@@ -69,7 +69,8 @@ impl_ulps_eq_float!(f64, u64);
 
 impl<A, B> UlpsEq<&B> for &A
 where
-    A: UlpsEq<B>,
+    A: UlpsEq<B> + ?Sized,
+    B: ?Sized,
 {
     type Tolerance = A::Tolerance;
     type UlpsTolerance = A::UlpsTolerance;
@@ -82,7 +83,8 @@ where
 
 impl<A, B> UlpsEq<&mut B> for &A
 where
-    A: UlpsEq<B>,
+    A: UlpsEq<B> + ?Sized,
+    B: ?Sized,
 {
     type Tolerance = A::Tolerance;
     type UlpsTolerance = A::UlpsTolerance;
@@ -95,7 +97,8 @@ where
 
 impl<A, B> UlpsEq<&B> for &mut A
 where
-    A: UlpsEq<B>,
+    A: UlpsEq<B> + ?Sized,
+    B: ?Sized,
 {
     type Tolerance = A::Tolerance;
     type UlpsTolerance = A::UlpsTolerance;
@@ -108,7 +111,8 @@ where
 
 impl<A, B> UlpsEq<&mut B> for &mut A
 where
-    A: UlpsEq<B>,
+    A: UlpsEq<B> + ?Sized,
+    B: ?Sized,
 {
     type Tolerance = A::Tolerance;
     type UlpsTolerance = A::UlpsTolerance;
@@ -227,7 +231,8 @@ impl_ulps_all_eq_float!(f64, u64);
 
 impl<A, B> UlpsAllEq<&B> for &A
 where
-    A: UlpsAllEq<B>,
+    A: UlpsAllEq<B> + ?Sized,
+    B: ?Sized,
 {
     type AllTolerance = A::AllTolerance;
     type AllUlpsTolerance = A::AllUlpsTolerance;
@@ -240,7 +245,8 @@ where
 
 impl<A, B> UlpsAllEq<&mut B> for &A
 where
-    A: UlpsAllEq<B>,
+    A: UlpsAllEq<B> + ?Sized,
+    B: ?Sized,
 {
     type AllTolerance = A::AllTolerance;
     type AllUlpsTolerance = A::AllUlpsTolerance;
@@ -253,7 +259,8 @@ where
 
 impl<A, B> UlpsAllEq<&B> for &mut A
 where
-    A: UlpsAllEq<B>,
+    A: UlpsAllEq<B> + ?Sized,
+    B: ?Sized,
 {
     type AllTolerance = A::AllTolerance;
     type AllUlpsTolerance = A::AllUlpsTolerance;
@@ -266,7 +273,8 @@ where
 
 impl<A, B> UlpsAllEq<&mut B> for &mut A
 where
-    A: UlpsAllEq<B>,
+    A: UlpsAllEq<B> + ?Sized,
+    B: ?Sized,
 {
     type AllTolerance = A::AllTolerance;
     type AllUlpsTolerance = A::AllUlpsTolerance;
@@ -410,7 +418,8 @@ impl_assert_ulps_eq_float!(f64, u64);
 
 impl<A, B> AssertUlpsEq<&B> for &A
 where
-    A: AssertUlpsEq<B>,
+    A: AssertUlpsEq<B> + ?Sized,
+    B: ?Sized,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugUlpsDiff = A::DebugUlpsDiff;
@@ -436,7 +445,8 @@ where
 
 impl<A, B> AssertUlpsEq<&mut B> for &A
 where
-    A: AssertUlpsEq<B>,
+    A: AssertUlpsEq<B> + ?Sized,
+    B: ?Sized,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugUlpsDiff = A::DebugUlpsDiff;
@@ -462,7 +472,8 @@ where
 
 impl<A, B> AssertUlpsEq<&B> for &mut A
 where
-    A: AssertUlpsEq<B>,
+    A: AssertUlpsEq<B> + ?Sized,
+    B: ?Sized,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugUlpsDiff = A::DebugUlpsDiff;
@@ -488,7 +499,8 @@ where
 
 impl<A, B> AssertUlpsEq<&mut B> for &mut A
 where
-    A: AssertUlpsEq<B>,
+    A: AssertUlpsEq<B> + ?Sized,
+    B: ?Sized,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugUlpsDiff = A::DebugUlpsDiff;
@@ -746,7 +758,8 @@ impl_assert_ulps_all_eq_float!(f64, u64);
 
 impl<A, B> AssertUlpsAllEq<&B> for &A
 where
-    A: AssertUlpsAllEq<B>,
+    A: AssertUlpsAllEq<B> + ?Sized,
+    B: ?Sized,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
     type AllDebugUlpsTolerance = A::AllDebugUlpsTolerance;
@@ -762,7 +775,8 @@ where
 
 impl<A, B> AssertUlpsAllEq<&mut B> for &A
 where
-    A: AssertUlpsAllEq<B>,
+    A: AssertUlpsAllEq<B> + ?Sized,
+    B: ?Sized,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
     type AllDebugUlpsTolerance = A::AllDebugUlpsTolerance;
@@ -778,7 +792,8 @@ where
 
 impl<A, B> AssertUlpsAllEq<&B> for &mut A
 where
-    A: AssertUlpsAllEq<B>,
+    A: AssertUlpsAllEq<B> + ?Sized,
+    B: ?Sized,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
     type AllDebugUlpsTolerance = A::AllDebugUlpsTolerance;
@@ -794,7 +809,8 @@ where
 
 impl<A, B> AssertUlpsAllEq<&mut B> for &mut A
 where
-    A: AssertUlpsAllEq<B>,
+    A: AssertUlpsAllEq<B> + ?Sized,
+    B: ?Sized,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
     type AllDebugUlpsTolerance = A::AllDebugUlpsTolerance;

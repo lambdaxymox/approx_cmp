@@ -26,7 +26,7 @@ where
                 .all(|(((a, b), abs_tol), ulps_tol)| a.ulps_eq(b, abs_tol, ulps_tol))
     }
 }
-
+/*
 impl<'a, 'b, A, B> UlpsEq<&'b [B]> for &'a [A]
 where
     A: UlpsEq<B>,
@@ -49,7 +49,7 @@ where
                 .all(|(((a, b), abs_tol), ulps_tol)| a.ulps_eq(b, abs_tol, ulps_tol))
     }
 }
-
+*/
 impl<A, B> UlpsAllEq<[B]> for [A]
 where
     A: UlpsAllEq<B>,
@@ -66,7 +66,7 @@ where
                 .all(|(a, b)| a.ulps_all_eq(b, max_abs_diff, max_ulps))
     }
 }
-
+/*
 impl<'a, 'b, A, B> UlpsAllEq<&'b [B]> for &'a [A]
 where
     A: UlpsAllEq<B>,
@@ -83,3 +83,4 @@ where
                 .all(|(a, b)| a.ulps_all_eq(b, max_abs_diff, max_ulps))
     }
 }
+*/

@@ -66,7 +66,7 @@ where
         }
     }
 }
-
+/*
 impl<'a, 'b, A, B> AssertUlpsEq<&'b [B]> for &'a [A]
 where
     A: AssertUlpsEq<B>,
@@ -128,7 +128,7 @@ where
         }
     }
 }
-
+*/
 impl<A, B> AssertUlpsAllEq<[B]> for [A]
 where
     A: AssertUlpsAllEq<B>,
@@ -168,7 +168,7 @@ where
         }
     }
 }
-
+/*
 impl<'a, 'b, A, B> AssertUlpsAllEq<&'b [B]> for &'a [A]
 where
     A: AssertUlpsAllEq<B>,
@@ -208,3 +208,4 @@ where
         }
     }
 }
+*/
