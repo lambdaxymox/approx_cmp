@@ -10,6 +10,7 @@ use abs_diff_cmp::{
     AssertAbsDiffEq,
 };
 
+
 #[test]
 fn test_eq() {
     assert!(AbsDiffEq::abs_diff_eq(&(), &(), &()));

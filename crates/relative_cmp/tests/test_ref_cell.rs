@@ -1,7 +1,7 @@
 extern crate relative_cmp;
 
 
-use core::cell;
+use std::cell;
 use relative_cmp::{
     assert_relative_eq,
     assert_relative_ne,

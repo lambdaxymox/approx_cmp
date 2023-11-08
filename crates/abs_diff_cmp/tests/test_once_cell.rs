@@ -7,7 +7,7 @@ use abs_diff_cmp::{
     AssertAbsDiffAllEq,
     AssertAbsDiffEq,
 };
-use core::cell;
+use std::cell;
 
 
 #[rustfmt::skip]
