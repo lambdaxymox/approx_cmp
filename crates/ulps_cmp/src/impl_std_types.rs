@@ -4,9 +4,9 @@ use crate::traits::{
     UlpsAllEq,
     UlpsEq,
 };
+use std::collections::HashMap;
 use std::fmt;
 use std::hash;
-use std::collections::HashMap;
 use std::sync;
 
 

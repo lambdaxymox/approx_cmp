@@ -32,7 +32,7 @@ where
     #[rustfmt::skip]
     #[inline]
     fn abs_diff_all_eq(&self, other: &[B], max_abs_diff: &Self::AllTolerance) -> bool {
-        self.len() == other.len() 
+        self.len() == other.len()
             && self
                 .iter()
                 .zip(other.iter())

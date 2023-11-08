@@ -1,13 +1,13 @@
 extern crate ulps_cmp;
 
 
+use std::collections::HashMap;
 use ulps_cmp::{
     assert_ulps_eq,
     assert_ulps_ne,
     AssertUlpsAllEq,
     AssertUlpsEq,
 };
-use std::collections::HashMap;
 
 
 #[rustfmt::skip]
