@@ -8,6 +8,9 @@ use std::boxed::Box;
 use std::fmt;
 use std::rc::Rc;
 use std::sync::Arc;
+use std::vec::Vec;
+use std::collections::VecDeque;
+use std::collections::LinkedList;
 
 
 impl<A, B> UlpsEq<Box<B>> for Box<A>
@@ -52,6 +55,75 @@ where
     }
 }
 
+impl<A, B> UlpsEq<Vec<B>> for Vec<A>
+where
+    A: UlpsEq<B>,
+    A::Tolerance: Sized,
+    A::UlpsTolerance: Sized,
+{
+    type Tolerance = Vec<A::Tolerance>;
+    type UlpsTolerance = Vec<A::UlpsTolerance>;
+
+    #[inline]
+    fn ulps_eq(&self, other: &Vec<B>, max_abs_diff: &Self::Tolerance, max_ulps: &Self::UlpsTolerance) -> bool {
+        self.len() == other.len()
+            && self.len() == max_abs_diff.len()
+            && self.len() == max_ulps.len()
+            && self
+                .iter()
+                .zip(other.iter())
+                .zip(max_abs_diff.iter())
+                .zip(max_ulps.iter())
+                .all(|(((a, b), abs_tol), ulps_tol)| UlpsEq::ulps_eq(a, b, abs_tol, ulps_tol))
+    }
+}
+
+impl<A, B> UlpsEq<VecDeque<B>> for VecDeque<A>
+where
+    A: UlpsEq<B>,
+    A::Tolerance: Sized,
+    A::UlpsTolerance: Sized,
+{
+    type Tolerance = VecDeque<A::Tolerance>;
+    type UlpsTolerance = VecDeque<A::UlpsTolerance>;
+
+    #[inline]
+    fn ulps_eq(&self, other: &VecDeque<B>, max_abs_diff: &Self::Tolerance, max_ulps: &Self::UlpsTolerance) -> bool {
+        self.len() == other.len()
+            && self.len() == max_abs_diff.len()
+            && self.len() == max_ulps.len()
+            && self
+                .iter()
+                .zip(other.iter())
+                .zip(max_abs_diff.iter())
+                .zip(max_ulps.iter())
+                .all(|(((a, b), abs_tol), ulps_tol)| UlpsEq::ulps_eq(a, b, abs_tol, ulps_tol))
+    }
+}
+
+impl<A, B> UlpsEq<LinkedList<B>> for LinkedList<A>
+where
+    A: UlpsEq<B>,
+    A::Tolerance: Sized,
+    A::UlpsTolerance: Sized,
+{
+    type Tolerance = LinkedList<A::Tolerance>;
+    type UlpsTolerance = LinkedList<A::UlpsTolerance>;
+
+    #[inline]
+    fn ulps_eq(&self, other: &LinkedList<B>, max_abs_diff: &Self::Tolerance, max_ulps: &Self::UlpsTolerance) -> bool {
+        self.len() == other.len()
+            && self.len() == max_abs_diff.len()
+            && self.len() == max_ulps.len()
+            && self
+                .iter()
+                .zip(other.iter())
+                .zip(max_abs_diff.iter())
+                .zip(max_ulps.iter())
+                .all(|(((a, b), abs_tol), ulps_tol)| UlpsEq::ulps_eq(a, b, abs_tol, ulps_tol))
+    }
+}
+
 
 impl<A, B> UlpsAllEq<Box<B>> for Box<A>
 where
@@ -92,6 +164,57 @@ where
     #[inline]
     fn ulps_all_eq(&self, other: &Arc<B>, max_abs_diff: &Self::AllTolerance, max_ulps: &Self::AllUlpsTolerance) -> bool {
         UlpsAllEq::ulps_all_eq(&**self, &**other, max_abs_diff, max_ulps)
+    }
+}
+
+impl<A, B> UlpsAllEq<Vec<B>> for Vec<A>
+where
+    A: UlpsAllEq<B>,
+{
+    type AllTolerance = A::AllTolerance;
+    type AllUlpsTolerance = A::AllUlpsTolerance;
+
+    #[inline]
+    fn ulps_all_eq(&self, other: &Vec<B>, max_abs_diff: &Self::AllTolerance, max_ulps: &Self::AllUlpsTolerance) -> bool {
+        self.len() == other.len()
+            && self
+                .iter()
+                .zip(other.iter())
+                .all(|(a, b)| UlpsAllEq::ulps_all_eq(a, b, max_abs_diff, max_ulps))
+    }
+}
+
+impl<A, B> UlpsAllEq<VecDeque<B>> for VecDeque<A>
+where
+    A: UlpsAllEq<B>,
+{
+    type AllTolerance = A::AllTolerance;
+    type AllUlpsTolerance = A::AllUlpsTolerance;
+
+    #[inline]
+    fn ulps_all_eq(&self, other: &VecDeque<B>, max_abs_diff: &Self::AllTolerance, max_ulps: &Self::AllUlpsTolerance) -> bool {
+        self.len() == other.len()
+            && self
+                .iter()
+                .zip(other.iter())
+                .all(|(a, b)| UlpsAllEq::ulps_all_eq(a, b, max_abs_diff, max_ulps))
+    }
+}
+
+impl<A, B> UlpsAllEq<LinkedList<B>> for LinkedList<A>
+where
+    A: UlpsAllEq<B>,
+{
+    type AllTolerance = A::AllTolerance;
+    type AllUlpsTolerance = A::AllUlpsTolerance;
+
+    #[inline]
+    fn ulps_all_eq(&self, other: &LinkedList<B>, max_abs_diff: &Self::AllTolerance, max_ulps: &Self::AllUlpsTolerance) -> bool {
+        self.len() == other.len()
+            && self
+                .iter()
+                .zip(other.iter())
+                .all(|(a, b)| UlpsAllEq::ulps_all_eq(a, b, max_abs_diff, max_ulps))
     }
 }
 
@@ -189,6 +312,225 @@ where
     }
 }
 
+impl<A, B> AssertUlpsEq<Vec<B>> for Vec<A>
+where
+    A: AssertUlpsEq<B> + ?Sized + Copy,
+    B: ?Sized + Copy,
+    A::Tolerance: Sized,
+    A::UlpsTolerance: Sized,
+    A::DebugTolerance: Sized,
+    A::DebugUlpsTolerance: Sized,
+{
+    type DebugAbsDiff = Option<Vec<A::DebugAbsDiff>>;
+    type DebugUlpsDiff = Option<Vec<A::DebugUlpsDiff>>;
+    type DebugTolerance = Option<Vec<A::DebugTolerance>>;
+    type DebugUlpsTolerance = Option<Vec<A::DebugUlpsTolerance>>;
+
+    #[inline]
+    fn debug_abs_diff(&self, other: &Vec<B>) -> Self::DebugAbsDiff {
+        if self.len() == other.len() {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| AssertUlpsEq::debug_abs_diff(a, b))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_ulps_diff(&self, other: &Vec<B>) -> Self::DebugUlpsDiff {
+        if self.len() == other.len() {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| AssertUlpsEq::debug_ulps_diff(a, b))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_abs_diff_tolerance(&self, other: &Vec<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        if (self.len() == other.len()) && (self.len() == max_abs_diff.len()) {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .zip(max_abs_diff.iter())
+                    .map(|((a, b), tol)| AssertUlpsEq::debug_abs_diff_tolerance(a, b, tol))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_ulps_tolerance(&self, other: &Vec<B>, max_ulps: &Self::UlpsTolerance) -> Self::DebugUlpsTolerance {
+        if (self.len() == other.len()) && (self.len() == max_ulps.len()) {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .zip(max_ulps.iter())
+                    .map(|((a, b), tol)| AssertUlpsEq::debug_ulps_tolerance(a, b, tol))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+}
+
+impl<A, B> AssertUlpsEq<VecDeque<B>> for VecDeque<A>
+where
+    A: AssertUlpsEq<B> + ?Sized + Copy,
+    B: ?Sized + Copy,
+    A::Tolerance: Sized,
+    A::UlpsTolerance: Sized,
+    A::DebugTolerance: Sized,
+    A::DebugUlpsTolerance: Sized,
+{
+    type DebugAbsDiff = Option<VecDeque<A::DebugAbsDiff>>;
+    type DebugUlpsDiff = Option<VecDeque<A::DebugUlpsDiff>>;
+    type DebugTolerance = Option<VecDeque<A::DebugTolerance>>;
+    type DebugUlpsTolerance = Option<VecDeque<A::DebugUlpsTolerance>>;
+
+    #[inline]
+    fn debug_abs_diff(&self, other: &VecDeque<B>) -> Self::DebugAbsDiff {
+        if self.len() == other.len() {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| AssertUlpsEq::debug_abs_diff(a, b))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_ulps_diff(&self, other: &VecDeque<B>) -> Self::DebugUlpsDiff {
+        if self.len() == other.len() {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| AssertUlpsEq::debug_ulps_diff(a, b))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_abs_diff_tolerance(&self, other: &VecDeque<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        if (self.len() == other.len()) && (self.len() == max_abs_diff.len()) {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .zip(max_abs_diff.iter())
+                    .map(|((a, b), tol)| AssertUlpsEq::debug_abs_diff_tolerance(a, b, tol))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_ulps_tolerance(&self, other: &VecDeque<B>, max_ulps: &Self::UlpsTolerance) -> Self::DebugUlpsTolerance {
+        if (self.len() == other.len()) && (self.len() == max_ulps.len()) {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .zip(max_ulps.iter())
+                    .map(|((a, b), tol)| AssertUlpsEq::debug_ulps_tolerance(a, b, tol))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+}
+
+impl<A, B> AssertUlpsEq<LinkedList<B>> for LinkedList<A>
+where
+    A: AssertUlpsEq<B> + ?Sized + Copy,
+    B: ?Sized + Copy,
+    A::Tolerance: Sized,
+    A::UlpsTolerance: Sized,
+    A::DebugTolerance: Sized,
+    A::DebugUlpsTolerance: Sized,
+{
+    type DebugAbsDiff = Option<LinkedList<A::DebugAbsDiff>>;
+    type DebugUlpsDiff = Option<LinkedList<A::DebugUlpsDiff>>;
+    type DebugTolerance = Option<LinkedList<A::DebugTolerance>>;
+    type DebugUlpsTolerance = Option<LinkedList<A::DebugUlpsTolerance>>;
+
+    #[inline]
+    fn debug_abs_diff(&self, other: &LinkedList<B>) -> Self::DebugAbsDiff {
+        if self.len() == other.len() {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| AssertUlpsEq::debug_abs_diff(a, b))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_ulps_diff(&self, other: &LinkedList<B>) -> Self::DebugUlpsDiff {
+        if self.len() == other.len() {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| AssertUlpsEq::debug_ulps_diff(a, b))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_abs_diff_tolerance(&self, other: &LinkedList<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        if (self.len() == other.len()) && (self.len() == max_abs_diff.len()) {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .zip(max_abs_diff.iter())
+                    .map(|((a, b), tol)| AssertUlpsEq::debug_abs_diff_tolerance(a, b, tol))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_ulps_tolerance(&self, other: &LinkedList<B>, max_ulps: &Self::UlpsTolerance) -> Self::DebugUlpsTolerance {
+        if (self.len() == other.len()) && (self.len() == max_ulps.len()) {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .zip(max_ulps.iter())
+                    .map(|((a, b), tol)| AssertUlpsEq::debug_ulps_tolerance(a, b, tol))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+}
+
 
 impl<A, B> AssertUlpsAllEq<Box<B>> for Box<A>
 where
@@ -244,5 +586,122 @@ where
     #[inline]
     fn debug_ulps_all_tolerance(&self, other: &Arc<B>, max_ulps: &Self::AllUlpsTolerance) -> Self::AllDebugUlpsTolerance {
         AssertUlpsAllEq::debug_ulps_all_tolerance(&**self, &**other, max_ulps)
+    }
+}
+
+impl<A, B> AssertUlpsAllEq<Vec<B>> for Vec<A>
+where
+    A: AssertUlpsAllEq<B> + ?Sized + Copy,
+    B: ?Sized + Copy,
+    A::AllDebugTolerance: Sized,
+    A::AllDebugUlpsTolerance: Sized,
+{
+    type AllDebugTolerance = Option<Vec<A::AllDebugTolerance>>;
+    type AllDebugUlpsTolerance = Option<Vec<A::AllDebugUlpsTolerance>>;
+
+    #[inline]
+    fn debug_abs_diff_all_tolerance(&self, other: &Vec<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        if self.len() == other.len() {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| AssertUlpsAllEq::debug_abs_diff_all_tolerance(a, b, max_abs_diff))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_ulps_all_tolerance(&self, other: &Vec<B>, max_ulps: &Self::AllUlpsTolerance) -> Self::AllDebugUlpsTolerance {
+        if self.len() == other.len() {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| AssertUlpsAllEq::debug_ulps_all_tolerance(a, b, max_ulps))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+}
+
+impl<A, B> AssertUlpsAllEq<VecDeque<B>> for VecDeque<A>
+where
+    A: AssertUlpsAllEq<B> + ?Sized + Copy,
+    B: ?Sized + Copy,
+    A::AllDebugTolerance: Sized,
+    A::AllDebugUlpsTolerance: Sized,
+{
+    type AllDebugTolerance = Option<VecDeque<A::AllDebugTolerance>>;
+    type AllDebugUlpsTolerance = Option<VecDeque<A::AllDebugUlpsTolerance>>;
+
+    #[inline]
+    fn debug_abs_diff_all_tolerance(&self, other: &VecDeque<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        if self.len() == other.len() {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| AssertUlpsAllEq::debug_abs_diff_all_tolerance(a, b, max_abs_diff))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_ulps_all_tolerance(&self, other: &VecDeque<B>, max_ulps: &Self::AllUlpsTolerance) -> Self::AllDebugUlpsTolerance {
+        if self.len() == other.len() {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| AssertUlpsAllEq::debug_ulps_all_tolerance(a, b, max_ulps))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+}
+
+impl<A, B> AssertUlpsAllEq<LinkedList<B>> for LinkedList<A>
+where
+    A: AssertUlpsAllEq<B> + ?Sized + Copy,
+    B: ?Sized + Copy,
+    A::AllDebugTolerance: Sized,
+    A::AllDebugUlpsTolerance: Sized,
+{
+    type AllDebugTolerance = Option<LinkedList<A::AllDebugTolerance>>;
+    type AllDebugUlpsTolerance = Option<LinkedList<A::AllDebugUlpsTolerance>>;
+
+    #[inline]
+    fn debug_abs_diff_all_tolerance(&self, other: &LinkedList<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        if self.len() == other.len() {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| AssertUlpsAllEq::debug_abs_diff_all_tolerance(a, b, max_abs_diff))
+                    .collect(),
+            )
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_ulps_all_tolerance(&self, other: &LinkedList<B>, max_ulps: &Self::AllUlpsTolerance) -> Self::AllDebugUlpsTolerance {
+        if self.len() == other.len() {
+            Some(
+                self.iter()
+                    .zip(other.iter())
+                    .map(|(a, b)| AssertUlpsAllEq::debug_ulps_all_tolerance(a, b, max_ulps))
+                    .collect(),
+            )
+        } else {
+            None
+        }
     }
 }
