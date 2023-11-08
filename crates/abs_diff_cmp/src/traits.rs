@@ -9,30 +9,33 @@ where
 
     /// Compare two floating point numbers for absolute difference equality.
     ///
-    /// Two floating point numbers are equal relative to some error if the
-    /// following condition holds.
+    /// Returns A boolean indicating whether or not two floating point
+    /// numbers are absolute difference equal with respect to a tolerance
+    /// `tolerance`.
     ///
-    /// Given floating point numbers `lhs` and `rhs`, and an error `tolerance`,
-    /// we say that `lhs` and `rhs` are approximately equal within tolerance
-    /// `tolerance` provided that
+    /// Two floating point numbers are equal relative to some error if the
+    /// following condition holds. Given floating point numbers `lhs` and
+    /// `rhs`, and a value `tolerance`, we say that `lhs` and `rhs` are
+    /// approximately equal within tolerance `tolerance` provided that
     /// ```text
     /// abs(lhs - rhs) <= tolerance
     /// ```
-    ///
-    /// - Returns: A boolean indicating whether or not two floating point
-    /// numbers are absolute difference equal with respect to a tolerance
-    /// `tolerance`.
     fn abs_diff_eq(&self, other: &Rhs, max_abs_diff: &Self::Tolerance) -> bool;
 
     /// Compare two floating point numbers for absolute difference inequality.
     ///
-    /// Two floating point numbers are approximately inequal within tolerance
-    /// `tolerance` provided that they are not approximately equal within tolerance
-    /// `tolerance`.
-    ///
-    /// - Returns: A boolean indicating whether or not two floating point
+    /// Returns a boolean indicating whether or not two floating point
     /// numbers are absolute difference inequal with respect to a tolerance
     /// `tolerance`.
+    ///
+    /// Two floating point numbers are approximately inequal within
+    /// tolerance `tolerance` provided that they are not approximately equal
+    /// within tolerance `tolerance`. Given floating point numbers `lhs` and
+    /// `rhs` and a tolerance `tolerance`, we say that `lhs` and `rhs` are
+    /// approximately inequal with tolerance `tolerance` provided that
+    /// ```text
+    /// abs(lhs - rhs) > tolerance
+    /// ```
     #[inline]
     fn abs_diff_ne(&self, other: &Rhs, max_abs_diff: &Self::Tolerance) -> bool {
         !Self::abs_diff_eq(self, other, max_abs_diff)
@@ -45,6 +48,20 @@ where
 {
     type AllTolerance: ?Sized;
 
+    /// Compare two collections of floating point numbers for absolute difference
+    /// equality.
+    ///
+    /// Returns A boolean indicating whether or not two collections of floating
+    /// point numbers are absolute difference equal with respect to a tolerance
+    /// `tolerance`.
+    ///
+    /// Two collections of floating point numbers are approximately equal relative to some error if the
+    /// following condition holds. Given floating point numbers `lhs` and
+    /// `rhs`, and a value `tolerance`, we say that `lhs` and `rhs` are
+    /// approximately equal within tolerance `tolerance` provided that
+    /// ```text
+    /// abs(lhs - rhs) <= tolerance
+    /// ```
     fn abs_diff_all_eq(&self, other: &Rhs, max_abs_diff: &Self::AllTolerance) -> bool;
 
     fn abs_diff_all_ne(&self, other: &Rhs, max_abs_diff: &Self::AllTolerance) -> bool {

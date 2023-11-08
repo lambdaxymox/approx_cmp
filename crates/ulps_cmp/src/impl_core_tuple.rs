@@ -586,12 +586,7 @@ where
     type AllUlpsTolerance = A::AllUlpsTolerance;
 
     #[inline]
-    fn ulps_all_eq(
-        &self,
-        other: &(B, B, B, B, B, B, B, B),
-        max_abs_diff: &Self::AllTolerance,
-        max_ulps: &Self::AllUlpsTolerance,
-    ) -> bool {
+    fn ulps_all_eq(&self, other: &(B, B, B, B, B, B, B, B), max_abs_diff: &Self::AllTolerance, max_ulps: &Self::AllUlpsTolerance) -> bool {
         self.0.ulps_all_eq(&other.0, max_abs_diff, max_ulps)
             && self.1.ulps_all_eq(&other.1, max_abs_diff, max_ulps)
             && self.2.ulps_all_eq(&other.2, max_abs_diff, max_ulps)
