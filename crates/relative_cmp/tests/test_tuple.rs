@@ -1280,7 +1280,7 @@ mod relative_eq_tuple7_heterogenous_tests {
         );
         let max_abs_diff = (
             0.2_f32, 0.3_f64, 0.4_f32, 0.5_f64,
-            0.6_f32, 0.7_f64, 0.8_f32
+            0.6_f32, 0.7_f64, 0.8_f32,
         );
 
         assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
@@ -1300,7 +1300,7 @@ mod relative_eq_tuple7_heterogenous_tests {
         );
         let max_relative = (
             0.2_f32, 0.3_f64, 0.4_f32, 0.5_f64,
-            0.6_f32, 0.7_f64, 0.8_f32
+            0.6_f32, 0.7_f64, 0.8_f32,
         );
 
         assert_eq!(lhs.debug_relative_tolerance(&rhs, &max_relative), max_relative);

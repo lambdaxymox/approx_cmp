@@ -90,7 +90,7 @@ macro_rules! impl_relative_tuple {
 
             #[inline]
             fn debug_relative_tolerance(&self, other: &Self, max_relative: &Self::Tolerance) -> Self::DebugTolerance {
-                ($(self.$idx.debug_abs_diff_tolerance(&other.$idx, &max_relative.$idx),)+)
+                ($(self.$idx.debug_relative_tolerance(&other.$idx, &max_relative.$idx),)+)
             }
         }
     )+};
