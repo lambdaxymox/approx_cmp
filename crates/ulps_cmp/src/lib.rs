@@ -10,7 +10,7 @@ extern crate std;
 
 
 mod impl_core_slice;
-// mod impl_core_tuple;
+mod impl_core_tuple;
 mod impl_core_types;
 mod traits;
 
@@ -25,7 +25,7 @@ mod impl_std_types;
 
 
 pub use impl_core_slice::*;
-// pub use impl_core_tuple::*;
+pub use impl_core_tuple::*;
 pub use impl_core_types::*;
 pub use traits::*;
 
