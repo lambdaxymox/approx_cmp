@@ -252,6 +252,7 @@ fn test_ne_none2() {
     let max_relative = f32::EPSILON;
 
     assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
+    assert_relative_ne!(rhs, lhs, abs_diff <= max_abs_diff, relative <= max_relative);
 }
 
 #[test]
@@ -262,6 +263,7 @@ fn test_ne_none3() {
     let max_relative = f32::EPSILON;
 
     assert_relative_ne!(lhs, rhs, abs_diff <= max_abs_diff, relative <= max_relative);
+    assert_relative_ne!(rhs, lhs, abs_diff <= max_abs_diff, relative <= max_relative);
 }
 
 #[test]

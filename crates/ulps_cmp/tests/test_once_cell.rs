@@ -316,6 +316,7 @@ fn test_ne_none2() {
     let max_ulps = 8_u32;
 
     assert_ulps_ne!(lhs, rhs, abs_diff <= max_abs_diff, ulps <= max_ulps);
+    assert_ulps_ne!(rhs, lhs, abs_diff <= max_abs_diff, ulps <= max_ulps);
 }
 
 #[test]
@@ -326,6 +327,7 @@ fn test_ne_none3() {
     let max_ulps = 8_u32;
 
     assert_ulps_ne!(lhs, rhs, abs_diff <= max_abs_diff, ulps <= max_ulps);
+    assert_ulps_ne!(rhs, lhs, abs_diff <= max_abs_diff, ulps <= max_ulps);
 }
 
 #[test]
