@@ -5,12 +5,12 @@ use crate::traits::{
     UlpsEq,
 };
 use std::boxed::Box;
+use std::collections::LinkedList;
+use std::collections::VecDeque;
 use std::fmt;
 use std::rc::Rc;
 use std::sync::Arc;
 use std::vec::Vec;
-use std::collections::VecDeque;
-use std::collections::LinkedList;
 
 
 impl<A, B> UlpsEq<Box<B>> for Box<A>

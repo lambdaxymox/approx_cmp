@@ -1,13 +1,13 @@
 extern crate ulps_cmp;
 
 
+use std::vec::Vec;
 use ulps_cmp::{
     assert_ulps_eq,
     assert_ulps_ne,
     AssertUlpsAllEq,
     AssertUlpsEq,
 };
-use std::vec::Vec;
 
 
 #[rustfmt::skip]
@@ -289,14 +289,8 @@ fn test_debug_ulps_all_tolerance() {
     let max_ulps_all = 8_u32;
     let max_ulps = Vec::from([max_ulps_all; 4]);
 
-    assert_eq!(
-        lhs.debug_ulps_all_tolerance(&rhs, &max_ulps_all),
-        Some(max_ulps.clone())
-    );
-    assert_eq!(
-        rhs.debug_ulps_all_tolerance(&lhs, &max_ulps_all),
-        Some(max_ulps.clone())
-    );
+    assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps_all), Some(max_ulps.clone()));
+    assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps_all), Some(max_ulps.clone()));
 }
 
 #[test]
