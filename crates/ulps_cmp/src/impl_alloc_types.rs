@@ -11,6 +11,7 @@ use std::fmt;
 use std::rc::Rc;
 use std::sync::Arc;
 use std::vec::Vec;
+use std::collections::BTreeMap;
 
 
 impl<A, B> UlpsEq<Box<B>> for Box<A>
@@ -124,6 +125,35 @@ where
     }
 }
 
+impl<K, VA, VB> UlpsEq<BTreeMap<K, VB>> for BTreeMap<K, VA>
+where
+    K: Eq + Ord,
+    VA: UlpsEq<VB>,
+    VA::Tolerance: Sized,
+    VA::UlpsTolerance: Sized,
+{
+    type Tolerance = BTreeMap<K, VA::Tolerance>;
+    type UlpsTolerance = BTreeMap<K, VA::UlpsTolerance>;
+
+    #[inline]
+    fn ulps_eq(&self, other: &BTreeMap<K, VB>, max_abs_diff: &Self::Tolerance, max_ulps: &Self::UlpsTolerance) -> bool {
+        self.len() == other.len()
+            && self.len() == max_abs_diff.len()
+            && self.len() == max_ulps.len()
+            && self.iter().all(|(key, a)| {
+                if let Some(b) = other.get(key) {
+                    if let (Some(abs_tol), Some(ulps_tol)) = (max_abs_diff.get(key), max_ulps.get(key)) {
+                        UlpsEq::ulps_eq(a, b, abs_tol, ulps_tol)
+                    } else {
+                        false
+                    }
+                } else {
+                    false
+                }
+            })
+    }
+}
+
 
 impl<A, B> UlpsAllEq<Box<B>> for Box<A>
 where
@@ -215,6 +245,27 @@ where
                 .iter()
                 .zip(other.iter())
                 .all(|(a, b)| UlpsAllEq::ulps_all_eq(a, b, max_abs_diff, max_ulps))
+    }
+}
+
+impl<K, VA, VB> UlpsAllEq<BTreeMap<K, VB>> for BTreeMap<K, VA>
+where
+    K: Eq + Ord,
+    VA: UlpsAllEq<VB>,
+{
+    type AllTolerance = VA::AllTolerance;
+    type AllUlpsTolerance = VA::AllUlpsTolerance;
+
+    #[inline]
+    fn ulps_all_eq(&self, other: &BTreeMap<K, VB>, max_abs_diff: &Self::AllTolerance, max_ulps: &Self::AllUlpsTolerance) -> bool {
+        self.len() == other.len()
+            && self.iter().all(|(key, a)| {
+                if let Some(b) = other.get(key) {
+                    UlpsAllEq::ulps_all_eq(a, b, max_abs_diff, max_ulps)
+                } else {
+                    false
+                }
+            })
     }
 }
 
@@ -531,6 +582,73 @@ where
     }
 }
 
+impl<K, VA, VB> AssertUlpsEq<BTreeMap<K, VB>> for BTreeMap<K, VA>
+where
+    K: Eq + Ord + Clone + fmt::Debug,
+    VA: AssertUlpsEq<VB>,
+    VA::Tolerance: Sized,
+    VA::UlpsTolerance: Sized,
+    VA::DebugTolerance: Sized,
+    VA::DebugUlpsTolerance: Sized,
+{
+    type DebugAbsDiff = Option<BTreeMap<K, VA::DebugAbsDiff>>;
+    type DebugUlpsDiff = Option<BTreeMap<K, VA::DebugUlpsDiff>>;
+    type DebugTolerance = Option<BTreeMap<K, VA::DebugTolerance>>;
+    type DebugUlpsTolerance = Option<BTreeMap<K, VA::DebugUlpsTolerance>>;
+
+    #[inline]
+    fn debug_abs_diff(&self, other: &BTreeMap<K, VB>) -> Self::DebugAbsDiff {
+        if self.len() == other.len() {
+            let mut result = BTreeMap::new();
+            for (key, v) in self {
+                result.insert(key.clone(), v.debug_abs_diff(other.get(key)?));
+            }
+            Some(result)
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_ulps_diff(&self, other: &BTreeMap<K, VB>) -> Self::DebugUlpsDiff {
+        if self.len() == other.len() {
+            let mut result = BTreeMap::new();
+            for (key, v) in self {
+                result.insert(key.clone(), v.debug_ulps_diff(other.get(key)?));
+            }
+            Some(result)
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_abs_diff_tolerance(&self, other: &BTreeMap<K, VB>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+        if self.len() == other.len() && self.len() == max_abs_diff.len() {
+            let mut result = BTreeMap::new();
+            for (key, v) in self {
+                result.insert(key.clone(), v.debug_abs_diff_tolerance(other.get(key)?, max_abs_diff.get(key)?));
+            }
+            Some(result)
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_ulps_tolerance(&self, other: &BTreeMap<K, VB>, max_ulps: &Self::UlpsTolerance) -> Self::DebugUlpsTolerance {
+        if self.len() == other.len() && self.len() == max_ulps.len() {
+            let mut result = BTreeMap::new();
+            for (key, v) in self {
+                result.insert(key.clone(), v.debug_ulps_tolerance(other.get(key)?, max_ulps.get(key)?));
+            }
+            Some(result)
+        } else {
+            None
+        }
+    }
+}
+
 
 impl<A, B> AssertUlpsAllEq<Box<B>> for Box<A>
 where
@@ -700,6 +818,43 @@ where
                     .map(|(a, b)| AssertUlpsAllEq::debug_ulps_all_tolerance(a, b, max_ulps))
                     .collect(),
             )
+        } else {
+            None
+        }
+    }
+}
+
+impl<K, VA, VB> AssertUlpsAllEq<BTreeMap<K, VB>> for BTreeMap<K, VA>
+where
+    K: Eq + Ord + Clone + fmt::Debug,
+    VA: AssertUlpsAllEq<VB>,
+    VA::AllDebugTolerance: Sized,
+    VA::AllDebugUlpsTolerance: Sized,
+{
+    type AllDebugTolerance = Option<BTreeMap<K, VA::AllDebugTolerance>>;
+    type AllDebugUlpsTolerance = Option<BTreeMap<K, VA::AllDebugUlpsTolerance>>;
+
+    #[inline]
+    fn debug_abs_diff_all_tolerance(&self, other: &BTreeMap<K, VB>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+        if self.len() == other.len() {
+            let mut result = BTreeMap::new();
+            for (key, v) in self {
+                result.insert(key.clone(), v.debug_abs_diff_all_tolerance(other.get(key)?, max_abs_diff));
+            }
+            Some(result)
+        } else {
+            None
+        }
+    }
+
+    #[inline]
+    fn debug_ulps_all_tolerance(&self, other: &BTreeMap<K, VB>, max_relative: &Self::AllUlpsTolerance) -> Self::AllDebugUlpsTolerance {
+        if self.len() == other.len() {
+            let mut result = BTreeMap::new();
+            for (key, v) in self {
+                result.insert(key.clone(), v.debug_ulps_all_tolerance(other.get(key)?, max_relative));
+            }
+            Some(result)
         } else {
             None
         }
