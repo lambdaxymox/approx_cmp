@@ -567,7 +567,7 @@ where
 
     #[inline]
     fn debug_abs_diff_all_tolerance(&self, other: &Rc<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        AssertRelativeAllEq::debug_relative_all_tolerance(&**self, &**other, max_abs_diff)
+        AssertRelativeAllEq::debug_abs_diff_all_tolerance(&**self, &**other, max_abs_diff)
     }
 
     #[inline]
@@ -585,7 +585,7 @@ where
 
     #[inline]
     fn debug_abs_diff_all_tolerance(&self, other: &Arc<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        AssertRelativeAllEq::debug_relative_all_tolerance(&**self, &**other, max_abs_diff)
+        AssertRelativeAllEq::debug_abs_diff_all_tolerance(&**self, &**other, max_abs_diff)
     }
 
     #[inline]

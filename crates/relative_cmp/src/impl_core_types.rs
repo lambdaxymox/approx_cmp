@@ -772,7 +772,7 @@ where
 
     #[inline]
     fn debug_abs_diff_all_tolerance(&self, other: &cell::RefCell<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
-        AssertRelativeAllEq::debug_relative_all_tolerance(&*self.borrow(), &*other.borrow(), max_abs_diff)
+        AssertRelativeAllEq::debug_abs_diff_all_tolerance(&*self.borrow(), &*other.borrow(), max_abs_diff)
     }
 
     #[inline]
