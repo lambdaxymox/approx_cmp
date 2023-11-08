@@ -1550,7 +1550,7 @@ macro_rules! impl_relative_eq_float_exact_exhaustive_tests {
             };
 
             #[test]
-            fn test_abs_relative_exactly_representable_exhaustive() {
+            fn test_relative_eq_exactly_representable_exhaustive() {
                 for i in <$IntegerType>::MIN..<$IntegerType>::MAX {
                     assert!((i as $FloatType).relative_eq(&(i as $FloatType), &0.0, &<$FloatType>::EPSILON));
                     assert!(relative_eq!(i as $FloatType, i as $FloatType, abs_diff <= 0.0, relative <= <$FloatType>::EPSILON));
@@ -1559,7 +1559,7 @@ macro_rules! impl_relative_eq_float_exact_exhaustive_tests {
             }
 
             #[test]
-            fn test_relative_ne_exactly_representable_exhaustive1() {
+            fn test_relative_ne_exactly_representable_exhaustive() {
                 for i in <$IntegerType>::MIN..<$IntegerType>::MAX {
                     assert!(((i + 1) as $FloatType).relative_ne(&(i as $FloatType), &0.0, &<$FloatType>::EPSILON));
                     assert!(relative_ne!((i + 1) as $FloatType, i as $FloatType, abs_diff <= 0.0, relative <= <$FloatType>::EPSILON));

@@ -3261,7 +3261,7 @@ macro_rules! impl_ulps_eq_float_exact_exhaustive_tests {
             };
 
             #[test]
-            fn test_abs_relative_exactly_representable_exhaustive() {
+            fn test_ulps_eq_exactly_representable_exhaustive() {
                 let max_ulps = 4;
                 for i in <$IntegerType>::MIN..<$IntegerType>::MAX {
                     assert!((i as $FloatType).ulps_eq(&(i as $FloatType), &0.0, &max_ulps));
@@ -3271,7 +3271,7 @@ macro_rules! impl_ulps_eq_float_exact_exhaustive_tests {
             }
 
             #[test]
-            fn test_ulps_ne_exactly_representable_exhaustive1() {
+            fn test_ulps_ne_exactly_representable_exhaustive() {
                 let max_ulps = 4;
                 for i in <$IntegerType>::MIN..<$IntegerType>::MAX {
                     assert!(((i + 1) as $FloatType).ulps_ne(&(i as $FloatType), &0.0, &max_ulps));

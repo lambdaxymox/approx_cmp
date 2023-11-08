@@ -19,10 +19,10 @@ mod impl_alloc_types;
 
 #[cfg(any(feature = "alloc", feature = "std"))]
 mod impl_alloc_slice;
-/*
+
 #[cfg(feature = "std")]
 mod impl_std_types;
-*/
+
 
 pub use impl_core_slice::*;
 // pub use impl_core_tuple::*;
@@ -34,7 +34,7 @@ pub use impl_alloc_types::*;
 
 #[cfg(any(feature = "alloc", feature = "std"))]
 pub use impl_alloc_slice::*;
-/*
+
 #[cfg(feature = "std")]
 pub use impl_std_types::*;
-*/
+

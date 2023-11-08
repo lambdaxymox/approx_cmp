@@ -1601,7 +1601,7 @@ macro_rules! impl_abs_diff_eq_float_exact_exhaustive_tests {
             }
 
             #[test]
-            fn test_abs_diff_ne_exactly_representable_exhaustive1() {
+            fn test_abs_diff_ne_exactly_representable_exhaustive() {
                 for i in <$IntegerType>::MIN..<$IntegerType>::MAX {
                     assert!(((i + 1) as $FloatType).abs_diff_ne(&(i as $FloatType), &0.0));
                     assert!(abs_diff_ne!((i + 1) as $FloatType, i as $FloatType, abs_diff <= 0.0));

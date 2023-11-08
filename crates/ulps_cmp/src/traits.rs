@@ -143,19 +143,19 @@ impl UlpsCmpOpTol {
     }
 
     #[inline]
-    pub fn ulps<A, B>(lhs: &A, rhs: &B, max_relative: &A::UlpsTolerance) -> A::DebugUlpsTolerance
+    pub fn ulps<A, B>(lhs: &A, rhs: &B, max_ulps: &A::UlpsTolerance) -> A::DebugUlpsTolerance
     where
         A: UlpsEq<B> + AssertUlpsEq<B>,
     {
-        A::debug_ulps_tolerance(lhs, rhs, max_relative)
+        A::debug_ulps_tolerance(lhs, rhs, max_ulps)
     }
 
     #[inline]
-    pub fn ulps_all<A, B>(lhs: &A, rhs: &B, max_relative: &A::AllUlpsTolerance) -> A::AllDebugUlpsTolerance
+    pub fn ulps_all<A, B>(lhs: &A, rhs: &B, max_ulps: &A::AllUlpsTolerance) -> A::AllDebugUlpsTolerance
     where
         A: UlpsAllEq<B> + AssertUlpsAllEq<B>,
     {
-        A::debug_ulps_all_tolerance(lhs, rhs, max_relative)
+        A::debug_ulps_all_tolerance(lhs, rhs, max_ulps)
     }
 }
 

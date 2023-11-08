@@ -848,11 +848,11 @@ where
     }
 
     #[inline]
-    fn debug_ulps_all_tolerance(&self, other: &BTreeMap<K, VB>, max_relative: &Self::AllUlpsTolerance) -> Self::AllDebugUlpsTolerance {
+    fn debug_ulps_all_tolerance(&self, other: &BTreeMap<K, VB>, max_ulps: &Self::AllUlpsTolerance) -> Self::AllDebugUlpsTolerance {
         if self.len() == other.len() {
             let mut result = BTreeMap::new();
             for (key, v) in self {
-                result.insert(key.clone(), v.debug_ulps_all_tolerance(other.get(key)?, max_relative));
+                result.insert(key.clone(), v.debug_ulps_all_tolerance(other.get(key)?, max_ulps));
             }
             Some(result)
         } else {

@@ -641,7 +641,7 @@ fn test_debug_abs_diff_all_tolerance_empty() {
 }
 
 #[test]
-fn test_debug_relative_tolerance_empty() {
+fn test_debug_ulps_tolerance_empty() {
     let lhs = Vec::new();
     let rhs = Vec::from([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
     let max_ulps = Vec::from([2_u32, 4_u32, 8_u32, 16_u32]);
