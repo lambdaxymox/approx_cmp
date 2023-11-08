@@ -112,7 +112,6 @@ impl RelativeCmp {
     }
 }
 
-
 #[doc(hidden)]
 pub struct RelativeCmpOpTol {}
 

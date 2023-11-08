@@ -121,7 +121,6 @@ impl UlpsCmp {
     }
 }
 
-
 #[doc(hidden)]
 pub struct UlpsCmpOpTol {}
 
