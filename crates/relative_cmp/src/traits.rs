@@ -567,7 +567,7 @@ macro_rules! assert_relative_eq {
                     // borrow is initialized even before the values are compared, leading to a
                     // noticeable slow down. See the documentation for `core::assert_eq`.
                     panic!(concat!(
-"assertion failed: `assert_relative_eq!(left, right, ", stringify!($eq1), " <= t, ", stringify!($eq2),  " <= t)`", r#"
+"assertion failed: `relative_eq!(left, right, ", stringify!($eq1), " <= t, ", stringify!($eq2),  " <= t)`", r#"
         left: `{:?}`,
        right: `{:?}`,
     abs_diff: `{:?}`,
@@ -593,7 +593,7 @@ macro_rules! assert_relative_eq {
                     // borrow is initialized even before the values are compared, leading to a
                     // noticeable slow down. See the documentation for `core::assert_eq`.
                     panic!(concat!(
-"assertion failed: `assert_relative_eq!(left, right, ", stringify!($eq1), " <= t, ", stringify!($eq2),  " <= t)`", r#"
+"assertion failed: `relative_eq!(left, right, ", stringify!($eq1), " <= t, ", stringify!($eq2),  " <= t)`", r#"
         left: `{:?}`,
        right: `{:?}`,
     abs_diff: `{:?}`,
@@ -624,7 +624,7 @@ macro_rules! assert_relative_ne {
                     // borrow is initialized even before the values are compared, leading to a
                     // noticeable slow down. See the documentation for `core::assert_eq`.
                     panic!(concat!(
-"assertion failed: `assert_relative_ne!(left, right, ", stringify!($eq1), " <= t, ", stringify!($eq2),  " <= t)`", r#"
+"assertion failed: `relative_ne!(left, right, ", stringify!($eq1), " <= t, ", stringify!($eq2),  " <= t)`", r#"
         left: `{:?}`,
        right: `{:?}`,
     abs_diff: `{:?}`,
@@ -650,7 +650,7 @@ macro_rules! assert_relative_ne {
                     // borrow is initialized even before the values are compared, leading to a
                     // noticeable slow down. See the documentation for `core::assert_eq`.
                     panic!(concat!(
-"assertion failed: `assert_relative_ne!(left, right, ", stringify!($eq1), " <= t, ", stringify!($eq2),  " <= t)`", r#"
+"assertion failed: `relative_ne!(left, right, ", stringify!($eq1), " <= t, ", stringify!($eq2),  " <= t)`", r#"
         left: `{:?}`,
        right: `{:?}`,
     abs_diff: `{:?}`,
