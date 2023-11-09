@@ -14,7 +14,7 @@ use core::fmt;
 /// ```text
 /// forall a in A. max_abs_diff[a] >= 0
 /// ```
-/// We say that `u` is absolute difference equal to `v` with tolerance
+/// We say that `u` is **absolute difference equal** to `v` with tolerance
 /// `max_abs_diff` provided that
 /// ```text
 /// forall a in A. abs(u[a], v[a]) <= max_abs_diff[a]
@@ -47,7 +47,7 @@ use core::fmt;
 /// assert!(abs_diff_ne!(lhs, rhs, abs_diff <= max_abs_diff3));
 /// ```
 /// 
-/// # Examples (Floating Point Number Sequence Comparisons)
+/// # Examples (Floating Point Sequence Comparisons)
 /// 
 /// ```
 /// # use abs_diff_cmp::{
@@ -95,11 +95,30 @@ where
     /// ```text
     /// forall a in A. max_abs_diff[a] >= 0
     /// ```
-    /// We say that `u` is absolute difference equal to `v` with tolerance
+    /// We say that `u` is **absolute difference equal** to `v` with tolerance
     /// `max_abs_diff` provided that
     /// ```text
     /// forall a in A. abs(u[a], v[a]) <= max_abs_diff[a]
     /// ```
+    /// 
+    /// An implementation of [`abs_diff_eq`] should be equivalent to 
+    /// ```
+    /// # trait TestAbsDiffEq {
+    /// #     fn abs_diff_eq(&self, other: &Self, max_abs_diff: &Self) -> bool;
+    /// #
+    /// #     fn abs_diff_ne(&self, other: &Self, max_abs_diff: &Self) -> bool { 
+    /// #         !Self::abs_diff_eq(self, other, max_abs_diff)
+    /// #     }
+    /// # }
+    /// #
+    /// # impl TestAbsDiffEq for f32 {
+    /// #     fn abs_diff_eq(&self, other: &Self, max_abs_diff: &Self) -> bool {
+    /// (self == other) || (Self::abs(self - other) <= *max_abs_diff)
+    /// #     }
+    /// # }
+    /// ```
+    /// and should not need to be implemented directly in general. The trait provides a 
+    /// default implementation.
     /// 
     /// # Example
     /// 
@@ -133,11 +152,27 @@ where
     /// ```text
     /// forall a in A. max_abs_diff[a] >= 0
     /// ```
-    /// We say that `u` is absolute difference unequal to `v` with tolerance
+    /// We say that `u` is **absolute difference unequal** to `v` with tolerance
     /// `max_abs_diff` provided that
     /// ```text
     /// forall a in A. abs(u[a], v[a]) > max_abs_diff[a]
     /// ```
+    /// 
+    /// An implementation of [`abs_diff_ne`] should be equivalent to 
+    /// ```
+    /// # trait TestAbsDiffEq {
+    /// #     fn abs_diff_eq(&self, other: &Self, max_abs_diff: &Self) -> bool { false }
+    /// #
+    /// #     fn abs_diff_ne(&self, other: &Self, max_abs_diff: &Self) -> bool;
+    /// # }
+    /// #
+    /// # impl TestAbsDiffEq for f32 {
+    /// #     fn abs_diff_ne(&self, other: &Self, max_abs_diff: &Self) -> bool {
+    /// !Self::abs_diff_eq(self, other, max_abs_diff)
+    /// #     }
+    /// # }
+    /// ```
+    /// and should not need to be implemented directly in general.
     /// 
     /// # Example
     /// 
@@ -171,7 +206,7 @@ where
 /// point data type, and let `u :: A -> T` and `v :: A -> T` be sequences of 
 /// finite precision floating point numbers. Let `max_abs_diff :: T` be a 
 /// finite precision floating point number such that `max_abs_diff >= 0`. We 
-/// say that `u` is absolute difference equal to `v` with tolerance 
+/// say that `u` is **absolute difference equal** to `v` with tolerance 
 /// `max_abs_diff` provided that
 /// ```text
 /// forall a in A. abs(u[a], v[a]) <= max_abs_diff
@@ -246,11 +281,14 @@ where
     /// More precisely, let `A` be a finite set of values, let `T` be a floating
     /// point data type, let `u :: A -> T` and `v :: A -> T` be sequences of 
     /// floating point numbers, and `max_abs_diff :: T` be a finite precision
-    /// floating point number. Then we say that `u` is absolute difference equal
+    /// floating point number. Then we say that `u` is **absolute difference equal**
     /// to `v` with tolerance `max_abs_diff` provided that
     /// ```text
     /// forall a in A. abs(u[a], v[a]) <= max_abs_diff
     /// ```
+    /// 
+    /// An implementation of [`abs_diff_all_eq`] must use the same algorithm as
+    /// [`AbsDiffEq::abs_diff_eq`].
     /// 
     /// # Example
     /// 
@@ -280,11 +318,27 @@ where
     /// More precisely, let `A` be a finite set of values, let `T` be a floating
     /// point data type, let `u :: A -> T` and `v :: A -> T` be sequences of 
     /// floating point numbers, and `max_abs_diff :: T` be a finite precision 
-    /// floating point number. Then we say that `u` is absolute difference unequal
+    /// floating point number. Then we say that `u` is **absolute difference unequal**
     /// to `v` with tolerance `max_abs_diff` provided that
     /// ```text
     /// forall a in A. abs(u[a], v[a]) > max_abs_diff
     /// ```
+    /// 
+    /// An implementation of [`abs_diff_all_ne`] should be equivalent to 
+    /// ```
+    /// # trait TestAbsDiffAllEq {
+    /// #     fn abs_diff_all_eq(&self, other: &Self, max_abs_diff: &Self) -> bool { false }
+    /// #
+    /// #     fn abs_diff_all_ne(&self, other: &Self, max_abs_diff: &Self) -> bool;
+    /// # }
+    /// #
+    /// # impl TestAbsDiffAllEq for f32 {
+    /// #     fn abs_diff_all_ne(&self, other: &Self, max_abs_diff: &Self) -> bool {
+    /// !Self::abs_diff_all_eq(self, other, max_abs_diff)
+    /// #     }
+    /// # }
+    /// ```
+    /// and should not need to be implemented directly in general.
     /// 
     /// # Example
     /// 
