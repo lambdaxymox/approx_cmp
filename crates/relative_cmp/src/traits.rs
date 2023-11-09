@@ -2,7 +2,7 @@ use core::fmt;
 
 
 /// Compare two sequences of finite precision floating point numbers using 
-/// per field relative difference tolerances.
+/// per entry relative difference tolerances.
 /// 
 /// Types implement this trait to utilize the [`relative_eq`] and [`relative_ne`]
 /// macros.
@@ -225,7 +225,7 @@ where
     Rhs: ?Sized,
 {
     /// The data type representing the uniform maximum allowed relative
-    /// difference between every field of two values to be considered
+    /// difference between every entry of two values to be considered
     /// approximately equal.
     type AllTolerance: ?Sized;
 

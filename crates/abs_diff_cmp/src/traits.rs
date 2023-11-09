@@ -2,7 +2,7 @@ use core::fmt;
 
 
 /// Compare two sequences of finite precision floating point numbers using 
-/// per field absolute difference tolerances.
+/// per entry absolute difference tolerances.
 /// 
 /// Types implement this trait to utilize the [`abs_diff_eq`] and [`abs_diff_ne`]
 /// macros.
@@ -232,7 +232,7 @@ where
     Rhs: ?Sized,
 {
     /// The data type representing the uniform maximum allowed absolute 
-    /// difference between every field of two values for them to be considered
+    /// difference between every entry of two values for them to be considered
     /// approximately equal.
     type AllTolerance: ?Sized;
 
@@ -369,7 +369,7 @@ where
     Rhs: ?Sized,
 {
     /// The data type representing the uniform maximum allowed absolute 
-    /// difference between every field of two values for them to be considered
+    /// difference between every entry of two values for them to be considered
     /// approximately equal that can be displayed in a debugging context 
     /// via [`fmt::Debug`].
     type AllDebugTolerance: fmt::Debug;
