@@ -12,12 +12,12 @@ use core::fmt;
 /// precision floating point numbers. Let `max_abs_diff :: A -> T` be a sequence
 /// of finite precision floating point numbers such that
 /// ```text
-/// forall a in A. max_abs_diff[a] >= 0
+/// forall a :: A. max_abs_diff[a] >= 0
 /// ```
 /// We say that `u` is **absolute difference equal** to `v` with tolerance
 /// `max_abs_diff` provided that
 /// ```text
-/// forall a in A. abs(u[a], v[a]) <= max_abs_diff[a]
+/// forall a :: A. abs(u[a], v[a]) <= max_abs_diff[a]
 /// ```
 ///
 /// # Examples (Floating Point Number Comparisons)
@@ -93,12 +93,12 @@ where
     /// precision floating point numbers. Let `max_abs_diff :: A -> T` be a sequence
     /// of finite precision floating point numbers such that
     /// ```text
-    /// forall a in A. max_abs_diff[a] >= 0
+    /// forall a :: A. max_abs_diff[a] >= 0
     /// ```
     /// We say that `u` is **absolute difference equal** to `v` with tolerance
     /// `max_abs_diff` provided that
     /// ```text
-    /// forall a in A. abs(u[a], v[a]) <= max_abs_diff[a]
+    /// forall a :: A. abs(u[a], v[a]) <= max_abs_diff[a]
     /// ```
     ///
     /// An implementation of [`abs_diff_eq`] should be equivalent to
@@ -149,12 +149,12 @@ where
     /// precision floating point numbers. Let `max_abs_diff :: A -> T` be a sequence
     /// of finite precision floating point numbers such that
     /// ```text
-    /// forall a in A. max_abs_diff[a] >= 0
+    /// forall a :: A. max_abs_diff[a] >= 0
     /// ```
     /// We say that `u` is **absolute difference unequal** to `v` with tolerance
     /// `max_abs_diff` provided that
     /// ```text
-    /// forall a in A. abs(u[a], v[a]) > max_abs_diff[a]
+    /// forall a :: A. abs(u[a], v[a]) > max_abs_diff[a]
     /// ```
     ///
     /// An implementation of [`abs_diff_ne`] should be equivalent to
@@ -208,7 +208,7 @@ where
 /// say that `u` is **absolute difference equal** to `v` with tolerance
 /// `max_abs_diff` provided that
 /// ```text
-/// forall a in A. abs(u[a], v[a]) <= max_abs_diff
+/// forall a :: A. abs(u[a], v[a]) <= max_abs_diff
 /// ```
 ///
 /// # Examples (Floating Point Number Comparisons)
@@ -283,7 +283,7 @@ where
     /// floating point number. Then we say that `u` is **absolute difference equal**
     /// to `v` with tolerance `max_abs_diff` provided that
     /// ```text
-    /// forall a in A. abs(u[a], v[a]) <= max_abs_diff
+    /// forall a :: A. abs(u[a], v[a]) <= max_abs_diff
     /// ```
     ///
     /// An implementation of [`abs_diff_all_eq`] must use the same algorithm as
@@ -320,7 +320,7 @@ where
     /// floating point number. Then we say that `u` is **absolute difference unequal**
     /// to `v` with tolerance `max_abs_diff` provided that
     /// ```text
-    /// forall a in A. abs(u[a], v[a]) > max_abs_diff
+    /// forall a :: A. abs(u[a], v[a]) > max_abs_diff
     /// ```
     ///
     /// An implementation of [`abs_diff_all_ne`] should be equivalent to

@@ -12,12 +12,12 @@ use core::fmt;
 /// precision floating point numbers. Let `max_relative :: A -> T` be a sequence
 /// of finite precision floating point numbers such that
 /// ```text
-/// forall a in A. max_relative[a] >= 0
+/// forall a :: A. max_relative[a] >= 0
 /// ```
 /// We say that `u` is **relative equal** to `v` with tolerance `max_relative`
 /// provided that
 /// ```text
-/// forall a in A. abs(u[a] - v[a]) <= max(abs(u[a]), abs(v[a])) * max_relative[a]
+/// forall a :: A. abs(u[a] - v[a]) <= max(abs(u[a]), abs(v[a])) * max_relative[a]
 /// ```
 /// The trait implementations for [`f32`] and [`f64`] provided perform an absolute
 /// difference comparison before the relative difference comparison. Relative
@@ -112,12 +112,12 @@ where
     /// precision floating point numbers. Let `max_relative :: A -> T` be a sequence
     /// of finite precision floating point numbers such that
     /// ```text
-    /// forall a in A. max_relative[a] >= 0
+    /// forall a :: A. max_relative[a] >= 0
     /// ```
     /// We say that `u` is **relative equal** to `v` with tolerance `max_relative`
     /// provided that
     /// ```text
-    /// forall a in A. abs(u[a] - v[a]) <= max(abs(u[a]), abs(v[a])) * max_relative[a]
+    /// forall a :: A. abs(u[a] - v[a]) <= max(abs(u[a]), abs(v[a])) * max_relative[a]
     /// ```
     ///
     /// An implementation of [`relative_eq`] should be equivalent to
@@ -176,12 +176,12 @@ where
     /// precision floating point numbers. Let `max_relative :: A -> T` be a sequence
     /// of finite precision floating point numbers such that
     /// ```text
-    /// forall a in A. max_relative[a] >= 0
+    /// forall a :: A. max_relative[a] >= 0
     /// ```
     /// We say that `u` is **relative unequal** to `v` with tolerance `max_relative`
     /// provided that
     /// ```text
-    /// forall a in A. abs(u[a] - v[a]) > max(abs(u[a]), abs(v[a])) * max_relative[a]
+    /// forall a :: A. abs(u[a] - v[a]) > max(abs(u[a]), abs(v[a])) * max_relative[a]
     /// ```
     ///
     /// An implementation of [`relative_ne`] should be equivalent to
@@ -234,7 +234,7 @@ where
 /// precision floating point number such that `max_relative >= 0`. We say that
 /// `u` is **relative equal** to `v` with tolerance `max_relative` provided that
 /// ```text
-/// forall a in A. abs(u[a] - v[a]) <= max(abs(u[a]), abs(v[a])) * max_relative
+/// forall a :: A. abs(u[a] - v[a]) <= max(abs(u[a]), abs(v[a])) * max_relative
 /// ```
 ///
 /// # Examples (Floating Point Number Comparisons)
@@ -309,7 +309,7 @@ where
     /// precision floating point number such that `max_relative >= 0`. We say that
     /// `u` is **relative equal** to `v` with tolerance `max_relative` provided that
     /// ```text
-    /// forall a in A. abs(u[a] - v[a]) <= max(abs(u[a]), abs(v[a])) * max_relative
+    /// forall a :: A. abs(u[a] - v[a]) <= max(abs(u[a]), abs(v[a])) * max_relative
     /// ```
     ///
     /// An implementation of [`relative_all_eq`] must use the same algorithm as
@@ -348,7 +348,7 @@ where
     /// precision floating point number such that `max_relative >= 0`. We say that
     /// `u` is **relative unequal** to `v` with tolerance `max_relative` provided that
     /// ```text
-    /// forall a in A. abs(u[a] - v[a]) > max(abs(u[a]), abs(v[a])) * max_relative
+    /// forall a :: A. abs(u[a] - v[a]) > max(abs(u[a]), abs(v[a])) * max_relative
     /// ```
     ///
     /// An implementation of [`relative_all_ne`] should be equivalent to
