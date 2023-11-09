@@ -198,7 +198,7 @@ where
     /// #     }
     /// # }
     /// ```
-    /// and should not need to be implemented directly in general.
+    /// and should not be implemented directly in general.
     /// 
     /// # Example
     /// 
@@ -365,7 +365,7 @@ where
     /// #     }
     /// # }
     /// ```
-    /// and should not need to be implemented directly in general.
+    /// and should not be implemented directly in general.
     /// 
     /// # Example
     /// 
@@ -397,12 +397,12 @@ pub trait AssertRelativeEq<Rhs = Self>: RelativeEq<Rhs>
 where
     Rhs: ?Sized,
 {
-    /// The absolute difference between two values in a debugging context. This is used
-    /// to display results via [`fmt::Debug`].
+    /// The absolute difference between two values in a debugging context. This
+    /// is used to display results via [`fmt::Debug`].
     type DebugAbsDiff: fmt::Debug + Sized;
     
-    /// The value of the tolerance used for comparing two values in a debugging context.
-    /// This is used to display results via [`fmt::Debug`].
+    /// The value of the tolerance used for comparing two values in a debugging
+    /// context. This is used to display results via [`fmt::Debug`].
     type DebugTolerance: fmt::Debug;
 
     /// Compute the absolute difference between two values in a debugging context.

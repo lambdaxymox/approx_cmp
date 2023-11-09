@@ -117,8 +117,7 @@ where
     /// #     }
     /// # }
     /// ```
-    /// and should not need to be implemented directly in general. The trait provides a 
-    /// default implementation.
+    /// and should not be implemented directly in general.
     /// 
     /// # Example
     /// 
@@ -172,7 +171,7 @@ where
     /// #     }
     /// # }
     /// ```
-    /// and should not need to be implemented directly in general.
+    /// and should not be implemented directly in general.
     /// 
     /// # Example
     /// 
@@ -338,7 +337,7 @@ where
     /// #     }
     /// # }
     /// ```
-    /// and should not need to be implemented directly in general.
+    /// and should not be implemented directly in general.
     /// 
     /// # Example
     /// 
