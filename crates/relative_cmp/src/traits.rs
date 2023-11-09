@@ -389,7 +389,7 @@ where
     }
 }
 
-/// Provide a debug context for when a relative difference comparison fails.
+/// Provide a debugging context for when a relative difference comparison fails.
 ///
 /// Types implement this trait to use the [`assert_relative_eq`] and [`assert_relative_ne`]
 /// macros.
