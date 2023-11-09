@@ -16,11 +16,8 @@ use core::fmt;
 /// ```
 /// We say that `u` is relative equal to `v` with tolerance `max_relative` if
 /// ```text
-/// forall a in A. abs(u[a], v[a]) <= max(abs(u[a], v[a])) * max_relative[a]
+/// forall a in A. abs(u[a] - v[a]) <= max(abs(u[a]), abs(v[a])) * max_relative[a]
 /// ```
-/// The relative equality comparison for the [`f32`] and [`f64`] data types are 
-/// based on the contents of the article [`Comparing Floating Point Numbers, 2012 Edition`]
-/// (https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/).
 /// 
 /// # Examples (Floating Point Number Comparisons)
 /// 
@@ -96,7 +93,7 @@ where
     /// ```
     /// We say that `u` is relative equal to `v` with tolerance `max_relative` if
     /// ```text
-    /// forall a in A. abs(u[a], v[a]) <= max(abs(u[a], v[a])) * max_relative[a]
+    /// forall a in A. abs(u[a] - v[a]) <= max(abs(u[a]), abs(v[a])) * max_relative[a]
     /// ```
     /// 
     /// # Example
@@ -134,7 +131,7 @@ where
     /// ```
     /// We say that `u` is relative unequal to `v` with tolerance `max_relative` if
     /// ```text
-    /// forall a in A. abs(u[a], v[a]) > max(abs(u[a], v[a])) * max_relative[a]
+    /// forall a in A. abs(u[a] - v[a]) > max(abs(u[a]), abs(v[a])) * max_relative[a]
     /// ```
     /// 
     /// # Example
@@ -171,11 +168,8 @@ where
 /// precision floating point number such that `max_relative >= 0`. We say that 
 /// `u` is relative equal to `v` with tolerance `max_relative` if
 /// ```text
-/// forall a in A. abs(u[a], v[a]) <= max(abs(u[a], v[a])) * max_relative
+/// forall a in A. abs(u[a] - v[a]) <= max(abs(u[a]), abs(v[a])) * max_relative
 /// ```
-/// The uniform relative equality comparison for the [`f32`] and [`f64`] data 
-/// types are based on the contents of the article [`Comparing Floating Point Numbers, 2012 Edition`]
-/// (https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/).
 /// 
 /// # Examples (Floating Point Number Comparisons)
 /// 
@@ -249,7 +243,7 @@ where
     /// precision floating point number such that `max_relative >= 0`. We say that 
     /// `u` is relative equal to `v` with tolerance `max_relative` if
     /// ```text
-    /// forall a in A. abs(u[a], v[a]) <= max(abs(u[a], v[a])) * max_relative
+    /// forall a in A. abs(u[a] - v[a]) <= max(abs(u[a]), abs(v[a])) * max_relative
     /// ```
     /// 
     /// # Example
@@ -285,7 +279,7 @@ where
     /// precision floating point number such that `max_relative >= 0`. We say that 
     /// `u` is relative equal to `v` with tolerance `max_relative` if
     /// ```text
-    /// forall a in A. abs(u[a], v[a]) > max(abs(u[a], v[a])) * max_relative
+    /// forall a in A. abs(u[a] - v[a]) > max(abs(u[a]), abs(v[a])) * max_relative
     /// ```
     /// 
     /// # Example
