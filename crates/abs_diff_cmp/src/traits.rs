@@ -247,7 +247,7 @@ where
     /// point data type, let `u :: A -> T` and `v :: A -> T` be sequences of 
     /// floating point numbers, and `max_abs_diff :: T` be a finite precision
     /// floating point number. Then we say that `u` is absolute difference equal
-    /// to `v` with tolerance `max_abs_diff` if
+    /// to `v` with tolerance `max_abs_diff` provided that
     /// ```text
     /// forall a in A. abs(u[a], v[a]) <= max_abs_diff
     /// ```
@@ -281,7 +281,7 @@ where
     /// point data type, let `u :: A -> T` and `v :: A -> T` be sequences of 
     /// floating point numbers, and `max_abs_diff :: T` be a finite precision 
     /// floating point number. Then we say that `u` is absolute difference unequal
-    /// to `v` with tolerance `max_abs_diff` if
+    /// to `v` with tolerance `max_abs_diff` provided that
     /// ```text
     /// forall a in A. abs(u[a], v[a]) > max_abs_diff
     /// ```

@@ -14,7 +14,7 @@ use core::fmt;
 /// ```text
 /// forall a in A. max_relative[a] >= 0
 /// ```
-/// We say that `u` is relative equal to `v` with tolerance `max_relative` if
+/// We say that `u` is relative equal to `v` with tolerance `max_relative` provided that
 /// ```text
 /// forall a in A. abs(u[a] - v[a]) <= max(abs(u[a]), abs(v[a])) * max_relative[a]
 /// ```
@@ -91,7 +91,7 @@ where
     /// ```text
     /// forall a in A. max_relative[a] >= 0
     /// ```
-    /// We say that `u` is relative equal to `v` with tolerance `max_relative` if
+    /// We say that `u` is relative equal to `v` with tolerance `max_relative` provided that
     /// ```text
     /// forall a in A. abs(u[a] - v[a]) <= max(abs(u[a]), abs(v[a])) * max_relative[a]
     /// ```
@@ -129,7 +129,7 @@ where
     /// ```text
     /// forall a in A. max_relative[a] >= 0
     /// ```
-    /// We say that `u` is relative unequal to `v` with tolerance `max_relative` if
+    /// We say that `u` is relative unequal to `v` with tolerance `max_relative` provided that
     /// ```text
     /// forall a in A. abs(u[a] - v[a]) > max(abs(u[a]), abs(v[a])) * max_relative[a]
     /// ```
@@ -166,7 +166,7 @@ where
 /// point data type, and let `u :: A -> T` and `v :: A -> T` be sequences of 
 /// finite precision floating point numbers. Let `max_relative :: T` be a finite
 /// precision floating point number such that `max_relative >= 0`. We say that 
-/// `u` is relative equal to `v` with tolerance `max_relative` if
+/// `u` is relative equal to `v` with tolerance `max_relative` provided that
 /// ```text
 /// forall a in A. abs(u[a] - v[a]) <= max(abs(u[a]), abs(v[a])) * max_relative
 /// ```
@@ -241,7 +241,7 @@ where
     /// point data type, and let `u :: A -> T` and `v :: A -> T` be sequences of 
     /// finite precision floating point numbers. Let `max_relative :: T` be a finite
     /// precision floating point number such that `max_relative >= 0`. We say that 
-    /// `u` is relative equal to `v` with tolerance `max_relative` if
+    /// `u` is relative equal to `v` with tolerance `max_relative` provided that
     /// ```text
     /// forall a in A. abs(u[a] - v[a]) <= max(abs(u[a]), abs(v[a])) * max_relative
     /// ```
@@ -277,7 +277,7 @@ where
     /// point data type, and let `u :: A -> T` and `v :: A -> T` be sequences of 
     /// finite precision floating point numbers. Let `max_relative :: T` be a finite
     /// precision floating point number such that `max_relative >= 0`. We say that 
-    /// `u` is relative equal to `v` with tolerance `max_relative` if
+    /// `u` is relative equal to `v` with tolerance `max_relative` provided that
     /// ```text
     /// forall a in A. abs(u[a] - v[a]) > max(abs(u[a]), abs(v[a])) * max_relative
     /// ```
