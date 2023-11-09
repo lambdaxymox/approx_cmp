@@ -514,6 +514,7 @@ where
 pub struct RelativeCmp {}
 
 impl RelativeCmp {
+    #[must_use]
     #[inline]
     pub fn eq<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance, max_relative: &A::Tolerance) -> bool
     where
@@ -523,6 +524,7 @@ impl RelativeCmp {
         A::relative_eq(lhs, rhs, max_abs_diff, max_relative)
     }
 
+    #[must_use]
     #[inline]
     pub fn ne<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance, max_relative: &A::Tolerance) -> bool
     where
@@ -532,6 +534,7 @@ impl RelativeCmp {
         A::relative_ne(lhs, rhs, max_abs_diff, max_relative)
     }
 
+    #[must_use]
     #[inline]
     pub fn all_eq<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance, max_relative: &A::AllTolerance) -> bool
     where
@@ -541,6 +544,7 @@ impl RelativeCmp {
         A::relative_all_eq(lhs, rhs, max_abs_diff, max_relative)
     }
 
+    #[must_use]
     #[inline]
     pub fn all_ne<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance, max_relative: &A::AllTolerance) -> bool
     where

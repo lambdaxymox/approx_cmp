@@ -84,6 +84,7 @@ where
 pub struct UlpsCmp {}
 
 impl UlpsCmp {
+    #[must_use]
     #[inline]
     pub fn eq<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance, max_ulps: &A::UlpsTolerance) -> bool
     where
@@ -93,6 +94,7 @@ impl UlpsCmp {
         A::ulps_eq(lhs, rhs, max_abs_diff, max_ulps)
     }
 
+    #[must_use]
     #[inline]
     pub fn ne<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance, max_ulps: &A::UlpsTolerance) -> bool
     where
@@ -102,6 +104,7 @@ impl UlpsCmp {
         A::ulps_ne(lhs, rhs, max_abs_diff, max_ulps)
     }
 
+    #[must_use]
     #[inline]
     pub fn all_eq<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance, max_ulps: &A::AllUlpsTolerance) -> bool
     where
@@ -111,6 +114,7 @@ impl UlpsCmp {
         A::ulps_all_eq(lhs, rhs, max_abs_diff, max_ulps)
     }
 
+    #[must_use]
     #[inline]
     pub fn all_ne<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance, max_ulps: &A::AllUlpsTolerance) -> bool
     where

@@ -451,6 +451,7 @@ where
 pub struct AbsDiffCmp {}
 
 impl AbsDiffCmp {
+    #[must_use]
     #[inline]
     pub fn eq<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance) -> bool
     where
@@ -460,6 +461,7 @@ impl AbsDiffCmp {
         A::abs_diff_eq(lhs, rhs, max_abs_diff)
     }
 
+    #[must_use]
     #[inline]
     pub fn ne<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::Tolerance) -> bool
     where
@@ -469,6 +471,7 @@ impl AbsDiffCmp {
         A::abs_diff_ne(lhs, rhs, max_abs_diff)
     }
 
+    #[must_use]
     #[inline]
     pub fn all_eq<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance) -> bool
     where
@@ -478,6 +481,7 @@ impl AbsDiffCmp {
         A::abs_diff_all_eq(lhs, rhs, max_abs_diff)
     }
 
+    #[must_use]
     #[inline]
     pub fn all_ne<A, B>(lhs: &A, rhs: &B, max_abs_diff: &A::AllTolerance) -> bool
     where
