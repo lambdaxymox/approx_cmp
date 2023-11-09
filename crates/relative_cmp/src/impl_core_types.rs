@@ -53,11 +53,7 @@ macro_rules! impl_relative_eq_float {
                 // `self`.
                 let abs_self = $T::abs(*self);
                 let abs_other = $T::abs(*other);
-                let largest = if abs_other > abs_self {
-                    abs_other
-                } else {
-                    abs_self
-                };
+                let largest = $T::max(abs_self, abs_other);
 
                 return abs_diff <= largest * max_relative
             }
