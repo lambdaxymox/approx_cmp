@@ -251,24 +251,25 @@ fn test_debug_abs_diff_tolerance() {
     let lhs = VecDeque::from([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
     let rhs = VecDeque::from([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
     let max_abs_diff = VecDeque::from([0.10_f32, 0.20_f32, 0.30_f32, 0.40_f32]);
+    let tolerance = max_abs_diff.clone();
 
-    assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), Some(max_abs_diff));
+    assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), Some(tolerance));
 }
 
 #[test]
 fn test_debug_abs_diff_all_tolerance() {
     let lhs = VecDeque::from([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
     let rhs = VecDeque::from([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
-    let max_abs_diff_all = 0.20_f32;
-    let max_abs_diff = VecDeque::from([max_abs_diff_all; 4]);
+    let max_abs_diff = 0.20_f32;
+    let tolerance = VecDeque::from([max_abs_diff; 4]);
 
     assert_eq!(
-        lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all),
-        Some(max_abs_diff.clone())
+        lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff),
+        Some(tolerance.clone())
     );
     assert_eq!(
-        rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all),
-        Some(max_abs_diff.clone())
+        rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff),
+        Some(tolerance.clone())
     );
 }
 
@@ -277,20 +278,21 @@ fn test_debug_ulps_tolerance() {
     let lhs = VecDeque::from([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
     let rhs = VecDeque::from([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
     let max_ulps = VecDeque::from([2_u32, 4_u32, 8_u32, 16_u32]);
+    let tolerance = max_ulps.clone();
 
-    assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), Some(max_ulps.clone()));
-    assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), Some(max_ulps.clone()));
+    assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), Some(tolerance.clone()));
+    assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), Some(tolerance.clone()));
 }
 
 #[test]
 fn test_debug_ulps_all_tolerance() {
     let lhs = VecDeque::from([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
     let rhs = VecDeque::from([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
-    let max_ulps_all = 8_u32;
-    let max_ulps = VecDeque::from([max_ulps_all; 4]);
+    let max_ulps = 8_u32;
+    let tolerance = VecDeque::from([max_ulps; 4]);
 
-    assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps_all), Some(max_ulps.clone()));
-    assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps_all), Some(max_ulps.clone()));
+    assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps), Some(tolerance.clone()));
+    assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps), Some(tolerance.clone()));
 }
 
 #[test]
@@ -634,10 +636,10 @@ fn test_debug_abs_diff_tolerance_empty() {
 fn test_debug_abs_diff_all_tolerance_empty() {
     let lhs: VecDeque<f32> = VecDeque::new();
     let rhs = VecDeque::from([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
-    let max_abs_diff_all = 0.20_f32;
+    let max_abs_diff = 0.20_f32;
 
-    assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), None);
-    assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), None);
+    assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), None);
+    assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff), None);
 }
 
 #[test]
@@ -654,8 +656,8 @@ fn test_debug_ulps_tolerance_empty() {
 fn test_debug_ulps_all_tolerance_empty() {
     let lhs = VecDeque::from([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
     let rhs = VecDeque::new();
-    let max_ulps_all = 8_u32;
+    let max_ulps = 8_u32;
 
-    assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps_all), None);
-    assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps_all), None);
+    assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps), None);
+    assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps), None);
 }

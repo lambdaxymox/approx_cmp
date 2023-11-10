@@ -79,9 +79,10 @@ mod ulps_eq_tuple1_tests {
         let lhs = (1.0_f32,);
         let rhs = (1.0000011_f32,);
         let max_abs_diff = (0.2_f32,);
+        let tolerance = max_abs_diff;
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[test]
@@ -89,31 +90,32 @@ mod ulps_eq_tuple1_tests {
         let lhs = (1.0_f32,);
         let rhs = (1.0000011_f32,);
         let max_ulps = (4_u32,);
+        let tolerance = max_ulps;
 
-        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), max_ulps);
-        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), max_ulps);
+        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), tolerance);
     }
 
     #[test]
     fn test_debug_abs_diff_all_tolerance() {
         let lhs = (1.0_f32,);
         let rhs = (1.0000011_f32,);
-        let max_abs_diff_all = 0.2_f32;
-        let max_abs_diff = (0.2_f32,);
+        let max_abs_diff = 0.2_f32;
+        let tolerance = (0.2_f32,);
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[test]
     fn test_debug_ulps_all_tolerance() {
         let lhs = (1.0_f32,);
         let rhs = (1.0000011_f32,);
-        let max_ulps_all = 4_u32;
-        let max_ulps = (4_u32,);
+        let max_ulps = 4_u32;
+        let tolerance = (4_u32,);
 
-        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps_all), max_ulps);
-        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps_all), max_ulps);
+        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps), tolerance);
     }
 }
 
@@ -173,22 +175,22 @@ mod ulps_eq_tuple2_tests {
     fn test_debug_abs_diff_all_tolerance() {
         let lhs = (1.0_f32, 2.0_f32);
         let rhs = (1.0000011_f32, 2.0000022_f32);
-        let max_abs_diff_all = 0.2_f32;
-        let max_abs_diff = (0.2_f32, 0.2_f32);
+        let max_abs_diff = 0.2_f32;
+        let tolerance = (0.2_f32, 0.2_f32);
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[test]
     fn test_debug_ulps_all_tolerance() {
         let lhs = (1.0_f32, 2.0_f32);
         let rhs = (1.0000011_f32, 2.0000022_f32);
-        let max_ulps_all = 8_u32;
-        let max_ulps = (8_u32, 8_u32);
+        let max_ulps = 8_u32;
+        let tolerance = (8_u32, 8_u32);
 
-        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps_all), max_ulps);
-        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps_all), max_ulps);
+        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps), tolerance);
     }
 }
 
@@ -249,9 +251,10 @@ mod ulps_eq_tuple2_heterogenous_tests {
         let lhs = (1.0_f32, 2.0_f64);
         let rhs = (1.0000011_f32, 2.000022_f64);
         let max_abs_diff = (0.2_f32, 0.3_f64);
+        let tolerance = max_abs_diff;
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[test]
@@ -259,9 +262,10 @@ mod ulps_eq_tuple2_heterogenous_tests {
         let lhs = (1.0_f32, 2.0_f64);
         let rhs = (1.0000011_f32, 2.000022_f64);
         let max_ulps = (9_u32, 4953959590_u64);
+        let tolerance = max_ulps;
 
-        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), max_ulps);
-        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), max_ulps);
+        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), tolerance);
     }
 }
 
@@ -321,22 +325,22 @@ mod ulps_eq_tuple3_tests {
     fn test_debug_abs_diff_all_tolerance() {
         let lhs = (1.0_f32, 2.0_f32, 4.0_f32);
         let rhs = (1.0000011_f32, 2.0000022_f32, 4.0000044_f32);
-        let max_abs_diff_all = 0.2_f32;
-        let max_abs_diff = (0.2_f32, 0.2_f32, 0.2_f32);
+        let max_abs_diff = 0.2_f32;
+        let tolerance = (0.2_f32, 0.2_f32, 0.2_f32);
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[test]
     fn test_debug_ulps_all_tolerance() {
         let lhs = (1.0_f32, 2.0_f32, 4.0_f32);
         let rhs = (1.0000011_f32, 2.0000022_f32, 4.0000044_f32);
-        let max_ulps_all = 9_u32;
-        let max_ulps = (9_u32, 9_u32, 9_u32);
+        let max_ulps = 9_u32;
+        let tolerance = (9_u32, 9_u32, 9_u32);
 
-        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps_all), max_ulps);
-        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps_all), max_ulps);
+        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps), tolerance);
     }
 }
 
@@ -397,9 +401,10 @@ mod ulps_eq_tuple3_heterogenous_tests {
         let lhs = (1.0_f32, 2.0_f64, 4.0_f32);
         let rhs = (1.0000011_f32, 2.0000022_f64, 4.0000044_f32);
         let max_abs_diff = (0.2_f32, 0.3_f64, 0.4_f32);
+        let tolerance = max_abs_diff;
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[test]
@@ -407,9 +412,10 @@ mod ulps_eq_tuple3_heterogenous_tests {
         let lhs = (1.0_f32, 2.0_f64, 4.0_f32);
         let rhs = (1.0000011_f32, 2.0000022_f64, 4.0000044_f32);
         let max_ulps = (9_u32, 4953959590_u64, 9_u32);
+        let tolerance = max_ulps;
 
-        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), max_ulps);
-        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), max_ulps);
+        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), tolerance);
     }
 }
 
@@ -479,22 +485,22 @@ mod ulps_eq_tuple4_tests {
     fn test_debug_abs_diff_all_tolerance() {
         let lhs = (1.0_f32, 2.0_f32, 4.0_f32, 8.0_f32);
         let rhs = (1.0000011_f32, 2.0000022_f32, 4.0000044_f32, 8.0000088_f32);
-        let max_abs_diff_all = 0.2_f32;
-        let max_abs_diff = (0.2_f32, 0.2_f32, 0.2_f32, 0.2_f32);
+        let max_abs_diff = 0.2_f32;
+        let tolerance = (0.2_f32, 0.2_f32, 0.2_f32, 0.2_f32);
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[test]
     fn test_debug_ulps_all_tolerance() {
         let lhs = (1.0_f32, 2.0_f32, 4.0_f32, 8.0_f32);
         let rhs = (1.0000011_f32, 2.0000022_f32, 4.0000044_f32, 8.0000088_f32);
-        let max_ulps_all = 9_u32;
-        let max_ulps = (9_u32, 9_u32, 9_u32, 9_u32);
+        let max_ulps = 9_u32;
+        let tolerance = (9_u32, 9_u32, 9_u32, 9_u32);
 
-        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps_all), max_ulps);
-        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps_all), max_ulps);
+        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps), tolerance);
     }
 }
 
@@ -560,9 +566,10 @@ mod ulps_eq_tuple4_heterogenous_tests {
         let lhs = (1.0_f32, 2.0_f64, 4.0_f32, 8.0_f64);
         let rhs = (1.0000011_f32, 2.0000022_f64, 4.0000044_f32, 8.0000088_f64);
         let max_abs_diff = (0.2_f32, 0.3_f64, 0.4_f32, 0.5_f64);
+        let tolerance = max_abs_diff;
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[test]
@@ -570,9 +577,10 @@ mod ulps_eq_tuple4_heterogenous_tests {
         let lhs = (1.0_f32, 2.0_f64, 4.0_f32, 8.0_f64);
         let rhs = (1.0000011_f32, 2.0000022_f64, 4.0000044_f32, 8.0000088_f64);
         let max_ulps = (9_u32, 4953959590_u64, 9_u32, 4953959590_u64);
+        let tolerance = max_ulps;
 
-        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), max_ulps);
-        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), max_ulps);
+        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), tolerance);
     }
 }
 
@@ -673,14 +681,14 @@ mod ulps_eq_tuple5_tests {
             1.0000011_f32,  2.0000022_f32, 4.0000044_f32, 8.0000088_f32,
             16.0000176_f32,
         );
-        let max_abs_diff_all = 0.2_f32;
-        let max_abs_diff = (
+        let max_abs_diff = 0.2_f32;
+        let tolerance = (
             0.2_f32, 0.2_f32, 0.2_f32, 0.2_f32,
             0.2_f32,
         );
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[rustfmt::skip]
@@ -694,11 +702,11 @@ mod ulps_eq_tuple5_tests {
             1.0000011_f32,  2.0000022_f32, 4.0000044_f32, 8.0000088_f32,
             16.0000176_f32,
         );
-        let max_ulps_all = 9_u32;
-        let max_ulps = (9_u32, 9_u32, 9_u32, 9_u32, 9_u32);
+        let max_ulps = 9_u32;
+        let tolerance = (9_u32, 9_u32, 9_u32, 9_u32, 9_u32);
 
-        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps_all), max_ulps);
-        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps_all), max_ulps);
+        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps), tolerance);
     }
 }
 
@@ -809,9 +817,10 @@ mod ulps_eq_tuple5_heterogenous_tests {
             0.2_f32, 0.3_f64, 0.4_f32, 0.5_f64,
             0.6_f32,
         );
+        let tolerance = max_abs_diff;
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[rustfmt::skip]
@@ -826,9 +835,10 @@ mod ulps_eq_tuple5_heterogenous_tests {
             16.0000176_f32,
         );
         let max_ulps = (9_u32, 4953959590_u64, 9_u32, 4953959590_u64, 9_u32);
+        let tolerance = max_ulps;
 
-        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), max_ulps);
-        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), max_ulps);
+        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), tolerance);
     }
 }
 
@@ -929,14 +939,14 @@ mod ulps_eq_tuple6_tests {
             1.0000011_f32,  2.0000022_f32,  4.0000044_f32, 8.0000088_f32,
             16.0000176_f32, 32.0000352_f32,
         );
-        let max_abs_diff_all = 0.2_f32;
-        let max_abs_diff = (
+        let max_abs_diff = 0.2_f32;
+        let tolerance = (
             0.2_f32, 0.2_f32, 0.2_f32, 0.2_f32,
             0.2_f32, 0.2_f32,
         );
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[rustfmt::skip]
@@ -950,11 +960,11 @@ mod ulps_eq_tuple6_tests {
             1.0000011_f32,  2.0000022_f32,  4.0000044_f32, 8.0000088_f32,
             16.0000176_f32, 32.0000352_f32,
         );
-        let max_ulps_all = 9_u32;
-        let max_ulps = (9_u32, 9_u32, 9_u32, 9_u32, 9_u32, 9_u32);
+        let max_ulps = 9_u32;
+        let tolerance = (9_u32, 9_u32, 9_u32, 9_u32, 9_u32, 9_u32);
 
-        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps_all), max_ulps);
-        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps_all), max_ulps);
+        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps), tolerance);
     }
 }
 
@@ -1071,9 +1081,10 @@ mod ulps_eq_tuple6_heterogenous_tests {
             0.2_f32, 0.3_f64, 0.4_f32, 0.5_f64,
             0.6_f32, 0.7_f64,
         );
+        let tolerance = max_abs_diff;
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[rustfmt::skip]
@@ -1091,9 +1102,10 @@ mod ulps_eq_tuple6_heterogenous_tests {
             9_u32, 4953959590_u64, 9_u32, 4953959590_u64,
             9_u32, 4953959590_u64,
         );
+        let tolerance = max_ulps;
 
-        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), max_ulps);
-        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), max_ulps);
+        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), tolerance);
     }
 }
 
@@ -1194,14 +1206,14 @@ mod ulps_eq_tuple7_tests {
             1.0000011_f32,  2.0000022_f32,  4.0000044_f32,  8.0000088_f32,
             16.0000176_f32, 32.0000352_f32, 64.0000704_f32,
         );
-        let max_abs_diff_all = 0.2_f32;
-        let max_abs_diff = (
+        let max_abs_diff = 0.2_f32;
+        let tolerance = (
             0.2_f32, 0.2_f32, 0.2_f32, 0.2_f32,
             0.2_f32, 0.2_f32, 0.2_f32,
         );
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[rustfmt::skip]
@@ -1215,11 +1227,11 @@ mod ulps_eq_tuple7_tests {
             1.0000011_f32,  2.0000022_f32,  4.0000044_f32,  8.0000088_f32,
             16.0000176_f32, 32.0000352_f32, 64.0000704_f32,
         );
-        let max_ulps_all = 9_u32;
-        let max_ulps = (9_u32, 9_u32, 9_u32, 9_u32, 9_u32, 9_u32, 9_u32);
+        let max_ulps = 9_u32;
+        let tolerance = (9_u32, 9_u32, 9_u32, 9_u32, 9_u32, 9_u32, 9_u32);
 
-        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps_all), max_ulps);
-        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps_all), max_ulps);
+        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps), tolerance);
     }
 }
 
@@ -1336,9 +1348,10 @@ mod ulps_eq_tuple7_heterogenous_tests {
             0.2_f32, 0.3_f64, 0.4_f32, 0.5_f64,
             0.6_f32, 0.7_f64, 0.8_f32,
         );
+        let tolerance = max_abs_diff;
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[rustfmt::skip]
@@ -1356,9 +1369,10 @@ mod ulps_eq_tuple7_heterogenous_tests {
             9_u32, 4953959590_u64, 9_u32, 4953959590_u64,
             9_u32, 4953959590_u64, 9_u32,
         );
+        let tolerance = max_ulps;
 
-        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), max_ulps);
-        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), max_ulps);
+        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), tolerance);
     }
 }
 
@@ -1465,14 +1479,14 @@ mod ulps_eq_tuple8_tests {
             1.0000011_f32,  2.0000022_f32,  4.0000044_f32,  8.0000088_f32,
             16.0000176_f32, 32.0000352_f32, 64.0000704_f32, 128.0001408_f32,
         );
-        let max_abs_diff_all = 0.2_f32;
-        let max_abs_diff = (
+        let max_abs_diff = 0.2_f32;
+        let tolerance = (
             0.2_f32, 0.2_f32, 0.2_f32, 0.2_f32,
             0.2_f32, 0.2_f32, 0.2_f32, 0.2_f32,
         );
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[rustfmt::skip]
@@ -1486,14 +1500,14 @@ mod ulps_eq_tuple8_tests {
             1.0000011_f32,  2.0000022_f32,  4.0000044_f32,  8.0000088_f32,
             16.0000176_f32, 32.0000352_f32, 64.0000704_f32, 128.0001408_f32,
         );
-        let max_ulps_all = 9_u32;
-        let max_ulps = (
+        let max_ulps = 9_u32;
+        let tolerance = (
             9_u32, 9_u32, 9_u32, 9_u32,
             9_u32, 9_u32, 9_u32, 9_u32,
         );
 
-        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps_all), max_ulps);
-        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps_all), max_ulps);
+        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps), tolerance);
     }
 }
 
@@ -1610,9 +1624,10 @@ mod ulps_eq_tuple8_heterogenous_tests {
             0.2_f32, 0.3_f64, 0.4_f32, 0.5_f64,
             0.6_f32, 0.7_f64, 0.8_f32, 1.6_f64,
         );
+        let tolerance = max_abs_diff;
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[rustfmt::skip]
@@ -1630,9 +1645,10 @@ mod ulps_eq_tuple8_heterogenous_tests {
             9_u32, 4953959590_u64, 9_u32, 4953959590_u64,
             9_u32, 4953959590_u64, 9_u32, 4953959590_u64,
         );
+        let tolerance = max_ulps;
 
-        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), max_ulps);
-        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), max_ulps);
+        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), tolerance);
     }
 }
 
@@ -1753,15 +1769,15 @@ mod ulps_eq_tuple9_tests {
             16.0000176_f32,  32.0000352_f32, 64.0000704_f32, 128.0001408_f32,
             256.0002816_f32,
         );
-        let max_abs_diff_all = 0.2_f32;
-        let max_abs_diff = (
+        let max_abs_diff = 0.2_f32;
+        let tolerance = (
             0.2_f32, 0.2_f32, 0.2_f32, 0.2_f32,
             0.2_f32, 0.2_f32, 0.2_f32, 0.2_f32,
             0.2_f32,
         );
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[rustfmt::skip]
@@ -1777,15 +1793,15 @@ mod ulps_eq_tuple9_tests {
             16.0000176_f32,  32.0000352_f32, 64.0000704_f32, 128.0001408_f32,
             256.0002816_f32,
         );
-        let max_ulps_all = 9_u32;
-        let max_ulps = (
+        let max_ulps = 9_u32;
+        let tolerance = (
             9_u32, 9_u32, 9_u32, 9_u32,
             9_u32, 9_u32, 9_u32, 9_u32,
             9_u32,
         );
 
-        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps_all), max_ulps);
-        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps_all), max_ulps);
+        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps), tolerance);
     }
 }
 
@@ -1919,9 +1935,10 @@ mod ulps_eq_tuple9_heterogenous_tests {
             0.6_f32, 0.7_f64, 0.8_f32, 1.6_f64,
             3.2_f32,
         );
+        let tolerance = max_abs_diff;
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[rustfmt::skip]
@@ -1942,9 +1959,10 @@ mod ulps_eq_tuple9_heterogenous_tests {
             9_u32, 4953959590_u64, 9_u32, 4953959590_u64,
             9_u32,
         );
+        let tolerance = max_ulps;
 
-        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), max_ulps);
-        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), max_ulps);
+        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), tolerance);
     }
 }
 
@@ -2065,15 +2083,15 @@ mod ulps_eq_tuple10_tests {
             16.0000176_f32,  32.0000352_f32,  64.0000704_f32, 128.0001408_f32,
             256.0002816_f32, 512.0005632_f32,
         );
-        let max_abs_diff_all = 0.2_f32;
-        let max_abs_diff = (
+        let max_abs_diff = 0.2_f32;
+        let tolerance = (
             0.2_f32, 0.2_f32, 0.2_f32, 0.2_f32,
             0.2_f32, 0.2_f32, 0.2_f32, 0.2_f32,
             0.2_f32, 0.2_f32,
         );
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[rustfmt::skip]
@@ -2089,15 +2107,15 @@ mod ulps_eq_tuple10_tests {
             16.0000176_f32,  32.0000352_f32,  64.0000704_f32, 128.0001408_f32,
             256.0002816_f32, 512.0005632_f32,
         );
-        let max_ulps_all = 9_u32;
-        let max_ulps = (
+        let max_ulps = 9_u32;
+        let tolerance = (
             9_u32, 9_u32, 9_u32, 9_u32,
             9_u32, 9_u32, 9_u32, 9_u32,
             9_u32, 9_u32,
         );
 
-        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps_all), max_ulps);
-        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps_all), max_ulps);
+        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps), tolerance);
     }
 }
 
@@ -2231,9 +2249,10 @@ mod ulps_eq_tuple10_heterogenous_tests {
             0.6_f32, 0.7_f64, 0.8_f32, 1.6_f64,
             3.2_f32, 6.4_f64,
         );
+        let tolerance = max_abs_diff;
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[rustfmt::skip]
@@ -2254,9 +2273,10 @@ mod ulps_eq_tuple10_heterogenous_tests {
             9_u32, 4953959590_u64, 9_u32, 4953959590_u64,
             9_u32, 4953959590_u64,
         );
+        let tolerance = max_ulps;
 
-        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), max_ulps);
-        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), max_ulps);
+        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), tolerance);
     }
 }
 
@@ -2377,15 +2397,15 @@ mod ulps_eq_tuple11_tests {
             16.0000176_f32,  32.0000352_f32,  64.0000704_f32,   128.0001408_f32,
             256.0002816_f32, 512.0005632_f32, 1024.0011264_f32,
         );
-        let max_abs_diff_all = 0.2_f32;
-        let max_abs_diff = (
+        let max_abs_diff = 0.2_f32;
+        let tolerance = (
             0.2_f32, 0.2_f32, 0.2_f32, 0.2_f32,
             0.2_f32, 0.2_f32, 0.2_f32, 0.2_f32,
             0.2_f32, 0.2_f32, 0.2_f32,
         );
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[rustfmt::skip]
@@ -2401,15 +2421,15 @@ mod ulps_eq_tuple11_tests {
             16.0000176_f32,  32.0000352_f32,  64.0000704_f32,   128.0001408_f32,
             256.0002816_f32, 512.0005632_f32, 1024.0011264_f32,
         );
-        let max_ulps_all = 9_u32;
-        let max_ulps = (
+        let max_ulps = 9_u32;
+        let tolerance = (
             9_u32, 9_u32, 9_u32, 9_u32,
             9_u32, 9_u32, 9_u32, 9_u32,
             9_u32, 9_u32, 9_u32,
         );
 
-        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps_all), max_ulps);
-        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps_all), max_ulps);
+        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps), tolerance);
     }
 }
 
@@ -2543,9 +2563,10 @@ mod ulps_eq_tuple11_heterogenous_tests {
             0.6_f32, 0.7_f64, 0.8_f32,  1.6_f64,
             3.2_f32, 6.4_f64, 12.8_f32,
         );
+        let tolerance = max_abs_diff;
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[rustfmt::skip]
@@ -2566,9 +2587,10 @@ mod ulps_eq_tuple11_heterogenous_tests {
             9_u32, 4953959590_u64, 9_u32, 4953959590_u64,
             9_u32, 4953959590_u64, 9_u32,
         );
+        let tolerance = max_ulps;
 
-        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), max_ulps);
-        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), max_ulps);
+        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), tolerance);
     }
 }
 
@@ -2689,15 +2711,15 @@ mod ulps_eq_tuple12_tests {
             16.0000176_f32,  32.0000352_f32,  64.0000704_f32,   128.0001408_f32,
             256.0002816_f32, 512.0005632_f32, 1024.0011264_f32, 2048.0022528_f32,
         );
-        let max_abs_diff_all = 0.2_f32;
-        let max_abs_diff = (
+        let max_abs_diff = 0.2_f32;
+        let tolerance = (
             0.2_f32, 0.2_f32, 0.2_f32, 0.2_f32,
             0.2_f32, 0.2_f32, 0.2_f32, 0.2_f32,
             0.2_f32, 0.2_f32, 0.2_f32, 0.2_f32,
         );
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[rustfmt::skip]
@@ -2713,15 +2735,15 @@ mod ulps_eq_tuple12_tests {
             16.0000176_f32,  32.0000352_f32,  64.0000704_f32,   128.0001408_f32,
             256.0002816_f32, 512.0005632_f32, 1024.0011264_f32, 2048.0022528_f32,
         );
-        let max_ulps_all = 9_u32;
-        let max_ulps = (
+        let max_ulps = 9_u32;
+        let tolerance = (
             9_u32, 9_u32, 9_u32, 9_u32,
             9_u32, 9_u32, 9_u32, 9_u32,
             9_u32, 9_u32, 9_u32, 9_u32,
         );
 
-        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps_all), max_ulps);
-        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps_all), max_ulps);
+        assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps), tolerance);
     }
 }
 
@@ -2855,9 +2877,10 @@ mod ulps_eq_tuple12_heterogenous_tests {
             0.6_f32, 0.7_f64, 0.8_f32,  1.6_f64,
             3.2_f32, 6.4_f64, 12.8_f32, 25.6_f64,
         );
+        let tolerance = max_abs_diff;
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[rustfmt::skip]
@@ -2878,8 +2901,9 @@ mod ulps_eq_tuple12_heterogenous_tests {
             9_u32, 4953959590_u64, 9_u32, 4953959590_u64,
             9_u32, 4953959590_u64, 9_u32, 4953959590_u64,
         );
+        let tolerance = max_ulps;
 
-        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), max_ulps);
-        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), max_ulps);
+        assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), tolerance);
+        assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), tolerance);
     }
 }

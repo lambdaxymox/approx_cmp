@@ -251,20 +251,21 @@ fn test_debug_abs_diff_tolerance() {
     let lhs = cell::OnceCell::from([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
     let rhs = cell::OnceCell::from([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
     let max_abs_diff = [0.10_f32, 0.20_f32, 0.30_f32, 0.40_f32];
+    let tolerance = max_abs_diff;
 
-    assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), Some(max_abs_diff));
-    assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), Some(max_abs_diff));
+    assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), Some(tolerance));
+    assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), Some(tolerance));
 }
 
 #[test]
 fn test_debug_abs_diff_all_tolerance() {
     let lhs = cell::OnceCell::from([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
     let rhs = cell::OnceCell::from([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
-    let max_abs_diff_all = 0.20_f32;
-    let max_abs_diff = [max_abs_diff_all; 4];
+    let max_abs_diff = 0.20_f32;
+    let tolerance = [max_abs_diff; 4];
 
-    assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), Some(max_abs_diff));
-    assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), Some(max_abs_diff));
+    assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), Some(tolerance));
+    assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff), Some(tolerance));
 }
 
 #[test]
@@ -272,20 +273,21 @@ fn test_debug_ulps_tolerance() {
     let lhs = cell::OnceCell::from([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
     let rhs = cell::OnceCell::from([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
     let max_ulps = [2_u32, 4_u32, 8_u32, 16_u32];
+    let tolerance = max_ulps;
 
-    assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), Some(max_ulps));
-    assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), Some(max_ulps));
+    assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), Some(tolerance));
+    assert_eq!(rhs.debug_ulps_tolerance(&lhs, &max_ulps), Some(tolerance));
 }
 
 #[test]
 fn test_debug_ulps_all_tolerance() {
     let lhs = cell::OnceCell::from([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
     let rhs = cell::OnceCell::from([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
-    let max_ulps_all = 8_u32;
-    let max_ulps = [max_ulps_all; 4];
+    let max_ulps = 8_u32;
+    let tolerance = [max_ulps; 4];
 
-    assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps_all), Some(max_ulps));
-    assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps_all), Some(max_ulps));
+    assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps), Some(tolerance));
+    assert_eq!(rhs.debug_ulps_all_tolerance(&lhs, &max_ulps), Some(tolerance));
 }
 
 #[test]
@@ -336,8 +338,9 @@ fn test_debug_abs_diff_tolerance_none() {
     let rhs = cell::OnceCell::from([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
     let empty_cell = cell::OnceCell::new();
     let max_abs_diff = [0.10_f32, 0.20_f32, 0.30_f32, 0.40_f32];
+    let tolerance = max_abs_diff;
 
-    assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), Some(max_abs_diff));
+    assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), Some(tolerance));
     assert_eq!(lhs.debug_abs_diff_tolerance(&empty_cell, &max_abs_diff), None);
     assert_eq!(empty_cell.debug_abs_diff_tolerance(&rhs, &max_abs_diff), None);
 }
@@ -347,12 +350,12 @@ fn test_debug_abs_diff_all_tolerance_none() {
     let lhs = cell::OnceCell::from([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
     let rhs = cell::OnceCell::from([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
     let empty_cell = cell::OnceCell::new();
-    let max_abs_diff_all = 0.20_f32;
-    let max_abs_diff = [max_abs_diff_all; 4];
+    let max_abs_diff = 0.20_f32;
+    let tolerance = [max_abs_diff; 4];
 
-    assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), Some(max_abs_diff));
-    assert_eq!(lhs.debug_abs_diff_all_tolerance(&empty_cell, &max_abs_diff_all), None);
-    assert_eq!(empty_cell.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), None);
+    assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), Some(tolerance));
+    assert_eq!(lhs.debug_abs_diff_all_tolerance(&empty_cell, &max_abs_diff), None);
+    assert_eq!(empty_cell.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), None);
 }
 
 #[test]
@@ -361,8 +364,9 @@ fn test_debug_ulps_tolerance_none() {
     let rhs = cell::OnceCell::from([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
     let empty_cell = cell::OnceCell::new();
     let max_ulps = [2_u32, 4_u32, 8_u32, 16_u32];
+    let tolerance = max_ulps;
 
-    assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), Some(max_ulps));
+    assert_eq!(lhs.debug_ulps_tolerance(&rhs, &max_ulps), Some(tolerance));
     assert_eq!(lhs.debug_ulps_tolerance(&empty_cell, &max_ulps), None);
     assert_eq!(empty_cell.debug_ulps_tolerance(&rhs, &max_ulps), None);
 }
@@ -372,10 +376,10 @@ fn test_debug_ulps_all_tolerance_none() {
     let lhs = cell::OnceCell::from([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
     let rhs = cell::OnceCell::from([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
     let empty_cell = cell::OnceCell::new();
-    let max_ulps_all = 4_u32;
-    let max_ulps = [max_ulps_all; 4];
+    let max_ulps = 4_u32;
+    let tolerance = [max_ulps; 4];
 
-    assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps_all), Some(max_ulps));
-    assert_eq!(lhs.debug_ulps_all_tolerance(&empty_cell, &max_ulps_all), None);
-    assert_eq!(empty_cell.debug_ulps_all_tolerance(&rhs, &max_ulps_all), None);
+    assert_eq!(lhs.debug_ulps_all_tolerance(&rhs, &max_ulps), Some(tolerance));
+    assert_eq!(lhs.debug_ulps_all_tolerance(&empty_cell, &max_ulps), None);
+    assert_eq!(empty_cell.debug_ulps_all_tolerance(&rhs, &max_ulps), None);
 }
