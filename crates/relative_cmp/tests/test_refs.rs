@@ -247,10 +247,10 @@ fn test_debug_relative_tolerance() {
     let a_mut = &mut 1.0_f32;
     let b_mut = &mut 2.0_f32;
 
-    assert_eq!(AssertRelativeEq::debug_relative_tolerance(&a, &b, &0.5_f32), 0.5_f32);
-    assert_eq!(AssertRelativeEq::debug_relative_tolerance(&a, &b_mut, &0.5_f32), 0.5_f32);
-    assert_eq!(AssertRelativeEq::debug_relative_tolerance(&a_mut, &b, &0.5_f32), 0.5_f32);
-    assert_eq!(AssertRelativeEq::debug_relative_tolerance(&a_mut, &b_mut, &0.5_f32), 0.5_f32);
+    assert_eq!(AssertRelativeEq::debug_relative_tolerance(&a, &b, &0.5_f32), 1.0_f32);
+    assert_eq!(AssertRelativeEq::debug_relative_tolerance(&a, &b_mut, &0.5_f32), 1.0_f32);
+    assert_eq!(AssertRelativeEq::debug_relative_tolerance(&a_mut, &b, &0.5_f32), 1.0_f32);
+    assert_eq!(AssertRelativeEq::debug_relative_tolerance(&a_mut, &b_mut, &0.5_f32), 1.0_f32);
 }
 
 #[test]
@@ -260,8 +260,8 @@ fn test_debug_relative_all_tolerance() {
     let a_mut = &mut 1.0_f32;
     let b_mut = &mut 2.0_f32;
 
-    assert_eq!(AssertRelativeAllEq::debug_relative_all_tolerance(&a, &b, &0.5_f32), 0.5_f32);
-    assert_eq!(AssertRelativeAllEq::debug_relative_all_tolerance(&a, &b_mut, &0.5_f32), 0.5_f32);
-    assert_eq!(AssertRelativeAllEq::debug_relative_all_tolerance(&a_mut, &b, &0.5_f32), 0.5_f32);
-    assert_eq!(AssertRelativeAllEq::debug_relative_all_tolerance(&a_mut, &b_mut, &0.5_f32), 0.5_f32);
+    assert_eq!(AssertRelativeAllEq::debug_relative_all_tolerance(&a, &b, &0.5_f32), 1.0_f32);
+    assert_eq!(AssertRelativeAllEq::debug_relative_all_tolerance(&a, &b_mut, &0.5_f32), 1.0_f32);
+    assert_eq!(AssertRelativeAllEq::debug_relative_all_tolerance(&a_mut, &b, &0.5_f32), 1.0_f32);
+    assert_eq!(AssertRelativeAllEq::debug_relative_all_tolerance(&a_mut, &b_mut, &0.5_f32), 1.0_f32);
 }

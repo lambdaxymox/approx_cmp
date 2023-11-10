@@ -391,9 +391,10 @@ fn test_debug_abs_diff_tolerance() {
         ("2", 0.30_f32),
         ("3", 0.40_f32),
     ]);
+    let tolerance = max_abs_diff.clone();
 
-    assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), Some(max_abs_diff.clone()));
-    assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), Some(max_abs_diff.clone()));
+    assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), Some(tolerance.clone()));
+    assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), Some(tolerance.clone()));
 }
 
 #[rustfmt::skip]
@@ -411,16 +412,16 @@ fn test_debug_abs_diff_all_tolerance() {
         ("2", 4.00_f32),
         ("3", 6.00_f32),
     ]);
-    let max_abs_diff_all = 0.20_f32;
-    let max_abs_diff = HashMap::from([
-        ("0", max_abs_diff_all),
-        ("1", max_abs_diff_all),
-        ("2", max_abs_diff_all),
-        ("3", max_abs_diff_all),
+    let max_abs_diff = 0.20_f32;
+    let tolerance = HashMap::from([
+        ("0", max_abs_diff),
+        ("1", max_abs_diff),
+        ("2", max_abs_diff),
+        ("3", max_abs_diff),
     ]);
 
-    assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), Some(max_abs_diff.clone()));
-    assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), Some(max_abs_diff.clone()));
+    assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), Some(tolerance.clone()));
+    assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff), Some(tolerance.clone()));
 }
 
 #[rustfmt::skip]
@@ -444,9 +445,15 @@ fn test_debug_relative_tolerance() {
         ("2", 0.30_f32),
         ("3", 0.40_f32),
     ]);
+    let tolerance = HashMap::from([
+        ("0", 0.25_f32),
+        ("1", 0.65000004_f32),
+        ("2", 1.35_f32),
+        ("3", 2.40_f32),
+    ]);
 
-    assert_eq!(lhs.debug_relative_tolerance(&rhs, &max_relative), Some(max_relative.clone()));
-    assert_eq!(rhs.debug_relative_tolerance(&lhs, &max_relative), Some(max_relative.clone()));
+    assert_eq!(lhs.debug_relative_tolerance(&rhs, &max_relative), Some(tolerance.clone()));
+    assert_eq!(rhs.debug_relative_tolerance(&lhs, &max_relative), Some(tolerance.clone()));
 }
 
 #[rustfmt::skip]
@@ -464,16 +471,16 @@ fn test_debug_relative_all_tolerance() {
         ("2", 4.00_f32),
         ("3", 6.00_f32),
     ]);
-    let max_relative_all = 0.20_f32;
-    let max_relative = HashMap::from([
-        ("0", max_relative_all),
-        ("1", max_relative_all),
-        ("2", max_relative_all),
-        ("3", max_relative_all),
+    let max_relative = 0.20_f32;
+    let tolerance = HashMap::from([
+        ("0", 0.50_f32),
+        ("1", 0.65000004_f32),
+        ("2", 0.90000004_f32),
+        ("3", 1.20_f32),
     ]);
 
-    assert_eq!(lhs.debug_relative_all_tolerance(&rhs, &max_relative_all), Some(max_relative.clone()));
-    assert_eq!(rhs.debug_relative_all_tolerance(&lhs, &max_relative_all), Some(max_relative.clone()));
+    assert_eq!(lhs.debug_relative_all_tolerance(&rhs, &max_relative), Some(tolerance.clone()));
+    assert_eq!(rhs.debug_relative_all_tolerance(&lhs, &max_relative), Some(tolerance.clone()));
 }
 
 #[test]
@@ -1056,10 +1063,10 @@ fn test_debug_abs_diff_all_tolerance_empty() {
         ("2", 4.00_f32),
         ("3", 6.00_f32),
     ]);
-    let max_abs_diff_all = 0.20_f32;
+    let max_abs_diff = 0.20_f32;
 
-    assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff_all), None);
-    assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff_all), None);
+    assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), None);
+    assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff), None);
 }
 
 #[rustfmt::skip]
@@ -1093,8 +1100,8 @@ fn test_debug_relative_all_tolerance_empty() {
         ("3", 5.75_f32),
     ]);
     let rhs = HashMap::new();
-    let max_relative_all = 0.20_f32;
+    let max_relative = 0.20_f32;
 
-    assert_eq!(lhs.debug_relative_all_tolerance(&rhs, &max_relative_all), None);
-    assert_eq!(rhs.debug_relative_all_tolerance(&lhs, &max_relative_all), None);
+    assert_eq!(lhs.debug_relative_all_tolerance(&rhs, &max_relative), None);
+    assert_eq!(rhs.debug_relative_all_tolerance(&lhs, &max_relative), None);
 }

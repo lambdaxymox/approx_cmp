@@ -195,11 +195,11 @@ fn test_debug_abs_diff_tolerance() {
 fn test_debug_abs_diff_all_tolerance() {
     let lhs = Some([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
     let rhs = Some([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
-    let max_abs_diff_all = 0.20_f32;
-    let max_abs_diff = Some([max_abs_diff_all; 4]);
+    let max_abs_diff = 0.20_f32;
+    let tolerance = Some([max_abs_diff; 4]);
 
-    assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &Some(max_abs_diff_all)), max_abs_diff);
-    assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &Some(max_abs_diff_all)), max_abs_diff);
+    assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &Some(max_abs_diff)), tolerance);
+    assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &Some(max_abs_diff)), tolerance);
 }
 
 #[test]
@@ -207,20 +207,21 @@ fn test_debug_relative_tolerance() {
     let lhs = Some([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
     let rhs = Some([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
     let max_relative = Some([0.10_f32, 0.20_f32, 0.30_f32, 0.40_f32]);
+    let tolerance = Some([0.25_f32, 0.65000004_f32, 1.35_f32, 2.40_f32]);
 
-    assert_eq!(lhs.debug_relative_tolerance(&rhs, &max_relative), max_relative);
-    assert_eq!(rhs.debug_relative_tolerance(&lhs, &max_relative), max_relative);
+    assert_eq!(lhs.debug_relative_tolerance(&rhs, &max_relative), tolerance);
+    assert_eq!(rhs.debug_relative_tolerance(&lhs, &max_relative), tolerance);
 }
 
 #[test]
 fn test_debug_relative_all_tolerance() {
     let lhs = Some([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
     let rhs = Some([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
-    let max_relative_all = 0.20_f32;
-    let max_relative = Some([max_relative_all; 4]);
+    let max_relative = 0.20_f32;
+    let tolerance = Some([0.50_f32, 0.65000004_f32, 0.90000004_f32, 1.20_f32]);
 
-    assert_eq!(lhs.debug_relative_all_tolerance(&rhs, &Some(max_relative_all)), max_relative);
-    assert_eq!(rhs.debug_relative_all_tolerance(&lhs, &Some(max_relative_all)), max_relative);
+    assert_eq!(lhs.debug_relative_all_tolerance(&rhs, &Some(max_relative)), tolerance);
+    assert_eq!(rhs.debug_relative_all_tolerance(&lhs, &Some(max_relative)), tolerance);
 }
 
 #[test]
@@ -389,43 +390,45 @@ fn test_debug_abs_diff_tolerance_none() {
     let lhs = Some([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
     let rhs = Some([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
     let max_abs_diff = Some([0.10_f32, 0.20_f32, 0.30_f32, 0.40_f32]);
+    let tolerance = max_abs_diff;
 
     assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &None), None);
     assert_ne!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), None);
-    assert_ne!(lhs.debug_abs_diff_tolerance(&rhs, &None), max_abs_diff);
+    assert_ne!(lhs.debug_abs_diff_tolerance(&rhs, &None), tolerance);
 }
 
 #[test]
 fn test_debug_abs_diff_all_tolerance_none() {
     let lhs = Some([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
     let rhs = Some([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
-    let max_abs_diff_all = 0.20_f32;
-    let max_abs_diff = Some([max_abs_diff_all; 4]);
+    let max_abs_diff = 0.20_f32;
+    let tolerance = Some([max_abs_diff; 4]);
 
     assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &None), None);
-    assert_ne!(lhs.debug_abs_diff_all_tolerance(&rhs, &Some(max_abs_diff_all)), None);
-    assert_ne!(lhs.debug_abs_diff_all_tolerance(&rhs, &None), max_abs_diff);
+    assert_ne!(lhs.debug_abs_diff_all_tolerance(&rhs, &Some(max_abs_diff)), None);
+    assert_ne!(lhs.debug_abs_diff_all_tolerance(&rhs, &None), tolerance);
 }
 
 #[test]
 fn test_debug_relative_tolerance_none() {
     let lhs = Some([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
     let rhs = Some([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
-    let max_abs_diff = Some([0.10_f32, 0.20_f32, 0.30_f32, 0.40_f32]);
+    let max_relative = Some([0.10_f32, 0.20_f32, 0.30_f32, 0.40_f32]);
+    let tolerance = Some([0.25_f32, 0.65000004_f32, 1.35_f32, 2.40_f32]);
 
     assert_eq!(lhs.debug_relative_tolerance(&rhs, &None), None);
-    assert_ne!(lhs.debug_relative_tolerance(&rhs, &max_abs_diff), None);
-    assert_ne!(lhs.debug_relative_tolerance(&rhs, &None), max_abs_diff);
+    assert_ne!(lhs.debug_relative_tolerance(&rhs, &max_relative), None);
+    assert_ne!(lhs.debug_relative_tolerance(&rhs, &None), tolerance);
 }
 
 #[test]
 fn test_debug_relative_all_tolerance_none() {
     let lhs = Some([2.00_f32, 3.25_f32, 4.50_f32, 5.75_f32]);
     let rhs = Some([2.50_f32, 3.00_f32, 4.00_f32, 6.00_f32]);
-    let max_abs_diff_all = 0.20_f32;
-    let max_abs_diff = Some([max_abs_diff_all; 4]);
+    let max_relative = 0.20_f32;
+    let tolerance = Some([0.50_f32, 0.65000004_f32, 0.90000004_f32, 1.20_f32]);
 
     assert_eq!(lhs.debug_relative_all_tolerance(&rhs, &None), None);
-    assert_ne!(lhs.debug_relative_all_tolerance(&rhs, &Some(max_abs_diff_all)), None);
-    assert_ne!(lhs.debug_relative_all_tolerance(&rhs, &None), max_abs_diff);
+    assert_ne!(lhs.debug_relative_all_tolerance(&rhs, &Some(max_relative)), None);
+    assert_ne!(lhs.debug_relative_all_tolerance(&rhs, &None), tolerance);
 }

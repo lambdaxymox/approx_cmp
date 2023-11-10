@@ -286,84 +286,106 @@ mod relative_eq_array_f32_debug_tests {
     fn test_debug_abs_diff_tolerance1() {
         let lhs = array_uniform::<32>(1.0_f32);
         let rhs = array_uniform::<32>(1.0_f32);
-        let tolerance = 4.0_f32 * f32::EPSILON;
-        let max_abs_diff = array_uniform::<32>(tolerance);
+        let max_abs_diff_all = 4.0_f32 * f32::EPSILON;
+        let max_abs_diff = array_uniform::<32>(max_abs_diff_all);
+        let tolerance = max_abs_diff;
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), tolerance);
     }
 
     #[test]
     fn test_debug_abs_diff_tolerance2() {
         let lhs = array_uniform::<32>(1.0_f32);
         let rhs = array_range::<32>(2.0_f32);
-        let tolerance = 4.0_f32 * f32::EPSILON;
-        let max_abs_diff = array_uniform::<32>(tolerance);
+        let max_abs_diff_all = 4.0_f32 * f32::EPSILON;
+        let max_abs_diff = array_uniform::<32>(max_abs_diff_all);
+        let tolerance = max_abs_diff;
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[test]
     fn test_debug_relative_tolerance1() {
         let lhs = array_uniform::<32>(1.0_f32);
         let rhs = array_uniform::<32>(1.0_f32);
-        let tolerance = 4.0_f32 * f32::EPSILON;
-        let max_relative = array_uniform::<32>(tolerance);
+        let max_relative_all = 4.0_f32 * f32::EPSILON;
+        let max_relative = array_uniform::<32>(max_relative_all);
+        let tolerance = max_relative;
 
-        assert_eq!(lhs.debug_relative_tolerance(&rhs, &max_relative), max_relative);
+        assert_eq!(lhs.debug_relative_tolerance(&rhs, &max_relative), tolerance);
     }
 
     #[test]
     fn test_debug_relative_tolerance2() {
         let lhs = array_uniform::<32>(1.0_f32);
         let rhs = array_range::<32>(2.0_f32);
-        let tolerance = 4.0_f32 * f32::EPSILON;
-        let max_relative = array_uniform::<32>(tolerance);
+        let max_relative_all = 4.0_f32 * f32::EPSILON;
+        let max_relative = array_uniform::<32>(max_relative_all);
+        let tolerance = [
+            9.536743e-7_f32,   1.4305115e-6_f32, 1.9073486e-6_f32, 2.3841858e-6_f32,
+            2.861023e-6_f32,   3.33786e-6_f32,   3.8146973e-6_f32, 4.2915344e-6_f32,
+            4.7683716e-6_f32,  5.2452087e-6_f32, 5.722046e-6_f32,  6.198883e-6_f32,
+            6.67572e-6_f32,    7.1525574e-6_f32, 7.6293945e-6_f32, 8.106232e-6_f32,
+            8.583069e-6_f32,   9.059906e-6_f32,  9.536743e-6_f32,  1.001358e-5_f32,
+            1.04904175e-5_f32, 1.0967255e-5_f32, 1.1444092e-5_f32, 1.1920929e-5_f32,
+            1.2397766e-5_f32,  1.2874603e-5_f32, 1.335144e-5_f32,  1.3828278e-5_f32,
+            1.4305115e-5_f32,  1.4781952e-5_f32, 1.5258789e-5_f32, 1.5735626e-5_f32,
+        ];
 
-        assert_eq!(lhs.debug_relative_tolerance(&rhs, &max_relative), max_relative);
-        assert_eq!(rhs.debug_relative_tolerance(&lhs, &max_relative), max_relative);
+        assert_eq!(lhs.debug_relative_tolerance(&rhs, &max_relative), tolerance);
+        assert_eq!(rhs.debug_relative_tolerance(&lhs, &max_relative), tolerance);
     }
 
     #[test]
     fn test_debug_abs_diff_all_tolerance1() {
         let lhs = array_uniform::<32>(1.0_f32);
         let rhs = array_uniform::<32>(1.0_f32);
-        let tolerance = 4.0_f32 * f32::EPSILON;
-        let max_abs_diff = array_uniform::<32>(tolerance);
+        let max_abs_diff = 4.0_f32 * f32::EPSILON;
+        let tolerance = array_uniform::<32>(max_abs_diff);
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &tolerance), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), tolerance);
     }
 
     #[test]
     fn test_debug_abs_diff_all_tolerance2() {
         let lhs = array_uniform::<32>(1.0_f32);
         let rhs = array_range::<32>(2.0_f32);
-        let tolerance = 4.0_f32 * f32::EPSILON;
-        let max_abs_diff = array_uniform::<32>(tolerance);
+        let max_abs_diff = 4.0_f32 * f32::EPSILON;
+        let tolerance = array_uniform::<32>(max_abs_diff);
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &tolerance), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &tolerance), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[test]
     fn test_debug_relative_all_tolerance1() {
         let lhs = array_uniform::<32>(1.0_f32);
         let rhs = array_uniform::<32>(1.0_f32);
-        let tolerance = 4.0_f32 * f32::EPSILON;
-        let max_relative = array_uniform::<32>(tolerance);
+        let max_relative = 4.0_f32 * f32::EPSILON;
+        let tolerance = array_uniform::<32>(max_relative);
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &tolerance), max_relative);
+        assert_eq!(lhs.debug_relative_all_tolerance(&rhs, &max_relative), tolerance);
     }
 
     #[test]
     fn test_debug_relative_all_tolerance2() {
         let lhs = array_uniform::<32>(1.0_f32);
         let rhs = array_range::<32>(2.0_f32);
-        let tolerance = 4.0_f32 * f32::EPSILON;
-        let max_relative = array_uniform::<32>(tolerance);
+        let max_relative = 4.0_f32 * f32::EPSILON;
+        let tolerance = [
+            9.536743e-7_f32,   1.4305115e-6_f32, 1.9073486e-6_f32, 2.3841858e-6_f32,
+            2.861023e-6_f32,   3.33786e-6_f32,   3.8146973e-6_f32, 4.2915344e-6_f32,
+            4.7683716e-6_f32,  5.2452087e-6_f32, 5.722046e-6_f32,  6.198883e-6_f32,
+            6.67572e-6_f32,    7.1525574e-6_f32, 7.6293945e-6_f32, 8.106232e-6_f32,
+            8.583069e-6_f32,   9.059906e-6_f32,  9.536743e-6_f32,  1.001358e-5_f32,
+            1.04904175e-5_f32, 1.0967255e-5_f32, 1.1444092e-5_f32, 1.1920929e-5_f32,
+            1.2397766e-5_f32,  1.2874603e-5_f32, 1.335144e-5_f32,  1.3828278e-5_f32,
+            1.4305115e-5_f32,  1.4781952e-5_f32, 1.5258789e-5_f32, 1.5735626e-5_f32,
+        ];
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &tolerance), max_relative);
-        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &tolerance), max_relative);
+        assert_eq!(lhs.debug_relative_all_tolerance(&rhs, &max_relative), tolerance);
+        assert_eq!(rhs.debug_relative_all_tolerance(&lhs, &max_relative), tolerance);
     }
 }
 
@@ -412,83 +434,105 @@ mod relative_eq_array_f64_debug_tests {
     fn test_debug_abs_diff_tolerance1() {
         let lhs = array_uniform::<32>(1.0_f64);
         let rhs = array_uniform::<32>(1.0_f64);
-        let tolerance = 4.0_f64 * f64::EPSILON;
-        let max_abs_diff = array_uniform::<32>(tolerance);
+        let max_abs_diff_all = 4.0_f64 * f64::EPSILON;
+        let max_abs_diff = array_uniform::<32>(max_abs_diff_all);
+        let tolerance = max_abs_diff;
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), tolerance);
     }
 
     #[test]
     fn test_debug_abs_diff_tolerance2() {
         let lhs = array_uniform::<32>(1.0_f64);
         let rhs = array_range::<32>(2.0_f64);
-        let tolerance = 4.0_f64 * f64::EPSILON;
-        let max_abs_diff = array_uniform::<32>(tolerance);
+        let max_abs_diff_all = 4.0_f64 * f64::EPSILON;
+        let max_abs_diff = array_uniform::<32>(max_abs_diff_all);
+        let tolerance = max_abs_diff;
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[test]
     fn test_debug_relative_tolerance1() {
         let lhs = array_uniform::<32>(1.0_f64);
         let rhs = array_uniform::<32>(1.0_f64);
-        let tolerance = 4.0_f64 * f64::EPSILON;
-        let max_relative = array_uniform::<32>(tolerance);
+        let max_relative_all = 4.0_f64 * f64::EPSILON;
+        let max_relative = array_uniform::<32>(max_relative_all);
+        let tolerance = max_relative;
 
-        assert_eq!(lhs.debug_relative_tolerance(&rhs, &max_relative), max_relative);
+        assert_eq!(lhs.debug_relative_tolerance(&rhs, &max_relative), tolerance);
     }
 
     #[test]
     fn test_debug_relative_tolerance2() {
         let lhs = array_uniform::<32>(1.0_f64);
         let rhs = array_range::<32>(2.0_f64);
-        let tolerance = 4.0_f64 * f64::EPSILON;
-        let max_relative = array_uniform::<32>(tolerance);
+        let max_relative_all = 4.0_f64 * f64::EPSILON;
+        let max_relative = array_uniform::<32>(max_relative_all);
+        let tolerance = [
+            1.7763568394002505e-15_f64, 2.6645352591003757e-15_f64, 3.552713678800501e-15_f64,  4.440892098500626e-15_f64,
+            5.329070518200751e-15_f64,  6.217248937900877e-15_f64,  7.105427357601002e-15_f64,  7.993605777301127e-15_f64,
+            8.881784197001252e-15_f64,  9.769962616701378e-15_f64,  1.0658141036401503e-14_f64, 1.1546319456101628e-14_f64,
+            1.2434497875801753e-14_f64, 1.3322676295501878e-14_f64, 1.4210854715202004e-14_f64, 1.509903313490213e-14_f64,
+            1.5987211554602254e-14_f64, 1.687538997430238e-14_f64,  1.7763568394002505e-14_f64, 1.865174681370263e-14_f64,
+            1.9539925233402755e-14_f64, 2.042810365310288e-14_f64,  2.1316282072803006e-14_f64, 2.220446049250313e-14_f64,
+            2.3092638912203256e-14_f64, 2.398081733190338e-14_f64,  2.4868995751603507e-14_f64, 2.5757174171303632e-14_f64,
+            2.6645352591003757e-14_f64, 2.7533531010703882e-14_f64, 2.842170943040401e-14_f64,  2.930988785010413e-14_f64,
+        ];
 
-        assert_eq!(lhs.debug_relative_tolerance(&rhs, &max_relative), max_relative);
-        assert_eq!(rhs.debug_relative_tolerance(&lhs, &max_relative), max_relative);
+        assert_eq!(lhs.debug_relative_tolerance(&rhs, &max_relative), tolerance);
+        assert_eq!(rhs.debug_relative_tolerance(&lhs, &max_relative), tolerance);
     }
 
     #[test]
     fn test_debug_abs_diff_all_tolerance1() {
         let lhs = array_uniform::<32>(1.0_f64);
         let rhs = array_uniform::<32>(1.0_f64);
-        let tolerance = 4.0_f64 * f64::EPSILON;
-        let max_abs_diff = array_uniform::<32>(tolerance);
+        let max_abs_diff = 4.0_f64 * f64::EPSILON;
+        let tolerance = array_uniform::<32>(max_abs_diff);
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &tolerance), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), tolerance);
     }
 
     #[test]
     fn test_debug_abs_diff_all_tolerance2() {
         let lhs = array_uniform::<32>(1.0_f64);
         let rhs = array_range::<32>(2.0_f64);
-        let tolerance = 4.0_f64 * f64::EPSILON;
-        let max_abs_diff = array_uniform::<32>(tolerance);
+        let max_abs_diff = 4.0_f64 * f64::EPSILON;
+        let tolerance = array_uniform::<32>(max_abs_diff);
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &tolerance), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &tolerance), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 
     #[test]
     fn test_debug_relative_all_tolerance1() {
         let lhs = array_uniform::<32>(1.0_f64);
         let rhs = array_uniform::<32>(1.0_f64);
-        let tolerance = 4.0_f64 * f64::EPSILON;
-        let max_relative = array_uniform::<32>(tolerance);
+        let max_relative = 4.0_f64 * f64::EPSILON;
+        let tolerance = array_uniform::<32>(max_relative);
 
-        assert_eq!(lhs.debug_relative_all_tolerance(&rhs, &tolerance), max_relative);
+        assert_eq!(lhs.debug_relative_all_tolerance(&rhs, &max_relative), tolerance);
     }
 
     #[test]
     fn test_debug_relative_all_tolerance2() {
         let lhs = array_uniform::<32>(1.0_f64);
         let rhs = array_range::<32>(2.0_f64);
-        let tolerance = 4.0_f64 * f64::EPSILON;
-        let max_relative = array_uniform::<32>(tolerance);
+        let max_relative = 4.0_f64 * f64::EPSILON;
+        let tolerance = [
+            1.7763568394002505e-15_f64, 2.6645352591003757e-15_f64, 3.552713678800501e-15_f64,  4.440892098500626e-15_f64,
+            5.329070518200751e-15_f64,  6.217248937900877e-15_f64,  7.105427357601002e-15_f64,  7.993605777301127e-15_f64,
+            8.881784197001252e-15_f64,  9.769962616701378e-15_f64,  1.0658141036401503e-14_f64, 1.1546319456101628e-14_f64,
+            1.2434497875801753e-14_f64, 1.3322676295501878e-14_f64, 1.4210854715202004e-14_f64, 1.509903313490213e-14_f64,
+            1.5987211554602254e-14_f64, 1.687538997430238e-14_f64,  1.7763568394002505e-14_f64, 1.865174681370263e-14_f64,
+            1.9539925233402755e-14_f64, 2.042810365310288e-14_f64,  2.1316282072803006e-14_f64, 2.220446049250313e-14_f64,
+            2.3092638912203256e-14_f64, 2.398081733190338e-14_f64,  2.4868995751603507e-14_f64, 2.5757174171303632e-14_f64,
+            2.6645352591003757e-14_f64, 2.7533531010703882e-14_f64, 2.842170943040401e-14_f64,  2.930988785010413e-14_f64,
+        ];
 
-        assert_eq!(lhs.debug_relative_all_tolerance(&rhs, &tolerance), max_relative);
-        assert_eq!(rhs.debug_relative_all_tolerance(&lhs, &tolerance), max_relative);
+        assert_eq!(lhs.debug_relative_all_tolerance(&rhs, &max_relative), tolerance);
+        assert_eq!(rhs.debug_relative_all_tolerance(&lhs, &max_relative), tolerance);
     }
 }
