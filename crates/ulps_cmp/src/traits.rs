@@ -3,39 +3,39 @@ use core::fmt;
 
 /// Compare two sequences of finite precision floating point numbers using
 /// per entry units in last place (ULPS) difference tolerances.
-/// 
+///
 /// Types implement this trait to utilize the [`ulps_eq`] and [`ulps_ne`]
 /// macros.
-/// 
+///
 /// More precisely, let `A` be a finite set of values, let `T` be a floating
 /// point data type, let `U` be an integer data type, and let `int :: T -> U` be a
-/// monotone bijection between values of type `T` and values of type `U`, i.e. 
-/// `size_of(T) == `size_of(U)`. Let `u :: A -> T` and `v :: A -> T` be sequences 
+/// monotone bijection between values of type `T` and values of type `U`, i.e.
+/// `size_of(T) == `size_of(U)`. Let `u :: A -> T` and `v :: A -> T` be sequences
 /// of floating point numbers. Let `max_ulps :: A -> U` be a sequence of integers
 /// such that
 /// ```text
 /// forall a :: A. max_ulps[a] >= 0
 /// ```
-/// We say that `u` is **ulps equal** to `v` (or `u` is 
+/// We say that `u` is **ulps equal** to `v` (or `u` is
 /// **units in last place equal** to `v`) with tolerance `max_ulps` provided that
 /// ```text
 /// forall a :: A. abs(int(u[a]) - int(v[a])) <= max_ulps[a]
 /// ```
 /// Here, a bijection means that every floating point number in `T` corresponds
-/// to exactly one integer in `U`, and exactly one integer in `U` corresponds to 
-/// exactly one floating point number in `T`. Typically this means that we interpret 
-/// a floating point number as its underlying integer type. Monotone means that 
+/// to exactly one integer in `U`, and exactly one integer in `U` corresponds to
+/// exactly one floating point number in `T`. Typically this means that we interpret
+/// a floating point number as its underlying integer type. Monotone means that
 /// ```text
 /// forall x :: T. forall y :: T. x <= y ==> int(x) <= int(y)
 /// ```
 /// so numbers ordered as floating point numbers correspond to their integer
 /// representations, meaning that ulps comparisons are well-defined for `T` as the
 /// number of representable numbers between two floating point numbers.
-/// 
+///
 /// The trait implementations for [`f32`] and [`f64`] provided perform an absolute
 /// difference comparison before the ulps difference comparison. Like relative
 /// comparisons, ulps comparisons are not generally meaningful for values near zero.
-/// 
+///
 /// # Examples (Floating Point Number Comparisons)
 ///
 /// ```
@@ -116,39 +116,39 @@ where
     /// between two values for them to be considered approximately equal.
     type UlpsTolerance: ?Sized;
 
-    /// Compare two sequences of finite precision floating point numbers for 
+    /// Compare two sequences of finite precision floating point numbers for
     /// units in last place (ULPS) equality.
-    /// 
+    ///
     /// Returns a boolean indicating whether or not two sequences of floating point
     /// numbers are ulps equal with respect to an absolute difference tolerance
     /// `max_abs_diff` for values close to zero, and an ulps tolerance `max_ulps`
     /// otherwise.
-    /// 
+    ///
     /// More precisely, let `A` be a finite set of values, let `T` be a floating
     /// point data type, let `U` be an integer data type, and let `int :: T -> U` be a
-    /// monotone bijection between values of type `T` and values of type `U`, i.e. 
-    /// `size_of(T) == `size_of(U)`. Let `u :: A -> T` and `v :: A -> T` be sequences 
+    /// monotone bijection between values of type `T` and values of type `U`, i.e.
+    /// `size_of(T) == `size_of(U)`. Let `u :: A -> T` and `v :: A -> T` be sequences
     /// of floating point numbers. Let `max_ulps :: A -> U` be a sequence of integers
     /// such that
     /// ```text
     /// forall a :: A. max_ulps[a] >= 0
     /// ```
-    /// We say that `u` is **ulps equal** to `v` (or `u` is 
+    /// We say that `u` is **ulps equal** to `v` (or `u` is
     /// **units in last place equal** to `v`) with tolerance `max_ulps` provided that
     /// ```text
     /// forall a :: A. abs(int(u[a]) - int(v[a])) <= max_ulps[a]
     /// ```
     /// Here, a bijection means that every floating point number in `T` corresponds
-    /// to exactly one integer in `U`, and exactly one integer in `U` corresponds to 
-    /// exactly one floating point number in `T`. Typically this means that we interpret 
-    /// a floating point number as its underlying integer type. Monotone means that 
+    /// to exactly one integer in `U`, and exactly one integer in `U` corresponds to
+    /// exactly one floating point number in `T`. Typically this means that we interpret
+    /// a floating point number as its underlying integer type. Monotone means that
     /// ```text
     /// forall x :: T. forall y :: T. x <= y ==> int(x) <= int(y)
     /// ```
     /// so numbers ordered as floating point numbers correspond to their integer
     /// representations, meaning that ulps comparisons are well-defined for `T` as the
     /// number of representable numbers between two floating point numbers.
-    /// 
+    ///
     /// An implementation of [`ulps_eq`] should be equivalent to
     /// ```
     /// # trait TestUlpsEq {
@@ -169,21 +169,21 @@ where
     /// #     fn ulps_eq(&self, other: &Self, max_abs_diff: &Self::Tolerance, max_ulps: &Self::UlpsTolerance) -> bool {
     /// self == other
     ///     || { Self::abs(self - other) <= *max_abs_diff }
-    ///     || { 
+    ///     || {
     ///         let bits_self = self.to_bits();
     ///         let bits_other = other.to_bits();
     ///         let max = Self::UlpsTolerance::max(bits_self, bits_other);
     ///         let min = Self::UlpsTolerance::min(bits_self, bits_other);
-    /// 
+    ///
     ///         (max - min) <= *max_ulps
     ///     }
     /// #     }
     /// # }
     /// ```
     /// where `self == other` handles comparisons of special values, the absolute
-    /// difference clause handles values near zero, and the last clause is the 
+    /// difference clause handles values near zero, and the last clause is the
     /// ulps difference comparison.
-    /// 
+    ///
     /// # Example
     ///
     /// ```
@@ -203,39 +203,39 @@ where
     /// ```
     fn ulps_eq(&self, other: &Rhs, max_abs_diff: &Self::Tolerance, max_ulps: &Self::UlpsTolerance) -> bool;
 
-    /// Compare two sequences of finite precision floating point numbers for 
+    /// Compare two sequences of finite precision floating point numbers for
     /// units in last place (ULPS) inequality.
-    /// 
+    ///
     /// Returns a boolean indicating whether or not two sequences of floating point
     /// numbers are ulps equal with respect to an absolute difference tolerance
     /// `max_abs_diff` for values close to zero, and an ulps tolerance `max_ulps`
     /// otherwise.
-    /// 
+    ///
     /// More precisely, let `A` be a finite set of values, let `T` be a floating
     /// point data type, let `U` be an integer data type, and let `int :: T -> U` be a
-    /// monotone bijection between values of type `T` and values of type `U`, i.e. 
-    /// `size_of(T) == `size_of(U)`. Let `u :: A -> T` and `v :: A -> T` be sequences 
+    /// monotone bijection between values of type `T` and values of type `U`, i.e.
+    /// `size_of(T) == `size_of(U)`. Let `u :: A -> T` and `v :: A -> T` be sequences
     /// of floating point numbers. Let `max_ulps :: A -> U` be a sequence of integers
     /// such that
     /// ```text
     /// forall a :: A. max_ulps[a] >= 0
     /// ```
-    /// We say that `u` is **ulps unequal** to `v` (or `u` is 
+    /// We say that `u` is **ulps unequal** to `v` (or `u` is
     /// **units in last place unequal** to `v`) with tolerance `max_ulps` provided that
     /// ```text
     /// forall a :: A. abs(int(u[a]) - int(v[a])) > max_ulps[a]
     /// ```
     /// Here, a bijection means that every floating point number in `T` corresponds
-    /// to exactly one integer in `U`, and exactly one integer in `U` corresponds to 
-    /// exactly one floating point number in `T`. Typically this means that we interpret 
-    /// a floating point number as its underlying integer type. Monotone means that 
+    /// to exactly one integer in `U`, and exactly one integer in `U` corresponds to
+    /// exactly one floating point number in `T`. Typically this means that we interpret
+    /// a floating point number as its underlying integer type. Monotone means that
     /// ```text
     /// forall x :: T. forall y :: T. x <= y ==> int(x) <= int(y)
     /// ```
     /// so numbers ordered as floating point numbers correspond to their integer
     /// representations, meaning that ulps comparisons are well-defined for `T` as the
     /// number of representable numbers between two floating point numbers.
-    /// 
+    ///
     /// An implementation of [`ulps_ne`] should be equivalent to
     /// ```
     /// # trait TestUlpsEq {
@@ -257,9 +257,9 @@ where
     /// # }
     /// ```
     /// and should not be implemented directly in general.
-    /// 
+    ///
     /// # Example
-    /// 
+    ///
     /// ```
     /// # use ulps_cmp::{
     /// #     ulps_ne,
@@ -283,31 +283,31 @@ where
 /// Compare two sequences of finite precision floating point numbers for
 /// units in last place (ULPS) difference equality using a uniform tolerance
 /// value.
-/// 
+///
 /// Types implement this trait to utilize the [`ulps_eq`] and [`ulps_ne`]
 /// macros using a single ulps tolerance value.
-/// 
+///
 /// More precisely, let `A` be a finite set of values, let `T` be a floating
 /// point data type, let `U` be an integer data type, and let `int :: T -> U` be a
-/// monotone bijection between values of type `T` and values of type `U`, i.e. 
-/// `size_of(T) == `size_of(U)`. Let `u :: A -> T` and `v :: A -> T` be sequences 
-/// of floating point numbers. Let `max_ulps :: U` be an integer such that 
-/// `max_ulps >= 0`. We say that `u` is **ulps equal** to `v` (or `u` is 
+/// monotone bijection between values of type `T` and values of type `U`, i.e.
+/// `size_of(T) == `size_of(U)`. Let `u :: A -> T` and `v :: A -> T` be sequences
+/// of floating point numbers. Let `max_ulps :: U` be an integer such that
+/// `max_ulps >= 0`. We say that `u` is **ulps equal** to `v` (or `u` is
 /// **units in last place equal** to `v`) with tolerance `max_ulps` provided that
 /// ```text
 /// forall a :: A. abs(int(u[a]) - int(v[a])) <= max_ulps
 /// ```
 /// Here, a bijection means that every floating point number in `T` corresponds
-/// to exactly one integer in `U`, and exactly one integer in `U` corresponds to 
-/// exactly one floating point number in `T`. Typically this means that we interpret 
-/// a floating point number as its underlying integer type. Monotone means that 
+/// to exactly one integer in `U`, and exactly one integer in `U` corresponds to
+/// exactly one floating point number in `T`. Typically this means that we interpret
+/// a floating point number as its underlying integer type. Monotone means that
 /// ```text
 /// forall x :: T. forall y :: T. x <= y ==> int(x) <= int(y)
 /// ```
 /// so numbers ordered as floating point numbers correspond to their integer
 /// representations, meaning that ulps comparisons are well-defined for `T` as the
 /// number of representable numbers between two floating point numbers.
-/// 
+///
 /// The trait implementations for [`f32`] and [`f64`] provided perform an absolute
 /// difference comparison before the ulps difference comparison. Like relative
 /// comparisons, ulps comparisons are not generally meaningful for values near zero.
@@ -377,33 +377,33 @@ where
     /// Compare two sequences of finite precision floating point numbers for
     /// units in last place (ULPS) difference equality using a uniform tolerance
     /// value.
-    /// 
+    ///
     /// Returns a boolean indicating whether or not two sequences of floating
     /// point numbers are ulps difference equal with respect to a uniform absolute
     /// difference tolerance `max_abs_diff` for values close to zero, and a
     /// uniform ulps tolerance `max_ulps` for values not close to zero.
-    /// 
+    ///
     /// More precisely, let `A` be a finite set of values, let `T` be a floating
     /// point data type, let `U` be an integer data type, and let `int :: T -> U` be a
-    /// monotone bijection between values of type `T` and values of type `U`, i.e. 
-    /// `size_of(T) == `size_of(U)`. Let `u :: A -> T` and `v :: A -> T` be sequences 
-    /// of floating point numbers. Let `max_ulps :: U` be an integer such that 
-    /// `max_ulps >= 0`. We say that `u` is **ulps equal** to `v` (or `u` is 
+    /// monotone bijection between values of type `T` and values of type `U`, i.e.
+    /// `size_of(T) == `size_of(U)`. Let `u :: A -> T` and `v :: A -> T` be sequences
+    /// of floating point numbers. Let `max_ulps :: U` be an integer such that
+    /// `max_ulps >= 0`. We say that `u` is **ulps equal** to `v` (or `u` is
     /// **units in last place equal** to `v`) with tolerance `max_ulps` provided that
     /// ```text
     /// forall a :: A. abs(int(u[a]) - int(v[a])) <= max_ulps
     /// ```
     /// Here, a bijection means that every floating point number in `T` corresponds
-    /// to exactly one integer in `U`, and exactly one integer in `U` corresponds to 
-    /// exactly one floating point number in `T`. Typically this means that we interpret 
-    /// a floating point number as its underlying integer type. Monotone means that 
+    /// to exactly one integer in `U`, and exactly one integer in `U` corresponds to
+    /// exactly one floating point number in `T`. Typically this means that we interpret
+    /// a floating point number as its underlying integer type. Monotone means that
     /// ```text
     /// forall x :: T. forall y :: T. x <= y ==> int(x) <= int(y)
     /// ```
     /// so numbers ordered as floating point numbers correspond to their integer
     /// representations, meaning that ulps comparisons are well-defined for `T` as the
     /// number of representable numbers between two floating point numbers.
-    /// 
+    ///
     /// An implementation of [`ulps_all_eq`] must use the same algorithm as
     /// [`UlpsEq::ulps_eq`].
     ///
@@ -429,33 +429,33 @@ where
     /// Compare two sequences of finite precision floating point numbers for
     /// units in last place (ULPS) difference inequality using a uniform tolerance
     /// value.
-    /// 
+    ///
     /// Returns a boolean indicating whether or not two sequences of floating
     /// point numbers are ulps difference unequal with respect to a uniform absolute
     /// difference tolerance `max_abs_diff` for values close to zero, and a
     /// uniform ulps tolerance `max_ulps` for values not close to zero.
-    /// 
+    ///
     /// More precisely, let `A` be a finite set of values, let `T` be a floating
     /// point data type, let `U` be an integer data type, and let `int :: T -> U` be a
-    /// monotone bijection between values of type `T` and values of type `U`, i.e. 
-    /// `size_of(T) == `size_of(U)`. Let `u :: A -> T` and `v :: A -> T` be sequences 
-    /// of floating point numbers. Let `max_ulps :: U` be an integer such that 
-    /// `max_ulps >= 0`. We say that `u` is **ulps unequal** to `v` (or `u` is 
+    /// monotone bijection between values of type `T` and values of type `U`, i.e.
+    /// `size_of(T) == `size_of(U)`. Let `u :: A -> T` and `v :: A -> T` be sequences
+    /// of floating point numbers. Let `max_ulps :: U` be an integer such that
+    /// `max_ulps >= 0`. We say that `u` is **ulps unequal** to `v` (or `u` is
     /// **units in last place unequal** to `v`) with tolerance `max_ulps` provided that
     /// ```text
     /// forall a :: A. abs(int(u[a]) - int(v[a])) > max_ulps
     /// ```
     /// Here, a bijection means that every floating point number in `T` corresponds
-    /// to exactly one integer in `U`, and exactly one integer in `U` corresponds to 
-    /// exactly one floating point number in `T`. Typically this means that we interpret 
-    /// a floating point number as its underlying integer type. Monotone means that 
+    /// to exactly one integer in `U`, and exactly one integer in `U` corresponds to
+    /// exactly one floating point number in `T`. Typically this means that we interpret
+    /// a floating point number as its underlying integer type. Monotone means that
     /// ```text
     /// forall x :: T. forall y :: T. x <= y ==> int(x) <= int(y)
     /// ```
     /// so numbers ordered as floating point numbers correspond to their integer
     /// representations, meaning that ulps comparisons are well-defined for `T` as the
     /// number of representable numbers between two floating point numbers.
-    /// 
+    ///
     /// An implementation of [`ulps_all_ne`] should be equivalent to
     /// ```
     /// # trait TestUlpsAllEq {
@@ -495,7 +495,7 @@ where
 }
 
 /// Procide a debugging context for when an ulps difference comparison fails.
-/// 
+///
 /// Types implement this trait to use the [`assert_ulps_eq`] and [`assert_ulps_ne`]
 /// macros.
 pub trait AssertUlpsEq<Rhs = Self>: UlpsEq<Rhs>
@@ -510,8 +510,8 @@ where
     /// is used to display results via [`fmt::Debug`].
     type DebugUlpsDiff: fmt::Debug + Sized;
 
-    /// The value of the absolute difference tolerance used for comparing two 
-    /// values in a debugging context. This is used to display results via 
+    /// The value of the absolute difference tolerance used for comparing two
+    /// values in a debugging context. This is used to display results via
     /// [`fmt::Debug`].
     type DebugTolerance: fmt::Debug;
 
@@ -537,9 +537,9 @@ where
     fn debug_abs_diff(&self, other: &Rhs) -> Self::DebugAbsDiff;
 
     /// Compute the ulps difference between two values in a debugging context.
-    /// 
+    ///
     /// # Example
-    /// 
+    ///
     /// ```
     /// # use ulps_cmp::AssertUlpsEq;
     /// #
@@ -588,20 +588,20 @@ where
 }
 
 /// Provide a debugging context for when an ulps difference comparison fails.
-/// 
+///
 /// Types implement this trait to use the [`assert_ulps_eq`] and [`assert_ulps_ne`]
 /// macros with `all` parameters.
 pub trait AssertUlpsAllEq<Rhs = Self>: UlpsAllEq<Rhs>
 where
     Rhs: ?Sized,
 {
-    /// The data type representing the uniform absolute difference between two 
-    /// values for them to be considered approximately equal that can be 
+    /// The data type representing the uniform absolute difference between two
+    /// values for them to be considered approximately equal that can be
     /// displayed in a debugging context.
     type AllDebugTolerance: fmt::Debug;
 
-    /// The data type representing the uniform ulps difference between two 
-    /// values for them to be considered approximately equal that can be 
+    /// The data type representing the uniform ulps difference between two
+    /// values for them to be considered approximately equal that can be
     /// displayed in a debugging context.
     type AllDebugUlpsTolerance: fmt::Debug;
 
@@ -625,9 +625,9 @@ where
 
     /// Compute the value of the maximum allowed uniform ulps difference
     /// between two values for a debugging context.
-    /// 
+    ///
     /// # Example
-    /// 
+    ///
     /// ```
     /// # use ulps_cmp::AssertUlpsAllEq;
     /// #
