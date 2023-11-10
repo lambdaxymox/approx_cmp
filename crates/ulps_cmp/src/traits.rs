@@ -725,6 +725,22 @@ impl UlpsCmpOpTol {
     }
 }
 
+/// Compare two finite precision floating point expression for ulps
+/// difference equality.
+/// 
+/// For more details, see the documentation for [`UlpsEq`] and [`UlpsAllEq`].
+/// 
+/// # Example
+/// 
+/// ```
+/// # use ulps_cmp::ulps_eq;
+/// #
+/// let lhs = 98.0005_f32;
+/// let rhs = 98.0001_f32;
+/// 
+/// assert!(ulps_eq!(lhs, rhs, abs_diff <= 0.0_f32, ulps <= 60_u32));
+/// assert!(ulps_eq!(lhs, rhs, abs_diff_all <= 0.0_f32, ulps_all <= 60_u32));
+/// ```
 #[macro_export]
 macro_rules! ulps_eq {
     ($left:expr, $right:expr, abs_diff <= $tol_1:expr, ulps <= $tol_2:expr $(,)?) => {{
@@ -749,6 +765,22 @@ macro_rules! ulps_eq {
     }};
 }
 
+/// Compare two finite precision floating point expression for ulps
+/// difference inequality.
+/// 
+/// For more details, see the documentation for [`UlpsEq`] and [`UlpsAllEq`].
+/// 
+/// # Example
+/// 
+/// ```
+/// # use ulps_cmp::ulps_ne;
+/// #
+/// let lhs = 98.0005_f32;
+/// let rhs = 98.0001_f32;
+/// 
+/// assert!(ulps_ne!(lhs, rhs, abs_diff <= 0.0_f32, ulps <= 40_u32));
+/// assert!(ulps_ne!(lhs, rhs, abs_diff_all <= 0.0_f32, ulps_all <= 40_u32));
+/// ```
 #[macro_export]
 macro_rules! ulps_ne {
     ($left:expr, $right:expr, abs_diff <= $tol_1:expr, ulps <= $tol_2:expr $(,)?) => {{
@@ -773,6 +805,25 @@ macro_rules! ulps_ne {
     }};
 }
 
+/// Assert that two finite precision floating point expressions are ulps
+/// difference equal.
+/// 
+/// See the documentation for [`UlpsEq`] and [`UlpsAllEq`] for details about
+/// ulps difference comparisons. See the documentation for [`AssertUlpsEq`] 
+/// and [`AssertUlpsAllEq`] for details about the debugging context provided
+/// when an assertion fails.
+/// 
+/// # Example
+/// 
+/// ```
+/// # use ulps_cmp::assert_ulps_eq;
+/// #
+/// let lhs = 98.0005_f32;
+/// let rhs = 98.0001_f32;
+/// 
+/// assert_ulps_eq!(lhs, rhs, abs_diff <= 0.0_f32, ulps <= 60_u32);
+/// assert_ulps_eq!(lhs, rhs, abs_diff_all <= 0.0_f32, ulps_all <= 60_u32);
+/// ```
 #[macro_export]
 macro_rules! assert_ulps_eq {
     ($left:expr, $right:expr, $eq1:ident <= $tol_1:expr, $eq2:ident <= $tol_2:expr $(,)?) => {{
@@ -834,6 +885,25 @@ macro_rules! assert_ulps_eq {
     }};
 }
 
+/// Assert that two finite precision floating point expressions are ulps
+/// difference inequal.
+/// 
+/// See the documentation for [`UlpsEq`] and [`UlpsAllEq`] for details about
+/// ulps difference comparisons. See the documentation for [`AssertUlpsEq`] 
+/// and [`AssertUlpsAllEq`] for details about the debugging context provided
+/// when an assertion fails.
+/// 
+/// # Example
+/// 
+/// ```
+/// # use ulps_cmp::assert_ulps_ne;
+/// #
+/// let lhs = 98.0005_f32;
+/// let rhs = 98.0001_f32;
+/// 
+/// assert_ulps_ne!(lhs, rhs, abs_diff <= 0.0_f32, ulps <= 40_u32);
+/// assert_ulps_ne!(lhs, rhs, abs_diff_all <= 0.0_f32, ulps_all <= 40_u32);
+/// ```
 #[macro_export]
 macro_rules! assert_ulps_ne {
     ($left:expr, $right:expr, $eq1:ident <= $tol_1:expr, $eq2:ident <= $tol_2:expr $(,)?) => {{
@@ -895,11 +965,55 @@ macro_rules! assert_ulps_ne {
     }};
 }
 
+/// Assert that two finite precision floating point expressions are ulps
+/// difference equal.
+/// 
+/// See the documentation for [`UlpsEq`] and [`UlpsAllEq`] for details about
+/// ulps difference comparisons. See the documentation for [`AssertUlpsEq`] 
+/// and [`AssertUlpsAllEq`] for details about the debugging context provided
+/// when an assertion fails.
+/// 
+/// This macro is only enable in debug builds like [`debug_assert_eq`] in the
+/// standard library.
+/// 
+/// # Example
+/// 
+/// ```
+/// # use ulps_cmp::debug_assert_ulps_eq;
+/// #
+/// let lhs = 98.0005_f32;
+/// let rhs = 98.0001_f32;
+/// 
+/// debug_assert_ulps_eq!(lhs, rhs, abs_diff <= 0.0_f32, ulps <= 60_u32);
+/// debug_assert_ulps_eq!(lhs, rhs, abs_diff_all <= 0.0_f32, ulps_all <= 60_u32);
+/// ```
 #[macro_export]
 macro_rules! debug_assert_ulps_eq {
     ($($arg:tt)*) => (if cfg!(debug_assertions) { $crate::assert_ulps_eq!($($arg)*); })
 }
 
+/// Assert that two finite precision floating point expressions are ulps
+/// difference equal.
+/// 
+/// See the documentation for [`UlpsEq`] and [`UlpsAllEq`] for details about
+/// ulps difference comparisons. See the documentation for [`AssertUlpsEq`] 
+/// and [`AssertUlpsAllEq`] for details about the debugging context provided
+/// when an assertion fails.
+/// 
+/// This macro is only enable in debug builds like [`debug_assert_ne`] in the
+/// standard library.
+/// 
+/// # Example
+/// 
+/// ```
+/// # use ulps_cmp::debug_assert_ulps_ne;
+/// #
+/// let lhs = 98.0005_f32;
+/// let rhs = 98.0001_f32;
+/// 
+/// debug_assert_ulps_ne!(lhs, rhs, abs_diff <= 0.0_f32, ulps <= 40_u32);
+/// debug_assert_ulps_ne!(lhs, rhs, abs_diff_all <= 0.0_f32, ulps_all <= 40_u32);
+/// ```
 #[macro_export]
 macro_rules! debug_assert_ulps_ne {
     ($($arg:tt)*) => (if cfg!(debug_assertions) { $crate::assert_ulps_ne!($($arg)*); })

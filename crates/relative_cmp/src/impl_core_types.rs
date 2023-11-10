@@ -355,8 +355,8 @@ macro_rules! impl_assert_relative_eq_float {
             }
 
             #[inline]
-            fn debug_relative_tolerance(&self, _other: &Self, max_relative: &Self::Tolerance) -> Self::DebugTolerance {
-                *max_relative
+            fn debug_relative_tolerance(&self, other: &Self, max_relative: &Self::Tolerance) -> Self::DebugTolerance {
+                Self::max(Self::abs(*self), Self::abs(*other)) * max_relative
             }
         }
     )*};
