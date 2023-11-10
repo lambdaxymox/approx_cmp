@@ -51,17 +51,19 @@ not available using the `alloc` feature, and similarly for `alloc` and `core`.
 
 The **approx_cmp** crate provides a rich set of features for doing finite
 precision arithmetic comparisons using the following comparison algorithms:
+
 * Absolute difference equality comparisons
 * Relative difference equality comparisons
 * Units In Last Place equality comparisons
 * Debugging traits for error reporting in case of failed comparisons
 * The capacity to define approximate comparison operations on custom data types.
-* A set of macros for each comparison algorithm making approximate comparisons tidier, and
-  making debugging and logging and more understandable.
+* A set of macros for each comparison algorithm making approximate comparisons 
+tidier, and making debugging and logging and more understandable.
+
 The library interfaces are designed to be number system agnostic. Typically one 
-would be interested in IEEE 754 floating point number comparisons, but the comparison 
-traits can be implemented for other numeric representations too, such as 
-[posits](https://posithub.org/).
+would be interested in IEEE 754 floating point number comparisons, but the 
+comparison traits can be implemented for other numeric representations too, such 
+as [posits](https://posithub.org/).
 
 For more details about the specifics of the comparison algorithms provided by the
 library, see the relevant documentation for that comparison algorithm trait.

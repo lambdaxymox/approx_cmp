@@ -287,7 +287,7 @@ where
     /// forall a :: A. abs(u[a] - v[a]) <= max_abs_diff
     /// ```
     ///
-    /// An implementation of [`AbsDiffAllEq::abs_diff_all_eq`] must use the 
+    /// An implementation of [`AbsDiffAllEq::abs_diff_all_eq`] must use the
     /// same algorithm as [`AbsDiffEq::abs_diff_eq`].
     ///
     /// # Example

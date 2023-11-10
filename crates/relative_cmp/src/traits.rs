@@ -312,7 +312,7 @@ where
     /// forall a :: A. abs(u[a] - v[a]) <= max(abs(u[a]), abs(v[a])) * max_relative
     /// ```
     ///
-    /// An implementation of [`RelativeAllEq::relative_all_eq`] must use the same 
+    /// An implementation of [`RelativeAllEq::relative_all_eq`] must use the same
     /// algorithm as [`RelativeEq::relative_eq`].
     ///
     /// # Example
@@ -351,7 +351,7 @@ where
     /// forall a :: A. abs(u[a] - v[a]) > max(abs(u[a]), abs(v[a])) * max_relative
     /// ```
     ///
-    /// An implementation of [`RelativeAllEq::relative_all_ne`] should be 
+    /// An implementation of [`RelativeAllEq::relative_all_ne`] should be
     /// equivalent to
     /// ```
     /// # trait TestRelativeAllEq {
