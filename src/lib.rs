@@ -1,4 +1,5 @@
 #![doc = include_str!("../README.md")]
+#![doc = include_str!("../EXAMPLES.md")]
 #![no_std]
 #[cfg(feature = "core")]
 extern crate core as std;
