@@ -2,7 +2,7 @@ use core::fmt;
 
 
 /// Compare two sequences of finite precision floating point numbers using
-/// per entry units in last place (ULPS) difference tolerances.
+/// per entry units in last place (ulps) difference tolerances.
 ///
 /// Types implement this trait to utilize the [`ulps_eq`] and [`ulps_ne`]
 /// macros.
@@ -117,7 +117,7 @@ where
     type UlpsTolerance: ?Sized;
 
     /// Compare two sequences of finite precision floating point numbers for
-    /// units in last place (ULPS) equality.
+    /// units in last place (ulps) equality.
     ///
     /// Returns a boolean indicating whether or not two sequences of floating point
     /// numbers are ulps equal with respect to an absolute difference tolerance
@@ -204,7 +204,7 @@ where
     fn ulps_eq(&self, other: &Rhs, max_abs_diff: &Self::Tolerance, max_ulps: &Self::UlpsTolerance) -> bool;
 
     /// Compare two sequences of finite precision floating point numbers for
-    /// units in last place (ULPS) inequality.
+    /// units in last place (ulps) inequality.
     ///
     /// Returns a boolean indicating whether or not two sequences of floating point
     /// numbers are ulps equal with respect to an absolute difference tolerance
@@ -281,7 +281,7 @@ where
 }
 
 /// Compare two sequences of finite precision floating point numbers for
-/// units in last place (ULPS) difference equality using a uniform tolerance
+/// units in last place (ulps) difference equality using a uniform tolerance
 /// value.
 ///
 /// Types implement this trait to utilize the [`ulps_eq`] and [`ulps_ne`]
@@ -375,7 +375,7 @@ where
     type AllUlpsTolerance: ?Sized;
 
     /// Compare two sequences of finite precision floating point numbers for
-    /// units in last place (ULPS) difference equality using a uniform tolerance
+    /// units in last place (ulps) difference equality using a uniform tolerance
     /// value.
     ///
     /// Returns a boolean indicating whether or not two sequences of floating
@@ -427,7 +427,7 @@ where
     fn ulps_all_eq(&self, other: &Rhs, max_abs_diff: &Self::AllTolerance, max_ulps: &Self::AllUlpsTolerance) -> bool;
 
     /// Compare two sequences of finite precision floating point numbers for
-    /// units in last place (ULPS) difference inequality using a uniform tolerance
+    /// units in last place (ulps) difference inequality using a uniform tolerance
     /// value.
     ///
     /// Returns a boolean indicating whether or not two sequences of floating
