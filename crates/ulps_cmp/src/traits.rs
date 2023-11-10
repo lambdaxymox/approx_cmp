@@ -54,10 +54,10 @@ use core::fmt;
 /// assert!(lhs.ulps_eq(&rhs, &max_abs_diff, &max_ulps1));
 /// assert!(lhs.ulps_ne(&rhs, &max_abs_diff, &max_ulps2));
 ///
-/// // Using the [`relative_eq`] macro.
+/// // Using the [`ulps_eq`] macro.
 /// assert!(ulps_eq!(lhs, rhs, abs_diff <= max_abs_diff, ulps <= max_ulps1));
 ///
-/// // Using the [`relative_ne`] macro.
+/// // Using the [`ulps_ne`] macro.
 /// assert!(ulps_ne!(lhs, rhs, abs_diff <= max_abs_diff, ulps <= max_ulps2));
 /// ```
 ///
@@ -311,6 +311,56 @@ where
 /// The trait implementations for [`f32`] and [`f64`] provided perform an absolute
 /// difference comparison before the ulps difference comparison. Like relative
 /// comparisons, ulps comparisons are not generally meaningful for values near zero.
+///
+/// # Examples (Floating Point Number Comparisons)
+///
+/// ```
+/// # use ulps_cmp::{
+/// #     ulps_eq,
+/// #     ulps_ne,
+/// #     UlpsAllEq,
+/// # };
+/// #
+/// let lhs = 11.0_f32;
+/// let rhs = 11.000105_f32;
+/// let max_abs_diff = 0.0_f32;
+/// let max_ulps1 = 120_u32;
+/// let max_ulps2 = 100_u32;
+///
+/// assert!(lhs.ulps_all_eq(&rhs, &max_abs_diff, &max_ulps1));
+/// assert!(lhs.ulps_all_ne(&rhs, &max_abs_diff, &max_ulps2));
+///
+/// // Using the [`ulps_eq`] macro with `all` parameters.
+/// assert!(ulps_eq!(lhs, rhs, abs_diff_all <= max_abs_diff, ulps_all <= max_ulps1));
+///
+/// // Using the [`ulps_ne`] macro with `all` parameters.
+/// assert!(ulps_ne!(lhs, rhs, abs_diff_all <= max_abs_diff, ulps_all <= max_ulps2));
+/// ```
+///
+/// # Examples (Floating Point Number Sequence Comparisons)
+///
+/// ```
+/// # use ulps_cmp::{
+/// #     ulps_eq,
+/// #     ulps_ne,
+/// #     UlpsAllEq,
+/// # };
+/// #
+/// let lhs = [1_f32, 2_f32, 3_f32, 4_f32];
+/// let rhs = [1.0001195_f32, 2.0002390_f32, 3.0003585, 4.0004780_f32];
+/// let max_abs_diff = 0.0_f32;
+/// let max_ulps1 = 1600_u32;
+/// let max_ulps2 = 1000_u32;
+///
+/// assert!(lhs.ulps_all_eq(&rhs, &max_abs_diff, &max_ulps1));
+/// assert!(lhs.ulps_all_ne(&rhs, &max_abs_diff, &max_ulps2));
+///
+/// // Using the [`ulps_eq`] macro with `all` parameters.
+/// assert!(ulps_eq!(lhs, rhs, abs_diff_all <= max_abs_diff, ulps_all <= max_ulps1));
+///
+/// // Using the [`ulps_ne`] macro with `all` parameters.
+/// assert!(ulps_ne!(lhs, rhs, abs_diff_all <= max_abs_diff, ulps_all <= max_ulps2));
+/// ```
 pub trait UlpsAllEq<Rhs = Self>
 where
     Rhs: ?Sized,
@@ -353,6 +403,27 @@ where
     /// so numbers ordered as floating point numbers correspond to their integer
     /// representations, meaning that ulps comparisons are well-defined for `T` as the
     /// number of representable numbers between two floating point numbers.
+    /// 
+    /// An implementation of [`ulps_all_eq`] must use the same algorithm as
+    /// [`UlpsEq::ulps_eq`].
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// # use ulps_cmp::{
+    /// #     ulps_eq,
+    /// #     UlpsAllEq,
+    /// # };
+    /// #
+    /// let lhs = 1.0_f32;
+    /// let rhs = 1.0001115_f32;
+    /// let max_abs_diff = 0.0_f32;
+    /// let max_ulps = 1000_u32;
+    ///
+    /// assert!(lhs.ulps_all_eq(&rhs, &max_abs_diff, &max_ulps));
+    ///
+    /// assert!(ulps_eq!(lhs, rhs, abs_diff_all <= max_abs_diff, ulps_all <= max_ulps));
+    /// ```
     fn ulps_all_eq(&self, other: &Rhs, max_abs_diff: &Self::AllTolerance, max_ulps: &Self::AllUlpsTolerance) -> bool;
 
     /// Compare two sequences of finite precision floating point numbers for
@@ -384,6 +455,40 @@ where
     /// so numbers ordered as floating point numbers correspond to their integer
     /// representations, meaning that ulps comparisons are well-defined for `T` as the
     /// number of representable numbers between two floating point numbers.
+    /// 
+    /// An implementation of [`ulps_all_ne`] should be equivalent to
+    /// ```
+    /// # trait TestUlpsAllEq {
+    /// #     fn ulps_all_eq(&self, other: &Self, max_abs_diff: &Self, max_ulps: &Self) -> bool { false }
+    /// #
+    /// #     fn ulps_all_ne(&self, other: &Self, max_abs_diff: &Self, max_ulps: &Self) -> bool;
+    /// # }
+    /// #
+    /// # impl TestUlpsAllEq for f32 {
+    /// #     fn ulps_all_ne(&self, other: &Self, max_abs_diff: &Self, max_ulps: &Self) -> bool {
+    /// !Self::ulps_all_eq(self, other, max_abs_diff, max_ulps)
+    /// #     }
+    /// # }
+    /// ```
+    /// and should not be implemented directly in general.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// # use ulps_cmp::{
+    /// #     ulps_ne,
+    /// #     UlpsAllEq,
+    /// # };
+    /// #
+    /// let lhs = 1.0_f32;
+    /// let rhs = 1.0001115_f32;
+    /// let max_abs_diff = 0.0_f32;
+    /// let max_ulps = 900_u32;
+    ///
+    /// assert!(lhs.ulps_all_ne(&rhs, &max_abs_diff, &max_ulps));
+    ///
+    /// assert!(ulps_ne!(lhs, rhs, abs_diff_all <= max_abs_diff, ulps_all <= max_ulps));
+    /// ```
     fn ulps_all_ne(&self, other: &Rhs, max_abs_diff: &Self::AllTolerance, max_ulps: &Self::AllUlpsTolerance) -> bool {
         !Self::ulps_all_eq(self, other, max_abs_diff, max_ulps)
     }
