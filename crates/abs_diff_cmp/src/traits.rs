@@ -101,7 +101,7 @@ where
     /// forall a :: A. abs(u[a] - v[a]) <= max_abs_diff[a]
     /// ```
     ///
-    /// An implementation of [`abs_diff_eq`] should be equivalent to
+    /// An implementation of [`AbsDiffEq::abs_diff_eq`] should be equivalent to
     /// ```
     /// # trait TestAbsDiffEq {
     /// #     fn abs_diff_eq(&self, other: &Self, max_abs_diff: &Self) -> bool;
@@ -117,7 +117,8 @@ where
     /// #     }
     /// # }
     /// ```
-    /// and should not be implemented directly in general.
+    /// where `self == other` handles comparisons of special values, and the
+    /// last clause is the absolute difference comparison.
     ///
     /// # Example
     ///
@@ -157,7 +158,7 @@ where
     /// forall a :: A. abs(u[a] - v[a]) > max_abs_diff[a]
     /// ```
     ///
-    /// An implementation of [`abs_diff_ne`] should be equivalent to
+    /// An implementation of [`AbsDiffEq::abs_diff_ne`] should be equivalent to
     /// ```
     /// # trait TestAbsDiffEq {
     /// #     fn abs_diff_eq(&self, other: &Self, max_abs_diff: &Self) -> bool { false }
@@ -286,8 +287,8 @@ where
     /// forall a :: A. abs(u[a] - v[a]) <= max_abs_diff
     /// ```
     ///
-    /// An implementation of [`abs_diff_all_eq`] must use the same algorithm as
-    /// [`AbsDiffEq::abs_diff_eq`].
+    /// An implementation of [`AbsDiffAllEq::abs_diff_all_eq`] must use the 
+    /// same algorithm as [`AbsDiffEq::abs_diff_eq`].
     ///
     /// # Example
     ///
@@ -323,7 +324,7 @@ where
     /// forall a :: A. abs(u[a] - v[a]) > max_abs_diff
     /// ```
     ///
-    /// An implementation of [`abs_diff_all_ne`] should be equivalent to
+    /// An implementation of [`AbsDiffAllEq::abs_diff_all_ne`] should be equivalent to
     /// ```
     /// # trait TestAbsDiffAllEq {
     /// #     fn abs_diff_all_eq(&self, other: &Self, max_abs_diff: &Self) -> bool { false }

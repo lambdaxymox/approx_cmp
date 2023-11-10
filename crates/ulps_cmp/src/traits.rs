@@ -149,7 +149,7 @@ where
     /// representations, meaning that ulps comparisons are well-defined for `T` as the
     /// number of representable numbers between two floating point numbers.
     ///
-    /// An implementation of [`ulps_eq`] should be equivalent to
+    /// An implementation of [`UlpsEq::ulps_eq`] should be equivalent to
     /// ```
     /// # trait TestUlpsEq {
     /// #     type Tolerance;
@@ -236,7 +236,7 @@ where
     /// representations, meaning that ulps comparisons are well-defined for `T` as the
     /// number of representable numbers between two floating point numbers.
     ///
-    /// An implementation of [`ulps_ne`] should be equivalent to
+    /// An implementation of [`UlpsEq::ulps_ne`] should be equivalent to
     /// ```
     /// # trait TestUlpsEq {
     /// #     type Tolerance;
@@ -404,8 +404,8 @@ where
     /// representations, meaning that ulps comparisons are well-defined for `T` as the
     /// number of representable numbers between two floating point numbers.
     ///
-    /// An implementation of [`ulps_all_eq`] must use the same algorithm as
-    /// [`UlpsEq::ulps_eq`].
+    /// An implementation of [`UlpsAllEq::ulps_all_eq`] must use the same
+    /// algorithm as [`UlpsEq::ulps_eq`].
     ///
     /// # Example
     ///
@@ -456,7 +456,7 @@ where
     /// representations, meaning that ulps comparisons are well-defined for `T` as the
     /// number of representable numbers between two floating point numbers.
     ///
-    /// An implementation of [`ulps_all_ne`] should be equivalent to
+    /// An implementation of [`UlpsAllEq::ulps_all_ne`] should be equivalent to
     /// ```
     /// # trait TestUlpsAllEq {
     /// #     fn ulps_all_eq(&self, other: &Self, max_abs_diff: &Self, max_ulps: &Self) -> bool { false }

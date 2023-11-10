@@ -120,7 +120,7 @@ where
     /// forall a :: A. abs(u[a] - v[a]) <= max(abs(u[a]), abs(v[a])) * max_relative[a]
     /// ```
     ///
-    /// An implementation of [`relative_eq`] should be equivalent to
+    /// An implementation of [`RelativeEq::relative_eq`] should be equivalent to
     /// ```
     /// # trait TestRelativeEq {
     /// #     fn relative_eq(&self, other: &Self, max_abs_diff: &Self, max_relative: &Self) -> bool;
@@ -184,7 +184,7 @@ where
     /// forall a :: A. abs(u[a] - v[a]) > max(abs(u[a]), abs(v[a])) * max_relative[a]
     /// ```
     ///
-    /// An implementation of [`relative_ne`] should be equivalent to
+    /// An implementation of [`RelativeEq::relative_ne`] should be equivalent to
     /// ```
     /// # trait TestRelativeEq {
     /// #     fn relative_eq(&self, other: &Self, max_abs_diff: &Self, max_relative: &Self) -> bool { false }
@@ -312,8 +312,8 @@ where
     /// forall a :: A. abs(u[a] - v[a]) <= max(abs(u[a]), abs(v[a])) * max_relative
     /// ```
     ///
-    /// An implementation of [`relative_all_eq`] must use the same algorithm as
-    /// [`RelativeEq::relative_eq`].
+    /// An implementation of [`RelativeAllEq::relative_all_eq`] must use the same 
+    /// algorithm as [`RelativeEq::relative_eq`].
     ///
     /// # Example
     ///
@@ -351,7 +351,8 @@ where
     /// forall a :: A. abs(u[a] - v[a]) > max(abs(u[a]), abs(v[a])) * max_relative
     /// ```
     ///
-    /// An implementation of [`relative_all_ne`] should be equivalent to
+    /// An implementation of [`RelativeAllEq::relative_all_ne`] should be 
+    /// equivalent to
     /// ```
     /// # trait TestRelativeAllEq {
     /// #     fn relative_all_eq(&self, other: &Self, max_abs_diff: &Self, max_relative: &Self) -> bool { false }
