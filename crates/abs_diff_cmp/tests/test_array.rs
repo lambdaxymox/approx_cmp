@@ -281,42 +281,42 @@ mod abs_diff_eq_array_f32_debug_tests {
     fn test_debug_abs_diff_tolerance1() {
         let lhs = array_uniform::<32>(1.0_f32);
         let rhs = array_uniform::<32>(1.0_f32);
-        let tolerance = 4.0_f32 * f32::EPSILON;
-        let max_abs_diff = array_uniform::<32>(tolerance);
+        let max_abs_diff = 4.0_f32 * f32::EPSILON;
+        let tolerance = array_uniform::<32>(max_abs_diff);
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &tolerance), tolerance);
     }
 
     #[test]
     fn test_debug_abs_diff_tolerance2() {
         let lhs = array_uniform::<32>(1.0_f32);
         let rhs = array_range::<32>(2.0_f32);
-        let tolerance = 4.0_f32 * f32::EPSILON;
-        let max_abs_diff = array_uniform::<32>(tolerance);
+        let max_abs_diff = 4.0_f32 * f32::EPSILON;
+        let tolerance = array_uniform::<32>(max_abs_diff);
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &tolerance), tolerance);
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &tolerance), tolerance);
     }
 
     #[test]
     fn test_debug_abs_diff_all_tolerance1() {
         let lhs = array_uniform::<32>(1.0_f32);
         let rhs = array_uniform::<32>(1.0_f32);
-        let tolerance = 4.0_f32 * f32::EPSILON;
-        let max_abs_diff = array_uniform::<32>(tolerance);
+        let max_abs_diff = 4.0_f32 * f32::EPSILON;
+        let tolerance = array_uniform::<32>(max_abs_diff);
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &tolerance), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), tolerance);
     }
 
     #[test]
     fn test_debug_abs_diff_all_tolerance2() {
         let lhs = array_uniform::<32>(1.0_f32);
         let rhs = array_range::<32>(2.0_f32);
-        let tolerance = 4.0_f32 * f32::EPSILON;
-        let max_abs_diff = array_uniform::<32>(tolerance);
+        let max_abs_diff = 4.0_f32 * f32::EPSILON;
+        let tolerance = array_uniform::<32>(max_abs_diff);
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &tolerance), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &tolerance), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 }
 
@@ -365,41 +365,41 @@ mod abs_diff_eq_array_f64_debug_tests {
     fn test_debug_abs_diff_tolerance1() {
         let lhs = array_uniform::<32>(1.0_f64);
         let rhs = array_uniform::<32>(1.0_f64);
-        let tolerance = 4.0_f64 * f64::EPSILON;
-        let max_abs_diff = array_uniform::<32>(tolerance);
+        let max_abs_diff = 4.0_f64 * f64::EPSILON;
+        let tolerance = array_uniform::<32>(max_abs_diff);
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &tolerance), tolerance);
     }
 
     #[test]
     fn test_debug_abs_diff_tolerance2() {
         let lhs = array_uniform::<32>(1.0_f64);
         let rhs = array_range::<32>(2.0_f64);
-        let tolerance = 4.0_f64 * f64::EPSILON;
-        let max_abs_diff = array_uniform::<32>(tolerance);
+        let max_abs_diff = 4.0_f64 * f64::EPSILON;
+        let tolerance = array_uniform::<32>(max_abs_diff);
 
-        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &max_abs_diff), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &max_abs_diff), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_tolerance(&rhs, &tolerance), tolerance);
+        assert_eq!(rhs.debug_abs_diff_tolerance(&lhs, &tolerance), tolerance);
     }
 
     #[test]
     fn test_debug_abs_diff_all_tolerance1() {
         let lhs = array_uniform::<32>(1.0_f64);
         let rhs = array_uniform::<32>(1.0_f64);
-        let tolerance = 4.0_f64 * f64::EPSILON;
-        let max_abs_diff = array_uniform::<32>(tolerance);
+        let max_abs_diff = 4.0_f64 * f64::EPSILON;
+        let tolerance = array_uniform::<32>(max_abs_diff);
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &tolerance), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), tolerance);
     }
 
     #[test]
     fn test_debug_abs_diff_all_tolerance2() {
         let lhs = array_uniform::<32>(1.0_f64);
         let rhs = array_range::<32>(2.0_f64);
-        let tolerance = 4.0_f64 * f64::EPSILON;
-        let max_abs_diff = array_uniform::<32>(tolerance);
+        let max_abs_diff = 4.0_f64 * f64::EPSILON;
+        let tolerance = array_uniform::<32>(max_abs_diff);
 
-        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &tolerance), max_abs_diff);
-        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &tolerance), max_abs_diff);
+        assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), tolerance);
+        assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff), tolerance);
     }
 }
