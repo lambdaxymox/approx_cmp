@@ -1,6 +1,6 @@
 [package]
 name = "approx_cmp"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 
 [features]
@@ -24,12 +24,12 @@ members = [
 
 [dependencies.abs_diff_cmp]
 path = "crates/abs_diff_cmp/"
-version = "0.1.0"
+version = "0.2.0"
 
 [dependencies.relative_cmp]
 path = "crates/relative_cmp/"
-version = "0.1.0"
+version = "0.2.0"
 
 [dependencies.ulps_cmp]
 path = "crates/ulps_cmp/"
-version = "0.1.0"
+version = "0.2.0"
