@@ -2,6 +2,23 @@
 name = "ulps_cmp"
 version = "0.2.0"
 edition = "2021"
+authors = ["LambdaXymox <lambda.xymox@gmail.com>"]
+description = "A library for doing approximate comparisons of finite precision numbers."
+categories = [
+    "algorithms",
+    "development-tools::debugging",
+    "no_std",
+]
+keywords = [
+    "approximate",
+    "comparison",
+    "float",
+    "graphics",
+    "numerics",
+]
+license = "Apache-2.0 OR MIT"
+readme = "README.md"
+repository = "https://github.com/lambdaxymox/approx_cmp/"
 
 [features]
 default = ["std"]
