@@ -595,17 +595,17 @@ impl RelativeCmpOpTol {
 
 /// Compare two finite precision floating point expression for relative
 /// difference equality.
-/// 
+///
 /// For more details, see the documentation for [`RelativeEq`] and [`RelativeAllEq`].
-/// 
+///
 /// # Example
-/// 
+///
 /// ```
 /// # use relative_cmp::relative_eq;
 /// #
 /// let lhs = 98.0005_f32;
 /// let rhs = 98.0001_f32;
-/// 
+///
 /// assert!(relative_eq!(lhs, rhs, abs_diff <= 0.0_f32, relative <= 6e-6_f32));
 /// assert!(relative_eq!(lhs, rhs, abs_diff_all <= 0.0_f32, relative_all <= 6e-6_f32));
 /// ```
@@ -633,19 +633,19 @@ macro_rules! relative_eq {
     }};
 }
 
-/// Compare two finite precision floating point expression for relative 
+/// Compare two finite precision floating point expression for relative
 /// difference inequality.
-/// 
+///
 /// For more details, see the documentation for [`RelativeEq`] and [`RelativeAllEq`].
-/// 
+///
 /// # Example
-/// 
+///
 /// ```
 /// # use relative_cmp::relative_ne;
 /// #
 /// let lhs = 98.0005_f32;
 /// let rhs = 98.0001_f32;
-/// 
+///
 /// assert!(relative_ne!(lhs, rhs, abs_diff <= 0.0_f32, relative <= 2e-6_f32));
 /// assert!(relative_ne!(lhs, rhs, abs_diff_all <= 0.0_f32, relative_all <= 2e-6_f32));
 /// ```
@@ -675,20 +675,20 @@ macro_rules! relative_ne {
 
 /// Assert that two finite precision floating point expressions are relative
 /// difference equal.
-/// 
+///
 /// See the documentation for [`RelativeEq`] and [`RelativeAllEq`] for details
-/// about relative difference comparisons. See the documentation for 
-/// [`AssertRelativeEq`] and [`AssertRelativeAllEq`] for details about the 
+/// about relative difference comparisons. See the documentation for
+/// [`AssertRelativeEq`] and [`AssertRelativeAllEq`] for details about the
 /// debugging context provided when an assertion fails.
-/// 
+///
 /// # Example
-/// 
+///
 /// ```
 /// # use relative_cmp::assert_relative_eq;
 /// #
 /// let lhs = 98.0005_f32;
 /// let rhs = 98.0001_f32;
-/// 
+///
 /// assert_relative_eq!(lhs, rhs, abs_diff <= 0.0_f32, relative <= 6e-6_f32);
 /// assert_relative_eq!(lhs, rhs, abs_diff_all <= 0.0_f32, relative_all <= 6e-6_f32);
 /// ```
@@ -751,20 +751,20 @@ macro_rules! assert_relative_eq {
 
 /// Assert that two finite precision floating point expressions are relative
 /// difference unequal.
-/// 
+///
 /// See the documentation for [`RelativeEq`] and [`RelativeAllEq`] for details
-/// about relative difference comparisons. See the documentation for 
-/// [`AssertRelativeEq`] and [`AssertRelativeAllEq`] for details about the 
+/// about relative difference comparisons. See the documentation for
+/// [`AssertRelativeEq`] and [`AssertRelativeAllEq`] for details about the
 /// debugging context provided when an assertion fails.
-/// 
+///
 /// # Example
-/// 
+///
 /// ```
 /// # use relative_cmp::assert_relative_ne;
 /// #
 /// let lhs = 98.0005_f32;
 /// let rhs = 98.0001_f32;
-/// 
+///
 /// assert_relative_ne!(lhs, rhs, abs_diff <= 0.0_f32, relative <= 2e-6_f32);
 /// assert_relative_ne!(lhs, rhs, abs_diff_all <= 0.0_f32, relative_all <= 2e-6_f32);
 /// ```
@@ -827,23 +827,23 @@ macro_rules! assert_relative_ne {
 
 /// Assert that two finite precision floating point expressions are relative
 /// difference equal.
-/// 
+///
 /// See the documentation for [`RelativeEq`] and [`RelativeAllEq`] for details
-/// about relative difference comparisons. See the documentation for 
-/// [`AssertRelativeEq`] and [`AssertRelativeAllEq`] for details about the 
+/// about relative difference comparisons. See the documentation for
+/// [`AssertRelativeEq`] and [`AssertRelativeAllEq`] for details about the
 /// debugging context provided when an assertion fails.
-/// 
-/// This macro is only enabled in debug builds like [`debug_assert_eq`] in the 
+///
+/// This macro is only enabled in debug builds like [`debug_assert_eq`] in the
 /// standard library.
-/// 
+///
 /// # Example
-/// 
+///
 /// ```
 /// # use relative_cmp::debug_assert_relative_eq;
 /// #
 /// let lhs = 98.0005_f32;
 /// let rhs = 98.0001_f32;
-/// 
+///
 /// debug_assert_relative_eq!(lhs, rhs, abs_diff <= 0.0_f32, relative <= 6e-6_f32);
 /// debug_assert_relative_eq!(lhs, rhs, abs_diff_all <= 0.0_f32, relative_all <= 6e-6_f32);
 /// ```
@@ -854,23 +854,23 @@ macro_rules! debug_assert_relative_eq {
 
 /// Assert that two finite precision floating point expressions are relative
 /// difference equal.
-/// 
+///
 /// See the documentation for [`RelativeEq`] and [`RelativeAllEq`] for details
-/// about relative difference comparisons. See the documentation for 
-/// [`AssertRelativeEq`] and [`AssertRelativeAllEq`] for details about the 
+/// about relative difference comparisons. See the documentation for
+/// [`AssertRelativeEq`] and [`AssertRelativeAllEq`] for details about the
 /// debugging context provided when an assertion fails.
-/// 
-/// This macro is only enabled in debug builds like [`debug_assert_ne`] in the 
+///
+/// This macro is only enabled in debug builds like [`debug_assert_ne`] in the
 /// standard library.
-/// 
+///
 /// # Example
-/// 
+///
 /// ```
 /// # use relative_cmp::debug_assert_relative_ne;
 /// #
 /// let lhs = 98.0005_f32;
 /// let rhs = 98.0001_f32;
-/// 
+///
 /// debug_assert_relative_ne!(lhs, rhs, abs_diff <= 0.0_f32, relative <= 2e-6_f32);
 /// debug_assert_relative_ne!(lhs, rhs, abs_diff_all <= 0.0_f32, relative_all <= 2e-6_f32);
 /// ```

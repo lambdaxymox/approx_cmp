@@ -199,14 +199,8 @@ fn test_debug_abs_diff_all_tolerance() {
     let max_abs_diff = 0.20_f32;
     let tolerance = VecDeque::from([max_abs_diff; 4]);
 
-    assert_eq!(
-        lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff),
-        Some(tolerance.clone())
-    );
-    assert_eq!(
-        rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff),
-        Some(tolerance.clone())
-    );
+    assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), Some(tolerance.clone()));
+    assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff), Some(tolerance.clone()));
 }
 
 #[test]
@@ -227,14 +221,8 @@ fn test_debug_relative_all_tolerance() {
     let max_relative = 0.20_f32;
     let tolerance = VecDeque::from([0.50_f32, 0.65000004_f32, 0.90000004_f32, 1.20_f32]);
 
-    assert_eq!(
-        lhs.debug_relative_all_tolerance(&rhs, &max_relative),
-        Some(tolerance.clone())
-    );
-    assert_eq!(
-        rhs.debug_relative_all_tolerance(&lhs, &max_relative),
-        Some(tolerance.clone())
-    );
+    assert_eq!(lhs.debug_relative_all_tolerance(&rhs, &max_relative), Some(tolerance.clone()));
+    assert_eq!(rhs.debug_relative_all_tolerance(&lhs, &max_relative), Some(tolerance.clone()));
 }
 
 #[test]

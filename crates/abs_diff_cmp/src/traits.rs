@@ -516,17 +516,17 @@ impl AbsDiffCmpOpTol {
 
 /// Compare two finite precision floating point expressions for absolute difference
 /// equality.
-/// 
+///
 /// For more details, see the documentation for [`AbsDiffEq`] and [`AbsDiffAllEq`].
-/// 
+///
 /// # Example
-/// 
+///
 /// ```
 /// # use abs_diff_cmp::abs_diff_eq;
 /// #
 /// let lhs = 98.0005_f32;
 /// let rhs = 98.0001_f32;
-/// 
+///
 /// assert!(abs_diff_eq!(lhs, rhs, abs_diff <= 0.0005_f32));
 /// assert!(abs_diff_eq!(lhs, rhs, abs_diff_all <= 0.0005_f32));
 /// ```
@@ -546,17 +546,17 @@ macro_rules! abs_diff_eq {
 
 /// Compare two finite precision floating point expressions for absolute difference
 /// inequality.
-/// 
+///
 /// For more details, see the documentation for [`AbsDiffEq`] and [`AbsDiffAllEq`].
-/// 
+///
 /// # Example
-/// 
+///
 /// ```
 /// # use abs_diff_cmp::abs_diff_ne;
 /// #
 /// let lhs = 98.0005_f32;
 /// let rhs = 98.0001_f32;
-/// 
+///
 /// assert!(abs_diff_ne!(lhs, rhs, abs_diff <= 0.0004_f32));
 /// assert!(abs_diff_ne!(lhs, rhs, abs_diff_all <= 0.0004_f32));
 /// ```
@@ -574,22 +574,22 @@ macro_rules! abs_diff_ne {
     }};
 }
 
-/// Assert that two finite precision floating point expressions are absolute 
+/// Assert that two finite precision floating point expressions are absolute
 /// difference equal.
-/// 
+///
 /// See the documentation for [`AbsDiffEq`] and [`AbsDiffAllEq`] for details about
-/// absolute difference comparisons. See the documentation for [`AssertAbsDiffEq`] and 
+/// absolute difference comparisons. See the documentation for [`AssertAbsDiffEq`] and
 /// [`AssertAbsDiffAllEq`] for details about the debugging context provided
 /// when an assertion fails.
-/// 
+///
 /// # Example
-/// 
+///
 /// ```
 /// # use abs_diff_cmp::assert_abs_diff_eq;
 /// #
 /// let lhs = 98.0_f32;
 /// let rhs = 98.0199_f32;
-/// 
+///
 /// assert_abs_diff_eq!(lhs, rhs, abs_diff <= 0.03_f32);
 /// assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= 0.03_f32);
 /// ```
@@ -644,22 +644,22 @@ macro_rules! assert_abs_diff_eq {
     }};
 }
 
-/// Assert that two finite precision floating point expressions are absolute 
+/// Assert that two finite precision floating point expressions are absolute
 /// difference unequal.
-/// 
+///
 /// See the documentation for [`AbsDiffEq`] and [`AbsDiffAllEq`] for details about
-/// absolute difference comparisons. See the documentation for [`AssertAbsDiffEq`] and 
+/// absolute difference comparisons. See the documentation for [`AssertAbsDiffEq`] and
 /// [`AssertAbsDiffAllEq`] for details about the debugging context provided
 /// when an assertion fails.
-/// 
+///
 /// # Example
-/// 
+///
 /// ```
 /// # use abs_diff_cmp::assert_abs_diff_ne;
 /// #
 /// let lhs = 98.0_f32;
 /// let rhs = 98.0199_f32;
-/// 
+///
 /// assert_abs_diff_ne!(lhs, rhs, abs_diff <= 0.01_f32);
 /// assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= 0.01_f32);
 /// ```
@@ -714,25 +714,25 @@ macro_rules! assert_abs_diff_ne {
     }};
 }
 
-/// Assert that two finite precision floating point expressions are absolute 
+/// Assert that two finite precision floating point expressions are absolute
 /// difference equal.
-/// 
+///
 /// See the documentation for [`AbsDiffEq`] and [`AbsDiffAllEq`] for details about
-/// absolute difference comparisons. See the documentation for [`AssertAbsDiffEq`] and 
+/// absolute difference comparisons. See the documentation for [`AssertAbsDiffEq`] and
 /// [`AssertAbsDiffAllEq`] for details about the debugging context provided
 /// when an assertion fails.
-/// 
-/// This macro is only enabled in debug builds like [`debug_assert_eq`] in the 
+///
+/// This macro is only enabled in debug builds like [`debug_assert_eq`] in the
 /// standard library.
-/// 
+///
 /// # Example
-/// 
+///
 /// ```
 /// # use abs_diff_cmp::debug_assert_abs_diff_eq;
 /// #
 /// let lhs = 98.0_f32;
 /// let rhs = 98.0199_f32;
-/// 
+///
 /// debug_assert_abs_diff_eq!(lhs, rhs, abs_diff <= 0.03_f32);
 /// debug_assert_abs_diff_eq!(lhs, rhs, abs_diff_all <= 0.03_f32);
 /// ```
@@ -741,25 +741,25 @@ macro_rules! debug_assert_abs_diff_eq {
     ($($arg:tt)*) => (if cfg!(debug_assertions) { $crate::assert_abs_diff_eq!($($arg)*); })
 }
 
-/// Assert that two finite precision floating point expressions are absolute 
+/// Assert that two finite precision floating point expressions are absolute
 /// difference unequal.
-/// 
+///
 /// See the documentation for [`AbsDiffEq`] and [`AbsDiffAllEq`] for details about
-/// absolute difference comparisons. See the documentation for [`AssertAbsDiffEq`] and 
+/// absolute difference comparisons. See the documentation for [`AssertAbsDiffEq`] and
 /// [`AssertAbsDiffAllEq`] for details about the debugging context provided
 /// when an assertion fails.
-/// 
+///
 /// This macro is only enabled in debug builds like [`debug_assert_ne`] in the
 /// standard library.
-/// 
+///
 /// # Example
-/// 
+///
 /// ```
 /// # use abs_diff_cmp::debug_assert_abs_diff_ne;
 /// #
 /// let lhs = 98.0_f32;
 /// let rhs = 98.0199_f32;
-/// 
+///
 /// debug_assert_abs_diff_ne!(lhs, rhs, abs_diff <= 0.01_f32);
 /// debug_assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= 0.01_f32);
 /// ```

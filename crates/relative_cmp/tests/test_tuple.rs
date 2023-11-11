@@ -546,7 +546,7 @@ mod relative_eq_tuple4_heterogenous_tests {
     fn test_debug_relative_tolerance() {
         let lhs = (1.0_f32, 2.0_f64, 4.0_f32, 8.0_f64);
         let rhs = (1.0000011_f32, 2.0000022_f64, 4.0000044_f32, 8.0000088_f64);
-        let max_relative = (0.2_f32, 0.3_f64, 0.4_f32,  0.5_f64);
+        let max_relative = (0.2_f32, 0.3_f64, 0.4_f32, 0.5_f64);
         let tolerance = (0.20000021_f32, 0.60000066_f64, 1.6000017_f32, 4.0000044_f64);
 
         assert_eq!(lhs.debug_relative_tolerance(&rhs, &max_relative), tolerance);

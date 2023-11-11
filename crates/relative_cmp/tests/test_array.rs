@@ -316,6 +316,7 @@ mod relative_eq_array_f32_debug_tests {
         assert_eq!(lhs.debug_relative_tolerance(&rhs, &max_relative), tolerance);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_relative_tolerance2() {
         let lhs = array_uniform::<32>(1.0_f32);
@@ -368,6 +369,7 @@ mod relative_eq_array_f32_debug_tests {
         assert_eq!(lhs.debug_relative_all_tolerance(&rhs, &max_relative), tolerance);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_relative_all_tolerance2() {
         let lhs = array_uniform::<32>(1.0_f32);
@@ -464,6 +466,7 @@ mod relative_eq_array_f64_debug_tests {
         assert_eq!(lhs.debug_relative_tolerance(&rhs, &max_relative), tolerance);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_relative_tolerance2() {
         let lhs = array_uniform::<32>(1.0_f64);
@@ -516,6 +519,7 @@ mod relative_eq_array_f64_debug_tests {
         assert_eq!(lhs.debug_relative_all_tolerance(&rhs, &max_relative), tolerance);
     }
 
+    #[rustfmt::skip]
     #[test]
     fn test_debug_relative_all_tolerance2() {
         let lhs = array_uniform::<32>(1.0_f64);

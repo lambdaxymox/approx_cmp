@@ -189,14 +189,8 @@ fn test_debug_abs_diff_all_tolerance() {
     let max_abs_diff = 0.20_f32;
     let tolerance = VecDeque::from([max_abs_diff; 4]);
 
-    assert_eq!(
-        lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff),
-        Some(tolerance.clone())
-    );
-    assert_eq!(
-        rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff),
-        Some(tolerance.clone())
-    );
+    assert_eq!(lhs.debug_abs_diff_all_tolerance(&rhs, &max_abs_diff), Some(tolerance.clone()));
+    assert_eq!(rhs.debug_abs_diff_all_tolerance(&lhs, &max_abs_diff), Some(tolerance.clone()));
 }
 
 #[test]
