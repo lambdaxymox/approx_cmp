@@ -2,10 +2,10 @@
 #![doc = include_str!("../EXAMPLES.md")]
 #![no_std]
 #[cfg(feature = "core")]
-extern crate core as std;
+extern crate core;
 
 #[cfg(feature = "alloc")]
-extern crate alloc as std;
+extern crate alloc;
 
 #[cfg(feature = "std")]
 extern crate std;
