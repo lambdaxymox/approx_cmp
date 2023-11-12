@@ -494,7 +494,7 @@ where
     }
 }
 
-/// Procide a debugging context for when an ulps difference comparison fails.
+/// Provide a debugging context for when an ulps difference comparison fails.
 ///
 /// Types implement this trait to use the [`assert_ulps_eq`] and [`assert_ulps_ne`]
 /// macros.
