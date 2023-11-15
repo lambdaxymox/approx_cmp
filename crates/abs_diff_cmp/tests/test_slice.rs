@@ -1,6 +1,3 @@
-extern crate abs_diff_cmp;
-
-
 use abs_diff_cmp::{
     abs_diff_eq,
     abs_diff_ne,

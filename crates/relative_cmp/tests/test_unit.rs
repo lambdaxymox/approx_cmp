@@ -1,6 +1,3 @@
-extern crate relative_cmp;
-
-
 use relative_cmp::{
     assert_relative_eq,
     relative_eq,

@@ -1,6 +1,3 @@
-extern crate ulps_cmp;
-
-
 #[cfg(test)]
 mod ulps_eq_tuple1_tests {
     use ulps_cmp::{

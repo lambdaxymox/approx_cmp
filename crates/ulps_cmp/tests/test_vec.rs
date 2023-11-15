@@ -1,6 +1,3 @@
-extern crate ulps_cmp;
-
-
 use std::vec::Vec;
 use ulps_cmp::{
     assert_ulps_eq,

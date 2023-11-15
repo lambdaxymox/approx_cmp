@@ -1,6 +1,3 @@
-extern crate abs_diff_cmp;
-
-
 #[cfg(test)]
 mod abs_diff_eq_tuple1_tests {
     use abs_diff_cmp::{

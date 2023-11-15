@@ -1,6 +1,3 @@
-extern crate relative_cmp;
-
-
 #[cfg(test)]
 mod relative_eq_tuple1_tests {
     use relative_cmp::{

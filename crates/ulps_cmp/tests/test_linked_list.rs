@@ -1,6 +1,3 @@
-extern crate ulps_cmp;
-
-
 use std::collections::LinkedList;
 use ulps_cmp::{
     assert_ulps_eq,

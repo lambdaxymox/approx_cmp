@@ -1,6 +1,3 @@
-extern crate abs_diff_cmp;
-
-
 #[cfg(test)]
 mod abs_diff_eq_f32_tests {
     use abs_diff_cmp::{

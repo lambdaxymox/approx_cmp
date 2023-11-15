@@ -1,6 +1,3 @@
-extern crate ulps_cmp;
-
-
 use ulps_cmp::{
     assert_ulps_eq,
     assert_ulps_ne,
