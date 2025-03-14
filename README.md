@@ -13,7 +13,7 @@ file
 
 ```toml
 [dependencies]
-approx_cmp = "1.0.0"
+approx_cmp = "2.0.0"
 ```
 
 and then place the crate declaration in either your `lib.rs` or `main.rs` file

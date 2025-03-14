@@ -1,6 +1,6 @@
 [package]
 name = "relative_cmp"
-version = "1.0.0"
+version = "2.0.0"
 edition = "2024"
 authors = ["LambdaXymox <lambda.xymox@gmail.com>"]
 description = "A library for doing approximate comparisons of finite precision numbers."
