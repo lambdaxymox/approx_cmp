@@ -1,7 +1,7 @@
 [package]
 name = "ulps_cmp"
 version = "1.0.0"
-edition = "2021"
+edition = "2024"
 authors = ["LambdaXymox <lambda.xymox@gmail.com>"]
 description = "A library for doing approximate comparisons of finite precision numbers."
 categories = [
