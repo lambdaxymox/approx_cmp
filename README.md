@@ -22,7 +22,7 @@ and then place the crate declaration in either your `lib.rs` or `main.rs` file
 extern crate approx_cmp;
 ```
 
-The library aims to be as platform agnostic as possible, including `no_std` 
+The library aims to be as platform-agnostic as possible, including `no_std` 
 environments. By default, the library is compatible with any environment that 
 supports the full Rust `std` library. However, the library can operate 
 with just the `core` or `alloc` libraries as well. You can explicitly support 

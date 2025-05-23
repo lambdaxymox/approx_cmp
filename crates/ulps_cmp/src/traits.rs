@@ -23,7 +23,7 @@ use core::fmt;
 /// ```
 /// Here, a bijection means that every floating point number in `T` corresponds
 /// to exactly one integer in `U`, and exactly one integer in `U` corresponds to
-/// exactly one floating point number in `T`. Typically this means that we interpret
+/// exactly one floating point number in `T`. This typically means that we interpret
 /// a floating point number as its underlying integer type. Monotone means that
 /// ```text
 /// forall x :: T. forall y :: T. x <= y ==> int(x) <= int(y)
@@ -119,7 +119,7 @@ where
     /// Compare two sequences of finite precision floating point numbers for
     /// units in last place (ulps) equality.
     ///
-    /// Returns a boolean indicating whether or not two sequences of floating point
+    /// Returns a boolean indicating whether two sequences of floating point
     /// numbers are ulps equal with respect to an absolute difference tolerance
     /// `max_abs_diff` for values close to zero, and an ulps tolerance `max_ulps`
     /// otherwise.
@@ -140,7 +140,7 @@ where
     /// ```
     /// Here, a bijection means that every floating point number in `T` corresponds
     /// to exactly one integer in `U`, and exactly one integer in `U` corresponds to
-    /// exactly one floating point number in `T`. Typically this means that we interpret
+    /// exactly one floating point number in `T`. This typically means that we interpret
     /// a floating point number as its underlying integer type. Monotone means that
     /// ```text
     /// forall x :: T. forall y :: T. x <= y ==> int(x) <= int(y)
@@ -206,7 +206,7 @@ where
     /// Compare two sequences of finite precision floating point numbers for
     /// units in last place (ulps) inequality.
     ///
-    /// Returns a boolean indicating whether or not two sequences of floating point
+    /// Returns a boolean indicating whether two sequences of floating point
     /// numbers are ulps equal with respect to an absolute difference tolerance
     /// `max_abs_diff` for values close to zero, and an ulps tolerance `max_ulps`
     /// otherwise.
@@ -227,7 +227,7 @@ where
     /// ```
     /// Here, a bijection means that every floating point number in `T` corresponds
     /// to exactly one integer in `U`, and exactly one integer in `U` corresponds to
-    /// exactly one floating point number in `T`. Typically this means that we interpret
+    /// exactly one floating point number in `T`. This typically means that we interpret
     /// a floating point number as its underlying integer type. Monotone means that
     /// ```text
     /// forall x :: T. forall y :: T. x <= y ==> int(x) <= int(y)
@@ -299,7 +299,7 @@ where
 /// ```
 /// Here, a bijection means that every floating point number in `T` corresponds
 /// to exactly one integer in `U`, and exactly one integer in `U` corresponds to
-/// exactly one floating point number in `T`. Typically this means that we interpret
+/// exactly one floating point number in `T`. This typically means that we interpret
 /// a floating point number as its underlying integer type. Monotone means that
 /// ```text
 /// forall x :: T. forall y :: T. x <= y ==> int(x) <= int(y)
@@ -378,7 +378,7 @@ where
     /// units in last place (ulps) difference equality using a uniform tolerance
     /// value.
     ///
-    /// Returns a boolean indicating whether or not two sequences of floating
+    /// Returns a boolean indicating whether two sequences of floating
     /// point numbers are ulps difference equal with respect to a uniform absolute
     /// difference tolerance `max_abs_diff` for values close to zero, and a
     /// uniform ulps tolerance `max_ulps` for values not close to zero.
@@ -395,7 +395,7 @@ where
     /// ```
     /// Here, a bijection means that every floating point number in `T` corresponds
     /// to exactly one integer in `U`, and exactly one integer in `U` corresponds to
-    /// exactly one floating point number in `T`. Typically this means that we interpret
+    /// exactly one floating point number in `T`. This typically means that we interpret
     /// a floating point number as its underlying integer type. Monotone means that
     /// ```text
     /// forall x :: T. forall y :: T. x <= y ==> int(x) <= int(y)
@@ -430,7 +430,7 @@ where
     /// units in last place (ulps) difference inequality using a uniform tolerance
     /// value.
     ///
-    /// Returns a boolean indicating whether or not two sequences of floating
+    /// Returns a boolean indicating whether two sequences of floating
     /// point numbers are ulps difference unequal with respect to a uniform absolute
     /// difference tolerance `max_abs_diff` for values close to zero, and a
     /// uniform ulps tolerance `max_ulps` for values not close to zero.
@@ -447,7 +447,7 @@ where
     /// ```
     /// Here, a bijection means that every floating point number in `T` corresponds
     /// to exactly one integer in `U`, and exactly one integer in `U` corresponds to
-    /// exactly one floating point number in `T`. Typically this means that we interpret
+    /// exactly one floating point number in `T`. This typically means that we interpret
     /// a floating point number as its underlying integer type. Monotone means that
     /// ```text
     /// forall x :: T. forall y :: T. x <= y ==> int(x) <= int(y)

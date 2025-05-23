@@ -95,14 +95,14 @@ pub trait RelativeEq<Rhs = Self>
 where
     Rhs: ?Sized,
 {
-    /// The data type representing the maxmimum allowed relative difference
+    /// The data type representing the maximum allowed relative difference
     /// between two values for them to be considered approximately equal.
     type Tolerance: ?Sized;
 
     /// Compare two sequences of finite precision floating point numbers for relative
     /// equality.
     ///
-    /// Returns a boolean indicating whether or not two sequences of floating
+    /// Returns a boolean indicating whether two sequences of floating
     /// point numbers are relatively equal with respect to an absolute difference
     /// tolerance `max_abs_diff` for values close to zero, and a relative tolerance
     /// `max_relative` otherwise.
@@ -166,7 +166,7 @@ where
 
     /// Compare two floating point numbers for relative inequality.
     ///
-    /// Returns a boolean indicating whether or not two sequences of floating
+    /// Returns a boolean indicating whether two sequences of floating
     /// point numbers are relatively unequal with respect to an absolute difference
     /// tolerance `max_abs_diff` for values close to zero, and a relative tolerance
     /// `max_relative` otherwise.
@@ -298,7 +298,7 @@ where
     /// Compare two sequences of floating point numbers for relative equality
     /// using a single uniform tolerance value.
     ///
-    /// Returns a boolean indicating whether or not two sequences of floating
+    /// Returns a boolean indicating whether two sequences of floating
     /// point numbers are relatively equal with respect to a uniform absolute
     /// difference tolerance `max_abs_diff` for values close to zero, and a
     /// uniform relative tolerance `max_relative` for values not close to zero.
@@ -337,7 +337,7 @@ where
     /// Compare two sequences of floating point numbers for relative inequality
     /// using a single uniform tolerance value.
     ///
-    /// Returns a boolean indicating whether or not two sequences of floating
+    /// Returns a boolean indicating whether two sequences of floating
     /// point numbers are relatively unequal with respect to a uniform absolute
     /// difference tolerance `max_abs_diff` for values close to zero, and a
     /// uniform relative tolerance `max_relative` for values not close to zero.
@@ -440,7 +440,7 @@ where
     /// ```
     fn debug_abs_diff_tolerance(&self, other: &Rhs, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance;
 
-    /// Compute the maxmimum allowed relative difference between two values for a
+    /// Compute the maximum allowed relative difference between two values for a
     /// debugging context.
     ///
     /// # Example

@@ -84,7 +84,7 @@ where
     /// Compare two sequences of finite precision floating point numbers for
     /// absolute difference equality.
     ///
-    /// Returns a boolean indicating whether or not two floating point
+    /// Returns a boolean indicating whether two floating point
     /// numbers are absolute difference equal with respect to a tolerance
     /// `max_abs_diff`.
     ///
@@ -141,7 +141,7 @@ where
     /// Compare two sequences of finite precision floating point numbers for
     /// absolute difference inequality.
     ///
-    /// Returns a boolean indicating whether or not two floating point
+    /// Returns a boolean indicating whether two floating point
     /// numbers are absolute difference unequal with respect to a tolerance
     /// `max_abs_diff`.
     ///
@@ -274,7 +274,7 @@ where
     /// Compare two sequences of floating point numbers for absolute difference
     /// equality using a single uniform tolerance value.
     ///
-    /// Returns a boolean indicating whether or not two sequences of floating
+    /// Returns a boolean indicating whether two sequences of floating
     /// point numbers are absolute difference equal with respect to a tolerance
     /// `max_abs_diff`.
     ///
@@ -311,7 +311,7 @@ where
     /// Compare two sequences of floating point numbers for absolute difference
     /// inequality using a single tolerance value.
     ///
-    /// Returns a boolean indicating whether or not two sequences of floating
+    /// Returns a boolean indicating whether two sequences of floating
     /// point numbers are absolute difference **unequal** with respect to a
     /// tolerance `max_abs_diff`.
     ///
