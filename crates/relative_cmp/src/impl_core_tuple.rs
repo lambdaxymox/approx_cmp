@@ -6,7 +6,6 @@ use crate::{
 };
 use core::fmt;
 
-
 impl RelativeEq for () {
     type Tolerance = ();
 
@@ -48,7 +47,6 @@ impl AssertRelativeAllEq for () {
     #[inline]
     fn debug_relative_all_tolerance(&self, _other: &(), _max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {}
 }
-
 
 macro_rules! impl_relative_tuple {
     ($(

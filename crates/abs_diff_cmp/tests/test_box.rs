@@ -1,10 +1,9 @@
 use abs_diff_cmp::{
-    assert_abs_diff_eq,
-    assert_abs_diff_ne,
     AssertAbsDiffAllEq,
     AssertAbsDiffEq,
+    assert_abs_diff_eq,
+    assert_abs_diff_ne,
 };
-
 
 #[rustfmt::skip]
 #[test]

@@ -4,7 +4,6 @@ use crate::traits::{
 };
 use std::vec::Vec;
 
-
 impl<A, B> AssertAbsDiffEq<[B]> for [A]
 where
     A: AssertAbsDiffEq<B>,
@@ -44,7 +43,6 @@ where
         }
     }
 }
-
 
 impl<A, B> AssertAbsDiffAllEq<[B]> for [A]
 where

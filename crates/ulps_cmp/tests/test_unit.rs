@@ -1,12 +1,11 @@
 use ulps_cmp::{
-    assert_ulps_eq,
-    ulps_eq,
     AssertUlpsAllEq,
     AssertUlpsEq,
     UlpsAllEq,
     UlpsEq,
+    assert_ulps_eq,
+    ulps_eq,
 };
-
 
 #[test]
 fn test_eq() {

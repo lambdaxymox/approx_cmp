@@ -6,7 +6,6 @@ use crate::{
 };
 use core::fmt;
 
-
 impl UlpsEq for () {
     type Tolerance = ();
     type UlpsTolerance = ();

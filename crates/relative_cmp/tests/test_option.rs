@@ -1,10 +1,9 @@
 use relative_cmp::{
-    assert_relative_eq,
-    assert_relative_ne,
     AssertRelativeAllEq,
     AssertRelativeEq,
+    assert_relative_eq,
+    assert_relative_ne,
 };
-
 
 #[rustfmt::skip]
 #[test]

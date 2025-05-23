@@ -1,12 +1,11 @@
 use relative_cmp::{
-    assert_relative_eq,
-    relative_eq,
     AssertRelativeAllEq,
     AssertRelativeEq,
     RelativeAllEq,
     RelativeEq,
+    assert_relative_eq,
+    relative_eq,
 };
-
 
 #[test]
 fn test_eq() {

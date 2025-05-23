@@ -13,7 +13,6 @@ use std::rc::Rc;
 use std::sync::Arc;
 use std::vec::Vec;
 
-
 impl<A, B> AbsDiffEq<Box<B>> for Box<A>
 where
     A: AbsDiffEq<B> + ?Sized,
@@ -136,7 +135,6 @@ where
     }
 }
 
-
 impl<A, B> AbsDiffAllEq<Box<B>> for Box<A>
 where
     A: AbsDiffAllEq<B> + ?Sized,
@@ -243,7 +241,6 @@ where
             })
     }
 }
-
 
 impl<A, B> AssertAbsDiffEq<Box<B>> for Box<A>
 where
@@ -458,7 +455,6 @@ where
         }
     }
 }
-
 
 impl<A, B> AssertAbsDiffAllEq<Box<B>> for Box<A>
 where

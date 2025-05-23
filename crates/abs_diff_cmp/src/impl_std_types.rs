@@ -9,7 +9,6 @@ use std::fmt;
 use std::hash;
 use std::sync;
 
-
 impl<K, VA, VB, S> AbsDiffEq<HashMap<K, VB, S>> for HashMap<K, VA, S>
 where
     K: Eq + hash::Hash,
@@ -37,7 +36,6 @@ where
     }
 }
 
-
 impl<A, B> AbsDiffEq<sync::OnceLock<B>> for sync::OnceLock<A>
 where
     A: AbsDiffEq<B>,
@@ -54,7 +52,6 @@ where
         }
     }
 }
-
 
 impl<K, VA, VB, S> AbsDiffAllEq<HashMap<K, VB, S>> for HashMap<K, VA, S>
 where
@@ -93,7 +90,6 @@ where
         }
     }
 }
-
 
 impl<K, VA, VB, S> AssertAbsDiffEq<HashMap<K, VB, S>> for HashMap<K, VA, S>
 where
@@ -159,7 +155,6 @@ where
         }
     }
 }
-
 
 impl<K, VA, VB, S> AssertAbsDiffAllEq<HashMap<K, VB, S>> for HashMap<K, VA, S>
 where

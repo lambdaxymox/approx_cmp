@@ -8,7 +8,6 @@ use crate::traits::{
 use core::cell;
 use core::mem;
 
-
 #[inline(always)]
 fn uninit_array<T, const N: usize>() -> [mem::MaybeUninit<T>; N] {
     unsafe { mem::MaybeUninit::<[mem::MaybeUninit<T>; N]>::uninit().assume_init() }
@@ -16,9 +15,8 @@ fn uninit_array<T, const N: usize>() -> [mem::MaybeUninit<T>; N] {
 
 #[inline(always)]
 unsafe fn array_assume_init<T, const N: usize>(array: [mem::MaybeUninit<T>; N]) -> [T; N] {
-    (&array as *const _ as *const [T; N]).read()
+    unsafe { (&array as *const _ as *const [T; N]).read() }
 }
-
 
 macro_rules! impl_ulps_eq_float {
     ($T:ident, $U:ident) => {
@@ -65,7 +63,6 @@ macro_rules! impl_ulps_eq_float {
 
 impl_ulps_eq_float!(f32, u32);
 impl_ulps_eq_float!(f64, u64);
-
 
 impl<A, B> UlpsEq<&B> for &A
 where
@@ -210,7 +207,6 @@ where
     }
 }
 
-
 macro_rules! impl_ulps_all_eq_float {
     ($T:ident, $U:ident) => {
         impl UlpsAllEq for $T {
@@ -227,7 +223,6 @@ macro_rules! impl_ulps_all_eq_float {
 
 impl_ulps_all_eq_float!(f32, u32);
 impl_ulps_all_eq_float!(f64, u64);
-
 
 impl<A, B> UlpsAllEq<&B> for &A
 where
@@ -367,7 +362,6 @@ where
     }
 }
 
-
 macro_rules! impl_assert_ulps_eq_float {
     ($T:ident, $U:ident) => {
         impl AssertUlpsEq for $T {
@@ -414,7 +408,6 @@ macro_rules! impl_assert_ulps_eq_float {
 
 impl_assert_ulps_eq_float!(f32, u32);
 impl_assert_ulps_eq_float!(f64, u64);
-
 
 impl<A, B> AssertUlpsEq<&B> for &A
 where
@@ -734,7 +727,6 @@ where
     }
 }
 
-
 macro_rules! impl_assert_ulps_all_eq_float {
     ($T:ident, $U:ident) => {
         impl AssertUlpsAllEq for $T {
@@ -754,7 +746,6 @@ macro_rules! impl_assert_ulps_all_eq_float {
 
 impl_assert_ulps_all_eq_float!(f32, u32);
 impl_assert_ulps_all_eq_float!(f64, u64);
-
 
 impl<A, B> AssertUlpsAllEq<&B> for &A
 where

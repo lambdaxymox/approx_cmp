@@ -1,11 +1,10 @@
 use relative_cmp::{
-    assert_relative_eq,
-    assert_relative_ne,
     AssertRelativeAllEq,
     AssertRelativeEq,
+    assert_relative_eq,
+    assert_relative_ne,
 };
 use std::sync::Arc;
-
 
 #[rustfmt::skip]
 #[test]

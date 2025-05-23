@@ -3,7 +3,6 @@ use crate::traits::{
     RelativeEq,
 };
 
-
 impl<A, B> RelativeEq<[B]> for [A]
 where
     A: RelativeEq<B>,

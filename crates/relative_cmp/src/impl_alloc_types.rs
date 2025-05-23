@@ -13,7 +13,6 @@ use std::rc::Rc;
 use std::sync::Arc;
 use std::vec::Vec;
 
-
 impl<A, B> RelativeEq<Box<B>> for Box<A>
 where
     A: RelativeEq<B> + ?Sized,
@@ -143,7 +142,6 @@ where
     }
 }
 
-
 impl<A, B> RelativeAllEq<Box<B>> for Box<A>
 where
     A: RelativeAllEq<B> + ?Sized,
@@ -250,7 +248,6 @@ where
             })
     }
 }
-
 
 impl<A, B> AssertRelativeEq<Box<B>> for Box<A>
 where
@@ -538,7 +535,6 @@ where
         }
     }
 }
-
 
 impl<A, B> AssertRelativeAllEq<Box<B>> for Box<A>
 where

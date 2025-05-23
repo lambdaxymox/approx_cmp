@@ -1,12 +1,11 @@
 use abs_diff_cmp::{
-    abs_diff_eq,
-    assert_abs_diff_eq,
     AbsDiffAllEq,
     AbsDiffEq,
     AssertAbsDiffAllEq,
     AssertAbsDiffEq,
+    abs_diff_eq,
+    assert_abs_diff_eq,
 };
-
 
 #[test]
 fn test_eq() {

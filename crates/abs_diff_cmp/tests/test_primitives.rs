@@ -1,12 +1,12 @@
 #[cfg(test)]
 mod abs_diff_eq_f32_tests {
     use abs_diff_cmp::{
+        AbsDiffAllEq,
+        AbsDiffEq,
         abs_diff_eq,
         abs_diff_ne,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
-        AbsDiffAllEq,
-        AbsDiffEq,
     };
 
     fn check_abs_diff_eq(a: f32, b: f32, tolerance: f32) {
@@ -585,16 +585,15 @@ mod abs_diff_eq_f32_tests {
     }
 }
 
-
 #[cfg(test)]
 mod abs_diff_eq_f64_tests {
     use abs_diff_cmp::{
+        AbsDiffAllEq,
+        AbsDiffEq,
         abs_diff_eq,
         abs_diff_ne,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
-        AbsDiffAllEq,
-        AbsDiffEq,
     };
 
     fn check_abs_diff_eq(a: f64, b: f64, tolerance: f64) {
@@ -1529,7 +1528,6 @@ mod abs_diff_eq_f64_tests {
     }
 }
 
-
 macro_rules! impl_abs_diff_eq_integer_exhaustive_tests {
     ($(($module_name:ident, $T:ty)),*) => {$(
         #[cfg(test)]
@@ -1567,7 +1565,6 @@ macro_rules! impl_abs_diff_eq_integer_exhaustive_tests {
         }
     )*};
 }
-
 
 impl_abs_diff_eq_integer_exhaustive_tests!(
     (abs_diff_eq_u8_exhaustive_tests, u8),

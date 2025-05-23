@@ -1,12 +1,12 @@
 #[cfg(test)]
 mod ulps_eq_f32_tests {
     use ulps_cmp::{
+        UlpsAllEq,
+        UlpsEq,
         assert_ulps_eq,
         assert_ulps_ne,
         ulps_eq,
         ulps_ne,
-        UlpsAllEq,
-        UlpsEq,
     };
 
     fn check_ulps_eq(a: f32, b: f32, max_abs_diff: f32, max_ulps: u32) {
@@ -1181,16 +1181,15 @@ mod ulps_eq_f32_tests {
     }
 }
 
-
 #[cfg(test)]
 mod ulps_eq_f64_tests {
     use ulps_cmp::{
+        UlpsAllEq,
+        UlpsEq,
         assert_ulps_eq,
         assert_ulps_ne,
         ulps_eq,
         ulps_ne,
-        UlpsAllEq,
-        UlpsEq,
     };
 
     fn check_ulps_eq(a: f64, b: f64, max_abs_diff: f64, max_ulps: u64) {
@@ -1260,7 +1259,6 @@ mod ulps_eq_f64_tests {
         check_ne(-0.0_f64,  0.0_f64, -f64::EPSILON, max_ulps);
         check_ne( 0.0_f64, -0.0_f64, -f64::EPSILON, max_ulps);
     }
-
 
     #[rustfmt::skip]
     #[test]

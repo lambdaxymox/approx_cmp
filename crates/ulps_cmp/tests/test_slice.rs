@@ -1,12 +1,11 @@
 use ulps_cmp::{
+    AssertUlpsAllEq,
+    AssertUlpsEq,
     assert_ulps_eq,
     assert_ulps_ne,
     ulps_eq,
     ulps_ne,
-    AssertUlpsAllEq,
-    AssertUlpsEq,
 };
-
 
 #[rustfmt::skip]
 #[test]

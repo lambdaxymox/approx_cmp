@@ -1,6 +1,5 @@
 use core::fmt;
 
-
 /// Compare two sequences of finite precision floating point numbers using
 /// per entry absolute difference tolerances.
 ///
@@ -361,7 +360,6 @@ where
     }
 }
 
-
 /// Provides a debugging context for when an absolute difference comparison fails.
 ///
 /// Types implement this trait to use the [`assert_abs_diff_eq`] and [`assert_abs_diff_ne`]
@@ -446,7 +444,6 @@ where
     /// ```
     fn debug_abs_diff_all_tolerance(&self, other: &Rhs, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance;
 }
-
 
 #[doc(hidden)]
 pub struct AbsDiffCmp {}

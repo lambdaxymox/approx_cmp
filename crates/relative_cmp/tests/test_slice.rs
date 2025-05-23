@@ -1,12 +1,11 @@
 use relative_cmp::{
+    AssertRelativeAllEq,
+    AssertRelativeEq,
     assert_relative_eq,
     assert_relative_ne,
     relative_eq,
     relative_ne,
-    AssertRelativeAllEq,
-    AssertRelativeEq,
 };
-
 
 #[rustfmt::skip]
 #[test]
@@ -186,7 +185,6 @@ fn test_debug_abs_diff4() {
     assert_eq!(lhs[..].debug_abs_diff(&rhs[..]), Some(abs_diff.clone()));
     assert_eq!(rhs[..].debug_abs_diff(&lhs[..]), Some(abs_diff.clone()));
 }
-
 
 #[test]
 fn test_debug_abs_diff_tolerance() {

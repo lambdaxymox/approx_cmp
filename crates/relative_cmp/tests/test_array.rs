@@ -1,12 +1,12 @@
 #[cfg(test)]
 mod relative_eq_array_f32_tests {
     use relative_cmp::{
+        RelativeAllEq,
+        RelativeEq,
         assert_relative_eq,
         assert_relative_ne,
         relative_eq,
         relative_ne,
-        RelativeAllEq,
-        RelativeEq,
     };
 
     fn array_uniform<const N: usize>(value: f32) -> [f32; N] {
@@ -117,16 +117,15 @@ mod relative_eq_array_f32_tests {
     }
 }
 
-
 #[cfg(test)]
 mod relative_eq_array_f64_tests {
     use relative_cmp::{
+        RelativeAllEq,
+        RelativeEq,
         assert_relative_eq,
         assert_relative_ne,
         relative_eq,
         relative_ne,
-        RelativeAllEq,
-        RelativeEq,
     };
 
     fn array_uniform<const N: usize>(value: f64) -> [f64; N] {
@@ -181,7 +180,6 @@ mod relative_eq_array_f64_tests {
         assert!(relative_ne!(lhs, rhs, abs_diff_all <= f64::EPSILON, relative_all <= f64::EPSILON));
         assert_relative_ne!(lhs, rhs, abs_diff_all <= f64::EPSILON, relative_all <= f64::EPSILON);
     }
-
 
     #[test]
     fn test_eq_array_empty() {
@@ -238,7 +236,6 @@ mod relative_eq_array_f64_tests {
     }
 }
 
-
 #[cfg(test)]
 mod relative_eq_array_f32_debug_tests {
     use relative_cmp::{
@@ -258,7 +255,6 @@ mod relative_eq_array_f32_debug_tests {
 
         array
     }
-
 
     #[test]
     fn test_debug_abs_diff1() {
@@ -388,7 +384,6 @@ mod relative_eq_array_f32_debug_tests {
     }
 }
 
-
 #[cfg(test)]
 mod relative_eq_array_f64_debug_tests {
     use relative_cmp::{
@@ -408,7 +403,6 @@ mod relative_eq_array_f64_debug_tests {
 
         array
     }
-
 
     #[test]
     fn test_debug_abs_diff1() {

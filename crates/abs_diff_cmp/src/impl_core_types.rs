@@ -8,7 +8,6 @@ use crate::traits::{
 use core::cell;
 use core::mem;
 
-
 #[inline(always)]
 fn uninit_array<T, const N: usize>() -> [mem::MaybeUninit<T>; N] {
     unsafe { mem::MaybeUninit::<[mem::MaybeUninit<T>; N]>::uninit().assume_init() }
@@ -16,9 +15,8 @@ fn uninit_array<T, const N: usize>() -> [mem::MaybeUninit<T>; N] {
 
 #[inline(always)]
 unsafe fn array_assume_init<T, const N: usize>(array: [mem::MaybeUninit<T>; N]) -> [T; N] {
-    (&array as *const _ as *const [T; N]).read()
+    unsafe { (&array as *const _ as *const [T; N]).read() }
 }
-
 
 macro_rules! impl_abs_diff_eq_unsigned {
     ($($T:ident),* $(,)?) => {$(
@@ -41,7 +39,6 @@ macro_rules! impl_abs_diff_eq_unsigned {
 
 impl_abs_diff_eq_unsigned!(u8, u16, u32, u64, u128, usize);
 
-
 macro_rules! impl_abs_diff_eq_signed {
     ($($T:ident),* $(,)?) => {$(
         impl AbsDiffEq for $T {
@@ -56,7 +53,6 @@ macro_rules! impl_abs_diff_eq_signed {
 }
 
 impl_abs_diff_eq_signed!(i8, i16, i32, i64, i128, isize, f32, f64);
-
 
 impl<A, B> AbsDiffEq<&B> for &A
 where
@@ -189,7 +185,6 @@ where
     }
 }
 
-
 macro_rules! impl_abs_diff_all_eq_unsigned {
     ($($T:ident),* $(,)?) => {$(
         impl AbsDiffAllEq for $T {
@@ -205,7 +200,6 @@ macro_rules! impl_abs_diff_all_eq_unsigned {
 
 impl_abs_diff_all_eq_unsigned!(u8, u16, u32, u64, u128, usize);
 
-
 macro_rules! impl_abs_diff_all_eq_signed {
     ($($T:ident),* $(,)?) => {$(
         impl AbsDiffAllEq for $T {
@@ -220,7 +214,6 @@ macro_rules! impl_abs_diff_all_eq_signed {
 }
 
 impl_abs_diff_all_eq_signed!(i8, i16, i32, i64, i128, isize, f32, f64);
-
 
 impl<A, B> AbsDiffAllEq<&B> for &A
 where
@@ -346,7 +339,6 @@ where
     }
 }
 
-
 macro_rules! impl_assert_abs_diff_eq_unsigned {
     ($($T:ident),* $(,)?) => {$(
         impl AssertAbsDiffEq for $T {
@@ -372,7 +364,6 @@ macro_rules! impl_assert_abs_diff_eq_unsigned {
 
 impl_assert_abs_diff_eq_unsigned!(u8, u16, u32, u64, u128, usize);
 
-
 macro_rules! impl_assert_abs_diff_eq_signed {
     ($($T:ident),* $(,)?) => {$(
         impl AssertAbsDiffEq for $T {
@@ -393,7 +384,6 @@ macro_rules! impl_assert_abs_diff_eq_signed {
 }
 
 impl_assert_abs_diff_eq_signed!(i8, i16, i32, i64, i128, isize, f32, f64);
-
 
 impl<A, B> AssertAbsDiffEq<&B> for &A
 where
@@ -592,7 +582,6 @@ where
     }
 }
 
-
 macro_rules! impl_assert_abs_diff_all_eq_unsigned {
     ($($T:ident),* $(,)?) => {$(
         impl AssertAbsDiffAllEq for $T {
@@ -608,7 +597,6 @@ macro_rules! impl_assert_abs_diff_all_eq_unsigned {
 
 impl_assert_abs_diff_all_eq_unsigned!(u8, u16, u32, u64, u128, usize);
 
-
 macro_rules! impl_assert_abs_diff_all_eq_signed {
     ($($T:ident),* $(,)?) => {$(
         impl AssertAbsDiffAllEq for $T {
@@ -623,7 +611,6 @@ macro_rules! impl_assert_abs_diff_all_eq_signed {
 }
 
 impl_assert_abs_diff_all_eq_signed!(i8, i16, i32, i64, i128, isize, f32, f64);
-
 
 impl<A, B> AssertAbsDiffAllEq<&B> for &A
 where

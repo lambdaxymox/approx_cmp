@@ -1,11 +1,10 @@
 use relative_cmp::{
-    assert_relative_eq,
-    assert_relative_ne,
     AssertRelativeAllEq,
     AssertRelativeEq,
+    assert_relative_eq,
+    assert_relative_ne,
 };
 use std::cell;
-
 
 #[rustfmt::skip]
 #[test]
@@ -178,7 +177,6 @@ fn test_debug_abs_diff4() {
     assert_eq!(lhs.debug_abs_diff(&rhs), abs_diff);
     assert_eq!(rhs.debug_abs_diff(&lhs), abs_diff);
 }
-
 
 #[test]
 fn test_debug_abs_diff_tolerance() {

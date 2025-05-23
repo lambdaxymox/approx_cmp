@@ -9,7 +9,6 @@ use std::fmt;
 use std::hash;
 use std::sync;
 
-
 impl<K, VA, VB, S> UlpsEq<HashMap<K, VB, S>> for HashMap<K, VA, S>
 where
     K: Eq + hash::Hash,
@@ -59,7 +58,6 @@ where
     }
 }
 
-
 impl<K, VA, VB, S> UlpsAllEq<HashMap<K, VB, S>> for HashMap<K, VA, S>
 where
     K: Eq + hash::Hash,
@@ -100,7 +98,6 @@ where
         }
     }
 }
-
 
 impl<K, VA, VB, S> AssertUlpsEq<HashMap<K, VB, S>> for HashMap<K, VA, S>
 where
@@ -217,7 +214,6 @@ where
         }
     }
 }
-
 
 impl<K, VA, VB, S> AssertUlpsAllEq<HashMap<K, VB, S>> for HashMap<K, VA, S>
 where

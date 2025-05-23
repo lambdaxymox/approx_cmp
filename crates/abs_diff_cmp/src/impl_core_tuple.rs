@@ -6,7 +6,6 @@ use crate::traits::{
 };
 use core::fmt;
 
-
 impl AbsDiffEq for () {
     type Tolerance = ();
 
@@ -42,7 +41,6 @@ impl AssertAbsDiffAllEq for () {
     #[inline]
     fn debug_abs_diff_all_tolerance(&self, _other: &(), _max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {}
 }
-
 
 macro_rules! impl_abs_diff_tuple {
     ($(
@@ -194,7 +192,6 @@ impl_abs_diff_tuple! {
         (11) -> A11
     }
 }
-
 
 impl<A, B> AbsDiffAllEq<(B,)> for (A,)
 where

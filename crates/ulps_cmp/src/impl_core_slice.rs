@@ -3,7 +3,6 @@ use crate::traits::{
     UlpsEq,
 };
 
-
 impl<A, B> UlpsEq<[B]> for [A]
 where
     A: UlpsEq<B>,

@@ -3,7 +3,6 @@ use crate::traits::{
     AbsDiffEq,
 };
 
-
 impl<A, B> AbsDiffEq<[B]> for [A]
 where
     A: AbsDiffEq<B>,
@@ -21,7 +20,6 @@ where
                 .all(|((a, b), tol)| a.abs_diff_eq(b, tol))
     }
 }
-
 
 impl<A, B> AbsDiffAllEq<[B]> for [A]
 where

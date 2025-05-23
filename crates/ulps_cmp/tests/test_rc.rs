@@ -1,11 +1,10 @@
 use std::rc::Rc;
 use ulps_cmp::{
-    assert_ulps_eq,
-    assert_ulps_ne,
     AssertUlpsAllEq,
     AssertUlpsEq,
+    assert_ulps_eq,
+    assert_ulps_ne,
 };
-
 
 #[rustfmt::skip]
 #[test]

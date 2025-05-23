@@ -13,7 +13,6 @@ use std::rc::Rc;
 use std::sync::Arc;
 use std::vec::Vec;
 
-
 impl<A, B> UlpsEq<Box<B>> for Box<A>
 where
     A: UlpsEq<B> + ?Sized,
@@ -154,7 +153,6 @@ where
     }
 }
 
-
 impl<A, B> UlpsAllEq<Box<B>> for Box<A>
 where
     A: UlpsAllEq<B> + ?Sized,
@@ -268,7 +266,6 @@ where
             })
     }
 }
-
 
 impl<A, B> AssertUlpsEq<Box<B>> for Box<A>
 where
@@ -648,7 +645,6 @@ where
         }
     }
 }
-
 
 impl<A, B> AssertUlpsAllEq<Box<B>> for Box<A>
 where

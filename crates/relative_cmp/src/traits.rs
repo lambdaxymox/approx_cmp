@@ -1,6 +1,5 @@
 use core::fmt;
 
-
 /// Compare two sequences of finite precision floating point numbers using
 /// per entry relative difference tolerances.
 ///
@@ -509,7 +508,6 @@ where
     /// ```
     fn debug_relative_all_tolerance(&self, other: &Rhs, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance;
 }
-
 
 #[doc(hidden)]
 pub struct RelativeCmp {}

@@ -4,7 +4,6 @@ use crate::traits::{
 };
 use std::vec::Vec;
 
-
 impl<A, B> AssertUlpsEq<[B]> for [A]
 where
     A: AssertUlpsEq<B>,

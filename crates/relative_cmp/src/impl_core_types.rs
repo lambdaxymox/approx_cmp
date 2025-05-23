@@ -8,7 +8,6 @@ use crate::traits::{
 use core::cell;
 use core::mem;
 
-
 #[inline(always)]
 fn uninit_array<T, const N: usize>() -> [mem::MaybeUninit<T>; N] {
     unsafe { mem::MaybeUninit::<[mem::MaybeUninit<T>; N]>::uninit().assume_init() }
@@ -16,9 +15,8 @@ fn uninit_array<T, const N: usize>() -> [mem::MaybeUninit<T>; N] {
 
 #[inline(always)]
 unsafe fn array_assume_init<T, const N: usize>(array: [mem::MaybeUninit<T>; N]) -> [T; N] {
-    (&array as *const _ as *const [T; N]).read()
+    unsafe { (&array as *const _ as *const [T; N]).read() }
 }
-
 
 macro_rules! impl_relative_eq_float {
     ($($T:ident),* $(,)?) => {$(
@@ -62,7 +60,6 @@ macro_rules! impl_relative_eq_float {
 }
 
 impl_relative_eq_float!(f32, f64);
-
 
 impl<A, B> RelativeEq<&B> for &A
 where
@@ -195,7 +192,6 @@ where
     }
 }
 
-
 macro_rules! impl_relative_all_eq_float {
     ($($T:ident),* $(,)?) => {$(
         impl RelativeAllEq for $T {
@@ -210,7 +206,6 @@ macro_rules! impl_relative_all_eq_float {
 }
 
 impl_relative_all_eq_float!(f32, f64);
-
 
 impl<A, B> RelativeAllEq<&B> for &A
 where
@@ -337,7 +332,6 @@ where
     }
 }
 
-
 macro_rules! impl_assert_relative_eq_float {
     ($($T:ident),* $(,)?) => {$(
         impl AssertRelativeEq for $T {
@@ -363,7 +357,6 @@ macro_rules! impl_assert_relative_eq_float {
 }
 
 impl_assert_relative_eq_float!(f32, f64);
-
 
 impl<A, B> AssertRelativeEq<&B> for &A
 where
@@ -620,7 +613,6 @@ where
     }
 }
 
-
 macro_rules! impl_assert_relative_all_eq_float {
     ($($T:ident),* $(,)?) => {$(
         impl AssertRelativeAllEq for $T {
@@ -640,7 +632,6 @@ macro_rules! impl_assert_relative_all_eq_float {
 }
 
 impl_assert_relative_all_eq_float!(f32, f64);
-
 
 impl<A, B> AssertRelativeAllEq<&B> for &A
 where

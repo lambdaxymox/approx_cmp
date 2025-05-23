@@ -9,7 +9,6 @@ use std::fmt;
 use std::hash;
 use std::sync;
 
-
 impl<K, VA, VB, S> RelativeEq<HashMap<K, VB, S>> for HashMap<K, VA, S>
 where
     K: Eq + hash::Hash,
@@ -55,7 +54,6 @@ where
     }
 }
 
-
 impl<K, VA, VB, S> RelativeAllEq<HashMap<K, VB, S>> for HashMap<K, VA, S>
 where
     K: Eq + hash::Hash,
@@ -93,7 +91,6 @@ where
         }
     }
 }
-
 
 impl<K, VA, VB, S> AssertRelativeEq<HashMap<K, VB, S>> for HashMap<K, VA, S>
 where
@@ -181,7 +178,6 @@ where
         }
     }
 }
-
 
 impl<K, VA, VB, S> AssertRelativeAllEq<HashMap<K, VB, S>> for HashMap<K, VA, S>
 where

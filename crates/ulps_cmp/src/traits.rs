@@ -1,6 +1,5 @@
 use core::fmt;
 
-
 /// Compare two sequences of finite precision floating point numbers using
 /// per entry units in last place (ulps) difference tolerances.
 ///
@@ -641,7 +640,6 @@ where
     /// ```
     fn debug_ulps_all_tolerance(&self, other: &Rhs, max_ulps: &Self::AllUlpsTolerance) -> Self::AllDebugUlpsTolerance;
 }
-
 
 #[doc(hidden)]
 pub struct UlpsCmp {}

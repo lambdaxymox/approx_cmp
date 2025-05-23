@@ -4,7 +4,6 @@ use crate::traits::{
 };
 use std::vec::Vec;
 
-
 impl<A, B> AssertRelativeEq<[B]> for [A]
 where
     A: AssertRelativeEq<B>,

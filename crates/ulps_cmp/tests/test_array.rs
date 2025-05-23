@@ -1,12 +1,12 @@
 #[cfg(test)]
 mod ulps_eq_array_f32_tests {
     use ulps_cmp::{
+        UlpsAllEq,
+        UlpsEq,
         assert_ulps_eq,
         assert_ulps_ne,
         ulps_eq,
         ulps_ne,
-        UlpsAllEq,
-        UlpsEq,
     };
 
     fn array_uniform<T, const N: usize>(value: T) -> [T; N]
@@ -24,7 +24,6 @@ mod ulps_eq_array_f32_tests {
 
         array
     }
-
 
     fn check_eq_array<const N: usize>(value: f32) {
         let lhs = array_uniform::<f32, N>(value);
@@ -123,16 +122,15 @@ mod ulps_eq_array_f32_tests {
     }
 }
 
-
 #[cfg(test)]
 mod ulps_eq_array_f64_tests {
     use ulps_cmp::{
+        UlpsAllEq,
+        UlpsEq,
         assert_ulps_eq,
         assert_ulps_ne,
         ulps_eq,
         ulps_ne,
-        UlpsAllEq,
-        UlpsEq,
     };
 
     fn array_uniform<T, const N: usize>(value: T) -> [T; N]
@@ -193,7 +191,6 @@ mod ulps_eq_array_f64_tests {
         assert_ulps_ne!(lhs, rhs, abs_diff_all <= f64::EPSILON, ulps_all <= max_ulps);
     }
 
-
     #[test]
     fn test_eq_array_empty() {
         check_eq_array::<0>(1.0_f64);
@@ -248,7 +245,6 @@ mod ulps_eq_array_f64_tests {
         check_all_ne_array::<64>(1.0_f64, 2.0_f64);
     }
 }
-
 
 #[cfg(test)]
 mod ulps_eq_array_f32_debug_tests {
@@ -407,7 +403,6 @@ mod ulps_eq_array_f32_debug_tests {
     }
 }
 
-
 #[cfg(test)]
 mod ulps_eq_array_f64_debug_tests {
     use ulps_cmp::{
@@ -430,7 +425,6 @@ mod ulps_eq_array_f64_debug_tests {
 
         array
     }
-
 
     #[test]
     fn test_debug_abs_diff1() {

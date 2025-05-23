@@ -1,12 +1,12 @@
 #[cfg(test)]
 mod abs_diff_eq_array_f32_tests {
     use abs_diff_cmp::{
+        AbsDiffAllEq,
+        AbsDiffEq,
         abs_diff_eq,
         abs_diff_ne,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
-        AbsDiffAllEq,
-        AbsDiffEq,
     };
 
     fn array_uniform<const N: usize>(value: f32) -> [f32; N] {
@@ -115,16 +115,15 @@ mod abs_diff_eq_array_f32_tests {
     }
 }
 
-
 #[cfg(test)]
 mod abs_diff_eq_array_f64_tests {
     use abs_diff_cmp::{
+        AbsDiffAllEq,
+        AbsDiffEq,
         abs_diff_eq,
         abs_diff_ne,
         assert_abs_diff_eq,
         assert_abs_diff_ne,
-        AbsDiffAllEq,
-        AbsDiffEq,
     };
 
     fn array_uniform<const N: usize>(value: f64) -> [f64; N] {
@@ -177,7 +176,6 @@ mod abs_diff_eq_array_f64_tests {
         assert!(abs_diff_ne!(lhs, rhs, abs_diff_all <= f64::EPSILON));
         assert_abs_diff_ne!(lhs, rhs, abs_diff_all <= f64::EPSILON);
     }
-
 
     #[test]
     fn test_eq_array_empty() {
@@ -254,7 +252,6 @@ mod abs_diff_eq_array_f32_debug_tests {
         array
     }
 
-
     #[test]
     fn test_debug_abs_diff1() {
         let lhs = array_uniform::<32>(1.0_f32);
@@ -317,7 +314,6 @@ mod abs_diff_eq_array_f32_debug_tests {
     }
 }
 
-
 #[cfg(test)]
 mod abs_diff_eq_array_f64_debug_tests {
     use abs_diff_cmp::{
@@ -337,7 +333,6 @@ mod abs_diff_eq_array_f64_debug_tests {
 
         array
     }
-
 
     #[test]
     fn test_debug_abs_diff1() {

@@ -1,3 +1,4 @@
+#![deny(unsafe_op_in_unsafe_fn)]
 #![no_std]
 #[cfg(feature = "core")]
 extern crate core as std;
@@ -7,7 +8,6 @@ extern crate alloc as std;
 
 #[cfg(feature = "std")]
 extern crate std;
-
 
 mod impl_core_slice;
 mod impl_core_tuple;
@@ -22,7 +22,6 @@ mod impl_alloc_slice;
 
 #[cfg(feature = "std")]
 mod impl_std_types;
-
 
 pub use impl_core_slice::*;
 pub use impl_core_tuple::*;

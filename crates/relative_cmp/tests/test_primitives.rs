@@ -1,12 +1,12 @@
 #[cfg(test)]
 mod relative_eq_f32_tests {
     use relative_cmp::{
+        RelativeAllEq,
+        RelativeEq,
         assert_relative_eq,
         assert_relative_ne,
         relative_eq,
         relative_ne,
-        RelativeAllEq,
-        RelativeEq,
     };
 
     fn check_relative_eq(a: f32, b: f32, max_abs_diff: f32, max_relative: f32) {
@@ -587,16 +587,15 @@ mod relative_eq_f32_tests {
     }
 }
 
-
 #[cfg(test)]
 mod relative_eq_f64_tests {
     use relative_cmp::{
+        RelativeAllEq,
+        RelativeEq,
         assert_relative_eq,
         assert_relative_ne,
         relative_eq,
         relative_ne,
-        RelativeAllEq,
-        RelativeEq,
     };
 
     fn check_relative_eq(a: f64, b: f64, max_abs_diff: f64, max_relative: f64) {

@@ -1,10 +1,10 @@
 #[cfg(test)]
 mod ulps_eq_tuple1_tests {
     use ulps_cmp::{
-        assert_ulps_eq,
-        assert_ulps_ne,
         AssertUlpsAllEq,
         AssertUlpsEq,
+        assert_ulps_eq,
+        assert_ulps_ne,
     };
 
     #[test]
@@ -119,9 +119,9 @@ mod ulps_eq_tuple1_tests {
 #[cfg(test)]
 mod ulps_eq_tuple2_tests {
     use ulps_cmp::{
+        AssertUlpsAllEq,
         assert_ulps_eq,
         assert_ulps_ne,
-        AssertUlpsAllEq,
     };
 
     #[test]
@@ -194,9 +194,9 @@ mod ulps_eq_tuple2_tests {
 #[cfg(test)]
 mod ulps_eq_tuple2_heterogenous_tests {
     use ulps_cmp::{
+        AssertUlpsEq,
         assert_ulps_eq,
         assert_ulps_ne,
-        AssertUlpsEq,
     };
 
     #[test]
@@ -269,9 +269,9 @@ mod ulps_eq_tuple2_heterogenous_tests {
 #[cfg(test)]
 mod ulps_eq_tuple3_tests {
     use ulps_cmp::{
+        AssertUlpsAllEq,
         assert_ulps_eq,
         assert_ulps_ne,
-        AssertUlpsAllEq,
     };
 
     #[test]
@@ -344,9 +344,9 @@ mod ulps_eq_tuple3_tests {
 #[cfg(test)]
 mod ulps_eq_tuple3_heterogenous_tests {
     use ulps_cmp::{
+        AssertUlpsEq,
         assert_ulps_eq,
         assert_ulps_ne,
-        AssertUlpsEq,
     };
 
     #[test]
@@ -419,9 +419,9 @@ mod ulps_eq_tuple3_heterogenous_tests {
 #[cfg(test)]
 mod ulps_eq_tuple4_tests {
     use ulps_cmp::{
+        AssertUlpsAllEq,
         assert_ulps_eq,
         assert_ulps_ne,
-        AssertUlpsAllEq,
     };
 
     #[test]
@@ -504,9 +504,9 @@ mod ulps_eq_tuple4_tests {
 #[cfg(test)]
 mod ulps_eq_tuple4_heterogenous_tests {
     use ulps_cmp::{
+        AssertUlpsEq,
         assert_ulps_eq,
         assert_ulps_ne,
-        AssertUlpsEq,
     };
 
     #[test]
@@ -584,9 +584,9 @@ mod ulps_eq_tuple4_heterogenous_tests {
 #[cfg(test)]
 mod ulps_eq_tuple5_tests {
     use ulps_cmp::{
+        AssertUlpsAllEq,
         assert_ulps_eq,
         assert_ulps_ne,
-        AssertUlpsAllEq,
     };
 
     #[rustfmt::skip]
@@ -710,9 +710,9 @@ mod ulps_eq_tuple5_tests {
 #[cfg(test)]
 mod ulps_eq_tuple5_heterogenous_tests {
     use ulps_cmp::{
+        AssertUlpsEq,
         assert_ulps_eq,
         assert_ulps_ne,
-        AssertUlpsEq,
     };
 
     #[rustfmt::skip]
@@ -842,9 +842,9 @@ mod ulps_eq_tuple5_heterogenous_tests {
 #[cfg(test)]
 mod ulps_eq_tuple6_tests {
     use ulps_cmp::{
+        AssertUlpsAllEq,
         assert_ulps_eq,
         assert_ulps_ne,
-        AssertUlpsAllEq,
     };
 
     #[rustfmt::skip]
@@ -968,9 +968,9 @@ mod ulps_eq_tuple6_tests {
 #[cfg(test)]
 mod ulps_eq_tuple6_heterogenous_tests {
     use ulps_cmp::{
+        AssertUlpsEq,
         assert_ulps_eq,
         assert_ulps_ne,
-        AssertUlpsEq,
     };
 
     #[rustfmt::skip]
@@ -1109,9 +1109,9 @@ mod ulps_eq_tuple6_heterogenous_tests {
 #[cfg(test)]
 mod ulps_eq_tuple7_tests {
     use ulps_cmp::{
+        AssertUlpsAllEq,
         assert_ulps_eq,
         assert_ulps_ne,
-        AssertUlpsAllEq,
     };
 
     #[rustfmt::skip]
@@ -1235,9 +1235,9 @@ mod ulps_eq_tuple7_tests {
 #[cfg(test)]
 mod ulps_eq_tuple7_heterogenous_tests {
     use ulps_cmp::{
+        AssertUlpsEq,
         assert_ulps_eq,
         assert_ulps_ne,
-        AssertUlpsEq,
     };
 
     #[rustfmt::skip]
@@ -1376,9 +1376,9 @@ mod ulps_eq_tuple7_heterogenous_tests {
 #[cfg(test)]
 mod ulps_eq_tuple8_tests {
     use ulps_cmp::{
+        AssertUlpsAllEq,
         assert_ulps_eq,
         assert_ulps_ne,
-        AssertUlpsAllEq,
     };
 
     #[rustfmt::skip]
@@ -1511,9 +1511,9 @@ mod ulps_eq_tuple8_tests {
 #[cfg(test)]
 mod ulps_eq_tuple8_heterogenous_tests {
     use ulps_cmp::{
+        AssertUlpsEq,
         assert_ulps_eq,
         assert_ulps_ne,
-        AssertUlpsEq,
     };
 
     #[rustfmt::skip]
@@ -1652,9 +1652,9 @@ mod ulps_eq_tuple8_heterogenous_tests {
 #[cfg(test)]
 mod ulps_eq_tuple9_tests {
     use ulps_cmp::{
+        AssertUlpsAllEq,
         assert_ulps_eq,
         assert_ulps_ne,
-        AssertUlpsAllEq,
     };
 
     #[rustfmt::skip]
@@ -1805,9 +1805,9 @@ mod ulps_eq_tuple9_tests {
 #[cfg(test)]
 mod ulps_eq_tuple9_heterogenous_tests {
     use ulps_cmp::{
+        AssertUlpsEq,
         assert_ulps_eq,
         assert_ulps_ne,
-        AssertUlpsEq,
     };
 
     #[rustfmt::skip]
@@ -1966,9 +1966,9 @@ mod ulps_eq_tuple9_heterogenous_tests {
 #[cfg(test)]
 mod ulps_eq_tuple10_tests {
     use ulps_cmp::{
+        AssertUlpsAllEq,
         assert_ulps_eq,
         assert_ulps_ne,
-        AssertUlpsAllEq,
     };
 
     #[rustfmt::skip]
@@ -2119,9 +2119,9 @@ mod ulps_eq_tuple10_tests {
 #[cfg(test)]
 mod ulps_eq_tuple10_heterogenous_tests {
     use ulps_cmp::{
+        AssertUlpsEq,
         assert_ulps_eq,
         assert_ulps_ne,
-        AssertUlpsEq,
     };
 
     #[rustfmt::skip]
@@ -2280,9 +2280,9 @@ mod ulps_eq_tuple10_heterogenous_tests {
 #[cfg(test)]
 mod ulps_eq_tuple11_tests {
     use ulps_cmp::{
+        AssertUlpsAllEq,
         assert_ulps_eq,
         assert_ulps_ne,
-        AssertUlpsAllEq,
     };
 
     #[rustfmt::skip]
@@ -2433,9 +2433,9 @@ mod ulps_eq_tuple11_tests {
 #[cfg(test)]
 mod ulps_eq_tuple11_heterogenous_tests {
     use ulps_cmp::{
+        AssertUlpsEq,
         assert_ulps_eq,
         assert_ulps_ne,
-        AssertUlpsEq,
     };
 
     #[rustfmt::skip]
@@ -2594,9 +2594,9 @@ mod ulps_eq_tuple11_heterogenous_tests {
 #[cfg(test)]
 mod ulps_eq_tuple12_tests {
     use ulps_cmp::{
+        AssertUlpsAllEq,
         assert_ulps_eq,
         assert_ulps_ne,
-        AssertUlpsAllEq,
     };
 
     #[rustfmt::skip]
@@ -2747,9 +2747,9 @@ mod ulps_eq_tuple12_tests {
 #[cfg(test)]
 mod ulps_eq_tuple12_heterogenous_tests {
     use ulps_cmp::{
+        AssertUlpsEq,
         assert_ulps_eq,
         assert_ulps_ne,
-        AssertUlpsEq,
     };
 
     #[rustfmt::skip]
