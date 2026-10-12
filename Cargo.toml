@@ -45,13 +45,13 @@ members = [
 [dependencies]
 
 [dependencies.abs_diff_cmp]
-path = "crates/abs_diff_cmp/"
+path = "crates/abs_diff_cmp"
 version = "2.0.0"
 
 [dependencies.relative_cmp]
-path = "crates/relative_cmp/"
+path = "crates/relative_cmp"
 version = "2.0.0"
 
 [dependencies.ulps_cmp]
-path = "crates/ulps_cmp/"
+path = "crates/ulps_cmp"
 version = "2.0.0"
