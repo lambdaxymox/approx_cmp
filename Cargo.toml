@@ -1,6 +1,6 @@
 [package]
 name = "approx_cmp"
-version = "2.0.0"
+version = "3.0.0"
 edition = "2024"
 authors = ["LambdaXymox <lambda.xymox@gmail.com>"]
 description = "A library for doing approximate comparisons of finite precision numbers."
@@ -43,15 +43,6 @@ members = [
 ]
 
 [dependencies]
-
-[dependencies.abs_diff_cmp]
-path = "crates/abs_diff_cmp"
-version = "2.0.0"
-
-[dependencies.relative_cmp]
-path = "crates/relative_cmp"
-version = "2.0.0"
-
-[dependencies.ulps_cmp]
-path = "crates/ulps_cmp"
-version = "2.0.0"
+abs_diff_cmp = { path = "crates/abs_diff_cmp", version = "3.0.0" }
+relative_cmp = { path = "crates/relative_cmp", version = "3.0.0" }
+ulps_cmp     = { path = "crates/ulps_cmp",     version = "3.0.0" }

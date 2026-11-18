@@ -6,6 +6,10 @@ Change log dates follow the ISO 8601 standard (YEAR-MONTH-DAY).
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-11-18
+- Migrate trait implementations for `Box` and `Vec` types to take arbitrary allocators now that `allocator_api` is
+  stable.
+
 ## [2.0.0] - 2025-03-13
 - Migrate to Rust Edition 2024.
 

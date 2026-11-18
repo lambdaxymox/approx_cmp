@@ -13,7 +13,7 @@ file
 
 ```toml
 [dependencies]
-approx_cmp = "2.0.0"
+approx_cmp = "3.0.0"
 ```
 
 and then place the crate declaration in either your `lib.rs` or `main.rs` file
@@ -69,6 +69,7 @@ For more details about the specifics of the comparison algorithms provided by th
 library, see the relevant documentation for that comparison algorithm trait.
 
 ## Prior Work
+
 The design of the comparison algorithms in this crate is heavily informed by the contents
 of the website [Comparing Floating Point Numbers, 2012 Edition](https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/)
 as well as the `approx` and `float-eq` crates. See the references section.
