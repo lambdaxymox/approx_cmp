@@ -13,15 +13,17 @@ use std::rc::Rc;
 use std::sync::Arc;
 use std::vec::Vec;
 
-impl<A, B> AbsDiffEq<Box<B>> for Box<A>
+impl<A, B, MA, MB> AbsDiffEq<Box<B, MB>> for Box<A, MA>
 where
     A: AbsDiffEq<B> + ?Sized,
     B: ?Sized,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type Tolerance = A::Tolerance;
 
     #[inline]
-    fn abs_diff_eq(&self, other: &Box<B>, max_abs_diff: &Self::Tolerance) -> bool {
+    fn abs_diff_eq(&self, other: &Box<B, MB>, max_abs_diff: &Self::Tolerance) -> bool {
         AbsDiffEq::abs_diff_eq(&**self, &**other, max_abs_diff)
     }
 }
@@ -52,15 +54,17 @@ where
     }
 }
 
-impl<A, B> AbsDiffEq<Vec<B>> for Vec<A>
+impl<A, B, MA, MB> AbsDiffEq<Vec<B, MB>> for Vec<A, MA>
 where
     A: AbsDiffEq<B>,
     A::Tolerance: Sized,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type Tolerance = Vec<A::Tolerance>;
 
     #[inline]
-    fn abs_diff_eq(&self, other: &Vec<B>, max_abs_diff: &Self::Tolerance) -> bool {
+    fn abs_diff_eq(&self, other: &Vec<B, MB>, max_abs_diff: &Self::Tolerance) -> bool {
         self.len() == other.len()
             && self.len() == max_abs_diff.len()
             && self
@@ -135,15 +139,17 @@ where
     }
 }
 
-impl<A, B> AbsDiffAllEq<Box<B>> for Box<A>
+impl<A, B, MA, MB> AbsDiffAllEq<Box<B, MB>> for Box<A, MA>
 where
     A: AbsDiffAllEq<B> + ?Sized,
     B: ?Sized,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn abs_diff_all_eq(&self, other: &Box<B>, max_abs_diff: &Self::AllTolerance) -> bool {
+    fn abs_diff_all_eq(&self, other: &Box<B, MB>, max_abs_diff: &Self::AllTolerance) -> bool {
         AbsDiffAllEq::abs_diff_all_eq(&**self, &**other, max_abs_diff)
     }
 }
@@ -174,14 +180,16 @@ where
     }
 }
 
-impl<A, B> AbsDiffAllEq<Vec<B>> for Vec<A>
+impl<A, B, MA, MB> AbsDiffAllEq<Vec<B, MB>> for Vec<A, MA>
 where
     A: AbsDiffAllEq<B>,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn abs_diff_all_eq(&self, other: &Vec<B>, max_abs_diff: &Self::AllTolerance) -> bool {
+    fn abs_diff_all_eq(&self, other: &Vec<B, MB>, max_abs_diff: &Self::AllTolerance) -> bool {
         self.len() == other.len()
             && self
                 .iter()
@@ -242,21 +250,23 @@ where
     }
 }
 
-impl<A, B> AssertAbsDiffEq<Box<B>> for Box<A>
+impl<A, B, MA, MB> AssertAbsDiffEq<Box<B, MB>> for Box<A, MA>
 where
     A: AssertAbsDiffEq<B> + ?Sized + Copy,
     B: ?Sized + Copy,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
 
     #[inline]
-    fn debug_abs_diff(&self, other: &Box<B>) -> Self::DebugAbsDiff {
+    fn debug_abs_diff(&self, other: &Box<B, MB>) -> Self::DebugAbsDiff {
         AssertAbsDiffEq::debug_abs_diff(&**self, &**other)
     }
 
     #[inline]
-    fn debug_abs_diff_tolerance(&self, other: &Box<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+    fn debug_abs_diff_tolerance(&self, other: &Box<B, MB>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
         AssertAbsDiffEq::debug_abs_diff_tolerance(&**self, &**other, max_abs_diff)
     }
 }
@@ -299,18 +309,20 @@ where
     }
 }
 
-impl<A, B> AssertAbsDiffEq<Vec<B>> for Vec<A>
+impl<A, B, MA, MB> AssertAbsDiffEq<Vec<B, MB>> for Vec<A, MA>
 where
     A: AssertAbsDiffEq<B> + ?Sized + Copy,
     B: ?Sized + Copy,
     A::Tolerance: Sized,
     A::DebugTolerance: Sized,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type DebugAbsDiff = Option<Vec<A::DebugAbsDiff>>;
     type DebugTolerance = Option<Vec<A::DebugTolerance>>;
 
     #[inline]
-    fn debug_abs_diff(&self, other: &Vec<B>) -> Self::DebugAbsDiff {
+    fn debug_abs_diff(&self, other: &Vec<B, MB>) -> Self::DebugAbsDiff {
         if self.len() == other.len() {
             Some(
                 self.iter()
@@ -324,7 +336,7 @@ where
     }
 
     #[inline]
-    fn debug_abs_diff_tolerance(&self, other: &Vec<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+    fn debug_abs_diff_tolerance(&self, other: &Vec<B, MB>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
         if self.len() == other.len() && self.len() == max_abs_diff.len() {
             Some(
                 self.iter()
@@ -456,15 +468,17 @@ where
     }
 }
 
-impl<A, B> AssertAbsDiffAllEq<Box<B>> for Box<A>
+impl<A, B, MA, MB> AssertAbsDiffAllEq<Box<B, MB>> for Box<A, MA>
 where
     A: AssertAbsDiffAllEq<B> + ?Sized + Copy,
     B: ?Sized + Copy,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
     #[inline]
-    fn debug_abs_diff_all_tolerance(&self, other: &Box<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_abs_diff_all_tolerance(&self, other: &Box<B, MB>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
         AssertAbsDiffAllEq::debug_abs_diff_all_tolerance(&**self, &**other, max_abs_diff)
     }
 }
@@ -495,16 +509,18 @@ where
     }
 }
 
-impl<A, B> AssertAbsDiffAllEq<Vec<B>> for Vec<A>
+impl<A, B, MA, MB> AssertAbsDiffAllEq<Vec<B, MB>> for Vec<A, MA>
 where
     A: AssertAbsDiffAllEq<B> + ?Sized + Copy,
     B: ?Sized + Copy,
     A::AllDebugTolerance: Sized,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type AllDebugTolerance = Option<Vec<A::AllDebugTolerance>>;
 
     #[inline]
-    fn debug_abs_diff_all_tolerance(&self, other: &Vec<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_abs_diff_all_tolerance(&self, other: &Vec<B, MB>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
         if self.len() == other.len() {
             Some(
                 self.iter()

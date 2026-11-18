@@ -13,15 +13,17 @@ use std::rc::Rc;
 use std::sync::Arc;
 use std::vec::Vec;
 
-impl<A, B> RelativeEq<Box<B>> for Box<A>
+impl<A, B, MA, MB> RelativeEq<Box<B, MB>> for Box<A, MA>
 where
     A: RelativeEq<B> + ?Sized,
     B: ?Sized,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type Tolerance = A::Tolerance;
 
     #[inline]
-    fn relative_eq(&self, other: &Box<B>, max_abs_diff: &Self::Tolerance, max_relative: &Self::Tolerance) -> bool {
+    fn relative_eq(&self, other: &Box<B, MB>, max_abs_diff: &Self::Tolerance, max_relative: &Self::Tolerance) -> bool {
         RelativeEq::relative_eq(&**self, &**other, max_abs_diff, max_relative)
     }
 }
@@ -52,15 +54,17 @@ where
     }
 }
 
-impl<A, B> RelativeEq<Vec<B>> for Vec<A>
+impl<A, B, MA, MB> RelativeEq<Vec<B, MB>> for Vec<A, MA>
 where
     A: RelativeEq<B>,
     A::Tolerance: Sized,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type Tolerance = Vec<A::Tolerance>;
 
     #[inline]
-    fn relative_eq(&self, other: &Vec<B>, max_abs_diff: &Self::Tolerance, max_relative: &Self::Tolerance) -> bool {
+    fn relative_eq(&self, other: &Vec<B, MB>, max_abs_diff: &Self::Tolerance, max_relative: &Self::Tolerance) -> bool {
         self.len() == other.len()
             && self.len() == max_abs_diff.len()
             && self.len() == max_relative.len()
@@ -142,15 +146,17 @@ where
     }
 }
 
-impl<A, B> RelativeAllEq<Box<B>> for Box<A>
+impl<A, B, MA, MB> RelativeAllEq<Box<B, MB>> for Box<A, MA>
 where
     A: RelativeAllEq<B> + ?Sized,
     B: ?Sized,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn relative_all_eq(&self, other: &Box<B>, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
+    fn relative_all_eq(&self, other: &Box<B, MB>, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
         RelativeAllEq::relative_all_eq(&**self, &**other, max_abs_diff, max_relative)
     }
 }
@@ -181,14 +187,16 @@ where
     }
 }
 
-impl<A, B> RelativeAllEq<Vec<B>> for Vec<A>
+impl<A, B, MA, MB> RelativeAllEq<Vec<B, MB>> for Vec<A, MA>
 where
     A: RelativeAllEq<B>,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type AllTolerance = A::AllTolerance;
 
     #[inline]
-    fn relative_all_eq(&self, other: &Vec<B>, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
+    fn relative_all_eq(&self, other: &Vec<B, MB>, max_abs_diff: &Self::AllTolerance, max_relative: &Self::AllTolerance) -> bool {
         self.len() == other.len()
             && self
                 .iter()
@@ -249,26 +257,28 @@ where
     }
 }
 
-impl<A, B> AssertRelativeEq<Box<B>> for Box<A>
+impl<A, B, MA, MB> AssertRelativeEq<Box<B, MB>> for Box<A, MA>
 where
     A: AssertRelativeEq<B> + ?Sized + Copy,
     B: ?Sized + Copy,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugTolerance = A::DebugTolerance;
 
     #[inline]
-    fn debug_abs_diff(&self, other: &Box<B>) -> Self::DebugAbsDiff {
+    fn debug_abs_diff(&self, other: &Box<B, MB>) -> Self::DebugAbsDiff {
         AssertRelativeEq::debug_abs_diff(&**self, &**other)
     }
 
     #[inline]
-    fn debug_abs_diff_tolerance(&self, other: &Box<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+    fn debug_abs_diff_tolerance(&self, other: &Box<B, MB>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
         AssertRelativeEq::debug_abs_diff_tolerance(&**self, &**other, max_abs_diff)
     }
 
     #[inline]
-    fn debug_relative_tolerance(&self, other: &Box<B>, max_relative: &Self::Tolerance) -> Self::DebugTolerance {
+    fn debug_relative_tolerance(&self, other: &Box<B, MB>, max_relative: &Self::Tolerance) -> Self::DebugTolerance {
         AssertRelativeEq::debug_relative_tolerance(&**self, &**other, max_relative)
     }
 }
@@ -321,18 +331,20 @@ where
     }
 }
 
-impl<A, B> AssertRelativeEq<Vec<B>> for Vec<A>
+impl<A, B, MA, MB> AssertRelativeEq<Vec<B, MB>> for Vec<A, MA>
 where
     A: AssertRelativeEq<B> + ?Sized + Copy,
     B: ?Sized + Copy,
     A::Tolerance: Sized,
     A::DebugTolerance: Sized,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type DebugAbsDiff = Option<Vec<A::DebugAbsDiff>>;
     type DebugTolerance = Option<Vec<A::DebugTolerance>>;
 
     #[inline]
-    fn debug_abs_diff(&self, other: &Vec<B>) -> Self::DebugAbsDiff {
+    fn debug_abs_diff(&self, other: &Vec<B, MB>) -> Self::DebugAbsDiff {
         if self.len() == other.len() {
             Some(
                 self.iter()
@@ -346,7 +358,7 @@ where
     }
 
     #[inline]
-    fn debug_abs_diff_tolerance(&self, other: &Vec<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+    fn debug_abs_diff_tolerance(&self, other: &Vec<B, MB>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
         if (self.len() == other.len()) && (self.len() == max_abs_diff.len()) {
             Some(
                 self.iter()
@@ -361,7 +373,7 @@ where
     }
 
     #[inline]
-    fn debug_relative_tolerance(&self, other: &Vec<B>, max_relative: &Self::Tolerance) -> Self::DebugTolerance {
+    fn debug_relative_tolerance(&self, other: &Vec<B, MB>, max_relative: &Self::Tolerance) -> Self::DebugTolerance {
         if (self.len() == other.len()) && (self.len() == max_relative.len()) {
             Some(
                 self.iter()
@@ -536,20 +548,22 @@ where
     }
 }
 
-impl<A, B> AssertRelativeAllEq<Box<B>> for Box<A>
+impl<A, B, MA, MB> AssertRelativeAllEq<Box<B, MB>> for Box<A, MA>
 where
     A: AssertRelativeAllEq<B> + ?Sized + Copy,
     B: ?Sized + Copy,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
 
     #[inline]
-    fn debug_abs_diff_all_tolerance(&self, other: &Box<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_abs_diff_all_tolerance(&self, other: &Box<B, MB>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
         AssertRelativeAllEq::debug_abs_diff_all_tolerance(&**self, &**other, max_abs_diff)
     }
 
     #[inline]
-    fn debug_relative_all_tolerance(&self, other: &Box<B>, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_relative_all_tolerance(&self, other: &Box<B, MB>, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
         AssertRelativeAllEq::debug_relative_all_tolerance(&**self, &**other, max_relative)
     }
 }
@@ -590,16 +604,18 @@ where
     }
 }
 
-impl<A, B> AssertRelativeAllEq<Vec<B>> for Vec<A>
+impl<A, B, MA, MB> AssertRelativeAllEq<Vec<B, MB>> for Vec<A, MA>
 where
     A: AssertRelativeAllEq<B> + ?Sized + Copy,
     B: ?Sized + Copy,
     A::AllDebugTolerance: Sized,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type AllDebugTolerance = Option<Vec<A::AllDebugTolerance>>;
 
     #[inline]
-    fn debug_abs_diff_all_tolerance(&self, other: &Vec<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_abs_diff_all_tolerance(&self, other: &Vec<B, MB>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
         if self.len() == other.len() {
             Some(
                 self.iter()
@@ -613,7 +629,7 @@ where
     }
 
     #[inline]
-    fn debug_relative_all_tolerance(&self, other: &Vec<B>, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_relative_all_tolerance(&self, other: &Vec<B, MB>, max_relative: &Self::AllTolerance) -> Self::AllDebugTolerance {
         if self.len() == other.len() {
             Some(
                 self.iter()

@@ -1,4 +1,3 @@
 # TODO
-- Parametrize the allocator for `Box`, `Rc`, `Arc`, `Vec`, `VecDeque`, `LinkedList`, 
-  `BTreeMap`, and `HashMap` trait implementations when 
-  [`allocator_api`](https://github.com/rust-lang/rust/issues/32838) lands in stable.
+- Parameterize the allocator for `Rc`, `Arc`, `VecDeque`, `LinkedList`, `BTreeMap`, and `HashMap` trait implementations 
+  when [`allocator_ext`](https://github.com/rust-lang/rust/issues/163177) lands in stable.

@@ -13,16 +13,18 @@ use std::rc::Rc;
 use std::sync::Arc;
 use std::vec::Vec;
 
-impl<A, B> UlpsEq<Box<B>> for Box<A>
+impl<A, B, MA, MB> UlpsEq<Box<B, MB>> for Box<A, MA>
 where
     A: UlpsEq<B> + ?Sized,
     B: ?Sized,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type Tolerance = A::Tolerance;
     type UlpsTolerance = A::UlpsTolerance;
 
     #[inline]
-    fn ulps_eq(&self, other: &Box<B>, max_abs_diff: &Self::Tolerance, max_ulps: &Self::UlpsTolerance) -> bool {
+    fn ulps_eq(&self, other: &Box<B, MB>, max_abs_diff: &Self::Tolerance, max_ulps: &Self::UlpsTolerance) -> bool {
         UlpsEq::ulps_eq(&**self, &**other, max_abs_diff, max_ulps)
     }
 }
@@ -55,17 +57,19 @@ where
     }
 }
 
-impl<A, B> UlpsEq<Vec<B>> for Vec<A>
+impl<A, B, MA, MB> UlpsEq<Vec<B, MB>> for Vec<A, MA>
 where
     A: UlpsEq<B>,
     A::Tolerance: Sized,
     A::UlpsTolerance: Sized,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type Tolerance = Vec<A::Tolerance>;
     type UlpsTolerance = Vec<A::UlpsTolerance>;
 
     #[inline]
-    fn ulps_eq(&self, other: &Vec<B>, max_abs_diff: &Self::Tolerance, max_ulps: &Self::UlpsTolerance) -> bool {
+    fn ulps_eq(&self, other: &Vec<B, MB>, max_abs_diff: &Self::Tolerance, max_ulps: &Self::UlpsTolerance) -> bool {
         self.len() == other.len()
             && self.len() == max_abs_diff.len()
             && self.len() == max_ulps.len()
@@ -153,16 +157,18 @@ where
     }
 }
 
-impl<A, B> UlpsAllEq<Box<B>> for Box<A>
+impl<A, B, MA, MB> UlpsAllEq<Box<B, MB>> for Box<A, MA>
 where
     A: UlpsAllEq<B> + ?Sized,
     B: ?Sized,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type AllTolerance = A::AllTolerance;
     type AllUlpsTolerance = A::AllUlpsTolerance;
 
     #[inline]
-    fn ulps_all_eq(&self, other: &Box<B>, max_abs_diff: &Self::AllTolerance, max_ulps: &Self::AllUlpsTolerance) -> bool {
+    fn ulps_all_eq(&self, other: &Box<B, MB>, max_abs_diff: &Self::AllTolerance, max_ulps: &Self::AllUlpsTolerance) -> bool {
         UlpsAllEq::ulps_all_eq(&**self, &**other, max_abs_diff, max_ulps)
     }
 }
@@ -195,15 +201,17 @@ where
     }
 }
 
-impl<A, B> UlpsAllEq<Vec<B>> for Vec<A>
+impl<A, B, MA, MB> UlpsAllEq<Vec<B, MB>> for Vec<A, MA>
 where
     A: UlpsAllEq<B>,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type AllTolerance = A::AllTolerance;
     type AllUlpsTolerance = A::AllUlpsTolerance;
 
     #[inline]
-    fn ulps_all_eq(&self, other: &Vec<B>, max_abs_diff: &Self::AllTolerance, max_ulps: &Self::AllUlpsTolerance) -> bool {
+    fn ulps_all_eq(&self, other: &Vec<B, MB>, max_abs_diff: &Self::AllTolerance, max_ulps: &Self::AllUlpsTolerance) -> bool {
         self.len() == other.len()
             && self
                 .iter()
@@ -267,10 +275,12 @@ where
     }
 }
 
-impl<A, B> AssertUlpsEq<Box<B>> for Box<A>
+impl<A, B, MA, MB> AssertUlpsEq<Box<B, MB>> for Box<A, MA>
 where
     A: AssertUlpsEq<B> + ?Sized + Copy,
     B: ?Sized + Copy,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type DebugAbsDiff = A::DebugAbsDiff;
     type DebugUlpsDiff = A::DebugUlpsDiff;
@@ -278,22 +288,22 @@ where
     type DebugUlpsTolerance = A::DebugUlpsTolerance;
 
     #[inline]
-    fn debug_abs_diff(&self, other: &Box<B>) -> Self::DebugAbsDiff {
+    fn debug_abs_diff(&self, other: &Box<B, MB>) -> Self::DebugAbsDiff {
         AssertUlpsEq::debug_abs_diff(&**self, &**other)
     }
 
     #[inline]
-    fn debug_ulps_diff(&self, other: &Box<B>) -> Self::DebugUlpsDiff {
+    fn debug_ulps_diff(&self, other: &Box<B, MB>) -> Self::DebugUlpsDiff {
         AssertUlpsEq::debug_ulps_diff(&**self, &**other)
     }
 
     #[inline]
-    fn debug_abs_diff_tolerance(&self, other: &Box<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+    fn debug_abs_diff_tolerance(&self, other: &Box<B, MB>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
         AssertUlpsEq::debug_abs_diff_tolerance(&**self, &**other, max_abs_diff)
     }
 
     #[inline]
-    fn debug_ulps_tolerance(&self, other: &Box<B>, max_ulps: &Self::UlpsTolerance) -> Self::DebugUlpsTolerance {
+    fn debug_ulps_tolerance(&self, other: &Box<B, MB>, max_ulps: &Self::UlpsTolerance) -> Self::DebugUlpsTolerance {
         AssertUlpsEq::debug_ulps_tolerance(&**self, &**other, max_ulps)
     }
 }
@@ -360,7 +370,7 @@ where
     }
 }
 
-impl<A, B> AssertUlpsEq<Vec<B>> for Vec<A>
+impl<A, B, MA, MB> AssertUlpsEq<Vec<B, MB>> for Vec<A, MA>
 where
     A: AssertUlpsEq<B> + ?Sized + Copy,
     B: ?Sized + Copy,
@@ -368,6 +378,8 @@ where
     A::UlpsTolerance: Sized,
     A::DebugTolerance: Sized,
     A::DebugUlpsTolerance: Sized,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type DebugAbsDiff = Option<Vec<A::DebugAbsDiff>>;
     type DebugUlpsDiff = Option<Vec<A::DebugUlpsDiff>>;
@@ -375,7 +387,7 @@ where
     type DebugUlpsTolerance = Option<Vec<A::DebugUlpsTolerance>>;
 
     #[inline]
-    fn debug_abs_diff(&self, other: &Vec<B>) -> Self::DebugAbsDiff {
+    fn debug_abs_diff(&self, other: &Vec<B, MB>) -> Self::DebugAbsDiff {
         if self.len() == other.len() {
             Some(
                 self.iter()
@@ -389,7 +401,7 @@ where
     }
 
     #[inline]
-    fn debug_ulps_diff(&self, other: &Vec<B>) -> Self::DebugUlpsDiff {
+    fn debug_ulps_diff(&self, other: &Vec<B, MB>) -> Self::DebugUlpsDiff {
         if self.len() == other.len() {
             Some(
                 self.iter()
@@ -403,7 +415,7 @@ where
     }
 
     #[inline]
-    fn debug_abs_diff_tolerance(&self, other: &Vec<B>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
+    fn debug_abs_diff_tolerance(&self, other: &Vec<B, MB>, max_abs_diff: &Self::Tolerance) -> Self::DebugTolerance {
         if (self.len() == other.len()) && (self.len() == max_abs_diff.len()) {
             Some(
                 self.iter()
@@ -418,7 +430,7 @@ where
     }
 
     #[inline]
-    fn debug_ulps_tolerance(&self, other: &Vec<B>, max_ulps: &Self::UlpsTolerance) -> Self::DebugUlpsTolerance {
+    fn debug_ulps_tolerance(&self, other: &Vec<B, MB>, max_ulps: &Self::UlpsTolerance) -> Self::DebugUlpsTolerance {
         if (self.len() == other.len()) && (self.len() == max_ulps.len()) {
             Some(
                 self.iter()
@@ -646,21 +658,23 @@ where
     }
 }
 
-impl<A, B> AssertUlpsAllEq<Box<B>> for Box<A>
+impl<A, B, MA, MB> AssertUlpsAllEq<Box<B, MB>> for Box<A, MA>
 where
     A: AssertUlpsAllEq<B> + ?Sized + Copy,
     B: ?Sized + Copy,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type AllDebugTolerance = A::AllDebugTolerance;
     type AllDebugUlpsTolerance = A::AllDebugUlpsTolerance;
 
     #[inline]
-    fn debug_abs_diff_all_tolerance(&self, other: &Box<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_abs_diff_all_tolerance(&self, other: &Box<B, MB>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
         AssertUlpsAllEq::debug_abs_diff_all_tolerance(&**self, &**other, max_abs_diff)
     }
 
     #[inline]
-    fn debug_ulps_all_tolerance(&self, other: &Box<B>, max_ulps: &Self::AllUlpsTolerance) -> Self::AllDebugUlpsTolerance {
+    fn debug_ulps_all_tolerance(&self, other: &Box<B, MB>, max_ulps: &Self::AllUlpsTolerance) -> Self::AllDebugUlpsTolerance {
         AssertUlpsAllEq::debug_ulps_all_tolerance(&**self, &**other, max_ulps)
     }
 }
@@ -703,18 +717,20 @@ where
     }
 }
 
-impl<A, B> AssertUlpsAllEq<Vec<B>> for Vec<A>
+impl<A, B, MA, MB> AssertUlpsAllEq<Vec<B, MB>> for Vec<A, MA>
 where
     A: AssertUlpsAllEq<B> + ?Sized + Copy,
     B: ?Sized + Copy,
     A::AllDebugTolerance: Sized,
     A::AllDebugUlpsTolerance: Sized,
+    MA: std::alloc::Allocator,
+    MB: std::alloc::Allocator,
 {
     type AllDebugTolerance = Option<Vec<A::AllDebugTolerance>>;
     type AllDebugUlpsTolerance = Option<Vec<A::AllDebugUlpsTolerance>>;
 
     #[inline]
-    fn debug_abs_diff_all_tolerance(&self, other: &Vec<B>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
+    fn debug_abs_diff_all_tolerance(&self, other: &Vec<B, MB>, max_abs_diff: &Self::AllTolerance) -> Self::AllDebugTolerance {
         if self.len() == other.len() {
             Some(
                 self.iter()
@@ -728,7 +744,7 @@ where
     }
 
     #[inline]
-    fn debug_ulps_all_tolerance(&self, other: &Vec<B>, max_ulps: &Self::AllUlpsTolerance) -> Self::AllDebugUlpsTolerance {
+    fn debug_ulps_all_tolerance(&self, other: &Vec<B, MB>, max_ulps: &Self::AllUlpsTolerance) -> Self::AllDebugUlpsTolerance {
         if self.len() == other.len() {
             Some(
                 self.iter()
